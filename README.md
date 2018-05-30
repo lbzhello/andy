@@ -1,0 +1,2 @@
+# mandy
+Funny Programming Language
