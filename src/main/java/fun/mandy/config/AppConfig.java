@@ -1,11 +1,10 @@
 package fun.mandy.config;
 
+import fun.mandy.tokenizer.Token;
 import fun.mandy.tokenizer.Tokenizer;
+import fun.mandy.tokenizer.support.DefaultToken;
 import fun.mandy.tokenizer.support.DefaultTokenizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan(basePackages = "fun.mandy")
@@ -13,6 +12,15 @@ import org.springframework.context.annotation.ImportResource;
 public class AppConfig {
     @Bean
     public Tokenizer tokenizer(){
-        return new DefaultTokenizer();
+        Tokenizer<Token<Integer,String>> tokenizer = new DefaultTokenizer();
+        return tokenizer;
     }
+
+    @Bean
+    @Scope("prototype")
+    public Token<Integer, String> token(){
+        return new DefaultToken(0,"");
+    }
+
+
 }
