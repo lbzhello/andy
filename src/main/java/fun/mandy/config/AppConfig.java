@@ -7,6 +7,8 @@ import fun.mandy.tokenizer.support.DefaultTokenizer;
 import org.springframework.context.annotation.*;
 
 @Configuration
+@ComponentScan(basePackages = "fun.mandy")
+@ImportResource("classpath:/fun/mandy/config/app-config.xml")
 public class AppConfig {
     @Bean
     public Tokenizer tokenizer(){

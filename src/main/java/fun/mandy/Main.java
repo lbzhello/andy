@@ -10,8 +10,6 @@ import org.springframework.context.annotation.*;
  */
 @Configuration
 @Import(AppConfig.class)
-@ComponentScan(basePackages = "fun.mandy")
-@ImportResource("classpath:/fun/mandy/config/app-config.xml")
 public class Main {
     public static void main( String[] args ) throws Exception {
         System.out.println("Application starting...");
