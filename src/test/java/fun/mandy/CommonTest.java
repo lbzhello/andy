@@ -1,7 +1,5 @@
 package fun.mandy;
 
-import fun.mandy.util.StaticUtils;
-
 import java.io.Serializable;
 
 class Model implements Serializable {
@@ -12,13 +10,22 @@ class Model implements Serializable {
         this.name = name;
         this.age = age;
     }
+
+    public static boolean parseNum(String num){
+        try {
+            Double d = Double.valueOf(num);
+            System.out.println(d);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
 
 public class CommonTest {
     public static void main( String[] args ) {
-        Model t1 = new Model("zhangsan", "22");
-        Model t2 = StaticUtils.copy(t1);
-        System.out.println();
+
+        System.out.println(Character.isLetter('/'));
     }
 
 }
