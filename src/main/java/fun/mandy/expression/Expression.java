@@ -5,5 +5,7 @@ import fun.mandy.context.Context;
 import java.io.Serializable;
 
 public interface Expression extends Serializable {
-    Expression eval(Context<Expression,Expression> context);
+    default Expression eval(Context<Expression,Expression> context){
+        return this;
+    };
 }

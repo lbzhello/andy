@@ -17,7 +17,14 @@ public interface Constants {
      */
     int WITH_LEFT_PAREN = -34; //'('
     int WITH_LEFT_BRACE =  -35; //'{'
-    int WITH_LEFT_BRACKET = -35; //'['
+    int WITH_LEFT_BRACKET = -36; //'['
+
+    /**
+     * SPACE_* 前缀表示表达式已经结束
+     */
+    int SPACE_LEFT_PAREN = -37; //'('
+    int SPACE_LEFT_BRACE = -38; //'{'
+    int SPACE_LEFT_BRACKET = -39; //'['
 
 }
 

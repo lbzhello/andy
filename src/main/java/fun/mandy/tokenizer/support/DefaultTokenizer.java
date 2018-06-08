@@ -4,12 +4,13 @@ import fun.mandy.constant.Constants;
 import fun.mandy.exception.Exceptions;
 import fun.mandy.tokenizer.Token;
 import fun.mandy.tokenizer.Tokenizer;
-import fun.mandy.util.Application;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
     private LineNumberReader lineNumberReader;
@@ -64,15 +65,33 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
                 if (!Character.isWhitespace(getChar())) { //不是空白字符
                    if(getChar() == '"'){ //String
                        return nextString();
-                   } else if (Application.isDelimiter(getChar())) { //间隔符直接返回
+                   } else if (Delimiter.isDelimiter(getChar())) { //间隔符直接返回
+                       Token<Integer, String> token = new DefaultToken((int) getChar(), String.valueOf(getChar()));
                        nextChar(); //eat
-                       return new DefaultToken((int)getChar(), String.valueOf(getChar()));
-                   } else if (Character.isLetter(getChar())) {
-                       nextChar(); //eat
+                       return token;
+                   } else if (Character.isDigit(getChar())) { //number
+                       return nextNumber();
+                   } else {
+                       return nextSymbol();
                    }
                 } else { //空白字符
                     System.out.println("yes");
-                    nextChar(); //eat
+                    while (Character.isWhitespace(getChar())) {
+                        nextChar(); //eat
+                    }
+                    if (getChar() == '(') {  //e.g. name {...
+                        Token<Integer,String> token = new DefaultToken(Constants.SPACE_LEFT_PAREN,String.valueOf(getChar()));
+                        nextChar();
+                        return token;
+                    } else if (getChar() == '[') { //e.g. name [...
+                        Token<Integer,String> token = new DefaultToken(Constants.SPACE_LEFT_BRACKET,String.valueOf(getChar()));
+                        nextChar();
+                        return token;
+                    } else if (getChar() == '{') { //e.g. name {...
+                        Token<Integer,String> token = new DefaultToken(Constants.SPACE_LEFT_BRACKET,String.valueOf(getChar()));
+                        nextChar();
+                        return  token;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -135,17 +154,14 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
     }
 
     /**
-     * e.g. name2
+     * e.g. name2, na-rt, sym+nnn...
      * @return
      * @throws IOException
      */
     private Token<Integer, String> nextSymbol() throws IOException {
         StringBuffer sb = new StringBuffer();
-        while (Character.isDigit(getChar()) || Character.isAlphabetic(getChar())) {
+        while (!Character.isWhitespace(getChar()) && !Delimiter.isDelimiter(getChar())) {
             sb.append(getChar());
-            boolean b = Character.isSpaceChar(' ');
-            boolean b2 = Character.isWhitespace(' ');
-            boolean b3 = Character.isLetter(5);
             nextChar();
         }
         return new DefaultToken(Constants.SYMBOL, sb.toString());

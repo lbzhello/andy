@@ -1,47 +1,52 @@
-package fun.mandy.util;
+package fun.mandy.boot;
 
+import fun.mandy.expression.Expression;
+import fun.mandy.parser.Parser;
+import fun.mandy.tokenizer.Token;
 import fun.mandy.tokenizer.Tokenizer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
 
 public final class Application {
     private Application() {}
     private static AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-    private static Set<Character> delimiters = new HashSet<>();
 
-    static {
-        delimiters.add('.');
-        delimiters.add(':');
-        delimiters.add('(');
-        delimiters.add(')');
-        delimiters.add('{');
-        delimiters.add('}');
-        delimiters.add('"');
-        delimiters.add('/');
-        delimiters.add('\'');
-        delimiters.add('\\');
+    @Component
+    private static final class Builder {
+        public void test(){
+            System.out.println("i am Context inner Application");
+        }
+
+        public Builder register(Class<?> clazz){
+            applicationContext.register(clazz);
+            applicationContext.refresh();
+            return this;
+        }
+
     }
 
-    public static void run(Class<?> clazz, String[] args) {
+
+
+
+    public void run() {
+
+    }
+
+    public static final void start(Class<?> clazz, String[] args) throws IOException {
         applicationContext.register(clazz);
         applicationContext.refresh();
 
-        try {
-            Tokenizer<String > tokenizer = getApplicationContext().getBean(Tokenizer.class);
-            Reader reader = new FileReader(args[0]);
-            tokenizer.init(reader);
-            String s = tokenizer.nextToken();
-            tokenizer.close();
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Parser<Expression> parser = getApplicationContext().getBean(Parser.class);
+        Reader reader = new FileReader(args[0]);
+        parser.init(reader);
+        parser.generate();
+        parser.close();
+        reader.close();
     }
 
     /**
@@ -52,17 +57,7 @@ public final class Application {
         return  applicationContext;
     }
 
-    public static final boolean isDelimiter(Character c){
-        return delimiters.contains(c);
-    }
 
-    public static final void addDelimiter(Character c){
-        delimiters.add(c);
-    }
-
-    public static final void removeDelimiter(Character c){
-        delimiters.remove(c);
-    }
 
     /**
      * Deep clone
@@ -70,7 +65,7 @@ public final class Application {
      * @param <T>
      * @return
      */
-    public static <T> T copy(T obj){
+    public static final <T> T copy(T obj){
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);
