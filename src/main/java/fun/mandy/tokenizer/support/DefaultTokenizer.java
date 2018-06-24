@@ -1,14 +1,13 @@
 package fun.mandy.tokenizer.support;
 
+import fun.mandy.boot.Application;
 import fun.mandy.constant.Constants;
 import fun.mandy.exception.Exceptions;
 import fun.mandy.tokenizer.Token;
 import fun.mandy.tokenizer.Tokenizer;
+import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,8 +34,13 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
         }
     }
 
-    //提供默认构造函数
-    public DefaultTokenizer(){}
+    /**
+     * 提供默认构造函数
+     * 初始化资源
+     */
+    public DefaultTokenizer(){
+//        this.lineNumberReader = new LineNumberReader(new BufferedReader(Application.getReader()));
+    }
 
     //只能通过Builder调用
     private DefaultTokenizer(Builder builder){
@@ -49,16 +53,12 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
     }
 
     @Override
-    public void close(){
-        try {
-            lineNumberReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void close() throws IOException {
+        lineNumberReader.close();
     }
 
     @Override
-    public Token<Integer,String> nextToken(){
+    public Token<Integer,String> next(){
         try {
             StringBuffer sb = new StringBuffer();
             while (!isEOF()) {
@@ -98,11 +98,11 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
             e.printStackTrace();
         }
         System.out.println("Tokenizer Running...");
-        return null;
+        return new DefaultToken(Constants.NIL,"");
     }
 
     @Override
-    public boolean hasNextToken(){
+    public boolean hasNext(){
         return !isEOF();
     }
 
@@ -160,7 +160,7 @@ public class DefaultTokenizer implements Tokenizer<Token<Integer,String>> {
      */
     private Token<Integer, String> nextSymbol() throws IOException {
         StringBuffer sb = new StringBuffer();
-        while (!Character.isWhitespace(getChar()) && !Delimiter.isDelimiter(getChar())) {
+        while (!Character.isWhitespace(getChar()) && !Delimiter.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());
             nextChar();
         }

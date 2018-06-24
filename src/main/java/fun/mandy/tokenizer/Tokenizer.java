@@ -1,30 +1,15 @@
 package fun.mandy.tokenizer;
 
+import java.io.Closeable;
 import java.io.Reader;
+import java.util.Iterator;
 
-public interface Tokenizer<T> {
+public interface Tokenizer<T> extends Iterator<T>,Closeable {
 
     /**
      * Tokenizer初始化方法为Tokenizer提供数据源
      * @param reader 输入流
      */
     void init(Reader reader);
-
-    /**
-     * 执行资源回收等操作
-     */
-    void close();
-
-    /**
-     * 下一个token
-     * @return
-     */
-    T nextToken();
-
-    /**
-     * 判断流是否结束
-     * @return
-     */
-    boolean hasNextToken();
 
 }

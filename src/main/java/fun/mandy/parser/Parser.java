@@ -2,10 +2,10 @@ package fun.mandy.parser;
 
 import fun.mandy.expression.Expression;
 
+import java.io.Closeable;
 import java.io.Reader;
+import java.util.Iterator;
 
-public interface Parser<T> {
-    T generate();
+public interface Parser<T> extends Iterator<T>,Closeable {
     void init(Reader reader);
-    void close();
 }

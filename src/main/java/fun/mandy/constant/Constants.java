@@ -4,6 +4,8 @@ package fun.mandy.constant;
  * 词法分析器相关常量
  */
 public interface Constants {
+    int NIL = -1;
+
     int NUMBER = -22;
     int STRING = -23;
     int SYMBOL = -24;
@@ -25,6 +27,9 @@ public interface Constants {
     int SPACE_LEFT_PAREN = -37; //'('
     int SPACE_LEFT_BRACE = -38; //'{'
     int SPACE_LEFT_BRACKET = -39; //'['
+
+    //分隔符
+    int DELIMITER = -40;
 
 }
 
