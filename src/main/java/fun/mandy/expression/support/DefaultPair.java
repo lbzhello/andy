@@ -25,4 +25,9 @@ public class DefaultPair implements Pair<Name,Expression>,Expression {
     public Expression value() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return this.key.toString() + " -> " + this.value.toString();
+    }
 }

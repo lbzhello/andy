@@ -2,38 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b9c545b-f920-4e49-9571-90e1f354dd9b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Context.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Name.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/EvalExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ListExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/NumberExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/Runtime.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/util/Definition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/fun/mandy/ManinTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DelimiterExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lang.my" beforeDir="false" afterPath="$PROJECT_DIR$/lang.my" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/boot/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/boot/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/context/Context.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Node.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ClassExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ClassExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/SymbolExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/SymbolExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/fun/mandy/CommonTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/fun/mandy/MainTest.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -54,50 +35,26 @@
       <file leaf-file-name="DefaultParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+            <state relative-caret-position="-42">
+              <caret line="97" column="13" lean-forward="true" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1593#1594#0" expanded="true" />
+                <element signature="e#1628#1629#0" expanded="true" />
+                <element signature="e#8321#8322#0" expanded="true" />
+                <element signature="e#8363#8364#0" expanded="true" />
+                <element signature="e#8416#8417#0" expanded="true" />
+                <element signature="e#8454#8455#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/parser/Parser.java">
+      <file leaf-file-name="lang.my" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lang.my">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Token.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Token.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tokenizer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Delimiter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/Delimiter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+            <state relative-caret-position="105">
+              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -105,48 +62,99 @@
       <file leaf-file-name="ExpressionTypeMode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+            <state relative-caret-position="75">
+              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManinTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/fun/mandy/ManinTest.java">
+      <file leaf-file-name="StringExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            <state relative-caret-position="135">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
               <folding>
-                <element signature="e#1237#1238#0" expanded="true" />
-                <element signature="e#1288#1289#0" expanded="true" />
+                <element signature="e#500#501#0" expanded="true" />
+                <element signature="e#539#540#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java">
+      <file leaf-file-name="ObjectExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="180">
+              <caret line="15" column="59" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefaultTokenizer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DefaultTokenizer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
+            <state relative-caret-position="93">
+              <caret line="74" column="65" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="65" />
+              <folding>
+                <element signature="e#3699#3700#0" expanded="true" />
+                <element signature="e#3739#3740#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefaultUnit.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DelimiterExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DelimiterExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+              <folding>
+                <element signature="e#227#228#0" expanded="true" />
+                <element signature="e#260#261#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NumberExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/NumberExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+              <folding>
+                <element signature="e#300#301#0" expanded="true" />
+                <element signature="e#334#335#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DefaultUnit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+            <state relative-caret-position="201">
+              <caret line="107" column="46" selection-start-line="107" selection-start-column="46" selection-end-line="107" selection-end-column="46" />
+              <folding>
+                <element signature="e#2080#2081#0" expanded="true" />
+                <element signature="e#2113#2114#0" expanded="true" />
+                <element signature="e#2163#2164#0" expanded="true" />
+                <element signature="e#2180#2181#0" expanded="true" />
+                <element signature="e#2281#2282#0" expanded="true" />
+                <element signature="e#2323#2324#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DefaultPair.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="30" column="67" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
+              <folding>
+                <element signature="e#616#617#0" expanded="true" />
+                <element signature="e#655#656#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,6 +184,13 @@
       <find>left =</find>
       <find>currentToken</find>
       <find>definitionExpression</find>
+      <find>Token&lt;Integer,String&gt;</find>
+      <find>DefaultToken</find>
+      <find>Token&lt;Integer, String&gt;</find>
+      <find>i</find>
+      <find>yes</find>
+      <find>==</find>
+      <find>!=</find>
     </findStrings>
     <replaceStrings>
       <replace>type</replace>
@@ -185,6 +200,8 @@
       <replace>return</replace>
       <replace>getToken()</replace>
       <replace>parseDefinition</replace>
+      <replace>SymbolExpression</replace>
+      <replace>Expression</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -193,7 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/exception/Error.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/exception/Exceptions.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/util/ApplicationUtils.java" />
@@ -203,9 +219,7 @@
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/core/Application.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/Delimiter.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/test/java/fun/mandy/MainTest.java" />
-        <option value="$PROJECT_DIR$/lang.my" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/context/Context.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Context.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/Metadata.java" />
@@ -217,33 +231,36 @@
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/EvaluationExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/RunTime.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionEnum.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/Runtime.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/util/DataFlow.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/parser/Parser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/TupleExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Node.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Name.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultContext.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Expression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/EvalExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/NumberExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/util/ReaderIterator.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/util/Definition.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/SymbolExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/boot/Application.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ListExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java" />
         <option value="$PROJECT_DIR$/src/test/java/fun/mandy/ManinTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java" />
+        <option value="$PROJECT_DIR$/lang.my" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DelimiterExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java" />
       </list>
     </option>
   </component>
@@ -298,8 +315,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -358,15 +375,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="exception" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mandy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
               <item name="expression" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -416,36 +424,6 @@
               <item name="mandy" type="462c0819:PsiDirectoryNode" />
               <item name="tokenizer" type="462c0819:PsiDirectoryNode" />
               <item name="support" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mandy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mandy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mandy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mandy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mandy" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -484,7 +462,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ManinTest.test">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="fun.mandy.Main" />
       <module name="mandy" />
@@ -717,9 +695,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ManinTest.test" />
         <item itemvalue="JUnit.ManinTest.NumberTest" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DefaultTokenizer.test" />
         <item itemvalue="JUnit.DefaultParser.generateTest" />
       </list>
@@ -762,7 +740,9 @@
       <workItem from="1529665139432" duration="6785000" />
       <workItem from="1529724000798" duration="17439000" />
       <workItem from="1529811092798" duration="22517000" />
-      <workItem from="1529852317501" duration="608000" />
+      <workItem from="1529852317501" duration="807000" />
+      <workItem from="1529923558239" duration="9226000" />
+      <workItem from="1530010683988" duration="12678000" />
     </task>
     <task id="LOCAL-00001" summary="update project">
       <created>1527943852893</created>
@@ -792,7 +772,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528456196175</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update project">
+      <created>1529853206954</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1529853206954</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -828,41 +815,41 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="298681000" />
+    <option name="totallyTimeSpent" value="320784000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info id="Image Layers" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5019857" side_tool="true" weight="0.32419354" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3289777" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" visible="true" weight="0.015091342" />
+      <window_info id="UI Designer" order="3" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4940429" weight="0.3967742" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49642575" weight="0.29354838" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info id="Image Layers" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info active="true" anchor="bottom" id="Version Control" order="10" visible="true" weight="0.32903227" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48337597" weight="0.3564516" />
       <window_info anchor="bottom" id="Spring" order="11" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2239873" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30579826" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4980143" weight="0.32419354" />
       <window_info id="Learn" order="6" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" visible="true" weight="0.015091342" />
-      <window_info id="UI Designer" order="3" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4940429" weight="0.3967742" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49642575" weight="0.29354838" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4980143" weight="0.32419354" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -911,7 +898,7 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="30" />
+      <option name="time" value="55" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -921,6 +908,31 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>getToken().toString().equals(&quot;(&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getToken().toString() == &quot;{&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getToken().toString()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>expression()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getToken()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>getChar()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -928,27 +940,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/FunctionalInterface.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/Map.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/Observer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/stream/Stream.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -964,13 +955,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/util/DataFlow.java" />
-    <entry file="file://$PROJECT_DIR$/lang.my">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="11" lean-forward="true" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7">
@@ -996,27 +980,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/Iterator.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultToken.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1097,24 +1060,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="59" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Context.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -1123,34 +1072,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/SymbolExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/NumberExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/boot/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-954">
-          <caret line="39" column="30" lean-forward="true" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1164,24 +1085,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Pair.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1218,37 +1125,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Token.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1263,24 +1143,190 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/Tokenizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultToken.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/config/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/boot/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="76" column="42" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/constant/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="216">
+          <caret line="36" column="28" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/Iterator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/Unit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/SymbolExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+          <folding>
+            <element signature="e#557#558#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/constant/ExpressionTypeMode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        <state relative-caret-position="75">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/StringExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#500#501#0" expanded="true" />
+            <element signature="e#539#540#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/ObjectExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="15" column="59" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/NumberExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding>
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#334#335#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DelimiterExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#227#228#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/tokenizer/support/DefaultTokenizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
+        <state relative-caret-position="93">
+          <caret line="74" column="65" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="65" />
+          <folding>
+            <element signature="e#3699#3700#0" expanded="true" />
+            <element signature="e#3739#3740#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lang.my">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/parser/support/DefaultParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-42">
+          <caret line="97" column="13" lean-forward="true" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1593#1594#0" expanded="true" />
+            <element signature="e#1628#1629#0" expanded="true" />
+            <element signature="e#8321#8322#0" expanded="true" />
+            <element signature="e#8363#8364#0" expanded="true" />
+            <element signature="e#8416#8417#0" expanded="true" />
+            <element signature="e#8454#8455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultPair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="30" column="67" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
+          <folding>
+            <element signature="e#616#617#0" expanded="true" />
+            <element signature="e#655#656#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fun/mandy/expression/support/DefaultUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="107" column="46" selection-start-line="107" selection-start-column="46" selection-end-line="107" selection-end-column="46" />
+          <folding>
+            <element signature="e#2080#2081#0" expanded="true" />
+            <element signature="e#2113#2114#0" expanded="true" />
+            <element signature="e#2163#2164#0" expanded="true" />
+            <element signature="e#2180#2181#0" expanded="true" />
+            <element signature="e#2281#2282#0" expanded="true" />
+            <element signature="e#2323#2324#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

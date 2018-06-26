@@ -1,5 +1,6 @@
 package fun.mandy.config;
 
+import fun.mandy.expression.Expression;
 import fun.mandy.tokenizer.Token;
 import fun.mandy.tokenizer.Tokenizer;
 import fun.mandy.tokenizer.support.DefaultToken;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.*;
 public class AppConfig {
     @Bean
     public Tokenizer tokenizer(){
-        Tokenizer<Token<Integer,String>> tokenizer = new DefaultTokenizer();
+        Tokenizer<Expression> tokenizer = new DefaultTokenizer();
         return tokenizer;
     }
 

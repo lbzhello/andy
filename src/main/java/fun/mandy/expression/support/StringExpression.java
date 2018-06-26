@@ -13,4 +13,9 @@ public class StringExpression extends ObjectExpression implements Name {
     public Expression eval(Context<Name, Expression> context) {
         return new StringExpression(value);
     }
+
+    @Override
+    public String toString() {
+        return "\"" + this.value.toString() + "\"";
+    }
 }

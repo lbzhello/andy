@@ -10,11 +10,15 @@ import java.util.Map;
  * @param <K> name of expression in context
  * @param <V> value of expression in Contest
  */
-public interface Unit<K,V> extends Expression,Node<Unit>,Context<K,V> {
+public interface Unit<K,V> extends Expression, Context<K,V> {
+    void setParent(Context<K, V> parent);
+
+    Context<K, V> getParent();
+
     void setParameter(Map<K,V> parameter);
 
-    void appendChild(K k, V v);
+    void setChild(K k, V v);
 
-    void appendEvalStream(V v);
+    void addEvalStream(V v);
 
 }

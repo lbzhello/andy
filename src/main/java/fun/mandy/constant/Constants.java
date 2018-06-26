@@ -31,5 +31,10 @@ public interface Constants {
     //分隔符
     int DELIMITER = -40;
 
+    /**
+     * 表示token前有空白字符
+     */
+    String SPACE = "SPACE_";
+
 }
 

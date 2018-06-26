@@ -70,23 +70,23 @@ public class DefaultUnit implements Unit<Name, Expression> {
     }
 
     @Override
-    public Unit getParent() {
+    public Context<Name, Expression> getParent() {
         return null;
     }
 
     @Override
-    public void setParent(Unit unit) {
-
+    public void setParent(Context<Name, Expression> unit) {
+        this.parent = unit;
     }
 
     @Override
-    public void appendChild(Name name, Expression expression) {
-
+    public void setChild(Name name, Expression expression) {
+        this.child.put(name, expression);
     }
 
     @Override
-    public void appendEvalStream(Expression expression) {
-
+    public void addEvalStream(Expression expression) {
+        this.expressionStream.add(expression);
     }
 
     @Override
@@ -97,5 +97,16 @@ public class DefaultUnit implements Unit<Name, Expression> {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        String param = "(" + this.parameter.keySet().toString() + ")";
+        String props = this.child.toString();
+        StringBuffer evalStream = new StringBuffer();
+        for (Expression tmp : this.expressionStream) {
+            evalStream.append(tmp.toString());
+        }
+        return param + "{" + props + evalStream + "}";
     }
 }
