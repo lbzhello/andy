@@ -1,8 +1,5 @@
-"i am string!"
-first line
-second line
-
-unit{
-    name:"liu"
-    age:22
+f(x) = {
+    5 + 5 * 6
 }
+
+f(9) * f(10 9)

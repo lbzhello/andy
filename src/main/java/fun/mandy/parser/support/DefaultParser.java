@@ -210,7 +210,7 @@ public class DefaultParser implements Parser<Expression> {
                     paramList.addExpression(getToken());
                     nextToken();
                 }
-                expression = new EvalExpression(expression, listExpression);
+                expression = new EvalExpression(expression, paramList);
             }
             if (getToken().toString().equals("," )) nextToken(); //eat ","
             listExpression.addExpression(expression);

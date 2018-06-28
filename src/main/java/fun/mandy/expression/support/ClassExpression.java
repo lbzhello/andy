@@ -23,4 +23,9 @@ public class ClassExpression implements Expression {
         ClassExpression that = (ClassExpression)o;
         return this.value == null ? that.value == null : this.value.equals(that.value);
     }
+
+    @Override
+    public String toString() {
+        return this.value.toString();
+    }
 }

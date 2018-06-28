@@ -13,6 +13,7 @@ import java.lang.invoke.MethodType;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 class MethodTest {
     public String test(String s){
@@ -39,7 +40,9 @@ public class ManinTest {
 
     @Test
     public void test(){
-        System.out.println("222" == " 222");
+        String str = "qwer";
+
+        System.out.println(str.substring(1,str.length()-1));
     }
 
     void println(Object object) {

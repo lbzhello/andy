@@ -14,7 +14,8 @@ public class ListExpression implements Expression {
     }
 
     public ListExpression(Expression... expressions) {
-        list = Arrays.asList(expressions);
+        list = new LinkedList<>();
+        Collections.addAll(list, expressions);
     }
 
     @Override
@@ -54,5 +55,16 @@ public class ListExpression implements Expression {
             map.put(new SymbolExpression("$" + i),list.get(i));
         }
         return map;
+    }
+
+    @Override
+    public String toString() {
+        String listStr = list.toString();
+        listStr = "(" + listStr.substring(1, listStr.length() - 1) + ")"; // '[...]' -> '(...)'
+        return listStr;
+    }
+
+    public List<Expression> getList() {
+        return list;
     }
 }

@@ -7,6 +7,8 @@ public final class Delimiter {
     private Delimiter(){}
     private static final Set<Character> delimiters = new HashSet<>();
     static {
+        delimiters.add(',');
+        delimiters.add(';');
         delimiters.add('.');
         delimiters.add(':');
         delimiters.add('(');

@@ -8,7 +8,7 @@ public class DefaultUnit implements Unit<Name, Expression> {
     //父节点
     private transient Context<Name,Expression> parent = null;
     //参数
-    private Map<Name,Expression> parameter = new HashMap<>();
+    private Map<Name,Expression> parameter = new LinkedHashMap<>();
     //子节点
     private Map<Name,Expression> child = new HashMap<>();
     //计算流
@@ -101,12 +101,18 @@ public class DefaultUnit implements Unit<Name, Expression> {
 
     @Override
     public String toString() {
-        String param = "(" + this.parameter.keySet().toString() + ")";
-        String props = this.child.toString();
-        StringBuffer evalStream = new StringBuffer();
+        //参数
+        String paramStr = this.parameter.keySet().toString();
+        paramStr = "(" + paramStr.substring(1,paramStr.length()-1) + ")";
+        //子节点/属性
+        String childStr = this.child.toString();
+        childStr = childStr.substring(1, childStr.length() - 1);
+        //计算流
+        StringBuffer evalStreamSb = new StringBuffer();
         for (Expression tmp : this.expressionStream) {
-            evalStream.append(tmp.toString());
+            evalStreamSb.append(tmp.toString() + " ");
         }
-        return param + "{" + props + evalStream + "}";
+
+        return paramStr + "{" + childStr + " " + evalStreamSb + "}";
     }
 }

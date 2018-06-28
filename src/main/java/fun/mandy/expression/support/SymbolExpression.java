@@ -16,8 +16,4 @@ public class SymbolExpression extends ObjectExpression implements Name {
         return new SymbolExpression(this.value);
     }
 
-    @Override
-    public String toString() {
-        return this.value.toString();
-    }
 }

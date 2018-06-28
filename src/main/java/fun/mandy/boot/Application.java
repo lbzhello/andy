@@ -43,6 +43,7 @@ public final class Application {
         operator.put("--", 51);
 
         operator.put("!", 1113);
+        operator.put(".", 1314);
     }
 
     @Named

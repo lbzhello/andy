@@ -32,4 +32,12 @@ public class EvalExpression implements Expression {
         return null;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (Expression expression : this.args.getList()) {
+            sb.append(" " + expression);
+        }
+        return "(" + this.name.toString() + sb.toString() + ")";
+    }
 }

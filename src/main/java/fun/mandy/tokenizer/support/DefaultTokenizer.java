@@ -150,10 +150,16 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
             sb.append(getChar());
             nextChar();
         }
-        if (!Character.isWhitespace(getChar())) { //e.g. 123.45abc
+        if (Character.isWhitespace(getChar()) || Delimiter.isDelimiter(getChar()) || isEOF()) {
+            return new NumberExpression(sb.toString());
+        } else {
             throw new Exceptions.NumberFormatException("Exceptions Number Format!");
         }
-        return new NumberExpression(sb.toString());
+
+//        if (!Character.isWhitespace(getChar()) && !Delimiter.isDelimiter(getChar())) { //e.g. 123.45abc
+//            throw new Exceptions.NumberFormatException("Exceptions Number Format!");
+//        }
+//        return new NumberExpression(sb.toString());
     }
 
     /**
