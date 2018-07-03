@@ -1,26 +1,34 @@
 package fun.mandy.expression.support;
 
-import fun.mandy.boot.Application;
-import fun.mandy.constant.Constants;
+import fun.mandy.core.Definition;
 import fun.mandy.expression.Context;
 import fun.mandy.expression.Expression;
 import fun.mandy.expression.Name;
-import sun.awt.Symbol;
 
 import java.util.List;
 
-public class EvalExpression implements Expression {
+public class EvalExpression extends ListExpression {
     private Expression name;
-    private ListExpression args;
+
+    public EvalExpression(Expression name, List<Expression> list) {
+        this.name = name;
+        this.list = list;
+    }
+
 
     public EvalExpression(Expression name, ListExpression args) {
         this.name = name;
-        this.args = args;
+        this.list = args.getList();
+    }
+
+
+    public EvalExpression(String name, Expression... list) {
+        this(new SymbolExpression(name), new ListExpression(list));
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        if (name instanceof SymbolExpression && Application.isOperator(name.toString())) { //原生函数
+        if (name instanceof SymbolExpression && Definition.isOperator(name.toString())) { //原生函数
 
         } else {
 //            Expression expression = context.lookup(name);
@@ -35,9 +43,17 @@ public class EvalExpression implements Expression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression expression : this.args.getList()) {
+        for (Expression expression : this.getList()) {
             sb.append(" " + expression);
         }
         return "(" + this.name.toString() + sb.toString() + ")";
+    }
+
+    public Expression getName() {
+        return name;
+    }
+
+    public void setName(Expression name) {
+        this.name = name;
     }
 }

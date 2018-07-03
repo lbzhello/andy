@@ -21,4 +21,6 @@ public interface Unit<K,V> extends Expression, Context<K,V> {
 
     void addEvalStream(V v);
 
+    void addBuildStream(V v);
+
 }

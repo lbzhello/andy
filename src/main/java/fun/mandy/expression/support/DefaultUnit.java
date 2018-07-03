@@ -11,6 +11,8 @@ public class DefaultUnit implements Unit<Name, Expression> {
     private Map<Name,Expression> parameter = new LinkedHashMap<>();
     //子节点
     private Map<Name,Expression> child = new HashMap<>();
+    //构造流,构造是运行一次
+    private List<Expression> buildStream = new LinkedList<>();
     //计算流
     private List<Expression> expressionStream = new LinkedList<>();
 
@@ -24,6 +26,7 @@ public class DefaultUnit implements Unit<Name, Expression> {
         this.parent = builder.parent;
         this.parameter = builder.parameter;
         this.child = builder.child;
+        this. buildStream = builder.buildStream;
         this.expressionStream = builder.expressionStream;
     }
 
@@ -31,6 +34,7 @@ public class DefaultUnit implements Unit<Name, Expression> {
         private Context<Name,Expression> parent;
         private Map<Name,Expression> parameter;
         private Map<Name,Expression> child;
+        private List<Expression> buildStream;
         private List<Expression> expressionStream;
         
         public DefaultUnit build() {
@@ -49,6 +53,11 @@ public class DefaultUnit implements Unit<Name, Expression> {
         
         public Builder child(Map<Name,Expression> child){
             this.child = child;
+            return this;
+        }
+
+        public Builder buildStream(List<Expression> buildStream) {
+            this.buildStream = buildStream;
             return this;
         }
 
@@ -90,6 +99,11 @@ public class DefaultUnit implements Unit<Name, Expression> {
     }
 
     @Override
+    public void addBuildStream(Expression expression) {
+        this.buildStream.add(expression);
+    }
+
+    @Override
     public void setParameter(Map<Name, Expression> parameter) {
         this.parameter = parameter;
     }
@@ -107,12 +121,19 @@ public class DefaultUnit implements Unit<Name, Expression> {
         //子节点/属性
         String childStr = this.child.toString();
         childStr = childStr.substring(1, childStr.length() - 1);
+
+        //计算流
+        StringBuffer buildStreamSb = new StringBuffer();
+        for (Expression tmp : this.buildStream) {
+            buildStreamSb.append(tmp.toString() + " ");
+        }
+
         //计算流
         StringBuffer evalStreamSb = new StringBuffer();
         for (Expression tmp : this.expressionStream) {
             evalStreamSb.append(tmp.toString() + " ");
         }
 
-        return paramStr + "{" + childStr + " " + evalStreamSb + "}";
+        return paramStr + "{" + childStr + " " + buildStreamSb + evalStreamSb + "}";
     }
 }

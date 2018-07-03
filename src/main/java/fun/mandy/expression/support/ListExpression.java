@@ -7,7 +7,7 @@ import fun.mandy.expression.Name;
 import java.util.*;
 
 public class ListExpression implements Expression {
-    private List<Expression> list;
+    protected List<Expression> list;
 
     public ListExpression(List<Expression> list){
         this.list = list;

@@ -1,19 +1,13 @@
 package fun.mandy;
 
-import fun.mandy.constant.ExpressionTypeMode;
-import fun.mandy.expression.Expression;
-import fun.mandy.expression.Name;
-import fun.mandy.expression.support.StringExpression;
-import fun.mandy.expression.support.SymbolExpression;
+import fun.mandy.core.ObjectFactory;
+import fun.mandy.parser.Parser;
 import org.junit.Test;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 class MethodTest {
     public String test(String s){
@@ -39,10 +33,9 @@ public class ManinTest {
     }
 
     @Test
-    public void test(){
-        String str = "qwer";
-
-        System.out.println(str.substring(1,str.length()-1));
+    public void test() throws Throwable {
+        Object o = ObjectFactory.create("parser");
+        System.out.println(o);
     }
 
     void println(Object object) {

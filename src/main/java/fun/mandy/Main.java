@@ -1,7 +1,7 @@
 package fun.mandy;
 
 import fun.mandy.config.AppConfig;
-import fun.mandy.boot.Application;
+import fun.mandy.core.Application;
 import org.springframework.context.annotation.*;
 
 /**
@@ -12,9 +12,9 @@ import org.springframework.context.annotation.*;
 @Import(AppConfig.class)
 public class Main {
     public static void main( String[] args ) throws Exception {
-        System.out.println("Application starting...");
+        System.out.println("Definition starting...");
         Application.start(Main.class,args);
-        System.out.println("Application ended");
+        System.out.println("Definition ended");
     }
 
 }

@@ -10,4 +10,8 @@ public interface Expression extends Serializable {
     default Expression eval(){
         return eval(null);
     }
+
+    enum Type implements Expression {
+        NIL, BEGIN
+    }
 }

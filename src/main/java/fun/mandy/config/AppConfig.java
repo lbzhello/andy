@@ -1,27 +1,26 @@
 package fun.mandy.config;
 
 import fun.mandy.expression.Expression;
-import fun.mandy.tokenizer.Token;
+import fun.mandy.parser.Parser;
+import fun.mandy.parser.support.DefaultParser;
 import fun.mandy.tokenizer.Tokenizer;
-import fun.mandy.tokenizer.support.DefaultToken;
 import fun.mandy.tokenizer.support.DefaultTokenizer;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@ComponentScan(basePackages = "fun.mandy")
-@ImportResource("classpath:/fun/mandy/config/app-config.xml")
+//@ComponentScan(basePackages = "fun.mandy")
+//@ImportResource("classpath:/fun/mandy/config/app-config.xml")
 public class AppConfig {
     @Bean
-    public Tokenizer tokenizer(){
+    public  Tokenizer tokenizer(){
         Tokenizer<Expression> tokenizer = new DefaultTokenizer();
         return tokenizer;
     }
 
     @Bean
-    @Scope("prototype")
-    public Token<Integer, String> token(){
-        return new DefaultToken(0,"");
+    public  Parser parser(){
+        Parser<Expression> parser = new DefaultParser(tokenizer());
+        return parser;
     }
-
 
 }
