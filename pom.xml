@@ -8,7 +8,7 @@
   <artifactId>mandy</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <expression>mandy</expression>
+  <name>mandy</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
