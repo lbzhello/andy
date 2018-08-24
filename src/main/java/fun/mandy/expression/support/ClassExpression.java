@@ -5,10 +5,12 @@ import fun.mandy.expression.Expression;
 public class ClassExpression implements Expression {
     private Class<?> value;
 
-    public ClassExpression(){}
-
     public ClassExpression(Class<?> value){
         this.value = value;
+    }
+
+    public Class<?> classOf() {
+        return value;
     }
 
     @Override

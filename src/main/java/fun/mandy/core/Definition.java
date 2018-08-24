@@ -1,5 +1,7 @@
 package fun.mandy.core;
 
+import fun.mandy.expression.Expression;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,9 +21,14 @@ public final class Definition {
     public static String DEFINE = "define";
 
     /**
+     * 系统提供函数，用于定义匿名对象
+     */
+    public static String LAMBDA = "lambda";
+
+    /**
      * 用于定义属性/字段
      */
-    public static String DEFINE_FIELD = ":";
+    public static String COLON = ":";
 
     private static final Set<Character> delimiters = new HashSet<>();
 

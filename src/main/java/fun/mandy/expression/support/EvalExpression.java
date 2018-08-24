@@ -1,44 +1,26 @@
 package fun.mandy.expression.support;
 
-import fun.mandy.core.Definition;
-import fun.mandy.expression.Context;
 import fun.mandy.expression.Expression;
-import fun.mandy.expression.Name;
 
 import java.util.List;
 
 public class EvalExpression extends ListExpression {
-    private Expression name;
-
-    public EvalExpression(Expression name, List<Expression> list) {
-        this.name = name;
-        this.list = list;
+    private Expression head;
+    
+    public EvalExpression(Expression head, Expression... list){
+        super(list);
+        this.head = head;
     }
 
-
-    public EvalExpression(Expression name, ListExpression args) {
-        this.name = name;
-        this.list = args.getList();
+    public EvalExpression(Expression head, List<Expression> list) {
+        super(list);
+        this.head = head;
     }
-
-
-    public EvalExpression(String name, Expression... list) {
-        this(new SymbolExpression(name), new ListExpression(list));
+    
+    public EvalExpression(String head, Expression... list) {
+        this(new SymbolExpression(head), list);
     }
-
-    @Override
-    public Expression eval(Context<Name, Expression> context) {
-        if (name instanceof SymbolExpression && Definition.isOperator(name.toString())) { //原生函数
-
-        } else {
-//            Expression expression = context.lookup(name);
-//            //如果是一个表达式名字,则循环查找到它所代表的值
-//            while (expression instanceof SymbolExpression) {
-//                expression = context.lookup(name);
-//            }
-        }
-        return null;
-    }
+    
 
     @Override
     public String toString() {
@@ -46,14 +28,12 @@ public class EvalExpression extends ListExpression {
         for (Expression expression : this.getList()) {
             sb.append(" " + expression);
         }
-        return "(" + this.name.toString() + sb.toString() + ")";
+        return "(" + this.head.toString() + sb.toString() + ")";
     }
 
-    public Expression getName() {
-        return name;
+    public Expression head() {
+        return head;
     }
 
-    public void setName(Expression name) {
-        this.name = name;
-    }
+
 }
