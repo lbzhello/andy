@@ -3,15 +3,13 @@ package fun.mandy.tokenizer.support;
 import fun.mandy.core.Definition;
 import fun.mandy.exception.Exceptions;
 import fun.mandy.expression.Expression;
-import fun.mandy.expression.support.DelimiterExpression;
-import fun.mandy.expression.support.NumberExpression;
-import fun.mandy.expression.support.StringExpression;
-import fun.mandy.expression.support.SymbolExpression;
+import fun.mandy.expression.support.*;
 import fun.mandy.tokenizer.Tokenizer;
+import sun.awt.SunHints;
 
 import java.io.*;
 
-public class DefaultTokenizer implements Tokenizer<Expression> {
+public class DefaultTokenizer implements Tokenizer<ValueExpression> {
     private LineNumberReader lineNumberReader;
     private Expression token;
     private int currentChar = ' ';
@@ -24,7 +22,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
 
         public Builder(){}
 
-        public Tokenizer<Expression> build(){
+        public Tokenizer<ValueExpression> build(){
             return new DefaultTokenizer(this);
         }
 
@@ -58,7 +56,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
     }
 
     @Override
-    public Expression next(){
+    public ValueExpression next(){
         try {
             StringBuffer sb = new StringBuffer();
             while (!isEOF()) {
@@ -66,7 +64,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       Expression token = new DelimiterExpression(String.valueOf(getChar()));
+                       ValueExpression token = new DelimiterExpression(String.valueOf(getChar()));
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -79,15 +77,15 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        Expression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        ValueExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        Expression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        ValueExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        Expression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        ValueExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return  token;
                     }
@@ -96,7 +94,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Expression.Type.NIL;
+        return Definition.EOF;
     }
 
     @Override
@@ -122,7 +120,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private Expression nextString() throws IOException {
+    private ValueExpression nextString() throws IOException {
         StringBuffer sb = new StringBuffer();
         nextChar(); //eat '"'
         while (getChar() != '"') {
@@ -138,7 +136,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private Expression nextNumber() throws IOException, Exceptions.NumberFormatException {
+    private ValueExpression nextNumber() throws IOException, Exceptions.NumberFormatException {
         StringBuffer sb = new StringBuffer();
         while (Character.isDigit(getChar()) || getChar() == '.') {
             sb.append(getChar());
@@ -161,7 +159,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private Expression nextSymbol() throws IOException {
+    private ValueExpression nextSymbol() throws IOException {
         StringBuffer sb = new StringBuffer();
         while (!Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());

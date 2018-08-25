@@ -1,5 +1,7 @@
 package fun.mandy.expression;
 
+import fun.mandy.expression.support.ValueExpression;
+
 import java.io.Serializable;
 
 public interface Expression extends Serializable {

@@ -1,7 +1,9 @@
 package fun.mandy.core;
 
 import fun.mandy.expression.Expression;
+import fun.mandy.expression.support.ValueExpression;
 
+import javax.management.ValueExp;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,9 +32,26 @@ public final class Definition {
      */
     public static String COLON = ":";
 
+    /**
+     * End of file
+     */
+    public static final ValueExpression EOF = new ValueExpression();
+
+    /**
+     * Head of file
+     */
+    public static final ValueExpression HOF = new ValueExpression(" ");
+
     private static final Set<Character> delimiters = new HashSet<>();
 
+    //e.g. a + 2
     private static Map<String,Integer> operator = new HashMap<>();
+
+    /**
+     * key: the name of command
+     * value: the param sizes the command takes
+     */
+    private static HashMap<String, Integer> command = new HashMap<>();
 
     static {
         delimiters.add(',');
@@ -56,7 +75,9 @@ public final class Definition {
         operator.put("&&", 12);
 
         operator.put("==", 21);
+        operator.put(">", 21);
         operator.put(">=", 21);
+        operator.put("<", 21);
         operator.put("<=", 21);
 
         operator.put("+", 31);
@@ -65,11 +86,20 @@ public final class Definition {
         operator.put("*", 41);
         operator.put("/", 41);
 
-        operator.put("++", 51);
-        operator.put("--", 51);
-
-        operator.put("!", 1113);
+//        operator.put("++", 51);
+//        operator.put("--", 51);
+//
+//        operator.put("!", 1113);
         operator.put(".", 1314);
+    }
+
+    static {
+        command.put("++", 1);
+        command.put("--", 1);
+        command.put("!", 1);
+
+        command.put("if", 2);
+        command.put("for", 2);
     }
 
     public static final boolean isDelimiter(Character c){
@@ -88,8 +118,33 @@ public final class Definition {
         return operator.keySet().contains(op);
     }
 
+    public static final boolean isOperator(Object op) {
+        return isOperator((String)op);
+    }
+
+    public static final boolean isCommand(String op) {
+        return command.keySet().contains(op);
+    }
+
+    public static final boolean isCommand(Object op) {
+        return isCommand((String)op);
+    }
+
+    /**
+     * get  priority of the operator
+     * @param op
+     * @return
+     */
     public static final int getPriority(String op) {
         return operator.getOrDefault(op,1);
+    }
+
+    public static final int getCommandSize(String op) {
+        return command.getOrDefault(op, 1);
+    }
+
+    public static final int getCommandSize(Object op) {
+        return getCommandSize((String) op);
     }
 
     /**
