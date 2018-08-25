@@ -35,10 +35,12 @@ public class GroupExpression implements Expression {
             evalStreamSB.append(expression + " ");
         }
 
-        if (buildStreamSB.length() > 0 && evalStreamSB.length() > 0) { //去掉 evalStreamSB 最后空格
-            evalStreamSB.deleteCharAt(evalStreamSB.length() - 1);
-        } else if (buildStreamSB.length() > 0 && evalStreamSB.length() == 0) { //去掉 buildStreamSB 最后空格
+        if (buildStreamSB.length() > 0 && evalStreamSB.length() == 0) { //去掉 buildStreamSB 最后空格
             buildStreamSB.deleteCharAt(buildStreamSB.length() - 1);
+        }
+
+        if (evalStreamSB.length() > 0) { //去掉evalStreamSB最后空格
+            evalStreamSB.deleteCharAt(evalStreamSB.length() - 1);
         }
 
         return "{" + buildStreamSB + evalStreamSB + "}";
