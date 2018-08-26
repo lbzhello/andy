@@ -17,7 +17,12 @@ public class Application {
 
         Parser<Expression> parser = new ObjectFactory().parser();
         parser.init(reader);
-        Expression expression = parser.next();
+
+        Expression expression = Expression.HOF;
+        while (expression != Expression.EOF) {
+            expression = parser.next();
+            System.out.println(expression);
+        }
 
         parser.close();
         reader.close();

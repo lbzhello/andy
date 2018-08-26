@@ -17,7 +17,7 @@ import java.util.Objects;
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<ValueExpression> tokenizer;
 
-    private ValueExpression currentToken = Definition.HOF;
+    private ValueExpression currentToken = Expression.HOF;
 
     public DefaultParser(Tokenizer<ValueExpression> tokenizer) {
         this.tokenizer = tokenizer;
@@ -25,13 +25,10 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression next(){
-        while (hasNext()) {
-            try {
-                Expression expression = expression();
-                System.out.println(expression);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            return expression();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -146,8 +143,8 @@ public class DefaultParser implements Parser<Expression> {
             return bracketExpression();
         } else if (Objects.equals(getToken().getValue(), "{") || Objects.equals(getToken().getValue(), Definition.SPACE + "{")) { //e.g. {...}...
             return braceExpression();
-        } else if (getToken() == Definition.EOF){ //文件结尾
-            return Definition.EOF;
+        } else if (getToken() == Expression.EOF){ //文件结尾
+            return Expression.EOF;
         } else { //其他字符跳过
             nextToken(); //eat
             return combinator();
@@ -265,7 +262,7 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public boolean hasNext() {
-        return getToken() != Definition.EOF;
+        return getToken() != Expression.EOF;
     }
 
     @Override

@@ -32,16 +32,6 @@ public final class Definition {
      */
     public static String COLON = ":";
 
-    /**
-     * End of file
-     */
-    public static final ValueExpression EOF = new ValueExpression();
-
-    /**
-     * Head of file
-     */
-    public static final ValueExpression HOF = new ValueExpression(" ");
-
     private static final Set<Character> delimiters = new HashSet<>();
 
     //e.g. a + 2
