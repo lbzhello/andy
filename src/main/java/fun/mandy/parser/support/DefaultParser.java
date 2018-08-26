@@ -74,7 +74,7 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * 生成一个表达式
+     * Generate an expressione
      * e.g. combinator() || name(...) || name(...)(...) || name(...){...} || (...){...}(...)(...) || var a ||...
      * @return
      */

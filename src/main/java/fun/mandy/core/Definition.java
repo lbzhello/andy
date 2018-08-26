@@ -91,6 +91,8 @@ public final class Definition {
 //
 //        operator.put("!", 1113);
         operator.put(".", 1314);
+
+        operator.put("else", 1314);
     }
 
     static {
