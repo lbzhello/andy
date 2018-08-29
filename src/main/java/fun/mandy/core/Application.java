@@ -18,8 +18,8 @@ public class Application {
         Parser<Expression> parser = new ObjectFactory().parser();
         parser.init(reader);
 
-        Expression expression = Expression.HOF;
-        while (expression != Expression.EOF) {
+        Expression expression = Definition.HOF;
+        while (expression != Definition.EOF) {
             expression = parser.next();
             System.out.println(expression);
         }

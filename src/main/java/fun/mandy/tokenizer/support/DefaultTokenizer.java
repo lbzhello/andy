@@ -94,7 +94,7 @@ public class DefaultTokenizer implements Tokenizer<ValueExpression> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Expression.EOF;
+        return Definition.EOF;
     }
 
     @Override
