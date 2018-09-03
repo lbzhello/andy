@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
-    private Tokenizer<ValueExpression> tokenizer;
+    private Tokenizer<Expression> tokenizer;
 
-    private ValueExpression currentToken = Definition.HOF;
+    private Expression currentToken = Definition.HOF;
 
-    public DefaultParser(Tokenizer<ValueExpression> tokenizer) {
+    public DefaultParser(Tokenizer<Expression> tokenizer) {
         this.tokenizer = tokenizer;
     }
 
@@ -33,18 +33,18 @@ public class DefaultParser implements Parser<Expression> {
         return null;
     }
 
-    private ValueExpression nextToken() {
+    private Expression nextToken() {
         currentToken = tokenizer.next();
         return currentToken;
     }
 
-    private ValueExpression getToken() {
+    private Expression getToken() {
         return currentToken;
     }
 
     private Expression expression() throws Exception {
         Expression expression = combine(combinator());
-        if (Definition.isOperator(getToken().getValue())) { //e.g. expression op ...
+        if (Definition.isOperator(getToken().toString())) { //e.g. expression op ...
             expression = operator(expression, getToken());
         }
         return expression;
@@ -58,7 +58,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression operator(Expression left, Expression op) throws Exception {
         nextToken(); //eat op
         Expression right = combine(combinator());
-        if (Definition.isOperator(getToken().getValue())) { //e.g. left op right op2 ...
+        if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.getPriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
                 return new EvalExpression(op, left, operator(right, op2));
@@ -77,25 +77,25 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression combine(Expression left) throws Exception {
         //if it's command
-        if (left instanceof ValueExpression && Definition.isCommand(((ValueExpression) left).getValue())) {
-            return commandExpression((ValueExpression) left);
+        if (Definition.isCommand(left.toString())) {
+            return commandExpression(left);
         }
-        if (Objects.equals(getToken().getValue(), "(")) { //e.g. left(...)...
+        if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
             EvalExpression evalExpression = new EvalExpression(left, parenExpression().getList());
-            if (Objects.equals(getToken().getValue(), "{")) { //e.g. left(...){...}
+            if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
                 GroupExpression group = braceExpression();
                 if (left instanceof Name) {
                     return new EvalExpression(Definition.DEFINE,evalExpression,group);
                 } else {
                     throw new Exceptions.ExpressionNotSurpportException();
                 }
-            } else if (Objects.equals(getToken().getValue(), "(")) { //e.g. left(...)(...)...
+            } else if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)(...)...
                 return combine(evalExpression);
             } else { //e.g. left(...)
                 return evalExpression;
 
             }
-        } else if (Objects.equals(getToken().getValue(), "{")) { //e.g. left{...}...
+        } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
             GroupExpression group = braceExpression();
             if (left instanceof Name) { //e.g. name{...}
 //                return new DefaultPair((Name)left, unit);
@@ -106,7 +106,7 @@ public class DefaultParser implements Parser<Expression> {
                 throw new Exceptions.ExpressionNotSurpportException();
             }
 
-        } else if (Objects.equals(getToken().getValue(), ":")) { //e.g. left: ...
+        } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
             return new EvalExpression(Definition.COLON, left, expression());
         } else {
@@ -123,7 +123,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combinator() throws Exception {
         if(getToken() instanceof SymbolExpression){ //e.g. name...
             Expression expression = getToken();
-            if (Definition.isOperator(getToken().getValue())) { //e.g. ! a
+            if (Definition.isOperator(getToken().toString())) { //e.g. ! a
                 nextToken(); //eat
                 return new EvalExpression(expression, combinator());
             }
@@ -137,11 +137,11 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = getToken();
             nextToken(); //eat
             return expression;
-        } else if (Objects.equals(getToken().getValue(), "(") || Objects.equals(getToken().getValue(), Definition.SPACE + "(")) { //e.g. (...)...
+        } else if (Objects.equals(getToken().toString(), "(") || Objects.equals(getToken().toString(), Definition.SPACE + "(")) { //e.g. (...)...
             return parenExpression();
-        } else if (Objects.equals(getToken().getValue(), "[") || Objects.equals(getToken().getValue(), Definition.SPACE + "[")) { //e.g. [...]...
+        } else if (Objects.equals(getToken().toString(), "[") || Objects.equals(getToken().toString(), Definition.SPACE + "[")) { //e.g. [...]...
             return bracketExpression();
-        } else if (Objects.equals(getToken().getValue(), "{") || Objects.equals(getToken().getValue(), Definition.SPACE + "{")) { //e.g. {...}...
+        } else if (Objects.equals(getToken().toString(), "{") || Objects.equals(getToken().toString(), Definition.SPACE + "{")) { //e.g. {...}...
             return braceExpression();
         } else if (getToken() == Definition.EOF){ //文件结尾
             return Definition.EOF;
@@ -152,8 +152,8 @@ public class DefaultParser implements Parser<Expression> {
 
     }
 
-    private Expression commandExpression(ValueExpression cmd) throws Exception {
-        int size = Definition.getCommandSize(cmd.getValue());
+    private Expression commandExpression(Expression cmd) throws Exception {
+        int size = Definition.getCommandSize(cmd.toString());
         ListExpression listExpression = new ListExpression();
         for (int i = 0; i < size; i++) {
             listExpression.addExpression(expression());
@@ -168,7 +168,7 @@ public class DefaultParser implements Parser<Expression> {
     private GroupExpression braceExpression() throws Exception {
         nextToken(); //eat '{'
         GroupExpression groupExpression = new GroupExpression();
-        while (!Objects.equals(getToken().getValue(), "}")) {
+        while (!Objects.equals(getToken().toString(), "}")) {
             parseGroup(groupExpression);
         }
         nextToken(); //eat '}'
@@ -227,7 +227,7 @@ public class DefaultParser implements Parser<Expression> {
     private ListExpression bracketExpression() throws Exception {
         nextToken(); //eat '['
         ListExpression listExpression = new ListExpression();
-        while (!Objects.equals(getToken().getValue(), "]")) {
+        while (!Objects.equals(getToken().toString(), "]")) {
             listExpression.addExpression(expression());
         }
 
@@ -242,17 +242,17 @@ public class DefaultParser implements Parser<Expression> {
     private ListExpression parenExpression() throws Exception {
         nextToken(); //eat '('
         ListExpression listExpression = new ListExpression();
-        while (!Objects.equals(getToken().getValue(), ")")) {
+        while (!Objects.equals(getToken().toString(), ")")) {
             Expression expression = expression();
-            if (!Objects.equals(getToken().getValue(), ",") && !Objects.equals(getToken().getValue(), ")")) { //e.g. (expr1 expr2 ...)
+            if (!Objects.equals(getToken().toString(), ",") && !Objects.equals(getToken().toString(), ")")) { //e.g. (expr1 expr2 ...)
                 List<Expression> paramList = new ArrayList<>();
-                while (!Objects.equals(getToken().getValue(), ",") && !Objects.equals(getToken().getValue(), ")")) {
+                while (!Objects.equals(getToken().toString(), ",") && !Objects.equals(getToken().toString(), ")")) {
                     paramList.add(getToken());
                     nextToken();
                 }
                 expression = new EvalExpression(expression, paramList);
             }
-            if (Objects.equals(getToken().getValue(), "," )) nextToken(); //eat ","
+            if (Objects.equals(getToken().toString(), "," )) nextToken(); //eat ","
             listExpression.addExpression(expression);
         }
         nextToken(); //eat ")"

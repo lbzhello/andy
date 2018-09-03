@@ -14,7 +14,7 @@ import org.springframework.context.annotation.*;
 public class AppConfig {
     @Bean
     public  Tokenizer tokenizer(){
-        Tokenizer<ValueExpression> tokenizer = new DefaultTokenizer();
+        Tokenizer<Expression> tokenizer = new DefaultTokenizer();
         return tokenizer;
     }
 

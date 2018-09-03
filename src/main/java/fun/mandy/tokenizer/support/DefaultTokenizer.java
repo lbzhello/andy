@@ -9,7 +9,7 @@ import sun.awt.SunHints;
 
 import java.io.*;
 
-public class DefaultTokenizer implements Tokenizer<ValueExpression> {
+public class DefaultTokenizer implements Tokenizer<Expression> {
     private LineNumberReader lineNumberReader;
     private Expression token;
     private int currentChar = ' ';
@@ -22,7 +22,7 @@ public class DefaultTokenizer implements Tokenizer<ValueExpression> {
 
         public Builder(){}
 
-        public Tokenizer<ValueExpression> build(){
+        public Tokenizer<Expression> build(){
             return new DefaultTokenizer(this);
         }
 
