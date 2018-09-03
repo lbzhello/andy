@@ -60,7 +60,7 @@ public class DefaultParser implements Parser<Expression> {
         Expression right = combine(combinator());
         if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
-            if (Definition.getPriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
+            if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
                 return new EvalExpression(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
                 return operator(new EvalExpression(op, left, right),op2);

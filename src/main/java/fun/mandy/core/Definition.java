@@ -3,7 +3,6 @@ package fun.mandy.core;
 import fun.mandy.expression.Expression;
 import fun.mandy.expression.support.ValueExpression;
 
-import javax.management.ValueExp;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,12 +34,12 @@ public final class Definition {
     /**
      * End of file
      */
-    public static final ValueExpression EOF = new ValueExpression("-_^");
+    public static final Expression EOF = new ValueExpression("-_^");
 
     /**
      * Head of file
      */
-    public static final ValueExpression HOF = new ValueExpression("^v^");
+    public static final Expression HOF = new ValueExpression("^v^");
 
     private static final Set<Character> delimiters = new HashSet<>();
 
@@ -137,7 +136,7 @@ public final class Definition {
      * @param op
      * @return
      */
-    public static final int getPriority(String op) {
+    public static final int comparePriority(String op) {
         return operator.getOrDefault(op,1);
     }
 
@@ -154,12 +153,12 @@ public final class Definition {
      * @param op1
      * @param op2
      * @return
-     *      0 -> getPriority(op1) = getPriority(op2)
-     *      1 -> getPriority(op1) > getPriority(op2)
-     *      -1 -> getPriority(op1) < getPriority(op2)
+     *      0 -> comparePriority(op1) = comparePriority(op2)
+     *      1 -> comparePriority(op1) > comparePriority(op2)
+     *      -1 -> comparePriority(op1) < comparePriority(op2)
      */
-    public static final int getPriority(String op1, String op2) {
-        return getPriority(op1) == getPriority(op2) ? 0 : getPriority(op1) > getPriority(op2) ? 1 : -1;
+    public static final int comparePriority(String op1, String op2) {
+        return comparePriority(op1) == comparePriority(op2) ? 0 : comparePriority(op1) > comparePriority(op2) ? 1 : -1;
     }
 
 }
