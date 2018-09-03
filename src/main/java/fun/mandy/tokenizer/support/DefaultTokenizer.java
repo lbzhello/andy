@@ -56,7 +56,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
     }
 
     @Override
-    public ValueExpression next(){
+    public Expression next(){
         try {
             StringBuffer sb = new StringBuffer();
             while (!isEOF()) {
@@ -120,7 +120,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private ValueExpression nextString() throws IOException {
+    private Expression nextString() throws IOException {
         StringBuffer sb = new StringBuffer();
         nextChar(); //eat '"'
         while (getChar() != '"') {
@@ -136,7 +136,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private ValueExpression nextNumber() throws IOException, Exceptions.NumberFormatException {
+    private Expression nextNumber() throws IOException, Exceptions.NumberFormatException {
         StringBuffer sb = new StringBuffer();
         while (Character.isDigit(getChar()) || getChar() == '.') {
             sb.append(getChar());
@@ -159,7 +159,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * @return
      * @throws IOException
      */
-    private ValueExpression nextSymbol() throws IOException {
+    private Expression nextSymbol() throws IOException {
         StringBuffer sb = new StringBuffer();
         while (!Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());
