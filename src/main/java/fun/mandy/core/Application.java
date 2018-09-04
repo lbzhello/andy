@@ -13,18 +13,9 @@ public class Application {
 //        ApplicationContext applicationContext = new ApplicationContextBuilder().build(clazz);
 //        Parser<Expression> parser = applicationContext.getBean(Parser.class);
 
-        Reader reader = new FileReader(args[0]);
-
         Parser<Expression> parser = new ObjectFactory().parser();
-        parser.init(reader);
 
-        Expression expression = Definition.HOF;
-        while (expression != Definition.EOF) {
-            expression = parser.next();
-            System.out.println(expression);
-        }
-
-        parser.close();
-        reader.close();
+        Expression expression  = parser.parse(args[0]);
+        System.out.println(expression);
     }
 }

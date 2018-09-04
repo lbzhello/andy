@@ -1,4 +1,4 @@
-(){}(a,b) {}() 5 "ddd" fff bb == CC
+(){}(a,b) (){}() 5 "ddd" fff bb == CC
 (! 2)
 
 if a > b {
@@ -6,3 +6,9 @@ if a > b {
 } else {
   c = 4
 }
+
+a = 3
+
+for i < 30 print(a)
+
+prop1:"nnn"

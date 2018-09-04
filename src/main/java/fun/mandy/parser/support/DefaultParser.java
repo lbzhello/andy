@@ -8,8 +8,7 @@ import fun.mandy.expression.support.*;
 import fun.mandy.parser.Parser;
 import fun.mandy.tokenizer.Tokenizer;
 
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +21,22 @@ public class DefaultParser implements Parser<Expression> {
     public DefaultParser(Tokenizer<Expression> tokenizer) {
         this.tokenizer = tokenizer;
     }
+
+    @Override
+    public Expression parse(String fileName){
+        ComplexExpression complexExpression = new ComplexExpression();
+        try {
+            tokenizer.sourceFile(fileName);
+            while (hasNext()) {
+                parseComplex(complexExpression);
+            }
+            close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return complexExpression;
+    }
+
 
     @Override
     public Expression next(){
@@ -169,7 +184,7 @@ public class DefaultParser implements Parser<Expression> {
         nextToken(); //eat '{'
         ComplexExpression complexExpression = new ComplexExpression();
         while (!Objects.equals(getToken().toString(), "}")) {
-            parseGroup(complexExpression);
+            parseComplex(complexExpression);
         }
         nextToken(); //eat '}'
         return complexExpression;
@@ -179,7 +194,7 @@ public class DefaultParser implements Parser<Expression> {
      * 解析一个表达式放入unit
      * @return
      */
-    private void parseGroup(ComplexExpression complexExpression) throws Exception {
+    private void parseComplex(ComplexExpression complexExpression) throws Exception {
         Expression expression = expression();
         if (expression instanceof EvalExpression) {
             EvalExpression evalExpression = (EvalExpression)expression;
@@ -265,10 +280,6 @@ public class DefaultParser implements Parser<Expression> {
         return getToken() != Definition.EOF;
     }
 
-    @Override
-    public void init(Reader reader) {
-        tokenizer.init(reader);
-    }
 
     @Override
     public void close() throws IOException {

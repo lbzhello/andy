@@ -8,8 +8,9 @@ public interface Tokenizer<T> extends Iterator<T>,Closeable {
 
     /**
      * Tokenizer初始化方法为Tokenizer提供数据源
-     * @param reader 输入流
+     * @param fileName 输入流
      */
-    void init(Reader reader);
+    void sourceFile(String fileName);
+
 
 }

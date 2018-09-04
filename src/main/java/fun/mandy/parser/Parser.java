@@ -7,5 +7,5 @@ import java.io.Reader;
 import java.util.Iterator;
 
 public interface Parser<T> extends Iterator<T>,Closeable {
-    void init(Reader reader);
+    T parse(String fileName);
 }
