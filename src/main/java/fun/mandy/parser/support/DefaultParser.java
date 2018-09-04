@@ -83,7 +83,7 @@ public class DefaultParser implements Parser<Expression> {
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
             EvalExpression evalExpression = new EvalExpression(left, parenExpression().getList());
             if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
-                ComboExpression group = braceExpression();
+                ComplexExpression group = braceExpression();
                 if (left instanceof Name) {
                     return new EvalExpression(Definition.DEFINE,evalExpression,group);
                 } else {
@@ -96,7 +96,7 @@ public class DefaultParser implements Parser<Expression> {
 
             }
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-            ComboExpression group = braceExpression();
+            ComplexExpression group = braceExpression();
             if (left instanceof Name) { //e.g. name{...}
 //                return new DefaultPair((Name)left, unit);
                 return new EvalExpression(Definition.DEFINE,left, group);
@@ -165,33 +165,33 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. {...}
      * @return
      */
-    private ComboExpression braceExpression() throws Exception {
+    private ComplexExpression braceExpression() throws Exception {
         nextToken(); //eat '{'
-        ComboExpression comboExpression = new ComboExpression();
+        ComplexExpression complexExpression = new ComplexExpression();
         while (!Objects.equals(getToken().toString(), "}")) {
-            parseGroup(comboExpression);
+            parseGroup(complexExpression);
         }
         nextToken(); //eat '}'
-        return comboExpression;
+        return complexExpression;
     }
 
     /**
      * 解析一个表达式放入unit
      * @return
      */
-    private void parseGroup(ComboExpression comboExpression) throws Exception {
+    private void parseGroup(ComplexExpression complexExpression) throws Exception {
         Expression expression = expression();
         if (expression instanceof EvalExpression) {
             EvalExpression evalExpression = (EvalExpression)expression;
             if (Objects.equals(evalExpression.head().toString(), Definition.DEFINE)) { //对象定义
-                comboExpression.addBuildStream(expression);
+                complexExpression.addBuildStream(expression);
             } else if (Objects.equals(evalExpression.head().toString(), Definition.COLON)) { //字段定义
-                comboExpression.addBuildStream(expression);
+                complexExpression.addBuildStream(expression);
             } else {
-                comboExpression.addEvalStream(expression);
+                complexExpression.addEvalStream(expression);
             }
         } else {
-            comboExpression.addEvalStream(expression);
+            complexExpression.addEvalStream(expression);
         }
     }
 

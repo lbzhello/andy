@@ -10,7 +10,7 @@ import java.util.Objects;
  * 一组表达式集合
  * e.g. {(...) (...) (...) ...}
  */
-public class GroupExpression implements Expression {
+public class ComplexExpression implements Expression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 
