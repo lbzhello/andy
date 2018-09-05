@@ -136,7 +136,7 @@ public final class Definition {
      * @param op
      * @return
      */
-    public static final int comparePriority(String op) {
+    public static final int getPriority(String op) {
         return operator.getOrDefault(op,1);
     }
 
@@ -153,12 +153,12 @@ public final class Definition {
      * @param op1
      * @param op2
      * @return
-     *      0 -> comparePriority(op1) = comparePriority(op2)
-     *      1 -> comparePriority(op1) > comparePriority(op2)
-     *      -1 -> comparePriority(op1) < comparePriority(op2)
+     *      0 -> getPriority(op1) = getPriority(op2)
+     *      1 -> getPriority(op1) > getPriority(op2)
+     *      -1 -> getPriority(op1) < getPriority(op2)
      */
     public static final int comparePriority(String op1, String op2) {
-        return comparePriority(op1) == comparePriority(op2) ? 0 : comparePriority(op1) > comparePriority(op2) ? 1 : -1;
+        return getPriority(op1) == getPriority(op2) ? 0 : getPriority(op1) > getPriority(op2) ? 1 : -1;
     }
 
 }
