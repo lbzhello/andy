@@ -26,11 +26,13 @@ public class DefaultParser implements Parser<Expression> {
     public Expression parse(String fileName){
         ComplexExpression complexExpression = new ComplexExpression();
         try {
-            tokenizer.sourceFile(fileName);
+            Reader reader = new FileReader(fileName);
+            tokenizer.init(reader);
             while (hasNext()) {
                 parseComplex(complexExpression);
             }
-            close();
+            tokenizer.close();
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

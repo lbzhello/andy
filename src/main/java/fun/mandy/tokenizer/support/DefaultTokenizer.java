@@ -46,9 +46,9 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
     }
 
     @Override
-    public void sourceFile(String fileName) {
+    public void init(Reader reader) {
         try {
-            this.lineNumberReader = new LineNumberReader(new BufferedReader(new FileReader(fileName)));
+            this.lineNumberReader = new LineNumberReader(new BufferedReader(reader));
         } catch (Exception e) {
             e.printStackTrace();
         }
