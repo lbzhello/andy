@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 一组表达式集合
+ * 表达式上下文
  * e.g. {(...) (...) (...) ...}
  */
-public class ComplexExpression implements Expression {
+public class ExpressionContext implements Expression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 

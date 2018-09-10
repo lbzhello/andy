@@ -24,17 +24,17 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression parse(String fileName){
-        ComplexExpression complexExpression = new ComplexExpression();
+        ExpressionContext expressionContext = new ExpressionContext();
         try {
             tokenizer.init(new FileReader(fileName));
             while (hasNext()) {
-                parseComplex(complexExpression);
+                parseComplex(expressionContext);
             }
             tokenizer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return complexExpression;
+        return expressionContext;
     }
 
 
@@ -98,7 +98,7 @@ public class DefaultParser implements Parser<Expression> {
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
             EvalExpression evalExpression = new EvalExpression(left, parenExpression().getList());
             if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
-                ComplexExpression group = braceExpression();
+                ExpressionContext group = braceExpression();
                 if (left instanceof Name) {
                     return new EvalExpression(Definition.DEFINE,evalExpression,group);
                 } else {
@@ -111,7 +111,7 @@ public class DefaultParser implements Parser<Expression> {
 
             }
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-            ComplexExpression group = braceExpression();
+            ExpressionContext group = braceExpression();
             if (left instanceof Name) { //e.g. name{...}
 //                return new DefaultPair((Name)left, unit);
                 return new EvalExpression(Definition.DEFINE,left, group);
@@ -180,33 +180,33 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. {...}
      * @return
      */
-    private ComplexExpression braceExpression() throws Exception {
+    private ExpressionContext braceExpression() throws Exception {
         nextToken(); //eat '{'
-        ComplexExpression complexExpression = new ComplexExpression();
+        ExpressionContext expressionContext = new ExpressionContext();
         while (!Objects.equals(getToken().toString(), "}")) {
-            parseComplex(complexExpression);
+            parseComplex(expressionContext);
         }
         nextToken(); //eat '}'
-        return complexExpression;
+        return expressionContext;
     }
 
     /**
      * 解析一个表达式放入unit
      * @return
      */
-    private void parseComplex(ComplexExpression complexExpression) throws Exception {
+    private void parseComplex(ExpressionContext expressionContext) throws Exception {
         Expression expression = expression();
         if (expression instanceof EvalExpression) {
             EvalExpression evalExpression = (EvalExpression)expression;
             if (Objects.equals(evalExpression.head().toString(), Definition.DEFINE)) { //对象定义
-                complexExpression.addBuildStream(expression);
+                expressionContext.addBuildStream(expression);
             } else if (Objects.equals(evalExpression.head().toString(), Definition.COLON)) { //字段定义
-                complexExpression.addBuildStream(expression);
+                expressionContext.addBuildStream(expression);
             } else {
-                complexExpression.addEvalStream(expression);
+                expressionContext.addEvalStream(expression);
             }
         } else {
-            complexExpression.addEvalStream(expression);
+            expressionContext.addEvalStream(expression);
         }
     }
 
