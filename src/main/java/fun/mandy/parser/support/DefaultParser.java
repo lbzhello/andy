@@ -243,7 +243,6 @@ public class DefaultParser implements Parser<Expression> {
                 nextToken(); //eat ')'
                 return expression instanceof CommandExpression ? ((CommandExpression) expression).toSExpression() :new SExpression(expression);
             } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...)
-                nextToken(); //eat ','
                 ListExpression listExpression = parseListExpression(new ListExpression(expression));
                 if (Objects.equals(getToken().toString(), ")")) {
                     nextToken(); //eat ")"
@@ -281,10 +280,9 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private ListExpression parseListExpression(ListExpression listExpression) throws Exception {
-        listExpression.add(expression());
-        if (Objects.equals(getToken().toString(), ",")) {
+        while (Objects.equals(getToken().toString(), ",")) {
             nextToken(); //eat ","
-            parseListExpression(listExpression);
+            listExpression.add(expression());
         }
         return listExpression;
     }
