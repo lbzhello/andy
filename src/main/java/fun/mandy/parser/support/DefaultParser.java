@@ -9,8 +9,6 @@ import fun.mandy.parser.Parser;
 import fun.mandy.tokenizer.Tokenizer;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
@@ -76,12 +74,12 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return new EvalExpression(op, left, operator(right, op2));
+                return new SExpression(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
-                return operator(new EvalExpression(op, left, right),op2);
+                return operator(new SExpression(op, left, right),op2);
             } 
         } else { //e.g. left op right
-            return new EvalExpression(op, left, right);
+            return new SExpression(op, left, right);
         }
     }
 
@@ -91,39 +89,33 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combine(Expression left) throws Exception {
-        //if it's command
-        if (Definition.isCommand(left.toString())) {
-            return commandExpression(left);
-        }
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
-            EvalExpression evalExpression = new EvalExpression(left, parenExpression().getList());
-            if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
-                ExpressionContext group = braceExpression();
-                if (left instanceof Name) {
-                    return new EvalExpression(Definition.DEFINE,evalExpression,group);
-                } else {
-                    throw new Exceptions.ExpressionNotSurpportException();
-                }
-            } else if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)(...)...
-                return combine(evalExpression);
-            } else { //e.g. left(...)
-                return evalExpression;
-
-            }
+            SExpression sexpression = new SExpression(left);
+            sexpression.getList().addAll(this.parenExpression().getList());
+            return combine(sexpression);
+//            if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
+//                ExpressionContext group = braceExpression();
+//                return new SExpression(Definition.DEFINE,sexpression,group);
+//            } else if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)(...)...
+//                return combine(sexpression);
+//            } else { //e.g. left(...)
+//                return sexpression;
+//            }
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-            ExpressionContext group = braceExpression();
-            if (left instanceof Name) { //e.g. name{...}
-//                return new DefaultPair((Name)left, unit);
-                return new EvalExpression(Definition.DEFINE,left, group);
-            } else if (left instanceof ListExpression){ //e.g. (...){...}...
-                return combine(new EvalExpression(Definition.LAMBDA, left, group));
-            } else {
-                throw new Exceptions.ExpressionNotSurpportException();
-            }
+            return combine(new SExpression(Definition.DEFINE, left, braceExpression()));
+//            ExpressionContext group = braceExpression();
+//            if (left instanceof Name) { //e.g. name{...}
+////                return new DefaultPair((Name)left, unit);
+//                return new SExpression(Definition.DEFINE,left, group);
+//            } else if (left instanceof SExpression){ //e.g. (...){...}...
+//                return combine(new SExpression(Definition.LAMBDA, left, group));
+//            } else {
+//                throw new Exceptions.ExpressionNotSurpportException();
+//            }
 
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
-            return new EvalExpression(Definition.COLON, left, expression());
+            return new SExpression(Definition.PAIR, left, expression());
         } else {
             return left;
         }
@@ -138,11 +130,11 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combinator() throws Exception {
         if(getToken() instanceof SymbolExpression){ //e.g. name...
             Expression expression = getToken();
-            if (Definition.isOperator(getToken().toString())) { //e.g. ! a
-                nextToken(); //eat
-                return new EvalExpression(expression, combinator());
+            nextToken(); //eat "expression"
+            //if it's command
+            if (Definition.isCommand(expression.toString())) {
+                return commandExpression(expression);
             }
-            nextToken(); //eat left
             return expression;
         } else if (getToken() instanceof StringExpression) { //e.g. "name"...
             Expression expression = getToken();
@@ -167,13 +159,13 @@ public class DefaultParser implements Parser<Expression> {
 
     }
 
-    private Expression commandExpression(Expression cmd) throws Exception {
+    private SExpression commandExpression(Expression cmd) throws Exception {
         int size = Definition.getCommandSize(cmd.toString());
-        ListExpression listExpression = new ListExpression();
+        SExpression sexpression = new CommandExpression(cmd);
         for (int i = 0; i < size; i++) {
-            listExpression.addExpression(expression());
+            sexpression.add(expression());
         }
-        return new EvalExpression(cmd, listExpression.getList());
+        return sexpression;
     }
 
     /**
@@ -196,18 +188,7 @@ public class DefaultParser implements Parser<Expression> {
      */
     private void parseComplex(ExpressionContext expressionContext) throws Exception {
         Expression expression = expression();
-        if (expression instanceof EvalExpression) {
-            EvalExpression evalExpression = (EvalExpression)expression;
-            if (Objects.equals(evalExpression.head().toString(), Definition.DEFINE)) { //对象定义
-                expressionContext.addBuildStream(expression);
-            } else if (Objects.equals(evalExpression.head().toString(), Definition.COLON)) { //字段定义
-                expressionContext.addBuildStream(expression);
-            } else {
-                expressionContext.addEvalStream(expression);
-            }
-        } else {
-            expressionContext.addEvalStream(expression);
-        }
+        expressionContext.add(expression);
     }
 
 //    /**
@@ -219,12 +200,12 @@ public class DefaultParser implements Parser<Expression> {
 ////        if (expression instanceof Pair) {
 ////            unit.setChild(((Pair<Name, Expression>) expression).key(),((Pair<Name, Expression>) expression).value());
 ////        } else
-//        if (expression instanceof EvalExpression) {
-//            EvalExpression evalExpression = (EvalExpression)expression;
+//        if (expression instanceof SExpression) {
+//            SExpression evalExpression = (SExpression)expression;
 //            if (evalExpression.head().toString().equals(Definition.DEFINE)) { //对象定义
 //                unit.addBuildStream(expression);
 //                unit.setChild((Name) evalExpression.getList().get(0),evalExpression.getList().get(1));
-//            } else if (evalExpression.head().toString().equals(Definition.COLON)) { //字段定义
+//            } else if (evalExpression.head().toString().equals(Definition.PAIR)) { //字段定义
 //                unit.addBuildStream(expression);
 //                unit.setChild((Name) evalExpression.getList().get(0),evalExpression.getList().get(1));
 //            } else {
@@ -239,38 +220,72 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. [...]
      * @return
      */
-    private ListExpression bracketExpression() throws Exception {
+    private SExpression bracketExpression() throws Exception {
         nextToken(); //eat '['
-        ListExpression listExpression = new ListExpression();
+        SExpression sexpression = new SExpression();
         while (!Objects.equals(getToken().toString(), "]")) {
-            listExpression.addExpression(expression());
+            sexpression.add(expression());
         }
 
         nextToken(); //eat ']'
-        return listExpression;
+        return sexpression;
     }
 
     /**
      * e.g. (...)
      * @return
      */
-    private ListExpression parenExpression() throws Exception {
+    private SExpression parenExpression() throws Exception {
         nextToken(); //eat '('
-        ListExpression listExpression = new ListExpression();
-        while (!Objects.equals(getToken().toString(), ")")) {
+        if (!Objects.equals(getToken().toString(), ")")) { //e.g. (expression...)
             Expression expression = expression();
-            if (!Objects.equals(getToken().toString(), ",") && !Objects.equals(getToken().toString(), ")")) { //e.g. (expr1 expr2 ...)
-                List<Expression> paramList = new ArrayList<>();
-                while (!Objects.equals(getToken().toString(), ",") && !Objects.equals(getToken().toString(), ")")) {
-                    paramList.add(getToken());
-                    nextToken();
+            if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
+                nextToken(); //eat ')'
+                return expression instanceof CommandExpression ? ((CommandExpression) expression).toSExpression() :new SExpression(expression);
+            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...)
+                nextToken(); //eat ','
+                ListExpression listExpression = parseListExpression(new ListExpression(expression));
+                if (Objects.equals(getToken().toString(), ")")) {
+                    nextToken(); //eat ")"
+                } else {
+
                 }
-                expression = new EvalExpression(expression, paramList);
+                return listExpression;
+            } else if (Objects.equals(getToken().toString(), ";")){
+                System.out.println("Not realizes");
+              return null;
+            } else {
+                return parseSExpression(new SExpression(expression));
             }
-            if (Objects.equals(getToken().toString(), "," )) nextToken(); //eat ","
-            listExpression.addExpression(expression);
+        } else { //e.g. ()
+            nextToken(); //eag ")"
+            return new SExpression();
+        }
+
+    }
+
+    /**
+     * e.g. (exp1 exp2 ...)
+     * @return
+     */
+    private SExpression parseSExpression(SExpression sexpression) throws Exception {
+        while (!Objects.equals(getToken().toString(), ")")) {
+            sexpression.add(expression());
         }
         nextToken(); //eat ")"
+        return sexpression;
+    }
+
+    /**
+     * e.g. (expr1, expr2, ...)
+     * @return
+     */
+    private ListExpression parseListExpression(ListExpression listExpression) throws Exception {
+        listExpression.add(expression());
+        if (Objects.equals(getToken().toString(), ",")) {
+            nextToken(); //eat ","
+            parseListExpression(listExpression);
+        }
         return listExpression;
     }
 

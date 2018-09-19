@@ -1,5 +1,6 @@
 package fun.mandy.expression.support;
 
+import fun.mandy.core.Definition;
 import fun.mandy.expression.Expression;
 
 import java.util.ArrayList;
@@ -14,11 +15,26 @@ public class ExpressionContext implements Expression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 
-    public void addBuildStream(Expression expression){
+    public void add(Expression expression) {
+        if (expression instanceof SExpression) {
+            SExpression sexpression = (SExpression)expression;
+            if (Objects.equals(sexpression.first(), Definition.DEFINE)) { //对象定义
+                this.addBuildStream(expression);
+            } else if (Objects.equals(sexpression.first(), Definition.PAIR)) { //字段定义
+                this.addBuildStream(expression);
+            } else {
+                this.addEvalStream(expression);
+            }
+        } else {
+            this.addEvalStream(expression);
+        }
+    }
+
+    private void addBuildStream(Expression expression){
         this.buildStream.add(expression);
     }
 
-    public void addEvalStream(Expression expression){
+    private void addEvalStream(Expression expression){
         this.evalStream.add(expression);
     }
 

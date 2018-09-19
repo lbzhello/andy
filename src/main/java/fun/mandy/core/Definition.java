@@ -1,6 +1,7 @@
 package fun.mandy.core;
 
 import fun.mandy.expression.Expression;
+import fun.mandy.expression.support.StringExpression;
 import fun.mandy.expression.support.ValueExpression;
 
 import java.util.HashMap;
@@ -19,17 +20,17 @@ public final class Definition {
     /**
      * 系统提供函数，用于定义其他函数/对象
      */
-    public static String DEFINE = "define";
+    public static Expression DEFINE = new ValueExpression("define");
 
     /**
      * 系统提供函数，用于定义匿名对象
      */
-    public static String LAMBDA = "lambda";
+    public static Expression LAMBDA = new ValueExpression("lambda");
 
     /**
      * 用于定义属性/字段
      */
-    public static String COLON = ":";
+    public static Expression PAIR = new ValueExpression(":");
 
     /**
      * End of file

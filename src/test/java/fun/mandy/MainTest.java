@@ -27,12 +27,15 @@ public class MainTest {
     }
 
     @Test
-    public String test(String arg) throws Throwable {
-        System.out.println(arg);
-        Object o = ObjectFactoryTest.create("parser");
-        System.out.println(o);
+    public void test() {
+    }
 
-        return arg;
+    @Test
+    public void StringBufferTest(){
+        StringBuffer sb = new StringBuffer("test ");
+        sb.replace(4, 5, "");
+        sb.append("0");
+        System.out.println(sb);
     }
 
 }
