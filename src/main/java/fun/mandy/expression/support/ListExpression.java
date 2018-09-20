@@ -12,7 +12,7 @@ public class ListExpression extends SExpression {
         StringBuffer sb = new StringBuffer("[");
         if (list != null && list.size() > 0) {
             for (Expression expression : list) {
-                sb.append(expression + ",");
+                sb.append(expression + " ");
             }
             //remove the last comma
             sb.replace(sb.length()-1, sb.length(), "");

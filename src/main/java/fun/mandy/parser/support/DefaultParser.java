@@ -93,26 +93,8 @@ public class DefaultParser implements Parser<Expression> {
             SExpression sexpression = new SExpression(left);
             sexpression.getList().addAll(this.parenExpression().getList());
             return combine(sexpression);
-//            if (Objects.equals(getToken().toString(), "{")) { //e.g. left(...){...}
-//                ExpressionContext group = braceExpression();
-//                return new SExpression(Definition.DEFINE,sexpression,group);
-//            } else if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)(...)...
-//                return combine(sexpression);
-//            } else { //e.g. left(...)
-//                return sexpression;
-//            }
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
             return combine(new SExpression(Definition.DEFINE, left, braceExpression()));
-//            ExpressionContext group = braceExpression();
-//            if (left instanceof Name) { //e.g. name{...}
-////                return new DefaultPair((Name)left, unit);
-//                return new SExpression(Definition.DEFINE,left, group);
-//            } else if (left instanceof SExpression){ //e.g. (...){...}...
-//                return combine(new SExpression(Definition.LAMBDA, left, group));
-//            } else {
-//                throw new Exceptions.ExpressionNotSurpportException();
-//            }
-
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
             return new SExpression(Definition.PAIR, left, expression());
@@ -191,38 +173,13 @@ public class DefaultParser implements Parser<Expression> {
         expressionContext.add(expression);
     }
 
-//    /**
-//     * 解析一个表达式放入unit
-//     * @return
-//     */
-//    private void parseDomain(Unit<Name, Expression> unit) throws Exception {
-//        Expression expression = expression();
-////        if (expression instanceof Pair) {
-////            unit.setChild(((Pair<Name, Expression>) expression).key(),((Pair<Name, Expression>) expression).value());
-////        } else
-//        if (expression instanceof SExpression) {
-//            SExpression evalExpression = (SExpression)expression;
-//            if (evalExpression.head().toString().equals(Definition.DEFINE)) { //对象定义
-//                unit.addBuildStream(expression);
-//                unit.setChild((Name) evalExpression.getList().get(0),evalExpression.getList().get(1));
-//            } else if (evalExpression.head().toString().equals(Definition.PAIR)) { //字段定义
-//                unit.addBuildStream(expression);
-//                unit.setChild((Name) evalExpression.getList().get(0),evalExpression.getList().get(1));
-//            } else {
-//                unit.addEvalStream(expression);
-//            }
-//        } else {
-//            unit.addEvalStream(expression);
-//        }
-//    }
-
     /**
      * e.g. [...]
      * @return
      */
     private SExpression bracketExpression() throws Exception {
         nextToken(); //eat '['
-        SExpression sexpression = new SExpression();
+        SExpression sexpression = new ListExpression();
         while (!Objects.equals(getToken().toString(), "]")) {
             sexpression.add(expression());
         }
