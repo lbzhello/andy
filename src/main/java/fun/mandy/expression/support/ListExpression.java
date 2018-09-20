@@ -3,6 +3,8 @@ package fun.mandy.expression.support;
 import fun.mandy.expression.Expression;
 
 public class ListExpression extends SExpression {
+    public ListExpression() {}
+
     public ListExpression(Expression... expressions) {
         super(expressions);
     }

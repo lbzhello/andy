@@ -1,8 +1,10 @@
 package fun.mandy;
 
-import fun.mandy.core.ObjectFactory;
-import fun.mandy.core.ObjectFactoryTest;
-import fun.mandy.parser.Parser;
+import fun.mandy.expression.Expression;
+import fun.mandy.expression.annotation.SExpressed;
+import fun.mandy.expression.support.CommandExpression;
+import fun.mandy.expression.support.SExpression;
+import fun.mandy.expression.support.ValueExpression;
 import org.junit.Test;
 
 import java.lang.invoke.MethodHandle;
@@ -27,7 +29,13 @@ public class MainTest {
     }
 
     @Test
-    public void test() {
+    public void AnnotationTest() throws IllegalAccessException, InstantiationException {
+        Expression expression = new CommandExpression(new ValueExpression("expr"));
+        SExpressed sExpressed = expression.getClass().getDeclaredAnnotation(SExpressed.class);
+        Class<? extends SExpression> v = sExpressed.value();
+        SExpression o = v.newInstance();
+
+        System.out.println();
     }
 
     @Test

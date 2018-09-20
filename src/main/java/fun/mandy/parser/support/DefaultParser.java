@@ -1,9 +1,8 @@
 package fun.mandy.parser.support;
 
 import fun.mandy.core.Definition;
-import fun.mandy.exception.Exceptions;
 import fun.mandy.expression.Expression;
-import fun.mandy.expression.Name;
+import fun.mandy.expression.annotation.SExpressed;
 import fun.mandy.expression.support.*;
 import fun.mandy.parser.Parser;
 import fun.mandy.tokenizer.Tokenizer;
@@ -74,12 +73,12 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return new SExpression(op, left, operator(right, op2));
+                return new OperatorExpression(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
-                return operator(new SExpression(op, left, right),op2);
+                return operator(new OperatorExpression(op, left, right),op2);
             } 
         } else { //e.g. left op right
-            return new SExpression(op, left, right);
+            return new OperatorExpression(op, left, right);
         }
     }
 
@@ -198,7 +197,7 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = expression();
             if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
                 nextToken(); //eat ')'
-                return expression instanceof CommandExpression ? ((CommandExpression) expression).toSExpression() :new SExpression(expression);
+                return toSExpression(expression);
             } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...)
                 ListExpression listExpression = parseListExpression(new ListExpression(expression));
                 if (Objects.equals(getToken().toString(), ")")) {
@@ -218,6 +217,14 @@ public class DefaultParser implements Parser<Expression> {
             return new SExpression();
         }
 
+    }
+
+    private SExpression toSExpression(Expression expression) {
+        if (expression.getClass().getDeclaredAnnotation(SExpressed.class) == null) {
+            return new SExpression(expression);
+        } else {
+            return ((SExpression)expression).sexpress();
+        }
     }
 
     /**

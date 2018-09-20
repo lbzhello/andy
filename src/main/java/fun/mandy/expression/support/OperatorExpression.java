@@ -3,12 +3,10 @@ package fun.mandy.expression.support;
 import fun.mandy.expression.Expression;
 import fun.mandy.expression.annotation.SExpressed;
 
-/**
- * command sign interface, help to parse expression
- */
 @SExpressed
-public class CommandExpression extends SExpression{
-    public CommandExpression(Expression... expressions){
+public class OperatorExpression extends SExpression{
+    public OperatorExpression(Expression... expressions) {
         super(expressions);
     }
+
 }
