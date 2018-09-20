@@ -195,36 +195,50 @@ public class DefaultParser implements Parser<Expression> {
      */
     private SExpression parenExpression() throws Exception {
         nextToken(); //eat '('
-        if (!Objects.equals(getToken().toString(), ")")) { //e.g. (expression...)
-            Expression expression = expression();
-            if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
-                nextToken(); //eat ')'
-                return toSExpression(expression);
-            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...
-                ListExpression listExpression = parseListExpression(new ListExpression(expression));
-                if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr1, expr2, expr3...)
-                    nextToken(); //eat ")"
-                    return listExpression;
-                } else if (Objects.equals(getToken().toString(), ";")){ //e.g. (expr1, expr2, expr3; expr4, expr5, ...)
-                    ListExpression multiListExpression = parseMultiListExpression(new ListExpression(listExpression));
-                    if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
-                    nextToken(); //eat ")"
-                    return multiListExpression;
-                } else {
-                    throw new Exception("Syntax Error!");
-                }
-            } else if (Objects.equals(getToken().toString(), ";")){
-                ListExpression multiListExpression = parseMultiListExpression(new ListExpression(expression));
-                if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
-                nextToken(); //eat ")"
-                return multiListExpression;
-            } else {
-                return parseSExpression(new SExpression(expression));
-            }
-        } else { //e.g. ()
-            nextToken(); //eag ")"
+        if (Objects.equals(getToken().toString(), ")")) { //e.g. ()
+            nextToken(); //eat ")"
             return new SExpression();
         }
+
+        Expression expression = expression();
+        if (Objects.equals(getToken().toString(), ")")) { //e.g. (expression)
+            nextToken(); //eat ")"
+            return toSExpression(expression);
+        } else {
+            return sexpression(expression);
+        }
+//        if (!Objects.equals(getToken().toString(), ")")) { //e.g. (expression...)
+//            Expression expression = expression();
+//            if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
+//                nextToken(); //eat ')'
+//                return toSExpression(expression);
+//            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...
+//                ListExpression listExpression = parseListExpression(new ListExpression(expression));
+//                if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr1, expr2, expr3...)
+//                    nextToken(); //eat ")"
+//                    return listExpression;
+//                } else if (Objects.equals(getToken().toString(), ";")){ //e.g. (expr1, expr2, expr3; expr4, expr5, ...)
+//                    ListExpression multiListExpression = parseMultiListExpression(new ListExpression(listExpression));
+//                    if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
+//                    nextToken(); //eat ")"
+//                    return multiListExpression;
+//                } else {
+//                    throw new Exception("Syntax Error!");
+//                }
+//            } else if (Objects.equals(getToken().toString(), ";")){
+//                ListExpression multiListExpression = parseMultiListExpression(new ListExpression(expression));
+//                if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
+//                nextToken(); //eat ")"
+//                return multiListExpression;
+//            } else {
+//                SExpression sexpression = parseSExpression(new SExpression(expression));
+//                nextToken(); //eat ")"
+//                return sexpression;
+//            }
+//        } else { //e.g. ()
+//            nextToken(); //eag ")"
+//            return new SExpression();
+//        }
 
     }
 
@@ -233,6 +247,27 @@ public class DefaultParser implements Parser<Expression> {
             return new SExpression(expression);
         } else {
             return ((SExpression)expression).sexpress();
+        }
+    }
+
+    /**
+     * e.g. expression() expression() || expression(), expression() || expression();expression() || expression(),expression(); expression(), ...
+     * @param left
+     * @return
+     */
+    private SExpression sexpression(Expression left) throws Exception {
+        if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
+            ListExpression listExpression = parseListExpression(new ListExpression(left));
+            return sexpression(listExpression);
+        } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
+            ListExpression listExpression = parseMultiListExpression(new ListExpression(left));
+            return sexpression(listExpression);
+        } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
+            SExpression listExpression = parseSExpression(new SExpression(left));
+            return sexpression(listExpression);
+        } else {
+            nextToken(); //eat ")"
+            return (SExpression)left;
         }
     }
 
@@ -260,7 +295,6 @@ public class DefaultParser implements Parser<Expression> {
         while (!Objects.equals(getToken().toString(), ")")) {
             sexpression.add(expression());
         }
-        nextToken(); //eat ")"
         return sexpression;
     }
 
@@ -273,6 +307,8 @@ public class DefaultParser implements Parser<Expression> {
             nextToken(); //eat ","
             listExpression.add(expression());
         }
+//        if (!Objects.equals(getToken().toString(), ";")
+//                || !Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
         return listExpression;
     }
 
