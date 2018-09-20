@@ -1,6 +1,7 @@
 package fun.mandy.parser.support;
 
 import fun.mandy.core.Definition;
+import fun.mandy.exception.Exceptions;
 import fun.mandy.expression.Expression;
 import fun.mandy.expression.annotation.SExpressed;
 import fun.mandy.expression.support.*;
@@ -8,6 +9,7 @@ import fun.mandy.parser.Parser;
 import fun.mandy.tokenizer.Tokenizer;
 
 import java.io.*;
+import java.util.List;
 import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
@@ -198,17 +200,24 @@ public class DefaultParser implements Parser<Expression> {
             if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
                 nextToken(); //eat ')'
                 return toSExpression(expression);
-            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...)
+            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...
                 ListExpression listExpression = parseListExpression(new ListExpression(expression));
-                if (Objects.equals(getToken().toString(), ")")) {
+                if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr1, expr2, expr3...)
                     nextToken(); //eat ")"
+                    return listExpression;
+                } else if (Objects.equals(getToken().toString(), ";")){ //e.g. (expr1, expr2, expr3; expr4, expr5, ...)
+                    ListExpression multiListExpression = parseMultiListExpression(new ListExpression(listExpression));
+                    if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
+                    nextToken(); //eat ")"
+                    return multiListExpression;
                 } else {
-
+                    throw new Exception("Syntax Error!");
                 }
-                return listExpression;
             } else if (Objects.equals(getToken().toString(), ";")){
-                System.out.println("Not realizes");
-              return null;
+                ListExpression multiListExpression = parseMultiListExpression(new ListExpression(expression));
+                if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
+                nextToken(); //eat ")"
+                return multiListExpression;
             } else {
                 return parseSExpression(new SExpression(expression));
             }
@@ -225,6 +234,22 @@ public class DefaultParser implements Parser<Expression> {
         } else {
             return ((SExpression)expression).sexpress();
         }
+    }
+
+    /**
+     * e.g. (expr1,expr2, ...; expr3, expr4; ...) => [[expr1 expr2 ...] [expr3 expr4] [...]]
+     * @return
+     */
+    private ListExpression parseMultiListExpression(ListExpression listExpression) throws Exception {
+        while (Objects.equals(getToken().toString(), ";")) {
+            nextToken(); //eat ";"
+            Expression expression = expression();
+            if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2; expr3, expr4 ...
+                expression = parseListExpression(new ListExpression(expression));
+            }
+            listExpression.add(expression);
+        }
+        return listExpression;
     }
 
     /**
