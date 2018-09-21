@@ -4,6 +4,7 @@ import fun.mandy.core.Definition;
 import fun.mandy.expression.Expression;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,11 +12,14 @@ import java.util.Objects;
  * 表达式上下文
  * e.g. {(...) (...) (...) ...}
  */
-public class ExpressionContext implements Expression {
+public class ComplexExpression extends DefaultExpression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 
-    public void add(Expression expression) {
+    public DefaultExpression add(Expression expression) {
+        //record the order of the origin file
+        super.add(expression);
+
         if (expression instanceof SExpression) {
             SExpression sexpression = (SExpression)expression;
             if (Objects.equals(sexpression.first(), Definition.DEFINE)) { //对象定义
@@ -28,6 +32,8 @@ public class ExpressionContext implements Expression {
         } else {
             this.addEvalStream(expression);
         }
+
+        return this;
     }
 
     private void addBuildStream(Expression expression){
@@ -40,6 +46,10 @@ public class ExpressionContext implements Expression {
 
     @Override
     public String toString() {
+        return "{" + super.toString() + "}";
+    }
+
+    public String toString_old() {
         StringBuffer buildStreamSB = new StringBuffer();
         StringBuffer evalStreamSB = new StringBuffer();
 

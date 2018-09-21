@@ -21,17 +21,17 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression parse(String fileName){
-        ExpressionContext expressionContext = new ExpressionContext();
+        ComplexExpression complexExpression = new ComplexExpression();
         try {
             tokenizer.init(new FileReader(fileName));
             while (hasNext()) {
-                expressionContext.add(expression());
+                complexExpression.add(expression());
             }
             tokenizer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return expressionContext;
+        return complexExpression;
     }
 
 
@@ -153,14 +153,14 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. {...}
      * @return
      */
-    private ExpressionContext braceExpression() throws Exception {
+    private ComplexExpression braceExpression() throws Exception {
         nextToken(); //eat '{'
-        ExpressionContext expressionContext = new ExpressionContext();
+        ComplexExpression complexExpression = new ComplexExpression();
         while (!Objects.equals(getToken().toString(), "}")) {
-            expressionContext.add(expression());
+            complexExpression.add(expression());
         }
         nextToken(); //eat '}'
-        return expressionContext;
+        return complexExpression;
     }
 
 
@@ -168,22 +168,22 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. [...]
      * @return
      */
-    private SExpression bracketExpression() throws Exception {
+    private DefaultExpression bracketExpression() throws Exception {
         nextToken(); //eat '['
-        SExpression sexpression = new ListExpression();
+        ListExpression listExpression = new ListExpression();
         while (!Objects.equals(getToken().toString(), "]")) {
-            sexpression.add(expression());
+            listExpression.add(expression());
         }
 
         nextToken(); //eat ']'
-        return sexpression;
+        return listExpression;
     }
 
     /**
      * e.g. (...)
      * @return
      */
-    private SExpression parenExpression() throws Exception {
+    private DefaultExpression parenExpression() throws Exception {
         nextToken(); //eat '('
         if (Objects.equals(getToken().toString(), ")")) { //e.g. ()
             nextToken(); //eat ")"
@@ -213,7 +213,7 @@ public class DefaultParser implements Parser<Expression> {
      * @param left
      * @return
      */
-    private SExpression sexpression(Expression left) throws Exception {
+    private DefaultExpression sexpression(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
             return sexpression(parseListExpression(new ListExpression(left)));
         } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
@@ -222,7 +222,7 @@ public class DefaultParser implements Parser<Expression> {
             return sexpression(parseSExpression(new SExpression(left)));
         } else {
             nextToken(); //eat ")"
-            return (SExpression)left;
+            return (DefaultExpression)left;
         }
     }
 

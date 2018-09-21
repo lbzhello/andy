@@ -12,10 +12,13 @@ import java.util.Set;
 public final class Definition {
     private Definition() {}
 
+
     /**
      * 表示token前有空白字符
      */
     public static String SPACE = "SPACE_";
+
+    public static final Expression NIL = new ValueExpression("nil");
 
     /**
      * 系统提供函数，用于定义其他函数/对象
