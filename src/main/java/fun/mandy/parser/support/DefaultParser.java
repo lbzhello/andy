@@ -27,7 +27,7 @@ public class DefaultParser implements Parser<Expression> {
         try {
             tokenizer.init(new FileReader(fileName));
             while (hasNext()) {
-                parseComplex(expressionContext);
+                expressionContext.add(expression());
             }
             tokenizer.close();
         } catch (Exception e) {
@@ -159,20 +159,12 @@ public class DefaultParser implements Parser<Expression> {
         nextToken(); //eat '{'
         ExpressionContext expressionContext = new ExpressionContext();
         while (!Objects.equals(getToken().toString(), "}")) {
-            parseComplex(expressionContext);
+            expressionContext.add(expression());
         }
         nextToken(); //eat '}'
         return expressionContext;
     }
 
-    /**
-     * 解析一个表达式放入unit
-     * @return
-     */
-    private void parseComplex(ExpressionContext expressionContext) throws Exception {
-        Expression expression = expression();
-        expressionContext.add(expression);
-    }
 
     /**
      * e.g. [...]
@@ -207,38 +199,6 @@ public class DefaultParser implements Parser<Expression> {
         } else {
             return sexpression(expression);
         }
-//        if (!Objects.equals(getToken().toString(), ")")) { //e.g. (expression...)
-//            Expression expression = expression();
-//            if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr)
-//                nextToken(); //eat ')'
-//                return toSExpression(expression);
-//            } else if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2, expr3...
-//                ListExpression listExpression = parseListExpression(new ListExpression(expression));
-//                if (Objects.equals(getToken().toString(), ")")) { //e.g. (expr1, expr2, expr3...)
-//                    nextToken(); //eat ")"
-//                    return listExpression;
-//                } else if (Objects.equals(getToken().toString(), ";")){ //e.g. (expr1, expr2, expr3; expr4, expr5, ...)
-//                    ListExpression multiListExpression = parseMultiListExpression(new ListExpression(listExpression));
-//                    if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
-//                    nextToken(); //eat ")"
-//                    return multiListExpression;
-//                } else {
-//                    throw new Exception("Syntax Error!");
-//                }
-//            } else if (Objects.equals(getToken().toString(), ";")){
-//                ListExpression multiListExpression = parseMultiListExpression(new ListExpression(expression));
-//                if (!Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
-//                nextToken(); //eat ")"
-//                return multiListExpression;
-//            } else {
-//                SExpression sexpression = parseSExpression(new SExpression(expression));
-//                nextToken(); //eat ")"
-//                return sexpression;
-//            }
-//        } else { //e.g. ()
-//            nextToken(); //eag ")"
-//            return new SExpression();
-//        }
 
     }
 
@@ -257,14 +217,11 @@ public class DefaultParser implements Parser<Expression> {
      */
     private SExpression sexpression(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
-            ListExpression listExpression = parseListExpression(new ListExpression(left));
-            return sexpression(listExpression);
+            return sexpression(parseListExpression(new ListExpression(left)));
         } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
-            ListExpression listExpression = parseMultiListExpression(new ListExpression(left));
-            return sexpression(listExpression);
+            return sexpression(parseMultiListExpression(new ListExpression(left)));
         } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
-            SExpression listExpression = parseSExpression(new SExpression(left));
-            return sexpression(listExpression);
+            return sexpression(parseSExpression(new SExpression(left)));
         } else {
             nextToken(); //eat ")"
             return (SExpression)left;
