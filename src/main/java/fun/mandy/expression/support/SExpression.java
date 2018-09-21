@@ -31,7 +31,7 @@ public class SExpression implements Expression {
     }
 
 
-    public List<Expression> getList() {
+    public List<Expression> list() {
         return this.list;
     }
 

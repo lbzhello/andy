@@ -1,7 +1,6 @@
 package fun.mandy.parser.support;
 
 import fun.mandy.core.Definition;
-import fun.mandy.exception.Exceptions;
 import fun.mandy.expression.Expression;
 import fun.mandy.expression.annotation.SExpressed;
 import fun.mandy.expression.support.*;
@@ -9,7 +8,6 @@ import fun.mandy.parser.Parser;
 import fun.mandy.tokenizer.Tokenizer;
 
 import java.io.*;
-import java.util.List;
 import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
@@ -92,7 +90,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combine(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
             SExpression sexpression = new SExpression(left);
-            sexpression.getList().addAll(this.parenExpression().getList());
+            sexpression.list().addAll(this.parenExpression().list());
             return combine(sexpression);
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
             return combine(new SExpression(Definition.DEFINE, left, braceExpression()));
