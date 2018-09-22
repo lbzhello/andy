@@ -15,7 +15,7 @@ public class Application {
 
         Parser<Expression> parser = new ObjectFactory().parser();
 
-        Expression expression  = parser.parse(args[0]);
+        Expression expression  = parser.parse("lang.my");
         System.out.println(expression);
     }
 }
