@@ -1,2 +1,2 @@
-# mandy
-Funny Programming Language
+#andy
+Lisp in java style
