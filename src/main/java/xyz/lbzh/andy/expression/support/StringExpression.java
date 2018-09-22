@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression.support;
 
-import xyz.lbzh.andy.expression.Name;
-
-public class StringExpression extends ValueExpression implements Name {
+public class StringExpression extends ValueExpression {
     public StringExpression(Object value){
         super(value);
     }

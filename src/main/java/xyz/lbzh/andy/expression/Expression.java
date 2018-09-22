@@ -1,12 +1,11 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.support.ValueExpression;
 
 import java.io.Serializable;
 
 public interface Expression extends Serializable {
 
-    default Expression eval(Context<Name,Expression> context){
+    default Expression eval(Context<Expression, Object> context){
         return this;
     }
 

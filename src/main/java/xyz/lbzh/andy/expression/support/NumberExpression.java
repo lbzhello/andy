@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression.support;
 
-import xyz.lbzh.andy.expression.Name;
-
-public class NumberExpression extends ValueExpression implements Name {
+public class NumberExpression extends ValueExpression {
     public NumberExpression(Object value) {
         this.value = value;
     }

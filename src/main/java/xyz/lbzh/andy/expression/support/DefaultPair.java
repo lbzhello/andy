@@ -1,28 +1,24 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.Pair;
 
-import java.security.Key;
-import java.util.Map;
+public class DefaultPair implements Pair<Expression, Object>,Expression {
+    private Expression key;
+    private Object value;
 
-public class DefaultPair implements Pair<Name,Expression>,Expression {
-    private Name key;
-    private Expression value;
-
-    public DefaultPair(Name key, Expression value) {
+    public DefaultPair(Expression key, Object value) {
         this.key = key;
         this.value = value;
     }
 
     @Override
-    public Name key() {
+    public Expression key() {
         return key;
     }
 
     @Override
-    public Expression value() {
+    public Object value() {
         return value;
     }
 
