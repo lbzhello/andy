@@ -2,6 +2,7 @@ package xyz.lbzh.andy.parser.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionBuilder;
 import xyz.lbzh.andy.expression.annotation.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.parser.Parser;
@@ -73,12 +74,12 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return RoundBracketExpression.operator(op, left, operator(right, op2));
+                return ExpressionBuilder.operator(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
-                return operator(RoundBracketExpression.operator(op, left, right),op2);
+                return operator(ExpressionBuilder.operator(op, left, right),op2);
             } 
         } else { //e.g. left op right
-            return RoundBracketExpression.operator(op, left, right);
+            return ExpressionBuilder.operator(op, left, right);
         }
     }
 
@@ -89,14 +90,14 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression combine(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
-            RoundBracketExpression sexpression = new RoundBracketExpression(left);
-            sexpression.list().addAll(this.parenExpression().list());
+            BracketExpression sexpression = ExpressionBuilder.roundBracket(left);
+            sexpression.list().addAll(this.roundBracketExpression().list());
             return combine(sexpression);
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-            return combine(new RoundBracketExpression(Definition.DEFINE, left, braceExpression()));
+            return combine(ExpressionBuilder.roundBracket(Definition.DEFINE, left, curlyBracketExpression()));
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
-            return new RoundBracketExpression(Definition.PAIR, left, expression());
+            return ExpressionBuilder.roundBracket(Definition.PAIR, left, expression());
         } else {
             return left;
         }
@@ -126,11 +127,11 @@ public class DefaultParser implements Parser<Expression> {
             nextToken(); //eat
             return expression;
         } else if (Objects.equals(getToken().toString(), "(") || Objects.equals(getToken().toString(), Definition.SPACE + "(")) { //e.g. (...)...
-            return parenExpression();
+            return roundBracketExpression();
         } else if (Objects.equals(getToken().toString(), "[") || Objects.equals(getToken().toString(), Definition.SPACE + "[")) { //e.g. [...]...
-            return bracketExpression();
+            return squareBracketExpression();
         } else if (Objects.equals(getToken().toString(), "{") || Objects.equals(getToken().toString(), Definition.SPACE + "{")) { //e.g. {...}...
-            return braceExpression();
+            return curlyBracketExpression();
         } else if (getToken() == Definition.EOF){ //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
@@ -140,22 +141,22 @@ public class DefaultParser implements Parser<Expression> {
 
     }
 
-    private RoundBracketExpression commandExpression(Expression cmd) throws Exception {
+    private BracketExpression commandExpression(Expression cmd) throws Exception {
         int size = Definition.getCommandSize(cmd.toString());
-        RoundBracketExpression sexpression = RoundBracketExpression.command(cmd);
+        BracketExpression roundBracketExpression = ExpressionBuilder.command(cmd);
         for (int i = 0; i < size; i++) {
-            sexpression.add(expression());
+            roundBracketExpression.add(expression());
         }
-        return sexpression;
+        return roundBracketExpression;
     }
 
     /**
      * e.g. {...}
      * @return
      */
-    private CurlyBracketExpression braceExpression() throws Exception {
+    private BracketExpression curlyBracketExpression() throws Exception {
         nextToken(); //eat '{'
-        CurlyBracketExpression curlyBracketExpression = new CurlyBracketExpression();
+        BracketExpression curlyBracketExpression = ExpressionBuilder.curlyBracket();
         while (!Objects.equals(getToken().toString(), "}")) {
             curlyBracketExpression.add(expression());
         }
@@ -168,9 +169,9 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. [...]
      * @return
      */
-    private BracketExpression bracketExpression() throws Exception {
+    private BracketExpression squareBracketExpression() throws Exception {
         nextToken(); //eat '['
-        SquareBracketExpression squareBracketExpression = new SquareBracketExpression();
+        BracketExpression squareBracketExpression = ExpressionBuilder.squareBracket();
         while (!Objects.equals(getToken().toString(), "]")) {
             squareBracketExpression.add(expression());
         }
@@ -183,26 +184,26 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (...)
      * @return
      */
-    private BracketExpression parenExpression() throws Exception {
+    private BracketExpression roundBracketExpression() throws Exception {
         nextToken(); //eat '('
         if (Objects.equals(getToken().toString(), ")")) { //e.g. ()
             nextToken(); //eat ")"
-            return new RoundBracketExpression();
+            return ExpressionBuilder.roundBracket();
         }
 
         Expression expression = expression();
         if (Objects.equals(getToken().toString(), ")")) { //e.g. (expression)
             nextToken(); //eat ")"
-            return toSExpression(expression);
+            return toRoundBracketExpression(expression);
         } else {
-            return sexpression(expression);
+            return roundBracket(expression);
         }
 
     }
 
-    private RoundBracketExpression toSExpression(Expression expression) {
+    private BracketExpression toRoundBracketExpression(Expression expression) {
         if (expression.getClass().getDeclaredAnnotation(RoundBracketed.class) == null) {
-            return new RoundBracketExpression(expression);
+            return ExpressionBuilder.roundBracket(expression);
         } else {
             return ((RoundBracketExpression)expression).sexpress();
         }
@@ -213,13 +214,13 @@ public class DefaultParser implements Parser<Expression> {
      * @param left
      * @return
      */
-    private BracketExpression sexpression(Expression left) throws Exception {
+    private BracketExpression roundBracket(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
-            return sexpression(parseListExpression(new SquareBracketExpression(left)));
+            return roundBracket(parseListExpression(ExpressionBuilder.squareBracket(left)));
         } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
-            return sexpression(parseMultiListExpression(new SquareBracketExpression(left)));
+            return roundBracket(parseMultiListExpression(ExpressionBuilder.squareBracket(left)));
         } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
-            return sexpression(parseSExpression(new RoundBracketExpression(left)));
+            return roundBracket(parseSExpression(ExpressionBuilder.roundBracket(left)));
         } else {
             nextToken(); //eat ")"
             return (BracketExpression)left;
@@ -230,12 +231,12 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (expr1,expr2, ...; expr3, expr4; ...) => [[expr1 expr2 ...] [expr3 expr4] [...]]
      * @return
      */
-    private SquareBracketExpression parseMultiListExpression(SquareBracketExpression squareBracketExpression) throws Exception {
+    private BracketExpression parseMultiListExpression(BracketExpression squareBracketExpression) throws Exception {
         while (Objects.equals(getToken().toString(), ";")) {
             nextToken(); //eat ";"
             Expression expression = expression();
             if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2; expr3, expr4 ...
-                expression = parseListExpression(new SquareBracketExpression(expression));
+                expression = parseListExpression(ExpressionBuilder.squareBracket(expression));
             }
             squareBracketExpression.add(expression);
         }
@@ -246,7 +247,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (exp1 exp2 ...)
      * @return
      */
-    private RoundBracketExpression parseSExpression(RoundBracketExpression sexpression) throws Exception {
+    private BracketExpression parseSExpression(BracketExpression sexpression) throws Exception {
         while (!Objects.equals(getToken().toString(), ")")) {
             sexpression.add(expression());
         }
@@ -257,7 +258,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (expr1, expr2, ...)
      * @return
      */
-    private SquareBracketExpression parseListExpression(SquareBracketExpression squareBracketExpression) throws Exception {
+    private BracketExpression parseListExpression(BracketExpression squareBracketExpression) throws Exception {
         while (Objects.equals(getToken().toString(), ",")) {
             nextToken(); //eat ","
             squareBracketExpression.add(expression());

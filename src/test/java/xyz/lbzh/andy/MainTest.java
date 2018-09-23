@@ -49,6 +49,11 @@ public class MainTest {
         RoundBracketExpression r = RoundBracketExpression.operator(new SymbolExpression("22"));
     }
 
+    @Test
+    public void constructTest() {
+
+    }
+
 }
 
 

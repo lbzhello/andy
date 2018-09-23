@@ -14,6 +14,10 @@ public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 
+    public CurlyBracketExpression(Expression... expressions) {
+        super(expressions);
+    }
+
     public BracketExpression add(Expression expression) {
         //record the order of the origin file
         super.add(expression);
