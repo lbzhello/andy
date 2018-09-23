@@ -14,12 +14,8 @@ public class RoundBracketExpression extends BracketExpression {
         super(expressions);
     }
 
-    public RoundBracketExpression(List<Expression> list) {
-        list(list);
-    }
-
-    public RoundBracketExpression sexpress() {
-        return new RoundBracketExpression(list());
+    public BracketExpression sexpress() {
+        return new RoundBracketExpression().list(list());
     }
 
     @Override

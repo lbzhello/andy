@@ -205,7 +205,8 @@ public class DefaultParser implements Parser<Expression> {
         if (expression.getClass().getDeclaredAnnotation(RoundBracketed.class) == null) {
             return ExpressionBuilder.roundBracket(expression);
         } else {
-            return ((RoundBracketExpression)expression).sexpress();
+            return ExpressionBuilder.roundBracket().list(((BracketExpression) expression).list());
+
         }
     }
 
