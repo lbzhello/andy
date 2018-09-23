@@ -1,7 +1,6 @@
 package xyz.lbzh.andy.expression.support;
 
 public class DelimiterExpression extends ValueExpression {
-    public DelimiterExpression(){}
 
     public DelimiterExpression(Object value) {
         this.value = value;

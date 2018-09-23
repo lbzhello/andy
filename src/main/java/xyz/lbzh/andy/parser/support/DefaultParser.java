@@ -73,12 +73,12 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return new OperatorExpression(op, left, operator(right, op2));
+                return RoundBracketExpression.operator(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
-                return operator(new OperatorExpression(op, left, right),op2);
+                return operator(RoundBracketExpression.operator(op, left, right),op2);
             } 
         } else { //e.g. left op right
-            return new OperatorExpression(op, left, right);
+            return RoundBracketExpression.operator(op, left, right);
         }
     }
 
@@ -142,7 +142,7 @@ public class DefaultParser implements Parser<Expression> {
 
     private RoundBracketExpression commandExpression(Expression cmd) throws Exception {
         int size = Definition.getCommandSize(cmd.toString());
-        RoundBracketExpression sexpression = new CommandExpression(cmd);
+        RoundBracketExpression sexpression = RoundBracketExpression.command(cmd);
         for (int i = 0; i < size; i++) {
             sexpression.add(expression());
         }

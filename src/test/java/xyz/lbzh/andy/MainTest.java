@@ -2,9 +2,7 @@ package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.annotation.RoundBracketed;
-import xyz.lbzh.andy.expression.support.CommandExpression;
-import xyz.lbzh.andy.expression.support.RoundBracketExpression;
-import xyz.lbzh.andy.expression.support.ValueExpression;
+import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
 
 import java.lang.invoke.MethodHandle;
@@ -30,7 +28,7 @@ public class MainTest {
 
     @Test
     public void AnnotationTest() throws IllegalAccessException, InstantiationException {
-        Expression expression = new CommandExpression(new ValueExpression("expr"));
+        Expression expression = RoundBracketExpression.command(new ValueExpression("expr"));
         RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
         Class<? extends RoundBracketExpression> v = roundBracketed.value();
         RoundBracketExpression o = v.newInstance();
@@ -44,6 +42,11 @@ public class MainTest {
         sb.replace(4, 5, "");
         sb.append("0");
         System.out.println(sb);
+    }
+
+    @Test
+    public void roundBracketTest() {
+        RoundBracketExpression r = RoundBracketExpression.operator(new SymbolExpression("22"));
     }
 
 }
