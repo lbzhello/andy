@@ -2,9 +2,12 @@ package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
 
-public class ListExpression extends DefaultExpression {
+/**
+ * [...]
+ */
+public class SquareBracketExpression extends BracketExpression {
 
-    public ListExpression(Expression... expressions) {
+    public SquareBracketExpression(Expression... expressions) {
         super(expressions);
     }
 

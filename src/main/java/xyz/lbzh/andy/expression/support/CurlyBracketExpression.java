@@ -4,24 +4,22 @@ import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * 表达式上下文
- * e.g. {(...) (...) (...) ...}
+ * e.g. {...}
  */
-public class ComplexExpression extends DefaultExpression {
+public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> buildStream = new ArrayList<>();
     private List<Expression> evalStream = new ArrayList<>();
 
-    public DefaultExpression add(Expression expression) {
+    public BracketExpression add(Expression expression) {
         //record the order of the origin file
         super.add(expression);
 
-        if (expression instanceof SExpression) {
-            SExpression sexpression = (SExpression)expression;
+        if (expression instanceof RoundBracketExpression) {
+            RoundBracketExpression sexpression = (RoundBracketExpression)expression;
             if (Objects.equals(sexpression.first(), Definition.DEFINE)) { //对象定义
                 this.addBuildStream(expression);
             } else if (Objects.equals(sexpression.first(), Definition.PAIR)) { //字段定义

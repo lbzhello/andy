@@ -1,9 +1,6 @@
 package xyz.lbzh.andy.engine.support;
 
-import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.engine.Engine;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.support.SExpression;
 
 import java.util.HashMap;
 import java.util.Map;

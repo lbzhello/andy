@@ -1,9 +1,9 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.annotation.SExpressed;
+import xyz.lbzh.andy.expression.annotation.RoundBracketed;
 import xyz.lbzh.andy.expression.support.CommandExpression;
-import xyz.lbzh.andy.expression.support.SExpression;
+import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 import xyz.lbzh.andy.expression.support.ValueExpression;
 import org.junit.Test;
 
@@ -31,9 +31,9 @@ public class MainTest {
     @Test
     public void AnnotationTest() throws IllegalAccessException, InstantiationException {
         Expression expression = new CommandExpression(new ValueExpression("expr"));
-        SExpressed sExpressed = expression.getClass().getDeclaredAnnotation(SExpressed.class);
-        Class<? extends SExpression> v = sExpressed.value();
-        SExpression o = v.newInstance();
+        RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
+        Class<? extends RoundBracketExpression> v = roundBracketed.value();
+        RoundBracketExpression o = v.newInstance();
 
         System.out.println();
     }

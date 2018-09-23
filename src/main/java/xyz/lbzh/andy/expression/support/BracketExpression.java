@@ -7,10 +7,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DefaultExpression implements Expression {
+public class BracketExpression implements Expression {
     private List<Expression> list;
 
-    public DefaultExpression(Expression... expressions) {
+    public BracketExpression(Expression... expressions) {
         list = new LinkedList<>();
         Collections.addAll(list, expressions);
     }
@@ -19,7 +19,7 @@ public class DefaultExpression implements Expression {
         return list;
     }
 
-    public DefaultExpression list(List<Expression> list) {
+    public BracketExpression list(List<Expression> list) {
         this.list = list;
         return this;
     }
@@ -28,7 +28,7 @@ public class DefaultExpression implements Expression {
         return this.list.size() == 0 ? Definition.NIL : list.get(0);
     }
 
-    public DefaultExpression add(Expression expression) {
+    public BracketExpression add(Expression expression) {
         this.list.add(expression);
         return this;
     }
