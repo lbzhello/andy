@@ -52,25 +52,25 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     public String toString_old() {
-        StringBuffer buildStreamSB = new StringBuffer();
-        StringBuffer evalStreamSB = new StringBuffer();
+        StringBuffer buildListSB = new StringBuffer();
+        StringBuffer evalListSB = new StringBuffer();
 
         for (Expression expression : buildList) {
-            buildStreamSB.append(expression + " ");
+            buildListSB.append(expression + " ");
         }
 
         for (Expression expression : evalList) {
-            evalStreamSB.append(expression + " ");
+            evalListSB.append(expression + " ");
         }
 
-        if (buildStreamSB.length() > 0 && evalStreamSB.length() == 0) { //去掉 buildStreamSB 最后空格
-            buildStreamSB.deleteCharAt(buildStreamSB.length() - 1);
+        if (buildListSB.length() > 0 && evalListSB.length() == 0) { //去掉 buildStreamSB 最后空格
+            buildListSB.deleteCharAt(buildListSB.length() - 1);
         }
 
-        if (evalStreamSB.length() > 0) { //去掉evalStreamSB最后空格
-            evalStreamSB.deleteCharAt(evalStreamSB.length() - 1);
+        if (evalListSB.length() > 0) { //去掉evalStreamSB最后空格
+            evalListSB.deleteCharAt(evalListSB.length() - 1);
         }
 
-        return "{" + buildStreamSB + evalStreamSB + "}";
+        return "{" + buildListSB + evalListSB + "}";
     }
 }
