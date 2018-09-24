@@ -213,11 +213,11 @@ public class DefaultParser implements Parser<Expression> {
      */
     private BracketExpression roundBracket(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
-            return roundBracket(parseListExpression(ExpressionBuilder.squareBracket(left)));
+            return roundBracket(commaExpression(ExpressionBuilder.squareBracket(left)));
         } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
             return roundBracket(semicolonExpression(ExpressionBuilder.squareBracket(left)));
         } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
-            return roundBracket(parseSExpression(ExpressionBuilder.roundBracket(left)));
+            return roundBracket(parseRoundBracket(ExpressionBuilder.roundBracket(left)));
         } else {
             nextToken(); //eat ")"
             return (BracketExpression)left;
@@ -233,7 +233,7 @@ public class DefaultParser implements Parser<Expression> {
             nextToken(); //eat ";"
             Expression expression = expression();
             if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2; expr3, expr4 ...
-                expression = parseListExpression(ExpressionBuilder.squareBracket(expression));
+                expression = commaExpression(ExpressionBuilder.squareBracket(expression));
             }
             squareBracketExpression.add(expression);
         }
@@ -244,7 +244,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (exp1 exp2 ...)
      * @return
      */
-    private BracketExpression parseSExpression(BracketExpression sexpression) throws Exception {
+    private BracketExpression parseRoundBracket(BracketExpression sexpression) throws Exception {
         while (!Objects.equals(getToken().toString(), ")")) {
             sexpression.add(expression());
         }
@@ -255,7 +255,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (expr1, expr2, ...)
      * @return
      */
-    private BracketExpression parseListExpression(BracketExpression squareBracketExpression) throws Exception {
+    private BracketExpression commaExpression(BracketExpression squareBracketExpression) throws Exception {
         while (Objects.equals(getToken().toString(), ",")) {
             nextToken(); //eat ","
             squareBracketExpression.add(expression());

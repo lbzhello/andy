@@ -11,8 +11,8 @@ import java.util.Objects;
  * e.g. {...}
  */
 public class CurlyBracketExpression extends BracketExpression {
-    private List<Expression> buildStream = new ArrayList<>();
-    private List<Expression> evalStream = new ArrayList<>();
+    private List<Expression> buildList = new ArrayList<>();
+    private List<Expression> evalList = new ArrayList<>();
 
     public CurlyBracketExpression(Expression... expressions) {
         super(expressions);
@@ -25,25 +25,25 @@ public class CurlyBracketExpression extends BracketExpression {
         if (expression instanceof RoundBracketExpression) {
             RoundBracketExpression sexpression = (RoundBracketExpression)expression;
             if (Objects.equals(sexpression.first(), Definition.DEFINE)) { //对象定义
-                this.addBuildStream(expression);
+                this.addBuildList(expression);
             } else if (Objects.equals(sexpression.first(), Definition.PAIR)) { //字段定义
-                this.addBuildStream(expression);
+                this.addBuildList(expression);
             } else {
-                this.addEvalStream(expression);
+                this.addEvalList(expression);
             }
         } else {
-            this.addEvalStream(expression);
+            this.addEvalList(expression);
         }
 
         return this;
     }
 
-    private void addBuildStream(Expression expression){
-        this.buildStream.add(expression);
+    private void addBuildList(Expression expression){
+        this.buildList.add(expression);
     }
 
-    private void addEvalStream(Expression expression){
-        this.evalStream.add(expression);
+    private void addEvalList(Expression expression){
+        this.evalList.add(expression);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class CurlyBracketExpression extends BracketExpression {
         StringBuffer buildStreamSB = new StringBuffer();
         StringBuffer evalStreamSB = new StringBuffer();
 
-        for (Expression expression : buildStream) {
+        for (Expression expression : buildList) {
             buildStreamSB.append(expression + " ");
         }
 
-        for (Expression expression : evalStream) {
+        for (Expression expression : evalList) {
             evalStreamSB.append(expression + " ");
         }
 
