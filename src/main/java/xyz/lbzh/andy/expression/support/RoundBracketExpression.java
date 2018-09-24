@@ -1,9 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.annotation.RoundBracketed;
-
-import java.util.List;
+import xyz.lbzh.andy.expression.RoundBracketed;
 
 /**
  * (...)

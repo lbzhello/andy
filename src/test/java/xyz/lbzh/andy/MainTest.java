@@ -1,7 +1,7 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.annotation.RoundBracketed;
+import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ package xyz.lbzh.andy.parser.support;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionBuilder;
-import xyz.lbzh.andy.expression.annotation.RoundBracketed;
+import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Tokenizer;

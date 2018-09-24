@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.constant.ExpressionType;
+import xyz.lbzh.andy.expression.ExpressionType;
 import xyz.lbzh.andy.expression.support.StringExpression;
 import xyz.lbzh.andy.expression.support.ValueExpression;
 
