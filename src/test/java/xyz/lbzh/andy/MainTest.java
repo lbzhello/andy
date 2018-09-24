@@ -28,7 +28,7 @@ public class MainTest {
 
     @Test
     public void AnnotationTest() throws IllegalAccessException, InstantiationException {
-        Expression expression = RoundBracketExpression.command(new ValueExpression("expr"));
+        Expression expression = RoundBracketExpression.operator(new ValueExpression("expr"));
         RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
         Class<? extends RoundBracketExpression> v = roundBracketed.value();
         RoundBracketExpression o = v.newInstance();

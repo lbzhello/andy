@@ -26,7 +26,4 @@ public class ExpressionBuilder {
         return RoundBracketExpression.operator(expressions);
     }
 
-    public static BracketExpression command(Expression... expressions) {
-        return RoundBracketExpression.command(expressions);
-    }
 }

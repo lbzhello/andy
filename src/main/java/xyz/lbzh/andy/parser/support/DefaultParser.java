@@ -141,9 +141,9 @@ public class DefaultParser implements Parser<Expression> {
 
     }
 
-    private BracketExpression commandExpression(Expression cmd) throws Exception {
-        int size = Definition.getCommandSize(cmd.toString());
-        BracketExpression roundBracketExpression = ExpressionBuilder.command(cmd);
+    private BracketExpression commandExpression(Expression op) throws Exception {
+        int size = Definition.getCommandSize(op.toString());
+        BracketExpression roundBracketExpression = ExpressionBuilder.operator(op);
         for (int i = 0; i < size; i++) {
             roundBracketExpression.add(expression());
         }
@@ -194,20 +194,16 @@ public class DefaultParser implements Parser<Expression> {
         Expression expression = expression();
         if (Objects.equals(getToken().toString(), ")")) { //e.g. (expression)
             nextToken(); //eat ")"
-            return toRoundBracketExpression(expression);
+            if (expression.getClass().getDeclaredAnnotation(RoundBracketed.class) == null) {
+                return ExpressionBuilder.roundBracket(expression);
+            } else {
+                return ExpressionBuilder.roundBracket().list(((BracketExpression) expression).list());
+
+            }
         } else {
             return roundBracket(expression);
         }
 
-    }
-
-    private BracketExpression toRoundBracketExpression(Expression expression) {
-        if (expression.getClass().getDeclaredAnnotation(RoundBracketed.class) == null) {
-            return ExpressionBuilder.roundBracket(expression);
-        } else {
-            return ExpressionBuilder.roundBracket().list(((BracketExpression) expression).list());
-
-        }
     }
 
     /**
@@ -219,7 +215,7 @@ public class DefaultParser implements Parser<Expression> {
         if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
             return roundBracket(parseListExpression(ExpressionBuilder.squareBracket(left)));
         } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
-            return roundBracket(parseMultiListExpression(ExpressionBuilder.squareBracket(left)));
+            return roundBracket(semicolonExpression(ExpressionBuilder.squareBracket(left)));
         } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
             return roundBracket(parseSExpression(ExpressionBuilder.roundBracket(left)));
         } else {
@@ -232,7 +228,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (expr1,expr2, ...; expr3, expr4; ...) => [[expr1 expr2 ...] [expr3 expr4] [...]]
      * @return
      */
-    private BracketExpression parseMultiListExpression(BracketExpression squareBracketExpression) throws Exception {
+    private BracketExpression semicolonExpression(BracketExpression squareBracketExpression) throws Exception {
         while (Objects.equals(getToken().toString(), ";")) {
             nextToken(); //eat ";"
             Expression expression = expression();
