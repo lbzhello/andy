@@ -1,6 +1,7 @@
 package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.constant.ExpressionType;
 import xyz.lbzh.andy.expression.support.StringExpression;
 import xyz.lbzh.andy.expression.support.ValueExpression;
 
@@ -18,32 +19,32 @@ public final class Definition {
      */
     public static String SPACE = "SPACE_";
 
-    public static final Expression NIL = new ValueExpression("nil");
+    public static final Expression NIL = ExpressionType.NIL;
 
     /**
      * 系统提供函数，用于定义其他函数/对象
      */
-    public static Expression DEFINE = new ValueExpression("define");
+    public static Expression DEFINE = ExpressionType.DEFINE;
 
     /**
      * 系统提供函数，用于定义匿名对象
      */
-    public static Expression LAMBDA = new ValueExpression("lambda");
+    public static Expression LAMBDA = ExpressionType.LAMBDA;
 
     /**
      * 用于定义属性/字段
      */
-    public static Expression PAIR = new ValueExpression(":");
+    public static Expression PAIR = ExpressionType.PAIR;
 
     /**
      * End of file
      */
-    public static final Expression EOF = new ValueExpression("-_^");
+    public static final Expression EOF = ExpressionType.EOF;
 
     /**
      * Head of file
      */
-    public static final Expression HOF = new ValueExpression("^v^");
+    public static final Expression HOF = ExpressionType.HOF;
 
     private static final Set<Character> delimiters = new HashSet<>();
 
