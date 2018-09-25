@@ -5,10 +5,19 @@ import java.util.Map;
 
 public class ExpressionContext implements Expression, Context<Expression, Object> {
     private Map<Expression, Object> container = new HashMap<>();
+    private Context<Expression, Object> parent = null;
+
+    public ExpressionContext(Context<Expression, Object> parent) {
+        this.parent = parent;
+    }
 
     @Override
     public Object lookup(Expression key) {
-        return container.getOrDefault(key, ExpressionType.NIL);
+        Object o = container.getOrDefault(key, null);
+        if (o == null && this.parent != null) {
+            o = parent.lookup(key);
+        }
+        return o;
     }
 
     @Override
