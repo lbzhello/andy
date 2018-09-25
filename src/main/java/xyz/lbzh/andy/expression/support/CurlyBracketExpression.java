@@ -1,6 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.core.Definition;
+import xyz.lbzh.andy.expression.Context;
 import xyz.lbzh.andy.expression.Expression;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.Objects;
 public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> buildList = new ArrayList<>();
     private List<Expression> evalList = new ArrayList<>();
+
+    private Context<Expression, Object> context;
 
     public CurlyBracketExpression(Expression... expressions) {
         super(expressions);
@@ -51,7 +54,7 @@ public class CurlyBracketExpression extends BracketExpression {
         return "{" + super.toString() + "}";
     }
 
-    public String toString_old() {
+    public String show() {
         StringBuffer buildListSB = new StringBuffer();
         StringBuffer evalListSB = new StringBuffer();
 
