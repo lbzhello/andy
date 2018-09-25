@@ -1,8 +1,9 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.Name;
 
-public class ValueExpression implements Expression {
+public class ValueExpression implements Expression, Name {
     protected Object value;
 
     public ValueExpression(){}

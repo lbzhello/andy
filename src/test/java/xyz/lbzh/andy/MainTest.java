@@ -1,6 +1,8 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionBuilder;
+import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -9,6 +11,8 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainTest {
     public static void main(String[] args) throws Throwable {
@@ -50,8 +54,21 @@ public class MainTest {
     }
 
     @Test
-    public void constructTest() {
+    public void equalTest() {
+        Expression a = new ValueExpression("t");
+        Expression b = ExpressionBuilder.roundBracket(a);
+        System.out.println(a.equals(b));
+        System.out.println(b.equals(a));
+        Map<Expression, Object> map = new HashMap<>();
+        map.put(a, "t");
+        map.put(b, "t2");
+        System.out.println(map);
+    }
 
+    @Test
+    public void objTest() {
+        Expression a = new ValueExpression("t");
+        System.out.println(Name.NIL);
     }
 
 }
