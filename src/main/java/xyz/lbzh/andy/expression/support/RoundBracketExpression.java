@@ -1,14 +1,11 @@
 package xyz.lbzh.andy.expression.support;
 
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.Nameable;
-import xyz.lbzh.andy.expression.RoundBracketed;
+import xyz.lbzh.andy.expression.*;
 
 /**
  * (...)
  */
-public class RoundBracketExpression extends BracketExpression implements Nameable {
+public class RoundBracketExpression extends BracketExpression {
 
     public RoundBracketExpression(Expression... expressions) {
         super(expressions);
@@ -16,6 +13,11 @@ public class RoundBracketExpression extends BracketExpression implements Nameabl
 
     public static RoundBracketExpression operator(Expression... expressions) {
         return new OperatorExpression(expressions);
+    }
+
+    @Override
+    public Name toName() {
+        return this.first().toName();
     }
 
     @Override
@@ -37,7 +39,7 @@ public class RoundBracketExpression extends BracketExpression implements Nameabl
         }
 
         @Override
-        public Expression eval(Context<Expression, Object> context) {
+        public Expression eval(Context<Name, Object> context) {
             return null;
         }
     }

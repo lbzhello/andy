@@ -13,6 +13,11 @@ public class ValueExpression implements Expression, Name {
     }
 
     @Override
+    public Name toName() {
+        return this;
+    }
+
+    @Override
     public int hashCode() {
         return this.getClass().getName().hashCode() + this.value.hashCode();
     }
