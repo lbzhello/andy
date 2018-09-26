@@ -15,6 +15,10 @@ public class RoundBracketExpression extends BracketExpression {
         return new OperatorExpression(expressions);
     }
 
+    public static RoundBracketExpression define(Expression key, Expression value) {
+        return new DefineExpression(key, value);
+    }
+
     @Override
     public Name toName() {
         return this.first().toName();
@@ -33,19 +37,19 @@ public class RoundBracketExpression extends BracketExpression {
 
     }
 
-    private static class DefinitionExpression extends RoundBracketExpression {
-        private Expression name;
-        private Expression body;
-        public DefinitionExpression(Expression name, Expression body) {
-            super(name, body);
-            this.name = name;
-            this.body = body;
+    private static class DefineExpression extends RoundBracketExpression {
+        private Expression key;
+        private Expression value;
+        public DefineExpression(Expression key, Expression value) {
+            super(key, value);
+            this.key = key;
+            this.value = value;
         }
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-            context.bind(name.toName(), body);
-            return null;
+            context.bind(key.toName(), value);
+            return this;
         }
     }
 
