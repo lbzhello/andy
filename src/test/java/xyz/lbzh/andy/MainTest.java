@@ -67,8 +67,8 @@ public class MainTest {
 
     @Test
     public void objTest() {
-        Expression a = new ValueExpression("t");
-        System.out.println(Name.NIL);
+        Expression a = ExpressionBuilder.roundBracket(ExpressionBuilder.roundBracket(new ValueExpression("a")));
+        System.out.println(a.toName());
     }
 
 }

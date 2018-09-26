@@ -34,12 +34,17 @@ public class RoundBracketExpression extends BracketExpression {
     }
 
     private static class DefinitionExpression extends RoundBracketExpression {
-        public DefinitionExpression(Expression name, CurlyBracketExpression curlyBracketExpression) {
-            super(name, curlyBracketExpression);
+        private Expression name;
+        private Expression body;
+        public DefinitionExpression(Expression name, Expression body) {
+            super(name, body);
+            this.name = name;
+            this.body = body;
         }
 
         @Override
         public Expression eval(Context<Name, Object> context) {
+            context.bind(name.toName(), body);
             return null;
         }
     }
