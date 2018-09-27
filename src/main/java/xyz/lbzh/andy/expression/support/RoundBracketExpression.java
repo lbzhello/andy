@@ -15,7 +15,7 @@ public class RoundBracketExpression extends BracketExpression {
         return new OperatorExpression(expressions);
     }
 
-    public static RoundBracketExpression define(Expression key, Expression value) {
+    public static RoundBracketExpression define(Expression key, CurlyBracketExpression value) {
         return new DefineExpression(key, value);
     }
 
@@ -39,8 +39,8 @@ public class RoundBracketExpression extends BracketExpression {
 
     private static class DefineExpression extends RoundBracketExpression {
         private Expression key;
-        private Expression value;
-        public DefineExpression(Expression key, Expression value) {
+        private CurlyBracketExpression value;
+        public DefineExpression(Expression key, CurlyBracketExpression value) {
             super(key, value);
             this.key = key;
             this.value = value;
@@ -50,6 +50,22 @@ public class RoundBracketExpression extends BracketExpression {
         public Expression eval(Context<Name, Object> context) {
             context.bind(key.toName(), value);
             return this;
+        }
+    }
+
+    private static class PairExpression extends RoundBracketExpression {
+        private Expression key;
+        private Expression value;
+
+        public PairExpression(Expression key, Expression value) {
+            super(key, value);
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public Expression eval(Context<Name, Object> context) {
+            return null;
         }
     }
 

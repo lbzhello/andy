@@ -26,7 +26,7 @@ public class ExpressionBuilder {
         return RoundBracketExpression.operator(expressions);
     }
 
-    public static BracketExpression define(Expression key, Expression value) {
+    public static BracketExpression define(Expression key, CurlyBracketExpression value) {
         return RoundBracketExpression.define(key, value);
     }
 }
