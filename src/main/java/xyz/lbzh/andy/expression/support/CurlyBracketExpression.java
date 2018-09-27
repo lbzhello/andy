@@ -30,25 +30,26 @@ public class CurlyBracketExpression extends BracketExpression {
         if (expression instanceof RoundBracketExpression) {
             RoundBracketExpression roundBracketExpression = (RoundBracketExpression)expression;
             if (Objects.equals(roundBracketExpression.first(), Definition.DEFINE)) { //对象定义
-                this.addBuildList(expression);
+                Expression key = roundBracketExpression.second();
+                CurlyBracketExpression value = (CurlyBracketExpression)roundBracketExpression.third();
+                if (key instanceof RoundBracketExpression) { //e.g. (define (a b c){...}
+
+                }
+                this.buildList.add(expression);
             } else if (Objects.equals(roundBracketExpression.first(), Definition.PAIR)) { //字段定义
-                this.addBuildList(expression);
+                this.buildList.add(expression);
             } else {
-                this.addEvalList(expression);
+                this.evalList.add(expression);
             }
         } else {
-            this.addEvalList(expression);
+            this.evalList.add(expression);
         }
 
         return this;
     }
 
-    private void addBuildList(Expression expression){
-        this.buildList.add(expression);
-    }
-
-    private void addEvalList(Expression expression){
-        this.evalList.add(expression);
+    public Context<Name, Object> context() {
+        return this.context;
     }
 
     @Override

@@ -27,6 +27,14 @@ public class BracketExpression implements Expression {
         return this.list.size() == 0 ? Definition.NIL : list.get(0);
     }
 
+    public Expression second() {
+        return this.list.size() >= 2 ? list.get(1) : Definition.NIL;
+    }
+
+    public Expression third() {
+        return this.list.size() >= 3 ? list.get(2) : Definition.NIL;
+    }
+
     public BracketExpression add(Expression expression) {
         this.list.add(expression);
         return this;
