@@ -28,10 +28,10 @@ public class CurlyBracketExpression extends BracketExpression {
         super.add(expression);
 
         if (expression instanceof RoundBracketExpression) {
-            RoundBracketExpression sexpression = (RoundBracketExpression)expression;
-            if (Objects.equals(sexpression.first(), Definition.DEFINE)) { //对象定义
+            RoundBracketExpression roundBracketExpression = (RoundBracketExpression)expression;
+            if (Objects.equals(roundBracketExpression.first(), Definition.DEFINE)) { //对象定义
                 this.addBuildList(expression);
-            } else if (Objects.equals(sexpression.first(), Definition.PAIR)) { //字段定义
+            } else if (Objects.equals(roundBracketExpression.first(), Definition.PAIR)) { //字段定义
                 this.addBuildList(expression);
             } else {
                 this.addEvalList(expression);
