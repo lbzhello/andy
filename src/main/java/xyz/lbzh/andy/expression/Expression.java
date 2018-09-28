@@ -14,7 +14,7 @@ public interface Expression extends Nameable, Serializable {
     }
 
     default <T> T shift(Class<T> clazz) {
-        return (T)this;
+        return (T)shift();
     }
 
 }
