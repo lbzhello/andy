@@ -24,7 +24,7 @@ public class BracketExpression implements Expression {
     }
 
     public Expression first() {
-        return this.list.size() == 0 ? Definition.NIL : list.get(0);
+        return this.list.size() >= 1 ? list.get(0) : Definition.NIL;
     }
 
     public Expression second() {

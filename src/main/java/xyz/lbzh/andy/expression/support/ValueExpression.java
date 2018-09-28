@@ -13,7 +13,7 @@ public class ValueExpression implements Expression, Name {
     }
 
     @Override
-    public Name toName() {
+    public Name getName() {
         return this;
     }
 

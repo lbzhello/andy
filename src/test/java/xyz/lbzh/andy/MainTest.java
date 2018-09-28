@@ -2,7 +2,6 @@ package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionBuilder;
-import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -68,7 +67,7 @@ public class MainTest {
     @Test
     public void objTest() {
         Expression a = ExpressionBuilder.roundBracket(ExpressionBuilder.roundBracket(new ValueExpression("a")));
-        System.out.println(a.toName());
+        System.out.println(a.getName());
     }
 
 }

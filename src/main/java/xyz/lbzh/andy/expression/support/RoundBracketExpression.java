@@ -20,8 +20,13 @@ public class RoundBracketExpression extends BracketExpression {
     }
 
     @Override
-    public Name toName() {
-        return this.first().toName();
+    public Expression shift() {
+        return ExpressionBuilder.squareBracket().list(this.list());
+    }
+
+    @Override
+    public Name getName() {
+        return this.first().getName();
     }
 
     @Override
@@ -35,6 +40,10 @@ public class RoundBracketExpression extends BracketExpression {
             super(expressions);
         }
 
+        @Override
+        public Expression shift() {
+            return ExpressionBuilder.roundBracket().list(this.list());
+        }
     }
 
     private static class DefineExpression extends RoundBracketExpression {
@@ -48,7 +57,7 @@ public class RoundBracketExpression extends BracketExpression {
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-            context.bind(key.toName(), value);
+            context.bind(key.getName(), value);
             return this;
         }
     }

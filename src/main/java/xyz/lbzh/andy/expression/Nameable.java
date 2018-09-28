@@ -5,7 +5,7 @@ public interface Nameable {
      * transfer an object to a name
      * @return
      */
-    default Name toName() {
+    default Name getName() {
         return Name.NIL;
     }
 }
