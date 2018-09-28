@@ -12,6 +12,10 @@ public class SquareBracketExpression extends BracketExpression {
         super(expressions);
     }
 
+    /**
+     * SquareBracketExpression => RoundBracketExpression
+     * @return
+     */
     @Override
     public Expression shift() {
         return ExpressionBuilder.roundBracket().list(this.list());

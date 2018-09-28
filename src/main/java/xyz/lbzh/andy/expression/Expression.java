@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression;
 
 
-import xyz.lbzh.andy.expression.support.RoundBracketExpression;
-
 import java.io.Serializable;
 
 public interface Expression extends Nameable, Serializable {
@@ -15,8 +13,7 @@ public interface Expression extends Nameable, Serializable {
         return this;
     }
 
-
-    default <T> T as(Class<T> clazz) {
+    default <T> T shift(Class<T> clazz) {
         return (T)this;
     }
 
