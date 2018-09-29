@@ -25,7 +25,7 @@ public class RoundBracketExpression extends BracketExpression {
      */
     @Override
     public Expression shift() {
-        return ExpressionBuilder.squareBracket().list(this.list());
+        return ExpressionFactory.squareBracket().list(this.list());
     }
 
     @Override
@@ -46,22 +46,27 @@ public class RoundBracketExpression extends BracketExpression {
 
         @Override
         public Expression shift() {
-            return ExpressionBuilder.roundBracket().list(this.list());
+            return ExpressionFactory.roundBracket().list(this.list());
         }
     }
 
     private static class DefineExpression extends RoundBracketExpression {
-        private Expression key;
-        private CurlyBracketExpression value;
-        public DefineExpression(Expression key, CurlyBracketExpression value) {
-            super(key, value);
-            this.key = key;
-            this.value = value;
+        private Expression expression;
+        private CurlyBracketExpression curlyBracketExpression;
+        public DefineExpression(Expression expression, CurlyBracketExpression curlyBracketExpression) {
+            super(expression, curlyBracketExpression);
+            this.expression = expression;
+            this.curlyBracketExpression = curlyBracketExpression;
         }
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-            context.bind(key.getName(), value);
+
+            if (expression instanceof RoundBracketExpression) { //e.g. (a b c){...}
+                RoundBracketExpression nameAndType = (RoundBracketExpression) expression;
+
+            }
+            context.bind(expression.getName(), curlyBracketExpression);
             return this;
         }
     }

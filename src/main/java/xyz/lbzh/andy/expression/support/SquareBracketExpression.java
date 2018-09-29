@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionBuilder;
+import xyz.lbzh.andy.expression.ExpressionFactory;
 
 /**
  * [...]
@@ -18,7 +18,7 @@ public class SquareBracketExpression extends BracketExpression {
      */
     @Override
     public Expression shift() {
-        return ExpressionBuilder.roundBracket().list(this.list());
+        return ExpressionFactory.roundBracket().list(this.list());
     }
 
     @Override

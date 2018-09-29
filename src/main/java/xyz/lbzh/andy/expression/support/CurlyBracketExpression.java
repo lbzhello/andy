@@ -3,7 +3,6 @@ package xyz.lbzh.andy.expression.support;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Context;
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionBuilder;
 import xyz.lbzh.andy.expression.Name;
 
 import java.util.ArrayList;
@@ -43,8 +42,12 @@ public class CurlyBracketExpression extends BracketExpression {
         return this;
     }
 
-    public Context<Name, Object> context() {
+    public Context<Name, Object> getContext() {
         return this.context;
+    }
+
+    public void setContext(Context<Name, Object> context) {
+        this.context = context;
     }
 
     @Override

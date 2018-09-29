@@ -5,7 +5,7 @@ import xyz.lbzh.andy.expression.support.CurlyBracketExpression;
 import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 import xyz.lbzh.andy.expression.support.SquareBracketExpression;
 
-public class ExpressionBuilder {
+public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
         return new BracketExpression(expressions);
     }

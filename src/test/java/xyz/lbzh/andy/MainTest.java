@@ -1,7 +1,7 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionBuilder;
+import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -10,6 +10,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class MainTest {
     @Test
     public void equalTest() {
         Expression a = new ValueExpression("t");
-        Expression b = ExpressionBuilder.roundBracket(a);
+        Expression b = ExpressionFactory.roundBracket(a);
         System.out.println(a.equals(b));
         System.out.println(b.equals(a));
         Map<Expression, Object> map = new HashMap<>();
@@ -66,8 +67,12 @@ public class MainTest {
 
     @Test
     public void objTest() {
-        Expression a = ExpressionBuilder.roundBracket(ExpressionBuilder.roundBracket(new ValueExpression("a")));
-        System.out.println(a.getName());
+        var list = new ArrayList<String>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        System.out.println(list.subList(1, 4));
     }
 
 }
