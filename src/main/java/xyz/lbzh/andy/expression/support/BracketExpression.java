@@ -35,6 +35,10 @@ public class BracketExpression implements Expression {
         return this.list.size() >= 3 ? list.get(2) : Definition.NIL;
     }
 
+    public List<Expression> tail() {
+        return this.list().subList(1, this.list().size());
+    }
+
     public BracketExpression add(Expression expression) {
         this.list.add(expression);
         return this;

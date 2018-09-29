@@ -2,6 +2,8 @@ package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.*;
 
+import java.util.List;
+
 /**
  * (...)
  */
@@ -53,6 +55,7 @@ public class RoundBracketExpression extends BracketExpression {
     private static class DefineExpression extends RoundBracketExpression {
         private Expression expression;
         private CurlyBracketExpression curlyBracketExpression;
+
         public DefineExpression(Expression expression, CurlyBracketExpression curlyBracketExpression) {
             super(expression, curlyBracketExpression);
             this.expression = expression;
@@ -61,10 +64,14 @@ public class RoundBracketExpression extends BracketExpression {
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-
+            curlyBracketExpression.parent(context);
             if (expression instanceof RoundBracketExpression) { //e.g. (a b c){...}
                 RoundBracketExpression nameAndType = (RoundBracketExpression) expression;
+                Expression name = nameAndType.first();
+                List<Expression> params = nameAndType.tail();
+                for (Expression param : params) {
 
+                }
             }
             context.bind(expression.getName(), curlyBracketExpression);
             return this;
