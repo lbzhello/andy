@@ -7,7 +7,4 @@ public interface Context<K,V> extends Serializable {
 
     Context<K, V> bind(K key, V value);
 
-    Context<K, V> parent();
-
-    Context<K, V> parent(Context<K, V> parent);
 }

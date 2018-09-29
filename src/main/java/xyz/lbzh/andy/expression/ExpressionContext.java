@@ -7,6 +7,10 @@ public class ExpressionContext implements Expression, Context<Name, Object> {
     private Map<Name, Object> container = new HashMap<>();
     private Context<Name, Object> parent = null;
 
+    public ExpressionContext(Context<Name, Object> parent) {
+        this.parent = parent;
+    }
+
     @Override
     public Object lookup(Name key) {
         Object o = container.getOrDefault(key, null);
@@ -22,14 +26,4 @@ public class ExpressionContext implements Expression, Context<Name, Object> {
         return this;
     }
 
-    @Override
-    public Context<Name, Object> parent() {
-        return this;
-    }
-
-    @Override
-    public Context<Name, Object> parent(Context<Name, Object> parent) {
-        this.parent = parent;
-        return this;
-    }
 }

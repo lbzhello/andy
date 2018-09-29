@@ -1,10 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.core.Definition;
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionContext;
-import xyz.lbzh.andy.expression.Name;
+import xyz.lbzh.andy.expression.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +13,6 @@ import java.util.Objects;
 public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> buildList = new ArrayList<>();
     private List<Expression> evalList = new ArrayList<>();
-
-    private Context<Name, Object> context = new ExpressionContext();
 
     public CurlyBracketExpression(Expression... expressions) {
         super(expressions);
@@ -43,9 +38,20 @@ public class CurlyBracketExpression extends BracketExpression {
         return this;
     }
 
-    public CurlyBracketExpression parent(Context<Name, Object> context) {
-        this.context.parent(context);
-        return this;
+    public Context<Name, Object> build(Context<Name, Object> context) {
+        this.buildList.stream().forEach(expression -> {
+            expression.eval(context);
+        });
+        return context;
+    }
+
+    @Override
+    public Expression eval(Context<Name, Object> context) {
+        Expression rst = ExpressionType.NIL;
+        for (Expression expression : this.evalList) {
+            rst = expression.eval(context);
+        }
+        return rst;
     }
 
     @Override

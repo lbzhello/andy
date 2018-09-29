@@ -64,11 +64,13 @@ public class RoundBracketExpression extends BracketExpression {
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-            curlyBracketExpression.parent(context);
+            this.curlyBracketExpression.build(context);
+            ComplexExpression complexExpression = new ComplexExpression(context);
             if (expression instanceof RoundBracketExpression) { //e.g. (a b c){...}
                 RoundBracketExpression nameAndType = (RoundBracketExpression) expression;
                 Expression name = nameAndType.first();
                 List<Expression> params = nameAndType.tail();
+
                 for (Expression param : params) {
 
                 }
