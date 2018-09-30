@@ -2,6 +2,7 @@ package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
+import xyz.lbzh.andy.expression.NameEnum;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,6 +75,10 @@ public class MainTest {
         list.add("3");
         list.add("4");
         System.out.println(list.subList(1, 4));
+    }
+
+    @Test
+    public void EnumTest() {
     }
 
 }

@@ -18,7 +18,7 @@ public class ExpressionFactory {
         return new SquareBracketExpression(expressions);
     }
 
-    public static BracketExpression curlyBracket(Expression... expressions) {
+    public static CurlyBracketExpression curlyBracket(Expression... expressions) {
         return new CurlyBracketExpression();
     }
 

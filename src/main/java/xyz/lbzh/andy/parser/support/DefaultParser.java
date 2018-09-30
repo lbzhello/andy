@@ -90,11 +90,12 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression combine(Expression left) throws Exception {
         if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
-            BracketExpression sexpression = ExpressionFactory.roundBracket(left);
-            sexpression.list().addAll(this.roundBracketExpression().list());
-            return combine(sexpression);
+            BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
+            bracketExpression.list().addAll(this.roundBracketExpression().list());
+            return combine(bracketExpression);
         } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-            return combine(ExpressionFactory.roundBracket(Definition.DEFINE, left, curlyBracketExpression()));
+//            return combine(ExpressionFactory.roundBracket(Definition.DEFINE, left, curlyBracketExpression()));
+            return combine(ExpressionFactory.define(left, curlyBracketExpression()));
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
             return ExpressionFactory.roundBracket(Definition.PAIR, left, expression());
@@ -154,9 +155,9 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. {...}
      * @return
      */
-    private BracketExpression curlyBracketExpression() throws Exception {
+    private CurlyBracketExpression curlyBracketExpression() throws Exception {
         nextToken(); //eat '{'
-        BracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
+        CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         while (!Objects.equals(getToken().toString(), "}")) {
             curlyBracketExpression.add(expression());
         }

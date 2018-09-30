@@ -57,25 +57,23 @@ public class RoundBracketExpression extends BracketExpression {
         private CurlyBracketExpression curlyBracketExpression;
 
         public DefineExpression(Expression expression, CurlyBracketExpression curlyBracketExpression) {
-            super(expression, curlyBracketExpression);
+            super(ExpressionType.DEFINE, expression, curlyBracketExpression);
             this.expression = expression;
             this.curlyBracketExpression = curlyBracketExpression;
         }
 
+        /**
+         * Define will generate a ComplexExpression
+         * @param context
+         * @return
+         */
         @Override
         public Expression eval(Context<Name, Object> context) {
-            this.curlyBracketExpression.build(context);
-            ComplexExpression complexExpression = new ComplexExpression(context);
-            if (expression instanceof RoundBracketExpression) { //e.g. (a b c){...}
-                RoundBracketExpression nameAndType = (RoundBracketExpression) expression;
-                Expression name = nameAndType.first();
-                List<Expression> params = nameAndType.tail();
-
-                for (Expression param : params) {
-
-                }
-            }
-            context.bind(expression.getName(), curlyBracketExpression);
+            //every ComplexExpression has it's own context
+            Context<Name, Object> complexContext = this.curlyBracketExpression.build(new ExpressionContext(context));
+            ComplexExpression complexExpression = new ComplexExpression(complexContext);
+            complexExpression.build(expression, curlyBracketExpression);
+            context.bind(expression.getName(), complexExpression);
             return this;
         }
     }
@@ -85,7 +83,7 @@ public class RoundBracketExpression extends BracketExpression {
         private Expression value;
 
         public PairExpression(Expression key, Expression value) {
-            super(key, value);
+            super(ExpressionType.PAIR, key, value);
             this.key = key;
             this.value = value;
         }

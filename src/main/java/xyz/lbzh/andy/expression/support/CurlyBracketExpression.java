@@ -45,6 +45,14 @@ public class CurlyBracketExpression extends BracketExpression {
         return context;
     }
 
+    public List<Expression> getBuildList() {
+        return buildList;
+    }
+
+    public List<Expression> getEvalList() {
+        return evalList;
+    }
+
     @Override
     public Expression eval(Context<Name, Object> context) {
         Expression rst = ExpressionType.NIL;
