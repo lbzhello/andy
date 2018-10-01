@@ -36,12 +36,16 @@ public class BracketExpression implements Expression {
     }
 
     public List<Expression> tail() {
-        return this.list().subList(1, this.list().size());
+        return this.list.size() >= 2 ?this.list().subList(1, this.list().size()) : Collections.emptyList();
     }
 
     public BracketExpression add(Expression expression) {
         this.list.add(expression);
         return this;
+    }
+
+    public List<Expression> getParameters() {
+        return list();
     }
 
     @Override

@@ -6,6 +6,7 @@ import xyz.lbzh.andy.expression.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * e.g. {...}
@@ -38,13 +39,6 @@ public class CurlyBracketExpression extends BracketExpression {
         return this;
     }
 
-    public Context<Name, Object> build(Context<Name, Object> context) {
-        this.buildList.stream().forEach(expression -> {
-            expression.eval(context);
-        });
-        return context;
-    }
-
     public List<Expression> getBuildList() {
         return buildList;
     }
@@ -54,12 +48,16 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     @Override
-    public Expression eval(Context<Name, Object> context) {
-        Expression rst = ExpressionType.NIL;
-        for (Expression expression : this.evalList) {
-            rst = expression.eval(context);
-        }
-        return rst;
+    public ComplexExpression eval(Context<Name, Object> context) {
+        this.buildList.stream().forEach(expression -> {
+            expression.eval(context);
+        });
+        return ExpressionFactory.complex(context);
+    }
+
+    @Override
+    public void expr(Consumer<Expression> action) {
+        this.buildList.stream().forEach(action);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.support.BracketExpression;
-import xyz.lbzh.andy.expression.support.CurlyBracketExpression;
-import xyz.lbzh.andy.expression.support.RoundBracketExpression;
-import xyz.lbzh.andy.expression.support.SquareBracketExpression;
+import xyz.lbzh.andy.expression.support.*;
+
+import java.util.Collections;
+import java.util.List;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -27,6 +27,16 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression define(Expression key, CurlyBracketExpression value) {
-        return RoundBracketExpression.define(key, value);
+        //a{...} => a(){...}
+        return RoundBracketExpression.define(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
     }
+
+    public static BracketExpression pair(Expression key, Expression value) {
+        return RoundBracketExpression.pair(key, value);
+    }
+
+    public static ComplexExpression complex(Context<Name, Object> context) {
+        return new ComplexExpression(context);
+    }
+
 }

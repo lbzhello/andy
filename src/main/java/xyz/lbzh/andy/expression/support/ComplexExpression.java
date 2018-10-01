@@ -4,14 +4,14 @@ import xyz.lbzh.andy.expression.Context;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.NameEnum;
+import xyz.lbzh.andy.util.Builder;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class ComplexExpression implements Expression {
-    private Expression expression;
-    private CurlyBracketExpression curlyBracketExpression;
+    private List<Expression> parameters;
+    private List<Expression> list;
 
     private Context<Name, Object> context;
 
@@ -19,25 +19,67 @@ public class ComplexExpression implements Expression {
         this.context = context;
     }
 
+    public ComplexExpression parameters(List<Expression> parameters) {
+        this.parameters = parameters;
+        // param1 -> NameEnum.$0; param2 -> NameEnum.$1; ...
+        for (int i = 0; i < this.parameters.size(); i++) {
+            context.bind(this.parameters.get(i).getName(), NameEnum.values()[i]);
+        }
+        return this;
+    }
+
+    public ComplexExpression list(List<Expression> list) {
+        this.list = list;
+        return this;
+    }
+
+//    private ComplexExpression(ComplexExpressionBuilder builder) {
+//        this.parameters = builder.parameters;
+//        this.list = builder.list;
+//    }
+//
+//    public ComplexExpressionBuilder builder() {
+//        return new ComplexExpressionBuilder();
+//    }
+//
+//    public static class ComplexExpressionBuilder implements Builder<ComplexExpression> {
+//        private List<Expression> parameters;
+//        private List<Expression> list;
+//
+//        public ComplexExpressionBuilder parameters(List<Expression> parameters) {
+//            this.parameters = parameters;
+//            return this;
+//        }
+//
+//        public ComplexExpressionBuilder list(List list) {
+//            this.list = list;
+//            return this;
+//        }
+//
+//        public ComplexExpression build() {
+//            return new ComplexExpression(this);
+//        }
+//    }
+
     /**
-     * e.g. expression{...}
-     * @param expression
-     * @param curlyBracketExpression
+     * e.g. parameters{...}
+     * @param parameters
+     * @param list
      * @return
      */
-    public ComplexExpression build(Expression expression, CurlyBracketExpression curlyBracketExpression) {
-        this.expression = expression;
-        this.curlyBracketExpression = curlyBracketExpression;
+    public ComplexExpression build(List<Expression> parameters, List<Expression> list) {
+        this.parameters = parameters;
+        this.list = list;
         init();
         return this;
     }
 
     private void init() {
         List<Expression> list = Collections.emptyList();
-        if (expression instanceof RoundBracketExpression) { //e.g. (a b c){...}
-            list = ((RoundBracketExpression) expression).tail();
-        } else if (expression instanceof SquareBracketExpression) { //e.g. (a, b, c){...}
-            list = ((SquareBracketExpression) expression).list();
+        if (parameters instanceof RoundBracketExpression) { //e.g. (a b c){...}
+            list = ((RoundBracketExpression) parameters).tail();
+        } else if (parameters instanceof SquareBracketExpression) { //e.g. (a, b, c){...}
+            list = ((SquareBracketExpression) parameters).list();
         } else {
 
         }
