@@ -26,8 +26,15 @@ public class ExpressionFactory {
         return RoundBracketExpression.operator(expressions);
     }
 
+    public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        return RoundBracketExpression.lambda(bracket, curlyBracket);
+    }
+
     public static BracketExpression define(Expression key, CurlyBracketExpression value) {
         //a{...} => a(){...}
+        if (key.getName() == NameEnum.NIL && key instanceof BracketExpression) { //it's a lambda
+            return lambda((BracketExpression) key, value);
+        }
         return RoundBracketExpression.define(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
     }
 

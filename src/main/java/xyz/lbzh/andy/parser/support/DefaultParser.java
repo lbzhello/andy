@@ -98,7 +98,8 @@ public class DefaultParser implements Parser<Expression> {
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
-            return ExpressionFactory.roundBracket(Definition.PAIR, left, expression());
+//            return ExpressionFactory.roundBracket(Definition.PAIR, left, expression());
+            return ExpressionFactory.pair(left, expression());
         } else {
             return left;
         }

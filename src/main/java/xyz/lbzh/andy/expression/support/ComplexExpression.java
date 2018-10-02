@@ -1,12 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.Name;
-import xyz.lbzh.andy.expression.NameEnum;
-import xyz.lbzh.andy.util.Builder;
+import xyz.lbzh.andy.expression.*;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ComplexExpression implements Expression {
@@ -33,7 +28,21 @@ public class ComplexExpression implements Expression {
         return this;
     }
 
-//    private ComplexExpression(ComplexExpressionBuilder builder) {
+    @Override
+    public Expression eval(Context<Name, Object> context) {
+        Expression retValue = ExpressionType.NIL;
+        for (Expression expression : this.list) {
+            retValue = expression.eval(context);
+            //return statement
+            if (retValue instanceof ReturnExpression) {
+                return retValue;
+            }
+        }
+        //or return the last value of the expression
+        return retValue;
+    }
+
+    //    private ComplexExpression(ComplexExpressionBuilder builder) {
 //        this.parameters = builder.parameters;
 //        this.list = builder.list;
 //    }
@@ -60,33 +69,5 @@ public class ComplexExpression implements Expression {
 //            return new ComplexExpression(this);
 //        }
 //    }
-
-    /**
-     * e.g. parameters{...}
-     * @param parameters
-     * @param list
-     * @return
-     */
-    public ComplexExpression build(List<Expression> parameters, List<Expression> list) {
-        this.parameters = parameters;
-        this.list = list;
-        init();
-        return this;
-    }
-
-    private void init() {
-        List<Expression> list = Collections.emptyList();
-        if (parameters instanceof RoundBracketExpression) { //e.g. (a b c){...}
-            list = ((RoundBracketExpression) parameters).tail();
-        } else if (parameters instanceof SquareBracketExpression) { //e.g. (a, b, c){...}
-            list = ((SquareBracketExpression) parameters).list();
-        } else {
-
-        }
-        // param1 -> NameEnum.$0; param2 -> NameEnum.$1; ...
-        for (int i = 0; i < list.size(); i++) {
-            context.bind(list.get(i).getName(), NameEnum.values()[i]);
-        }
-    }
 
 }

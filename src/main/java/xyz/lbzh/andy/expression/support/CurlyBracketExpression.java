@@ -52,7 +52,7 @@ public class CurlyBracketExpression extends BracketExpression {
         this.buildList.stream().forEach(expression -> {
             expression.eval(context);
         });
-        return ExpressionFactory.complex(context);
+        return ExpressionFactory.complex(context).list(this.getEvalList());
     }
 
     @Override

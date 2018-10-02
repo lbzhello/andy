@@ -6,6 +6,6 @@ public interface Nameable {
      * @return
      */
     default Name getName() {
-        return Name.NIL;
+        return NameEnum.NIL;
     }
 }

@@ -8,7 +8,7 @@
   <artifactId>andy</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <bracketExpression>andy</bracketExpression>
+  <bracket>andy</bracket>
   <!-- FIXME change it to the project's website -->
   <url>http://lbzh.xyz/andy</url>
 

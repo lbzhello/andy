@@ -18,8 +18,12 @@ public class RoundBracketExpression extends BracketExpression {
         return new OperatorExpression(expressions);
     }
 
-    public static RoundBracketExpression define(BracketExpression key, CurlyBracketExpression value) {
-        return new DefineExpression(key, value);
+    public static RoundBracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        return new LambdaExpression(bracket, curlyBracket);
+    }
+
+    public static RoundBracketExpression define(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        return new DefineExpression(bracket, curlyBracket);
     }
 
     public static RoundBracketExpression pair(Expression key, Expression value) {
@@ -62,14 +66,33 @@ public class RoundBracketExpression extends BracketExpression {
         }
     }
 
-    private static class DefineExpression extends RoundBracketExpression {
-        private BracketExpression bracketExpression;
-        private CurlyBracketExpression curlyBracketExpression;
+    /**
+     * e.g. (...){...}
+     */
+    private static class LambdaExpression extends RoundBracketExpression {
+        private BracketExpression bracket;
+        private CurlyBracketExpression curlyBracket;
 
-        public DefineExpression(BracketExpression bracketExpression, CurlyBracketExpression curlyBracketExpression) {
-            super(ExpressionType.DEFINE, bracketExpression, curlyBracketExpression);
-            this.bracketExpression = bracketExpression;
-            this.curlyBracketExpression = curlyBracketExpression;
+        public LambdaExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+            this.bracket = bracket;
+            this.curlyBracket = curlyBracket;
+        }
+
+        @Override
+        public Expression eval(Context<Name, Object> context) {
+            //every ComplexExpression has it's own context
+            return this.curlyBracket.eval(new ExpressionContext(context)).parameters(bracket.getParameters());
+        }
+    }
+
+    private static class DefineExpression extends RoundBracketExpression {
+        private BracketExpression bracket;
+        private CurlyBracketExpression curlyBracket;
+
+        public DefineExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+            super(ExpressionType.DEFINE, bracket, curlyBracket);
+            this.bracket = bracket;
+            this.curlyBracket = curlyBracket;
         }
 
         /**
@@ -80,9 +103,8 @@ public class RoundBracketExpression extends BracketExpression {
         @Override
         public Expression eval(Context<Name, Object> context) {
             //every ComplexExpression has it's own context
-            ComplexExpression complexExpression = this.curlyBracketExpression.eval(new ExpressionContext(context));
-            complexExpression.parameters(bracketExpression.getParameters()).list(this.curlyBracketExpression.getEvalList());
-            context.bind(bracketExpression.getName(), complexExpression);
+            ComplexExpression complexExpression = this.curlyBracket.eval(new ExpressionContext(context)).parameters(bracket.getParameters());
+            context.bind(bracket.getName(), complexExpression);
             return complexExpression;
         }
     }
@@ -91,7 +113,9 @@ public class RoundBracketExpression extends BracketExpression {
      * e.g. name: "some name"
      */
     private static class PairExpression extends RoundBracketExpression {
+        //e.g. (f a b) || f
         private Expression key;
+        //e.g. "some text" || {...} || (...){...}
         private Expression value;
 
         public PairExpression(Expression key, Expression value) {
@@ -102,15 +126,17 @@ public class RoundBracketExpression extends BracketExpression {
 
         @Override
         public Expression eval(Context<Name, Object> context) {
-            Expression rstValue = ExpressionType.NIL;
-            if (value instanceof CurlyBracketExpression) { //e.g. key(a, b, c): {...}
-                rstValue = ExpressionFactory.define(key, (CurlyBracketExpression) value).eval(context);
-            } else if (value instanceof DefineExpression) { //e.g. key: (a, b, c){...}
-                value.eval(context);
+            if (value instanceof CurlyBracketExpression || value instanceof LambdaExpression) {
+                List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
+                ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
+                complexExpression.parameters(parameters);
+                context.bind(key.getName(), complexExpression);
+                return complexExpression;
+            } else {
+                context.bind(key.getName(), value);
+                return value;
             }
 
-            context.bind(key.getName(), rstValue);
-            return null;
         }
     }
 
