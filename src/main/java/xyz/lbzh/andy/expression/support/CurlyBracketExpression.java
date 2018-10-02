@@ -56,11 +56,6 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     @Override
-    public void expr(Consumer<Expression> action) {
-        this.buildList.stream().forEach(action);
-    }
-
-    @Override
     public String toString() {
         return "{" + super.toString() + "}";
     }

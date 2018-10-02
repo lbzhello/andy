@@ -4,16 +4,15 @@ import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.support.NumberExpression;
 import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 import xyz.lbzh.andy.expression.support.StringExpression;
-import xyz.lbzh.andy.expression.support.SymbolExpression;
 
 import java.math.BigDecimal;
 
 @RoundBracketed
-public class PlusExpression extends RoundBracketExpression {
+public class MultiplyExpression extends RoundBracketExpression {
     Expression left;
     Expression right;
 
-    public PlusExpression(Expression left, Expression right) {
+    public MultiplyExpression(Expression left, Expression right) {
         super(ExpressionType.PLUS, left, right);
         this.left = left;
         this.right = right;
@@ -34,11 +33,6 @@ public class PlusExpression extends RoundBracketExpression {
         BigDecimal rightValue = ((NumberExpression) rightExpression).getValue();
 
 
-        return new NumberExpression(leftValue.add(rightValue));
-    }
-
-    @Override
-    public Expression shift() {
-        return ExpressionFactory.roundBracket();
+        return new NumberExpression(leftValue.multiply(rightValue));
     }
 }
