@@ -79,7 +79,7 @@ public class RoundBracketExpression extends BracketExpression {
         }
 
         @Override
-        public Expression eval(Context<Name, Object> context) {
+        public Expression eval(Context<Name, Expression> context) {
             //every ComplexExpression has it's own context
             return this.curlyBracket.eval(new ExpressionContext(context)).parameters(bracket.getParameters());
         }
@@ -101,7 +101,7 @@ public class RoundBracketExpression extends BracketExpression {
          * @return
          */
         @Override
-        public Expression eval(Context<Name, Object> context) {
+        public Expression eval(Context<Name, Expression> context) {
             //every ComplexExpression has it's own context
             ComplexExpression complexExpression = this.curlyBracket.eval(new ExpressionContext(context)).parameters(bracket.getParameters());
             context.bind(bracket.getName(), complexExpression);
@@ -125,7 +125,7 @@ public class RoundBracketExpression extends BracketExpression {
         }
 
         @Override
-        public Expression eval(Context<Name, Object> context) {
+        public Expression eval(Context<Name, Expression> context) {
             if (value instanceof CurlyBracketExpression || value instanceof LambdaExpression) {
                 List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
                 ComplexExpression complexExpression = (ComplexExpression) value.eval(context);

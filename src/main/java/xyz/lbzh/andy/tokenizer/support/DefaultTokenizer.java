@@ -7,6 +7,7 @@ import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
+import java.math.BigDecimal;
 
 public class DefaultTokenizer implements Tokenizer<Expression> {
     private LineNumberReader lineNumberReader;
@@ -36,7 +37,7 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
      * 初始化资源
      */
     public DefaultTokenizer(){
-//        this.lineNumberReader = new LineNumberReader(new BufferedReader(Definition.getReader()));
+//        this.lineNumberReader = new LineNumberReader(new BufferedReader(NameExpression.getReader()));
     }
 
     //只能通过Builder调用
@@ -146,12 +147,12 @@ public class DefaultTokenizer implements Tokenizer<Expression> {
             nextChar();
         }
         if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-            return new NumberExpression(sb.toString());
+            return new NumberExpression(new BigDecimal(sb.toString()));
         } else {
             throw new Exceptions.NumberFormatException("Exceptions Number Format!");
         }
 
-//        if (!Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar())) { //e.g. 123.45abc
+//        if (!Character.isWhitespace(getChar()) && !NameExpression.isDelimiter(getChar())) { //e.g. 123.45abc
 //            throw new Exceptions.NumberFormatException("Exceptions Number Format!");
 //        }
 //        return new NumberExpression(sb.toString());

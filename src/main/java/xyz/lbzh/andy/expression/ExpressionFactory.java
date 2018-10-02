@@ -32,7 +32,7 @@ public class ExpressionFactory {
 
     public static BracketExpression define(Expression key, CurlyBracketExpression value) {
         //a{...} => a(){...}
-        if (key.getName() == NameEnum.NIL && key instanceof BracketExpression) { //it's a lambda
+        if (key.getName() == Name.NIL && key instanceof BracketExpression) { //it's a lambda
             return lambda((BracketExpression) key, value);
         }
         return RoundBracketExpression.define(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
@@ -42,7 +42,7 @@ public class ExpressionFactory {
         return RoundBracketExpression.pair(key, value);
     }
 
-    public static ComplexExpression complex(Context<Name, Object> context) {
+    public static ComplexExpression complex(Context<Name, Expression> context) {
         return new ComplexExpression(context);
     }
 

@@ -12,9 +12,9 @@ import org.springframework.context.annotation.*;
 @Import(AppConfig.class)
 public class Main {
     public static void main( String[] args ) throws Exception {
-        System.out.println("Definition starting...");
+        System.out.println("NameExpression starting...");
         Application.start(Main.class,args);
-        System.out.println("Definition ended");
+        System.out.println("NameExpression ended");
     }
 
 }

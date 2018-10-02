@@ -48,7 +48,7 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     @Override
-    public ComplexExpression eval(Context<Name, Object> context) {
+    public ComplexExpression eval(Context<Name, Expression> context) {
         this.buildList.stream().forEach(expression -> {
             expression.eval(context);
         });

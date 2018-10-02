@@ -8,17 +8,17 @@ public class ComplexExpression implements Expression {
     private List<Expression> parameters;
     private List<Expression> list;
 
-    private Context<Name, Object> context;
+    private Context<Name, Expression> context;
 
-    public ComplexExpression(Context<Name, Object> context) {
+    public ComplexExpression(Context<Name, Expression> context) {
         this.context = context;
     }
 
     public ComplexExpression parameters(List<Expression> parameters) {
         this.parameters = parameters;
-        // param1 -> NameEnum.$0; param2 -> NameEnum.$1; ...
+        // param1 -> NameExpression.$0; param2 -> NameExpression.$1; ...
         for (int i = 0; i < this.parameters.size(); i++) {
-            context.bind(this.parameters.get(i).getName(), NameEnum.values()[i]);
+            context.bind(this.parameters.get(i).getName(), NameExpression.values()[i]);
         }
         return this;
     }
@@ -29,7 +29,7 @@ public class ComplexExpression implements Expression {
     }
 
     @Override
-    public Expression eval(Context<Name, Object> context) {
+    public Expression eval(Context<Name, Expression> context) {
         Expression retValue = ExpressionType.NIL;
         for (Expression expression : this.list) {
             retValue = expression.eval(context);

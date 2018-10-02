@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public interface Expression extends Nameable, Serializable {
 
-    default Expression eval(Context<Name, Object> context){
+    default Expression eval(Context<Name, Expression> context){
         return this;
     }
 
