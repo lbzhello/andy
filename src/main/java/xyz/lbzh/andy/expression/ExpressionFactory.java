@@ -1,9 +1,11 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.function.ReturnExpression;
+import xyz.lbzh.andy.core.Definition;
+import xyz.lbzh.andy.expression.function.*;
+import xyz.lbzh.andy.expression.internal.ErrorExpression;
 import xyz.lbzh.andy.expression.support.*;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,17 +15,23 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression roundBracket(Expression... expressions) {
-        if (expressions.length >= 1 && false) {
-            return functionMux(expressions[0]);
+        if (expressions.length > 0) {
+            Expression name = expressions[0];
+            if (Definition.isBinary(name)) {
+                if (Objects.equals(name.toString(), "+")) {
+                    return new PlusExpression(expressions);
+                } else if (Objects.equals(name.toString(), "-")) {
+                    return new MinusExpression(expressions[1], expressions[2]);
+                } else if (Objects.equals(name.toString(), "*")) {
+                    return new MultiplyExpression(expressions);
+                } else if (Objects.equals(name.toString(), "/")) {
+                    return new DivideExpression(expressions[1], expressions[2]);
+                } else if (Objects.equals(name.toString(), "||")) {
+                    return new OrExpression(expressions[1], expressions[2]);
+                }
+            }
         }
         return new RoundBracketExpression(expressions);
-    }
-
-    private static BracketExpression functionMux(Expression expression) {
-        if (Objects.equals(expression.toString(), "+")) {
-
-        }
-        return null;
     }
 
     public static BracketExpression squareBracket(Expression...expressions) {
@@ -56,6 +64,11 @@ public class ExpressionFactory {
 
     public static ComplexExpression complex(Context<Name, Expression> context) {
         return new ComplexExpression(context);
+    }
+
+    //************ functions *****************//
+    public static ErrorExpression error(String message) {
+        return new ErrorExpression(message);
     }
 
 }

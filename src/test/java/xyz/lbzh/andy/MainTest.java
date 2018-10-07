@@ -3,6 +3,7 @@ package xyz.lbzh.andy;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
+import xyz.lbzh.andy.expression.ExpressionType;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -84,7 +85,7 @@ public class MainTest {
 
     @Test
     public void DeTest() {
-        Expression expression = new DelimiterExpression(Definition.SPACE + String.valueOf("("));
+        Expression expression = ExpressionType.NIL.eval(null);
         System.out.println(expression);
     }
 

@@ -1,4 +1,4 @@
-package xyz.lbzh.andy.expression.function;
+package xyz.lbzh.andy.expression.internal;
 
 import xyz.lbzh.andy.expression.Expression;
 

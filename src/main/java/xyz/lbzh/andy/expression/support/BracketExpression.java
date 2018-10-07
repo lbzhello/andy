@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BracketExpression implements Expression {
-    private List<Expression> list = new LinkedList<>();;
+    private List<Expression> list = new LinkedList<>();
 
     public BracketExpression(Expression... expressions) {
         Collections.addAll(list, expressions);

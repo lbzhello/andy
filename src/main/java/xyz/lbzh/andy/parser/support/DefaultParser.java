@@ -115,9 +115,9 @@ public class DefaultParser implements Parser<Expression> {
         if(getToken() instanceof SymbolExpression){ //e.g. name...
             Expression expression = getToken();
             nextToken(); //eat "expression"
-            //if it's command
+            //if it's unary operator
             if (Definition.isUnary(expression.toString())) {
-                return commandExpression(expression);
+                return unaryExpression(expression);
             }
             return expression;
         } else if (getToken() instanceof StringExpression) { //e.g. "name"...
@@ -143,7 +143,7 @@ public class DefaultParser implements Parser<Expression> {
 
     }
 
-    private BracketExpression commandExpression(Expression op) throws Exception {
+    private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());
         BracketExpression roundBracketExpression = ExpressionFactory.roundBracket(op);
         for (int i = 0; i < size; i++) {

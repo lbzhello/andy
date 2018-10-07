@@ -6,28 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * (...)
+ * (f x y)
  */
 public class RoundBracketExpression extends BracketExpression {
 
     public RoundBracketExpression(Expression... expressions) {
         super(expressions);
-    }
-
-    public static RoundBracketExpression operator(Expression... expressions) {
-        return new OperatorExpression(expressions);
-    }
-
-    public static RoundBracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        return new LambdaExpression(bracket, curlyBracket);
-    }
-
-    public static RoundBracketExpression define(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        return new DefineExpression(bracket, curlyBracket);
-    }
-
-    public static RoundBracketExpression pair(Expression key, Expression value) {
-        return new PairExpression(key, value);
     }
 
     @Override
@@ -52,6 +36,39 @@ public class RoundBracketExpression extends BracketExpression {
     @Override
     public String toString() {
         return "(" + super.toString() + ")";
+    }
+
+    /**
+     * e.g. (f x y)
+     * @param context
+     * @return
+     */
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        if (list().size() == 0) return ExpressionType.NIL; //e.g. ()
+        Expression name = first().eval(context);
+        if (name == ExpressionType.NIL) return ExpressionType.NIL;
+        if (!(name instanceof ComplexExpression)) return ExpressionFactory.error("Expression must be ComplexExpression!");
+        for (Expression expression : this.list()) {
+
+        }
+        return null;
+    }
+
+    public static RoundBracketExpression operator(Expression... expressions) {
+        return new OperatorExpression(expressions);
+    }
+
+    public static RoundBracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        return new LambdaExpression(bracket, curlyBracket);
+    }
+
+    public static RoundBracketExpression define(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        return new DefineExpression(bracket, curlyBracket);
+    }
+
+    public static RoundBracketExpression pair(Expression key, Expression value) {
+        return new PairExpression(key, value);
     }
 
     @RoundBracketed
