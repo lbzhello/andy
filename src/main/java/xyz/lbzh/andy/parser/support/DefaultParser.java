@@ -57,7 +57,7 @@ public class DefaultParser implements Parser<Expression> {
 
     private Expression expression() throws Exception {
         Expression expression = combine(combinator());
-        if (Definition.isOperator(getToken().toString())) { //e.g. expression op ...
+        if (Definition.isBinary(getToken().toString())) { //e.g. expression op ...
             expression = operator(expression, getToken());
         }
         return expression;
@@ -71,15 +71,15 @@ public class DefaultParser implements Parser<Expression> {
     private Expression operator(Expression left, Expression op) throws Exception {
         nextToken(); //eat op
         Expression right = combine(combinator());
-        if (Definition.isOperator(getToken().toString())) { //e.g. left op right op2 ...
+        if (Definition.isBinary(getToken().toString())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return ExpressionFactory.operator(op, left, operator(right, op2));
+                return ExpressionFactory.roundBracket(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
-                return operator(ExpressionFactory.operator(op, left, right),op2);
+                return operator(ExpressionFactory.roundBracket(op, left, right),op2);
             } 
         } else { //e.g. left op right
-            return ExpressionFactory.operator(op, left, right);
+            return ExpressionFactory.roundBracket(op, left, right);
         }
     }
 
@@ -116,7 +116,7 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = getToken();
             nextToken(); //eat "expression"
             //if it's command
-            if (Definition.isCommand(expression.toString())) {
+            if (Definition.isUnary(expression.toString())) {
                 return commandExpression(expression);
             }
             return expression;
@@ -144,8 +144,8 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     private BracketExpression commandExpression(Expression op) throws Exception {
-        int size = Definition.getCommandSize(op.toString());
-        BracketExpression roundBracketExpression = ExpressionFactory.operator(op);
+        int size = Definition.getNumberOfOperands(op.toString());
+        BracketExpression roundBracketExpression = ExpressionFactory.roundBracket(op);
         for (int i = 0; i < size; i++) {
             roundBracketExpression.add(expression());
         }

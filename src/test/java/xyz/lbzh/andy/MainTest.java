@@ -1,5 +1,6 @@
 package xyz.lbzh.andy;
 
+import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.RoundBracketed;
@@ -9,7 +10,9 @@ import org.junit.Test;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,16 +29,16 @@ public class MainTest {
     public void NumberTest(){
         Object n = 223;
         BigDecimal a = new BigDecimal(n.toString());
-        BigDecimal b = a.divide(new BigDecimal(3),5,BigDecimal.ROUND_HALF_DOWN);
+        BigDecimal b = a.divide(new BigDecimal(3),5,RoundingMode.HALF_EVEN);
         System.out.println(b);
     }
 
     @Test
-    public void AnnotationTest() throws IllegalAccessException, InstantiationException {
+    public void AnnotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Expression expression = RoundBracketExpression.operator(new ValueExpression("expr"));
         RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
         Class<? extends RoundBracketExpression> v = roundBracketed.value();
-        RoundBracketExpression o = v.newInstance();
+        RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
 
         System.out.println();
     }
@@ -77,6 +80,12 @@ public class MainTest {
 
     @Test
     public void EnumTest() {
+    }
+
+    @Test
+    public void DeTest() {
+        Expression expression = new DelimiterExpression(Definition.SPACE + String.valueOf("("));
+        System.out.println(expression);
     }
 
 }

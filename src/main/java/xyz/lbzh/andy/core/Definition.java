@@ -2,8 +2,6 @@ package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionType;
-import xyz.lbzh.andy.expression.support.StringExpression;
-import xyz.lbzh.andy.expression.support.ValueExpression;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,13 +47,13 @@ public final class Definition {
     private static final Set<Character> delimiters = new HashSet<>();
 
     //e.g. a + 2
-    private static Map<String,Integer> operator = new HashMap<>();
+    private static Map<String,Integer> binary = new HashMap<>();
 
     /**
-     * key: the name of command
-     * value: the param sizes the command takes
+     * key: the name of unary
+     * value: Number Of Operands
      */
-    private static HashMap<String, Integer> command = new HashMap<>();
+    private static HashMap<String, Integer> unary = new HashMap<>();
 
     static {
         delimiters.add(',');
@@ -75,39 +73,39 @@ public final class Definition {
     }
 
     static {
-        operator.put("=", 0);
+        binary.put("=", 0);
 
-        operator.put("||", 11);
-        operator.put("&&", 12);
+        binary.put("||", 11);
+        binary.put("&&", 12);
 
-        operator.put("==", 21);
-        operator.put(">", 21);
-        operator.put(">=", 21);
-        operator.put("<", 21);
-        operator.put("<=", 21);
+        binary.put("==", 21);
+        binary.put(">", 21);
+        binary.put(">=", 21);
+        binary.put("<", 21);
+        binary.put("<=", 21);
 
-        operator.put("+", 31);
-        operator.put("-",31);
+        binary.put("+", 31);
+        binary.put("-",31);
 
-        operator.put("*", 41);
-        operator.put("/", 41);
+        binary.put("*", 41);
+        binary.put("/", 41);
 
-//        operator.put("++", 51);
-//        operator.put("--", 51);
+//        binary.put("++", 51);
+//        binary.put("--", 51);
 //
-//        operator.put("!", 1113);
-        operator.put(".", 1314);
+//        binary.put("!", 1113);
+        binary.put(".", 1314);
 
-        operator.put("else", 1314);
+        binary.put("else", 1314);
     }
 
     static {
-        command.put("++", 1);
-        command.put("--", 1);
-        command.put("!", 1);
+        unary.put("++", 1);
+        unary.put("--", 1);
+        unary.put("!", 1);
 
-        command.put("if", 2);
-        command.put("for", 2);
+        unary.put("if", 2);
+        unary.put("for", 2);
     }
 
     public static final boolean isDelimiter(Character c){
@@ -122,37 +120,37 @@ public final class Definition {
         delimiters.remove(c);
     }
 
-    public static final boolean isOperator(String op) {
-        return operator.keySet().contains(op);
+    public static final boolean isBinary(String op) {
+        return binary.keySet().contains(op);
     }
 
-    public static final boolean isOperator(Object op) {
-        return isOperator((String)op);
+    public static final boolean isBinary(Object op) {
+        return isBinary(op.toString());
     }
 
-    public static final boolean isCommand(String op) {
-        return command.keySet().contains(op);
+    public static final boolean isUnary(String op) {
+        return unary.keySet().contains(op);
     }
 
-    public static final boolean isCommand(Object op) {
-        return isCommand((String)op);
+    public static final boolean isUnary(Object op) {
+        return isUnary(op.toString());
     }
 
     /**
-     * get  priority of the operator
+     * get  priority of the binary
      * @param op
      * @return
      */
     public static final int getPriority(String op) {
-        return operator.getOrDefault(op,1);
+        return binary.getOrDefault(op,1);
     }
 
-    public static final int getCommandSize(String op) {
-        return command.getOrDefault(op, 1);
+    public static final int getNumberOfOperands(String op) {
+        return unary.getOrDefault(op, 1);
     }
 
-    public static final int getCommandSize(Object op) {
-        return getCommandSize((String) op);
+    public static final int getNumberOfOperands(Object op) {
+        return getNumberOfOperands((String) op);
     }
 
     /**

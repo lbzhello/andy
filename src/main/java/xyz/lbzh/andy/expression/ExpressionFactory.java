@@ -5,6 +5,7 @@ import xyz.lbzh.andy.expression.support.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -12,7 +13,17 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression roundBracket(Expression... expressions) {
+        if (expressions.length >= 1 && false) {
+            return functionMux(expressions[0]);
+        }
         return new RoundBracketExpression(expressions);
+    }
+
+    private static BracketExpression functionMux(Expression expression) {
+        if (Objects.equals(expression.toString(), "+")) {
+
+        }
+        return null;
     }
 
     public static BracketExpression squareBracket(Expression...expressions) {
