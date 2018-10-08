@@ -49,10 +49,13 @@ public class RoundBracketExpression extends BracketExpression {
         Expression name = first().eval(context);
         if (name == ExpressionType.NIL) return ExpressionType.NIL;
         if (!(name instanceof ComplexExpression)) return ExpressionFactory.error("Expression must be ComplexExpression!");
-        for (Expression expression : this.list()) {
-
+        ComplexExpression complex = (ComplexExpression) name;
+        Context<Name, Expression> childContext = new ExpressionContext(complex.getContext());
+        //put args in context
+        for (int i = 0; i < this.tail().size(); i++) {
+            childContext.bind(NameExpression.values()[i], this.tail().get(i));
         }
-        return null;
+        return complex.eval(childContext);
     }
 
     public static RoundBracketExpression operator(Expression... expressions) {

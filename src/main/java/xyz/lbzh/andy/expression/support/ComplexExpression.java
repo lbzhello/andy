@@ -24,6 +24,10 @@ public class ComplexExpression implements Expression {
         return this;
     }
 
+    public Context<Name, Expression> getContext() {
+        return context;
+    }
+
     public ComplexExpression list(List<Expression> list) {
         this.list = list;
         return this;
