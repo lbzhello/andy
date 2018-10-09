@@ -33,6 +33,9 @@ public class DefaultParser implements Parser<Expression> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ComplexExpression complex = curlyBracketExpression.eval(new ExpressionContext(Definition.getCoreContext()));
+        Expression rst = complex.eval(new ExpressionContext(complex.getContext()));
+        System.out.println(rst);
         return curlyBracketExpression;
     }
 

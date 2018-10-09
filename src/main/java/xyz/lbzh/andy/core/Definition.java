@@ -1,7 +1,8 @@
 package xyz.lbzh.andy.core;
 
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionType;
+import xyz.lbzh.andy.expression.*;
+import xyz.lbzh.andy.expression.function.PrintExpression;
+import xyz.lbzh.andy.expression.support.SymbolExpression;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,6 +56,8 @@ public final class Definition {
      */
     private static HashMap<String, Integer> unary = new HashMap<>();
 
+    private static Context<Name, Expression> CORE_CONTEXT = new ExpressionContext(null);
+
     static {
         delimiters.add(',');
         delimiters.add(';');
@@ -106,6 +109,14 @@ public final class Definition {
 
         unary.put("if", 2);
         unary.put("for", 2);
+    }
+
+    static {
+        CORE_CONTEXT.bind(new SymbolExpression("print"), null);
+    }
+
+    public static final Context<Name, Expression> getCoreContext() {
+        return CORE_CONTEXT;
     }
 
     public static final boolean isDelimiter(Character c){

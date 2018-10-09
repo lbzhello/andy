@@ -4,5 +4,6 @@ public enum ExpressionType implements Expression {
     NIL, DEFINE, PAIR, LAMBDA, EOF, HOF, PARENT,
     PLUS, MINUS, MULTIPLY, DIVIDE,
     OR, AND, NOT,
-    TRUE, FALSE
+    TRUE, FALSE,
+    PRINT
 }

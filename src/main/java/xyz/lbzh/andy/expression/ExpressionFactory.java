@@ -28,6 +28,8 @@ public class ExpressionFactory {
                     return new DivideExpression(expressions[1], expressions[2]);
                 } else if (Objects.equals(name.toString(), "||")) {
                     return new OrExpression(expressions[1], expressions[2]);
+                } else if (Objects.equals(name.toString(), "print")) {
+                    return new PrintExpression(expressions[1]);
                 }
             }
         }

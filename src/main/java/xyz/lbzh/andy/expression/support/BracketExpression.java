@@ -2,6 +2,7 @@ package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionType;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -33,6 +34,16 @@ public class BracketExpression implements Expression {
 
     public Expression third() {
         return this.list.size() >= 3 ? list.get(2) : Definition.NIL;
+    }
+
+    public Expression before(Expression expression) {
+        this.list().add(0, expression);
+        return ExpressionType.NIL;
+    }
+
+    public Expression after(Expression expression) {
+        this.list().add(expression);
+        return ExpressionType.NIL;
     }
 
     public List<Expression> tail() {
