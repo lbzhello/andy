@@ -112,6 +112,7 @@ public final class Definition {
     }
 
     static {
+        CORE_CONTEXT.bind(new SymbolExpression("="), new AssignExpression());
         CORE_CONTEXT.bind(new SymbolExpression("+"), new PlusExpression());
         CORE_CONTEXT.bind(new SymbolExpression("-"), new MinusExpression());
         CORE_CONTEXT.bind(new SymbolExpression("*"), new MultiplyExpression());
