@@ -15,24 +15,24 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression roundBracket(Expression... expressions) {
-        if (expressions.length > 0) {
-            Expression name = expressions[0];
-            if (Definition.isBinary(name)) {
-                if (Objects.equals(name.toString(), "+")) {
-                    return new PlusExpression(expressions);
-                } else if (Objects.equals(name.toString(), "-")) {
-                    return new MinusExpression(expressions[1], expressions[2]);
-                } else if (Objects.equals(name.toString(), "*")) {
-                    return new MultiplyExpression(expressions);
-                } else if (Objects.equals(name.toString(), "/")) {
-                    return new DivideExpression(expressions[1], expressions[2]);
-                } else if (Objects.equals(name.toString(), "||")) {
-                    return new OrExpression(expressions[1], expressions[2]);
-                } else if (Objects.equals(name.toString(), "print")) {
-                    return new PrintExpression(expressions[1]);
-                }
-            }
-        }
+//        if (expressions.length > 0) {
+//            Expression name = expressions[0];
+//            if (Definition.isBinary(name)) {
+//                if (Objects.equals(name.toString(), "+")) {
+//                    return new PlusExpression(expressions);
+//                } else if (Objects.equals(name.toString(), "-")) {
+//                    return new MinusExpression(expressions[1], expressions[2]);
+//                } else if (Objects.equals(name.toString(), "*")) {
+//                    return new MultiplyExpression(expressions);
+//                } else if (Objects.equals(name.toString(), "/")) {
+//                    return new DivideExpression(expressions[1], expressions[2]);
+//                } else if (Objects.equals(name.toString(), "||")) {
+//                    return new OrExpression(expressions[1], expressions[2]);
+//                } else if (Objects.equals(name.toString(), "print")) {
+//                    return new PrintExpression(expressions[1]);
+//                }
+//            }
+//        }
         return new RoundBracketExpression(expressions);
     }
 

@@ -112,7 +112,7 @@ public final class Definition {
     }
 
     static {
-        CORE_CONTEXT.bind(new SymbolExpression("print"), null);
+        CORE_CONTEXT.bind(new SymbolExpression("print"), new PrintExpression());
     }
 
     public static final Context<Name, Expression> getCoreContext() {

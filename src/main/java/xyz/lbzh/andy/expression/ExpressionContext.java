@@ -14,7 +14,7 @@ public class ExpressionContext implements Expression, Context<Name, Expression> 
     @Override
     public Expression lookup(Name key) {
         Expression o = container.getOrDefault(key, ExpressionType.NIL);
-        if (o == null && this.parent != null) {
+        if (o == ExpressionType.NIL && this.parent != null) {
             o = parent.lookup(key);
         }
         return o;

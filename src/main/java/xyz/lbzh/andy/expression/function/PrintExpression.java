@@ -7,16 +7,29 @@ import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 import xyz.lbzh.andy.expression.support.StringExpression;
 
-public class PrintExpression extends RoundBracketExpression {
-    private Expression element;
+import java.util.LinkedList;
+import java.util.List;
 
-    public PrintExpression(Expression element) {
-        super(ExpressionType.PRINT, element);
+public class PrintExpression extends NativeExpression {
+
+    public PrintExpression() {}
+
+    private PrintExpression(List<Expression> list) {
+        list(list);
+    }
+
+    @Override
+    public Expression build(List<Expression> list) {
+        return new PrintExpression(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        System.out.println(element);
+        List<Expression> rstList = new LinkedList<>();
+        list().stream().forEach(element -> {
+            rstList.add(element.eval(context));
+        });
+        System.out.println(rstList);
         return ExpressionType.NIL;
     }
 }

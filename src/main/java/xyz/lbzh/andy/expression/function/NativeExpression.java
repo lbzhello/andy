@@ -8,7 +8,7 @@ import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 
 import java.util.List;
 
-public class CoreFunctionExpression extends RoundBracketExpression {
+public class NativeExpression extends RoundBracketExpression {
     public Expression build(List<Expression> list) {
         return ExpressionType.NIL;
     }

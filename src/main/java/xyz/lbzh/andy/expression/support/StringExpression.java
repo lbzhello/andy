@@ -7,8 +7,7 @@ public class StringExpression extends ValueExpression {
 
     @Override
     public String toString() {
-//        return "\"" + this.value.toString() + "\"";
-        return this.value.toString();
+        return "\"" + this.value.toString() + "\"";
     }
 
 }
