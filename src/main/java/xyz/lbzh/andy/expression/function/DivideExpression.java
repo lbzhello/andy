@@ -7,22 +7,20 @@ import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 @RoundBracketed
-public class DivideExpression extends RoundBracketExpression {
-    Expression left;
-    Expression right;
+public class DivideExpression extends NativeExpression {
 
-    public DivideExpression(Expression left, Expression right) {
-        super(ExpressionType.PLUS, left, right);
-        this.left = left;
-        this.right = right;
+    @Override
+    public Expression build(List<Expression> list) {
+        return new DivideExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression leftExpression = left.eval(context);
-        Expression rightExpression = right.eval(context);
+        Expression leftExpression = first().eval(context);
+        Expression rightExpression = second().eval(context);
         if (!(leftExpression instanceof NumberExpression) || !(rightExpression instanceof NumberExpression)) {
             return new ErrorExpression("Unsupport Operand Type!");
         }

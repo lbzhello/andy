@@ -6,24 +6,23 @@ import xyz.lbzh.andy.expression.ExpressionType;
 import xyz.lbzh.andy.expression.Name;
 import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 
+import java.util.List;
+
 /**
  *  a || b
  */
-public class OrExpression extends RoundBracketExpression {
-    private Expression left;
-    private Expression right;
+public class OrExpression extends NativeExpression {
 
-    public OrExpression(Expression left, Expression right) {
-        super(ExpressionType.OR, left, right);
-        this.left = left;
-        this.right = right;
+    @Override
+    public Expression build(List<Expression> list) {
+        return new OrExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression rst = ExpressionType.NIL;
-        if ((rst = left.eval(context)) == ExpressionType.NIL) {
-            rst = right.eval(context);
+        Expression rst;
+        if ((rst = first().eval(context)) == ExpressionType.NIL) {
+            rst = second().eval(context);
         }
         return rst;
     }

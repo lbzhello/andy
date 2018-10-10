@@ -6,22 +6,20 @@ import xyz.lbzh.andy.expression.support.NumberExpression;
 import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RoundBracketed
-public class MinusExpression extends RoundBracketExpression {
-    Expression left;
-    Expression right;
+public class MinusExpression extends NativeExpression {
 
-    public MinusExpression(Expression left, Expression right) {
-        super(ExpressionType.MINUS, left, right);
-        this.left = left;
-        this.right = right;
+    @Override
+    public Expression build(List<Expression> list) {
+        return new MinusExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression leftExpression = left.eval(context);
-        Expression rightExpression = right.eval(context);
+        Expression leftExpression = first().eval(context);
+        Expression rightExpression = second().eval(context);
         if (!(leftExpression instanceof NumberExpression) || !(rightExpression instanceof NumberExpression)) {
             return new ErrorExpression("Unsupport Operand Type!");
         }

@@ -85,10 +85,17 @@ public class MainTest {
 
     @Test
     public void DeTest() {
-        Expression expression = ExpressionType.NIL.eval(null);
-        System.out.println(expression);
+        EqTest o = new EqTest();
+        System.out.println(o.equals(o));
     }
 
+}
+
+class EqTest {
+    @Override
+    public boolean equals(Object obj) {
+        return false;
+    }
 }
 
 

@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.function.PrintExpression;
+import xyz.lbzh.andy.expression.function.*;
 import xyz.lbzh.andy.expression.support.SymbolExpression;
 
 import java.util.HashMap;
@@ -112,6 +112,14 @@ public final class Definition {
     }
 
     static {
+        CORE_CONTEXT.bind(new SymbolExpression("+"), new PlusExpression());
+        CORE_CONTEXT.bind(new SymbolExpression("-"), new MinusExpression());
+        CORE_CONTEXT.bind(new SymbolExpression("*"), new MultiplyExpression());
+        CORE_CONTEXT.bind(new SymbolExpression("/"), new DivideExpression());
+
+        CORE_CONTEXT.bind(new SymbolExpression("||"), new OrExpression());
+
+
         CORE_CONTEXT.bind(new SymbolExpression("print"), new PrintExpression());
     }
 

@@ -68,9 +68,9 @@ public class ExpressionFactory {
         return new ComplexExpression(context);
     }
 
-    //************ functions *****************//
     public static ErrorExpression error(String message) {
         return new ErrorExpression(message);
     }
+
 
 }

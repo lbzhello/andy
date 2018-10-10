@@ -10,19 +10,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @RoundBracketed
-public class MultiplyExpression extends RoundBracketExpression {
-    private List<Expression> parameters;
+public class MultiplyExpression extends NativeExpression {
 
-    //e.g. (* 2 5)
-    public MultiplyExpression(Expression... expressions) {
-        super(expressions);
-        parameters = Arrays.asList(expressions).subList(1, expressions.length);
+    @Override
+    public Expression build(List<Expression> list) {
+        return new MultiplyExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         BigDecimal accu = BigDecimal.ONE;
-        for (Expression expression : parameters) {
+        for (Expression expression : list()) {
             Expression factor = expression.eval(context);
             if (!(factor instanceof NumberExpression)) return new ErrorExpression("Unsupport Operand Type!");
             accu = accu.multiply(((NumberExpression) factor).getValue());

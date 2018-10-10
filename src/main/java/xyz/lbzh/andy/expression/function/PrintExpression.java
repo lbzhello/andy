@@ -1,35 +1,24 @@
 package xyz.lbzh.andy.expression.function;
 
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionType;
-import xyz.lbzh.andy.expression.Name;
-import xyz.lbzh.andy.expression.support.RoundBracketExpression;
-import xyz.lbzh.andy.expression.support.StringExpression;
+import xyz.lbzh.andy.expression.*;
+import xyz.lbzh.andy.expression.support.BracketExpression;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class PrintExpression extends NativeExpression {
 
-    public PrintExpression() {}
-
-    private PrintExpression(List<Expression> list) {
-        list(list);
-    }
-
     @Override
     public Expression build(List<Expression> list) {
-        return new PrintExpression(list);
+        return new PrintExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        List<Expression> rstList = new LinkedList<>();
+        BracketExpression rst = ExpressionFactory.bracket();
         list().stream().forEach(element -> {
-            rstList.add(element.eval(context));
+            rst.add(element.eval(context));
         });
-        System.out.println(rstList);
+        System.out.println(rst);
         return ExpressionType.NIL;
     }
 }
