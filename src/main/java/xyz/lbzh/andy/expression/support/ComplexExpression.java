@@ -5,6 +5,7 @@ import xyz.lbzh.andy.expression.internal.ReturnExpression;
 
 import java.util.List;
 
+@CurlyBracketed
 public class ComplexExpression implements Expression {
     private List<Expression> parameters;
     private List<Expression> list;

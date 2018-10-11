@@ -93,6 +93,7 @@ public class RoundBracketExpression extends BracketExpression {
     /**
      * e.g. (...){...}
      */
+    @CurlyBracketed
     private static class LambdaExpression extends RoundBracketExpression {
         private BracketExpression bracket;
         private CurlyBracketExpression curlyBracket;
@@ -109,6 +110,7 @@ public class RoundBracketExpression extends BracketExpression {
         }
     }
 
+    @CurlyBracketed
     private static class DefineExpression extends RoundBracketExpression {
         private BracketExpression bracket;
         private CurlyBracketExpression curlyBracket;

@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 /**
  * e.g. {...}
  */
+@CurlyBracketed
 public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> buildList = new ArrayList<>();
     private List<Expression> evalList = new ArrayList<>();
