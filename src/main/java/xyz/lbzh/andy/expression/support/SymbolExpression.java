@@ -11,6 +11,10 @@ public class SymbolExpression extends ValueExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        return context.lookup(this);
+        Expression rst = context.lookup(this);
+        while (rst instanceof SymbolExpression) {
+            rst = context.lookup(rst.getName());
+        }
+        return rst;
     }
 }

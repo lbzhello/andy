@@ -44,8 +44,8 @@ public class ExpressionFactory {
         return new CurlyBracketExpression();
     }
 
-    public static BracketExpression operator(Expression... expressions) {
-        return RoundBracketExpression.operator(expressions);
+    public static SymbolExpression symbol(String value) {
+        return new SymbolExpression(value);
     }
 
     public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {

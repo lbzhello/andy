@@ -57,7 +57,7 @@ public class RoundBracketExpression extends BracketExpression {
         Context<Name, Expression> childContext = new ExpressionContext(complex.getContext());
         //put args in context
         for (int i = 0; i < this.getParameters().size(); i++) {
-            childContext.bind(NameExpression.values()[i], this.tail().get(i).eval(context));
+            childContext.bind(ExpressionFactory.symbol("$" + i), this.tail().get(i).eval(context));
         }
         return complex.eval(childContext);
     }

@@ -20,7 +20,7 @@ public class ComplexExpression implements Expression {
         this.parameters = parameters;
         // param1 -> NameExpression.$0; param2 -> NameExpression.$1; ...
         for (int i = 0; i < this.parameters.size(); i++) {
-            context.bind(this.parameters.get(i).getName(), NameExpression.values()[i]);
+            context.bind(this.parameters.get(i).getName(), ExpressionFactory.symbol("$" + i));
         }
         return this;
     }
