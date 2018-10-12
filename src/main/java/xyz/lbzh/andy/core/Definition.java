@@ -118,6 +118,8 @@ public final class Definition {
         CORE_CONTEXT.bind(new SymbolExpression("*"), new MultiplyExpression());
         CORE_CONTEXT.bind(new SymbolExpression("/"), new DivideExpression());
 
+        CORE_CONTEXT.bind(new SymbolExpression("."), new PointExpression());
+
         CORE_CONTEXT.bind(new SymbolExpression("||"), new OrExpression());
 
 
