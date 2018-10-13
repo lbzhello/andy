@@ -52,14 +52,19 @@ public class RoundBracketExpression extends BracketExpression {
         if (name instanceof NativeExpression) {
             return ((NativeExpression) name).build(this.getParameters()).eval(context);
         }
-        if (!(name instanceof ComplexExpression)) return ExpressionFactory.error("Expression must be ComplexExpression!");
-        ComplexExpression complex = (ComplexExpression) name;
-        Context<Name, Expression> childContext = new ExpressionContext(complex.getContext());
-        //put args in context
-        for (int i = 0; i < this.getParameters().size(); i++) {
-            childContext.bind(ExpressionFactory.symbol("$" + i), this.tail().get(i).eval(context));
+        if (name instanceof ComplexExpression) { //e.g. name = {...} (name x y)
+            ComplexExpression complex = (ComplexExpression) name;
+            Context<Name, Expression> childContext = new ExpressionContext(complex.getContext());
+            //put args in context
+            for (int i = 0; i < this.getParameters().size(); i++) {
+                childContext.bind(ExpressionFactory.symbol("$" + i), this.tail().get(i).eval(context));
+            }
+            return complex.eval(childContext);
+        } else if (this.list().size() == 1) { //e.g. (name)
+            return name;
+        } else {
+            return ExpressionFactory.error("Expression must be ComplexExpression!");
         }
-        return complex.eval(childContext);
     }
 
     public static RoundBracketExpression operator(Expression... expressions) {
