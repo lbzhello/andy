@@ -1,8 +1,7 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.support.NumberExpression;
-import xyz.lbzh.andy.expression.support.StringExpression;
-import xyz.lbzh.andy.expression.support.SymbolExpression;
+import xyz.lbzh.andy.expression.runtime.LambdaExpression;
+import xyz.lbzh.andy.expression.support.*;
 
 import java.io.*;
 
@@ -21,5 +20,25 @@ public class ExpressionUtils {
 
     public static boolean isValue(Expression expression) {
         return isNumber(expression) || isString(expression);
+    }
+
+    public static boolean isLambda(Expression expression) {
+        return expression instanceof LambdaExpression;
+    }
+
+    public static boolean isBracket(Expression expression) {
+        return expression instanceof BracketExpression;
+    }
+
+    public static boolean isRoundBracket(Expression expression) {
+        return expression instanceof RoundBracketExpression;
+    }
+
+    public static boolean isCurlyBracket(Expression expression) {
+        return expression instanceof CurlyBracketExpression;
+    }
+
+    public static boolean isSquareBracket(Expression expression) {
+        return expression instanceof SquareBracketExpression;
     }
 }

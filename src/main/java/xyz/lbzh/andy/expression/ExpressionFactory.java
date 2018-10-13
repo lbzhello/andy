@@ -1,5 +1,8 @@
 package xyz.lbzh.andy.expression;
 
+import xyz.lbzh.andy.expression.runtime.DefineExpression;
+import xyz.lbzh.andy.expression.runtime.LambdaExpression;
+import xyz.lbzh.andy.expression.runtime.PairExpression;
 import xyz.lbzh.andy.expression.support.ErrorExpression;
 import xyz.lbzh.andy.expression.runtime.ComplexExpression;
 import xyz.lbzh.andy.expression.support.*;
@@ -10,24 +13,6 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression roundBracket(Expression... expressions) {
-//        if (expressions.length > 0) {
-//            Expression name = expressions[0];
-//            if (Definition.isBinary(name)) {
-//                if (Objects.equals(name.toString(), "+")) {
-//                    return new PlusExpression(expressions);
-//                } else if (Objects.equals(name.toString(), "-")) {
-//                    return new MinusExpression(expressions[1], expressions[2]);
-//                } else if (Objects.equals(name.toString(), "*")) {
-//                    return new MultiplyExpression(expressions);
-//                } else if (Objects.equals(name.toString(), "/")) {
-//                    return new DivideExpression(expressions[1], expressions[2]);
-//                } else if (Objects.equals(name.toString(), "||")) {
-//                    return new OrExpression(expressions[1], expressions[2]);
-//                } else if (Objects.equals(name.toString(), "print")) {
-//                    return new PrintExpression(expressions[1]);
-//                }
-//            }
-//        }
         return new RoundBracketExpression(expressions);
     }
 
@@ -60,7 +45,7 @@ public class ExpressionFactory {
     }
 
     public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        return RoundBracketExpression.lambda(bracket, curlyBracket);
+        return new LambdaExpression(bracket, curlyBracket);
     }
 
     public static BracketExpression define(Expression key, CurlyBracketExpression value) {
@@ -68,11 +53,11 @@ public class ExpressionFactory {
         if (key.getName() == Name.NIL && key instanceof BracketExpression) { //it's a lambda
             return lambda((BracketExpression) key, value);
         }
-        return RoundBracketExpression.define(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
+        return new DefineExpression(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
     }
 
     public static BracketExpression pair(Expression key, Expression value) {
-        return RoundBracketExpression.pair(key, value);
+        return new PairExpression(key, value);
     }
 
     public static ComplexExpression complex(Context<Name, Expression> context) {
