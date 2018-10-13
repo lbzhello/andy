@@ -2,6 +2,7 @@ package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.exception.Exceptions;
+import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;

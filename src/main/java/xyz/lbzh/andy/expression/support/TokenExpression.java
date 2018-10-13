@@ -2,19 +2,15 @@ package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
+import xyz.lbzh.andy.tokenizer.Token;
 
-public class TokenExpression implements Expression, Name {
+public class TokenExpression implements Token, Expression, Name {
     protected Object value;
 
     public TokenExpression(){}
 
     public TokenExpression(Object value){
         this.value = value;
-    }
-
-    @Override
-    public String token() {
-        return value.toString();
     }
 
     @Override

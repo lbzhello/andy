@@ -63,7 +63,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression expression() throws Exception {
         Expression expression = combine(combinator());
         if (Definition.isBinary(getToken().toString())) { //e.g. expression op ...
-            expression = operator(expression, ExpressionFactory.token(getToken()));
+            expression = operator(expression, getToken());
         }
         return expression;
     }
@@ -77,7 +77,7 @@ public class DefaultParser implements Parser<Expression> {
         nextToken(); //eat op
         Expression right = combine(combinator());
         if (Definition.isBinary(getToken().toString())) { //e.g. left op right op2 ...
-            Expression op2 = ExpressionFactory.token(getToken());
+            Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
                 return ExpressionFactory.roundBracket(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
@@ -120,7 +120,7 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression combinator() throws Exception {
         if(getToken() instanceof SymbolExpression){ //e.g. name...
-            Expression expression = ExpressionFactory.token(getToken());
+            Expression expression = getToken();
             nextToken(); //eat "expression"
             //if it's unary operator
             if (Definition.isUnary(expression.toString())) {
@@ -128,11 +128,11 @@ public class DefaultParser implements Parser<Expression> {
             }
             return expression;
         } else if (getToken() instanceof StringExpression) { //e.g. "name"...
-            Expression expression = ExpressionFactory.token(getToken());
+            Expression expression = getToken();
             nextToken(); //eat
             return expression;
         } else if (getToken() instanceof NumberExpression) { //e.g. 123...
-            Expression expression = ExpressionFactory.token(getToken());
+            Expression expression = getToken();
             nextToken(); //eat
             return expression;
         } else if (Objects.equals(getToken().toString(), "(") || Objects.equals(getToken().toString(), Definition.SPACE + "(")) { //e.g. (...)...

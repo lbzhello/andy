@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.tokenizer;
 
-public interface Token {
-    default String token() {
-        return "";
-    }
+import xyz.lbzh.andy.expression.Expression;
+
+public interface Token extends Expression {
+
 }

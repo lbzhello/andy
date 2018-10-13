@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.expression;
 
 public enum ExpressionType implements Expression {
-    NIL, DEFINE, PAIR, LAMBDA, EOF, HOF, PARENT,
+    NIL, DEFINE, PAIR, LAMBDA, PARENT,
     PLUS, MINUS, MULTIPLY, DIVIDE,
     OR, AND, NOT,
     TRUE, FALSE,

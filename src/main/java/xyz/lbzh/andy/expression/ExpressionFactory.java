@@ -39,9 +39,9 @@ public class ExpressionFactory {
         return new CurlyBracketExpression();
     }
 
-    public static TokenExpression token(Token token) {
-        return (TokenExpression)token;
-    }
+//    public static TokenExpression token(Token token) {
+//        return (TokenExpression)token;
+//    }
 
     public static SymbolExpression symbol(String value) {
         return new SymbolExpression(value);

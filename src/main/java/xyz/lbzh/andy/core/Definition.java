@@ -3,6 +3,8 @@ package xyz.lbzh.andy.core;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.function.*;
 import xyz.lbzh.andy.expression.support.SymbolExpression;
+import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.TokenFlag;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,12 +40,12 @@ public final class Definition {
     /**
      * End of file
      */
-    public static final Expression EOF = ExpressionType.EOF;
+    public static final Token EOF = TokenFlag.EOF;
 
     /**
      * Head of file
      */
-    public static final Expression HOF = ExpressionType.HOF;
+    public static final Token HOF = TokenFlag.HOF;
 
     private static final Set<Character> delimiters = new HashSet<>();
 
