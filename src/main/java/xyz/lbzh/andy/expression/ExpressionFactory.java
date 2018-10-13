@@ -1,13 +1,8 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.core.Definition;
-import xyz.lbzh.andy.expression.function.*;
 import xyz.lbzh.andy.expression.internal.ErrorExpression;
 import xyz.lbzh.andy.expression.support.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import xyz.lbzh.andy.tokenizer.Token;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -42,6 +37,10 @@ public class ExpressionFactory {
 
     public static CurlyBracketExpression curlyBracket(Expression... expressions) {
         return new CurlyBracketExpression();
+    }
+
+    public static TokenExpression token(Token token) {
+        return (TokenExpression)token;
     }
 
     public static SymbolExpression symbol(String value) {

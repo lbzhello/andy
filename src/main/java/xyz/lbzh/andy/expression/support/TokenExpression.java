@@ -3,13 +3,18 @@ package xyz.lbzh.andy.expression.support;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
 
-public class ValueExpression implements Expression, Name {
+public class TokenExpression implements Expression, Name {
     protected Object value;
 
-    public ValueExpression(){}
+    public TokenExpression(){}
 
-    public ValueExpression(Object value){
+    public TokenExpression(Object value){
         this.value = value;
+    }
+
+    @Override
+    public String token() {
+        return value.toString();
     }
 
     @Override
@@ -26,7 +31,7 @@ public class ValueExpression implements Expression, Name {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
-        ValueExpression that = (ValueExpression) o;
+        TokenExpression that = (TokenExpression) o;
         return this.value == null ? that.value == null : this.value.equals(that.value);
     }
 

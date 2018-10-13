@@ -1,9 +1,7 @@
 package xyz.lbzh.andy;
 
-import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.expression.ExpressionType;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
@@ -36,7 +34,7 @@ public class MainTest {
 
     @Test
     public void AnnotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        Expression expression = RoundBracketExpression.operator(new ValueExpression("expr"));
+        Expression expression = RoundBracketExpression.operator(new TokenExpression("expr"));
         RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
         Class<? extends RoundBracketExpression> v = roundBracketed.value();
         RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
@@ -59,7 +57,7 @@ public class MainTest {
 
     @Test
     public void equalTest() {
-        Expression a = new ValueExpression("t");
+        Expression a = new TokenExpression("t");
         Expression b = ExpressionFactory.roundBracket(a);
         System.out.println(a.equals(b));
         System.out.println(b.equals(a));

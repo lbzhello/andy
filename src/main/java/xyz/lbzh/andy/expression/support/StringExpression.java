@@ -1,6 +1,6 @@
 package xyz.lbzh.andy.expression.support;
 
-public class StringExpression extends ValueExpression {
+public class StringExpression extends TokenExpression {
     public StringExpression(Object value){
         super(value);
     }

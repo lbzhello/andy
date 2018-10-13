@@ -4,7 +4,7 @@ import xyz.lbzh.andy.expression.Context;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
 
-public class DelimiterExpression extends ValueExpression {
+public class DelimiterExpression extends TokenExpression {
 
     public DelimiterExpression(Object value) {
         this.value = value;
