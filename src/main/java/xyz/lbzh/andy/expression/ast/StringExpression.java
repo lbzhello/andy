@@ -1,4 +1,4 @@
-package xyz.lbzh.andy.expression.support;
+package xyz.lbzh.andy.expression.ast;
 
 public class StringExpression extends TokenExpression {
     public StringExpression(String value){

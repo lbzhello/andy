@@ -1,9 +1,7 @@
 package xyz.lbzh.andy.expression;
 
+import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.LambdaExpression;
-import xyz.lbzh.andy.expression.support.*;
-
-import java.io.*;
 
 public class ExpressionUtils {
     public static boolean isSymbol(Expression expression) {

@@ -1,6 +1,6 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.support.CurlyBracketExpression;
+import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
 
 import java.lang.annotation.*;
 
