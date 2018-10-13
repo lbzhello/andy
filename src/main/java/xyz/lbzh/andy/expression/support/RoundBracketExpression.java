@@ -68,9 +68,6 @@ public class RoundBracketExpression extends BracketExpression {
         }
     }
 
-    public static RoundBracketExpression operator(Expression... expressions) {
-        return new OperatorExpression(expressions);
-    }
 
     public static RoundBracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
         return new LambdaExpression(bracket, curlyBracket);

@@ -35,7 +35,7 @@ public class MainTest {
 
     @Test
     public void AnnotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        Expression expression = RoundBracketExpression.operator(ExpressionFactory.token("expr"));
+        Expression expression = ExpressionFactory.roundBracket(ExpressionFactory.token("expr"));
         RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
         Class<? extends RoundBracketExpression> v = roundBracketed.value();
         RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
@@ -53,7 +53,7 @@ public class MainTest {
 
     @Test
     public void roundBracketTest() {
-        RoundBracketExpression r = RoundBracketExpression.operator(ExpressionFactory.symbol("22"));
+        BracketExpression r = ExpressionFactory.roundBracket(ExpressionFactory.symbol("22"));
     }
 
     @Test
