@@ -6,3 +6,4 @@ f(a, b) = {
 var = "name"
 f.(var) = "uil"
 f.(var)
+(f 2 4)

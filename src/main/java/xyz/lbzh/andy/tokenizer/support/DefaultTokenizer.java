@@ -68,7 +68,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       TokenExpression token = new DelimiterExpression(String.valueOf(getChar()));
+                       TokenExpression token = new TokenExpression(String.valueOf(getChar()));
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -81,15 +81,15 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        TokenExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        TokenExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        TokenExpression token = new DelimiterExpression(Definition.SPACE + String.valueOf(getChar()));
+                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return  token;
                     }
