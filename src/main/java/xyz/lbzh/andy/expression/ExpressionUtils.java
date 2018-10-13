@@ -1,6 +1,5 @@
 package xyz.lbzh.andy.expression;
 
-import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.support.NumberExpression;
 import xyz.lbzh.andy.expression.support.StringExpression;
 import xyz.lbzh.andy.expression.support.SymbolExpression;

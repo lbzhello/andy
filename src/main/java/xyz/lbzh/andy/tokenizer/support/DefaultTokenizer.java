@@ -148,7 +148,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             nextChar();
         }
         if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-            return ExpressionFactory.number(new BigDecimal(sb.toString()));
+            return ExpressionFactory.number(sb.toString());
         } else {
             throw new Exceptions.NumberFormatException("Exceptions Number Format!");
         }

@@ -2,11 +2,8 @@ package xyz.lbzh.andy.expression.function;
 
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.internal.ErrorExpression;
-import xyz.lbzh.andy.expression.support.NumberExpression;
-import xyz.lbzh.andy.expression.support.RoundBracketExpression;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 @RoundBracketed
@@ -22,10 +19,10 @@ public class PlusExpression extends NativeExpression {
         BigDecimal accu = BigDecimal.ZERO;
         for (Expression expression : list()) {
             Expression factor = expression.eval(context);
-            if (!(factor instanceof NumberExpression)) return new ErrorExpression("Unsupport Operand Type!");
-            accu = accu.add(((NumberExpression) factor).getValue());
+            if (!(ExpressionUtils.isNumber(factor))) return new ErrorExpression("Unsupport Operand Type!");
+            accu = accu.add(((BigDecimal) factor));
         }
-        return new NumberExpression(accu);
+        return ExpressionFactory.number(accu.doubleValue());
     }
 
     @Override

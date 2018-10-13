@@ -54,8 +54,12 @@ public class ExpressionFactory {
         return new StringExpression(value);
     }
 
-    public static NumberExpression number(BigDecimal num) {
-        return new NumberExpression(num);
+    public static NumberExpression number(String val) {
+        return new NumberExpression(val);
+    }
+
+    public static NumberExpression number(double val) {
+        return new NumberExpression(val);
     }
 
     public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
