@@ -1,10 +1,7 @@
 package xyz.lbzh.andy.parser.support;
 
 import xyz.lbzh.andy.core.Definition;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionContext;
-import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.expression.RoundBracketed;
+import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
@@ -119,7 +116,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combinator() throws Exception {
-        if(getToken() instanceof SymbolExpression){ //e.g. name...
+        if (ExpressionUtils.isSymbol(getToken())) { //e.g. name...
             Expression expression = getToken();
             nextToken(); //eat "expression"
             //if it's unary operator
@@ -127,11 +124,11 @@ public class DefaultParser implements Parser<Expression> {
                 return unaryExpression(expression);
             }
             return expression;
-        } else if (getToken() instanceof StringExpression) { //e.g. "name"...
+        } else if (ExpressionUtils.isString(getToken())) { //e.g. "name"...
             Expression expression = getToken();
             nextToken(); //eat
             return expression;
-        } else if (getToken() instanceof NumberExpression) { //e.g. 123...
+        } else if (ExpressionUtils.isNumber(getToken())) { //e.g. 123...
             Expression expression = getToken();
             nextToken(); //eat
             return expression;
@@ -141,7 +138,7 @@ public class DefaultParser implements Parser<Expression> {
             return squareBracketExpression();
         } else if (Objects.equals(getToken().toString(), "{") || Objects.equals(getToken().toString(), Definition.SPACE + "{")) { //e.g. {...}...
             return curlyBracketExpression();
-        } else if (getToken() == Definition.EOF){ //文件结尾
+        } else if (getToken() == Definition.EOF) { //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
             nextToken(); //eat

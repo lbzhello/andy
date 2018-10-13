@@ -21,7 +21,7 @@ public class DivideExpression extends NativeExpression {
     public Expression eval(Context<Name, Expression> context) {
         Expression leftExpression = first().eval(context);
         Expression rightExpression = second().eval(context);
-        if (!(leftExpression instanceof NumberExpression) || !(rightExpression instanceof NumberExpression)) {
+        if (!(ExpressionUtils.isNumber(leftExpression)) || !(ExpressionUtils.isNumber(rightExpression))) {
             return new ErrorExpression("Unsupport Operand Type!");
         }
 

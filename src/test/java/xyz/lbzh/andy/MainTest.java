@@ -6,6 +6,7 @@ import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.support.*;
 import org.junit.Test;
 
+import java.io.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -87,6 +88,30 @@ public class MainTest {
         System.out.println(o.equals(o));
     }
 
+    /**
+     * Deep clone
+     * @param obj
+     * @param <T>
+     * @return
+     */
+    public static final <T> T copy(T obj){
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (T)ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
 }
 
 class EqTest {
@@ -95,5 +120,7 @@ class EqTest {
         return false;
     }
 }
+
+
 
 

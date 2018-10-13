@@ -2,7 +2,6 @@ package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.function.*;
-import xyz.lbzh.andy.expression.support.SymbolExpression;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 
@@ -114,18 +113,18 @@ public final class Definition {
     }
 
     static {
-        CORE_CONTEXT.bind(new SymbolExpression("="), new AssignExpression());
-        CORE_CONTEXT.bind(new SymbolExpression("+"), new PlusExpression());
-        CORE_CONTEXT.bind(new SymbolExpression("-"), new MinusExpression());
-        CORE_CONTEXT.bind(new SymbolExpression("*"), new MultiplyExpression());
-        CORE_CONTEXT.bind(new SymbolExpression("/"), new DivideExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), new AssignExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), new PlusExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), new MinusExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), new MultiplyExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), new DivideExpression());
 
-        CORE_CONTEXT.bind(new SymbolExpression("."), new PointExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("."), new PointExpression());
 
-        CORE_CONTEXT.bind(new SymbolExpression("||"), new OrExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
 
 
-        CORE_CONTEXT.bind(new SymbolExpression("print"), new PrintExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
     }
 
     public static final Context<Name, Expression> getCoreContext() {

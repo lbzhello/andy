@@ -1,7 +1,7 @@
 package xyz.lbzh.andy.expression.support;
 
 public class StringExpression extends TokenExpression {
-    public StringExpression(Object value){
+    public StringExpression(String value){
         super(value);
     }
 

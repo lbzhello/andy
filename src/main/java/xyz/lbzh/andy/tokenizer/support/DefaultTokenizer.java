@@ -2,7 +2,7 @@ package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.exception.Exceptions;
-import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
@@ -69,7 +69,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       TokenExpression token = new TokenExpression(String.valueOf(getChar()));
+                       Token token = ExpressionFactory.token(String.valueOf(getChar()));
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -82,15 +82,15 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        TokenExpression token = new TokenExpression(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
                         nextChar();
                         return  token;
                     }
@@ -133,7 +133,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             nextChar();
         }
         nextChar(); //eat '"'
-        return new StringExpression(sb.toString());
+        return ExpressionFactory.string(sb.toString());
     }
 
     /**
@@ -148,7 +148,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             nextChar();
         }
         if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-            return new NumberExpression(new BigDecimal(sb.toString()));
+            return ExpressionFactory.number(new BigDecimal(sb.toString()));
         } else {
             throw new Exceptions.NumberFormatException("Exceptions Number Format!");
         }
@@ -170,7 +170,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             sb.append(getChar());
             nextChar();
         }
-        return new SymbolExpression(sb.toString());
+        return ExpressionFactory.symbol(sb.toString());
     }
 
 }

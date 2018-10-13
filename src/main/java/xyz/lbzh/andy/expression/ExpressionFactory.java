@@ -4,6 +4,9 @@ import xyz.lbzh.andy.expression.internal.ErrorExpression;
 import xyz.lbzh.andy.expression.support.*;
 import xyz.lbzh.andy.tokenizer.Token;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
         return new BracketExpression(expressions);
@@ -39,12 +42,20 @@ public class ExpressionFactory {
         return new CurlyBracketExpression();
     }
 
-//    public static TokenExpression token(Token token) {
-//        return (TokenExpression)token;
-//    }
+    public static TokenExpression token(Object token) {
+        return new TokenExpression(token);
+    }
 
     public static SymbolExpression symbol(String value) {
         return new SymbolExpression(value);
+    }
+
+    public static StringExpression string(String value) {
+        return new StringExpression(value);
+    }
+
+    public static NumberExpression number(BigDecimal num) {
+        return new NumberExpression(num);
     }
 
     public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
