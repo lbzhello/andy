@@ -1,6 +1,7 @@
-package xyz.lbzh.andy.expression.internal;
+package xyz.lbzh.andy.expression.support;
 
 import xyz.lbzh.andy.expression.ExpressionType;
+import xyz.lbzh.andy.expression.runtime.ReturnExpression;
 
 public class ErrorExpression extends ReturnExpression {
     private String message;

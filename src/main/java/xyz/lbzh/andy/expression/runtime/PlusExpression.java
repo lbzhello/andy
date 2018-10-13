@@ -1,27 +1,32 @@
-package xyz.lbzh.andy.expression.function;
+package xyz.lbzh.andy.expression.runtime;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.internal.ErrorExpression;
+import xyz.lbzh.andy.expression.support.ErrorExpression;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @RoundBracketed
-public class MultiplyExpression extends NativeExpression {
+public class PlusExpression extends NativeExpression {
 
     @Override
     public Expression build(List<Expression> list) {
-        return new MultiplyExpression().list(list);
+        return new PlusExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        BigDecimal accu = BigDecimal.ONE;
+        BigDecimal accu = BigDecimal.ZERO;
         for (Expression expression : list()) {
             Expression factor = expression.eval(context);
             if (!(ExpressionUtils.isNumber(factor))) return new ErrorExpression("Unsupport Operand Type!");
-            accu = accu.multiply(((BigDecimal) factor));
+            accu = accu.add(((BigDecimal) factor));
         }
         return ExpressionFactory.number(accu.doubleValue());
+    }
+
+    @Override
+    public Expression shift() {
+        return ExpressionFactory.roundBracket();
     }
 }
