@@ -13,7 +13,7 @@ public class Application {
 
         Parser<Expression> parser = new ObjectFactory().parser();
 
-        Expression curlyBracket  = parser.parse("lang.my");
+        Expression curlyBracket  = parser.parse("andy.test");
         System.out.println(curlyBracket);
 
         System.out.println();
