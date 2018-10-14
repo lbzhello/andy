@@ -48,7 +48,7 @@ public class CurlyBracketExpression extends BracketExpression {
         return "{" + super.toString() + "}";
     }
 
-    public String show() {
+    private String toStringTest() {
         StringBuffer buildListSB = new StringBuffer();
         StringBuffer evalListSB = new StringBuffer();
 
