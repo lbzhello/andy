@@ -2,10 +2,12 @@ package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
+import xyz.lbzh.andy.expression.ReplEngine;
 import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
+import xyz.lbzh.andy.expression.runtime.PlusExpression;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -84,9 +86,19 @@ public class MainTest {
     }
 
     @Test
-    public void DeTest() {
-        EqTest o = new EqTest();
-        System.out.println(o.equals(o));
+    public void replTest() {
+        ReplEngine replEngine = new ReplEngine();
+
+        Expression assign = ExpressionFactory.symbol("=");
+        Expression plus = ExpressionFactory.symbol("+");
+        Expression p1 = ExpressionFactory.number("344");
+        Expression p2 = ExpressionFactory.number(123);
+        Expression a = ExpressionFactory.symbol("a");
+
+        Expression rst1 = ExpressionFactory.roundBracket(plus, p1, p2);
+        Expression rst2 = ExpressionFactory.roundBracket(assign, a, rst1);
+        replEngine.eval(rst2);
+        replEngine.eval(a);
     }
 
     /**
