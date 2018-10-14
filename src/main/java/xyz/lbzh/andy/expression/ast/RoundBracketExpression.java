@@ -64,7 +64,7 @@ public class RoundBracketExpression extends BracketExpression {
         } else if (this.list().size() == 1) { //e.g. (name)
             return name;
         } else {
-            return ExpressionFactory.error("Expression must be ComplexExpression!");
+            return ExpressionFactory.error(first(), "Expression must be ComplexExpression!");
         }
     }
 

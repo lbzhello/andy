@@ -24,9 +24,9 @@ public class CurlyBracketExpression extends BracketExpression {
         //record the order of the origin file
         super.add(expression);
 
-        if (expression instanceof RoundBracketExpression &&
+        if (expression instanceof RoundBracketExpression && (
                 Objects.equals(((RoundBracketExpression) expression).first(), Definition.DEFINE) ||
-                Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR)) {
+                Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR))) {
             this.fieldList.add(expression);
         } else {
             this.evalList.add(expression);

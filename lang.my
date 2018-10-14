@@ -1,3 +1,4 @@
+3
 f(a, b) = {
     "name":"liu"
     a + b
@@ -7,3 +8,4 @@ var = "name"
 f.(var) = "uil"
 f.(var)
 (f 2 "fsf")
+3

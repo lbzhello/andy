@@ -20,7 +20,7 @@ public class PlusExpression extends NativeExpression {
         for (Expression expression : list()) {
             Expression factor = expression.eval(context);
             if (!(ExpressionUtils.isNumber(factor))) {
-                return new ErrorExpression(expression, "Unsupport Operand Type!");
+                return new ErrorExpression(factor, "Unsupport Operand Type!");
             }
             accu = accu.add(((BigDecimal) factor));
         }
