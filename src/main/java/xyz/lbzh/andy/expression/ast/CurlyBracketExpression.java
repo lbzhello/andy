@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 @CurlyBracketed
 public class CurlyBracketExpression extends BracketExpression {
-    private List<Expression> buildList = new ArrayList<>();
+    private List<Expression> fieldList = new ArrayList<>();
     private List<Expression> evalList = new ArrayList<>();
 
     public CurlyBracketExpression(Expression... expressions) {
@@ -24,15 +24,10 @@ public class CurlyBracketExpression extends BracketExpression {
         //record the order of the origin file
         super.add(expression);
 
-        if (expression instanceof RoundBracketExpression) {
-            RoundBracketExpression roundBracketExpression = (RoundBracketExpression)expression;
-            if (Objects.equals(roundBracketExpression.first(), Definition.DEFINE)) { //对象定义
-                this.buildList.add(expression);
-            } else if (Objects.equals(roundBracketExpression.first(), Definition.PAIR)) { //字段定义
-                this.buildList.add(expression);
-            } else {
-                this.evalList.add(expression);
-            }
+        if (expression instanceof RoundBracketExpression &&
+                Objects.equals(((RoundBracketExpression) expression).first(), Definition.DEFINE) ||
+                Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR)) {
+            this.fieldList.add(expression);
         } else {
             this.evalList.add(expression);
         }
@@ -40,20 +35,12 @@ public class CurlyBracketExpression extends BracketExpression {
         return this;
     }
 
-    public List<Expression> getBuildList() {
-        return buildList;
-    }
-
-    public List<Expression> getEvalList() {
-        return evalList;
-    }
-
     @Override
     public ComplexExpression eval(Context<Name, Expression> context) {
-        this.buildList.stream().forEach(expression -> {
+        this.fieldList.stream().forEach(expression -> {
             expression.eval(context);
         });
-        return ExpressionFactory.complex(context).list(this.getEvalList());
+        return ExpressionFactory.complex(context).list(this.evalList);
     }
 
     @Override
@@ -65,7 +52,7 @@ public class CurlyBracketExpression extends BracketExpression {
         StringBuffer buildListSB = new StringBuffer();
         StringBuffer evalListSB = new StringBuffer();
 
-        for (Expression expression : buildList) {
+        for (Expression expression : fieldList) {
             buildListSB.append(expression + " ");
         }
 

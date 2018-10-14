@@ -23,7 +23,7 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression parse(String fileName){
-        CurlyBracketExpression curlyBracketExpression = new CurlyBracketExpression();
+        CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         try {
             tokenizer.init(new FileReader(fileName));
             while (hasNext()) {
