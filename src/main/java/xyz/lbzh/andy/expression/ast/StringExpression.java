@@ -5,6 +5,10 @@ public class StringExpression extends TokenExpression {
         super(value);
     }
 
+    public StringExpression(String value, int lineNumber) {
+        super(value, lineNumber);
+    }
+
     @Override
     public String toString() {
         return "\"" + this.value.toString() + "\"";

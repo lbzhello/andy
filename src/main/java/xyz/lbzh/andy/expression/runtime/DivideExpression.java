@@ -20,7 +20,7 @@ public class DivideExpression extends NativeExpression {
         Expression leftExpression = first().eval(context);
         Expression rightExpression = second().eval(context);
         if (!(ExpressionUtils.isNumber(leftExpression)) || !(ExpressionUtils.isNumber(rightExpression))) {
-            return new ErrorExpression("Unsupport Operand Type!");
+            return ExpressionFactory.error("Unsupport Operand Type!");
         }
 
         BigDecimal leftValue = (BigDecimal) leftExpression;

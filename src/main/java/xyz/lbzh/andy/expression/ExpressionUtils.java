@@ -2,8 +2,17 @@ package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.LambdaExpression;
+import xyz.lbzh.andy.expression.runtime.ReturnExpression;
 
 public class ExpressionUtils {
+    public static boolean isReturn(Expression expression) {
+        return expression instanceof ReturnExpression;
+    }
+
+    public static boolean hasError(Expression expression) {
+        return expression instanceof ErrorExpression;
+    }
+
     public static boolean isSymbol(Expression expression) {
         return expression instanceof SymbolExpression;
     }

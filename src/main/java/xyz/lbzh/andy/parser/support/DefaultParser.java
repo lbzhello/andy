@@ -11,6 +11,7 @@ import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<Token> tokenizer;
@@ -33,9 +34,7 @@ public class DefaultParser implements Parser<Expression> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ComplexExpression complex = curlyBracketExpression.eval(new ExpressionContext(Definition.getCoreContext()));
-        Expression rst = complex.eval(new ExpressionContext(complex.getContext()));
-        System.out.println(rst);
+
         return curlyBracketExpression;
     }
 
@@ -101,7 +100,7 @@ public class DefaultParser implements Parser<Expression> {
 //            return combine(ExpressionFactory.roundBracket(NameExpression.DEFINE, left, curlyBracketExpression()));
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
         } else if (Objects.equals(getToken().toString(), ".")) { //e.g. left.right...
-            return combine(ExpressionFactory.roundBracket(ExpressionFactory.symbol("."), left, combinator()));
+            return combine(ExpressionFactory.roundBracket(ExpressionFactory.symbol(".", tokenizer.getLineNumber()), left, combinator()));
         } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
             nextToken();
 //            return ExpressionFactory.roundBracket(NameExpression.PAIR, left, expression());

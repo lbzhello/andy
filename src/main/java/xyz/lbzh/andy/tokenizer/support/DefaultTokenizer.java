@@ -1,7 +1,6 @@
 package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.core.Definition;
-import xyz.lbzh.andy.exception.Exceptions;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
@@ -54,6 +53,11 @@ public class DefaultTokenizer implements Tokenizer<Token> {
     }
 
     @Override
+    public int getLineNumber() {
+        return this.lineNumberReader.getLineNumber() + 1; //1 based
+    }
+
+    @Override
     public void close() throws IOException {
         lineNumberReader.close();
     }
@@ -67,7 +71,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       Token token = ExpressionFactory.token(String.valueOf(getChar()));
+                       Token token = ExpressionFactory.token(String.valueOf(getChar()), getLineNumber());
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -80,15 +84,15 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()));
+                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return  token;
                     }
@@ -131,7 +135,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             nextChar();
         }
         nextChar(); //eat '"'
-        return ExpressionFactory.string(sb.toString());
+        return ExpressionFactory.string(sb.toString(), getLineNumber());
     }
 
     /**
@@ -139,22 +143,18 @@ public class DefaultTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private Token nextNumber() throws IOException, Exceptions.NumberFormatException {
+    private Token nextNumber() throws IOException {
         StringBuffer sb = new StringBuffer();
         while (Character.isDigit(getChar()) || getChar() == '.') {
             sb.append(getChar());
             nextChar();
         }
         if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-            return ExpressionFactory.number(sb.toString());
+            return ExpressionFactory.number(sb.toString(), getLineNumber());
         } else {
-            throw new Exceptions.NumberFormatException("Exceptions Number Format!");
+            throw new NumberFormatException("Line: " + getLineNumber());
         }
 
-//        if (!Character.isWhitespace(getChar()) && !NameExpression.isDelimiter(getChar())) { //e.g. 123.45abc
-//            throw new Exceptions.NumberFormatException("Exceptions Number Format!");
-//        }
-//        return new NumberExpression(sb.toString());
     }
 
     /**
@@ -168,7 +168,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
             sb.append(getChar());
             nextChar();
         }
-        return ExpressionFactory.symbol(sb.toString());
+        return ExpressionFactory.symbol(sb.toString(), getLineNumber());
     }
 
 }

@@ -10,6 +10,10 @@ public class SymbolExpression extends TokenExpression {
         this.value = value;
     }
 
+    public SymbolExpression(String value, int lineNumber) {
+        super(value, lineNumber);
+    }
+
     @Override
     public Expression eval(Context<Name, Expression> context) {
         Expression rst = context.lookup(this);

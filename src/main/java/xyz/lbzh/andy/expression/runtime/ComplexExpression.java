@@ -35,44 +35,14 @@ public class ComplexExpression implements Expression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression retValue = ExpressionType.NIL;
+        Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.list) {
-            retValue = expression.eval(context);
-            //return statement
-            if (retValue instanceof ReturnExpression) {
-                return retValue;
+            rstValue = expression.eval(context);
+            if (ExpressionUtils.isReturn(expression) || ExpressionUtils.hasError(expression)) {
+                return rstValue;
             }
         }
-        //or return the last value of the expression
-        return retValue;
+        return rstValue;
     }
-
-    //    private ComplexExpression(ComplexExpressionBuilder builder) {
-//        this.parameters = builder.parameters;
-//        this.list = builder.list;
-//    }
-//
-//    public ComplexExpressionBuilder builder() {
-//        return new ComplexExpressionBuilder();
-//    }
-//
-//    public static class ComplexExpressionBuilder implements Builder<ComplexExpression> {
-//        private List<Expression> parameters;
-//        private List<Expression> list;
-//
-//        public ComplexExpressionBuilder parameters(List<Expression> parameters) {
-//            this.parameters = parameters;
-//            return this;
-//        }
-//
-//        public ComplexExpressionBuilder list(List list) {
-//            this.list = list;
-//            return this;
-//        }
-//
-//        public ComplexExpression build() {
-//            return new ComplexExpression(this);
-//        }
-//    }
 
 }

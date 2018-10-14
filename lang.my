@@ -7,3 +7,4 @@ var = "name"
 f.(var) = "uil"
 f.(var)
 (f 2 4)
+3 + "5"
