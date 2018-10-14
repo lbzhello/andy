@@ -1,11 +1,7 @@
 package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.config.AppConfig;
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionContext;
-import xyz.lbzh.andy.expression.Name;
-import xyz.lbzh.andy.expression.runtime.ComplexExpression;
+import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.parser.Parser;
 
 import java.io.IOException;
@@ -22,9 +18,7 @@ public class Application {
 
         System.out.println();
 
-        Context<Name, Expression> rootContext = new ExpressionContext(Definition.getCoreContext());
-        Expression complex = curlyBracket.eval(rootContext); //build and generate a runtime expression
-        Expression rst = complex.eval(new ExpressionContext(rootContext));
-        System.err.println(rst);
+        ReplEngine replEngine = new ReplEngine();
+        replEngine.eval(curlyBracket);
     }
 }

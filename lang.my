@@ -6,6 +6,4 @@ f(a, b) = {
 var = "name"
 f.(var) = "uil"
 f.(var)
-(f 2 4)
-num = "numbbb"
-3 - num
+(f 2 "fsf")
