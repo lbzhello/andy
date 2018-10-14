@@ -19,9 +19,9 @@ public class MinusExpression extends NativeExpression {
         Expression leftExpression = first().eval(context);
         Expression rightExpression = second().eval(context);
         if (!(ExpressionUtils.isNumber(leftExpression))) {
-            return new ErrorExpression(first(), "Unsupport Operand Type!");
+            return new ErrorExpression(leftExpression, "Unsupport Operand Type!");
         } else if (!(ExpressionUtils.isNumber(rightExpression))) {
-            return new ErrorExpression(second(), "Unsupport Operand Type!");
+            return new ErrorExpression(rightExpression, "Unsupport Operand Type!");
         }
 
         BigDecimal leftValue = (BigDecimal) leftExpression;

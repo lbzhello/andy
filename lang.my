@@ -7,5 +7,5 @@ f(a, b) = {
 var = "name"
 f.(var) = "uil"
 f.(var)
-(f 2 "fsf")
-3
+c = (f 2 6)
+c
