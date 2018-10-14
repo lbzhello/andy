@@ -19,7 +19,9 @@ public class MultiplyExpression extends NativeExpression {
         BigDecimal accu = BigDecimal.ONE;
         for (Expression expression : list()) {
             Expression factor = expression.eval(context);
-            if (!(ExpressionUtils.isNumber(factor))) return new ErrorExpression("Unsupport Operand Type!");
+            if (!(ExpressionUtils.isNumber(factor))) {
+                return new ErrorExpression(expression, "Unsupport Operand Type!");
+            }
             accu = accu.multiply(((BigDecimal) factor));
         }
         return ExpressionFactory.number(accu.doubleValue());

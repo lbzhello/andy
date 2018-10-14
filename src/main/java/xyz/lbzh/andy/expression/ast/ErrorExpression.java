@@ -6,17 +6,19 @@ import xyz.lbzh.andy.expression.ExpressionUtils;
 import xyz.lbzh.andy.expression.runtime.ReturnExpression;
 import xyz.lbzh.andy.tokenizer.Token;
 
-public class ErrorExpression extends ReturnExpression {
+public class ErrorExpression implements Expression {
     private String message;
+    private Expression expression;
+
     private int lineNumber = -1;
 
     public ErrorExpression(String message) {
-        super(ExpressionType.NIL);
+        this.expression = ExpressionType.NIL;
         this.message = message;
     }
 
     public ErrorExpression(Expression expression, String message) {
-        super(expression);
+        this.expression = expression;
         if (expression instanceof Token) {
             this.lineNumber = ((Token) expression).getLineNumber();
         }
@@ -25,6 +27,6 @@ public class ErrorExpression extends ReturnExpression {
 
     @Override
     public String toString() {
-        return "ErrorExpression in line " + lineNumber + ": " + message;
+        return "ErrorExpression in line " + lineNumber + ": " + expression + "\n    " + message;
     }
 }

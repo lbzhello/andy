@@ -18,8 +18,10 @@ public class MinusExpression extends NativeExpression {
     public Expression eval(Context<Name, Expression> context) {
         Expression leftExpression = first().eval(context);
         Expression rightExpression = second().eval(context);
-        if (!(ExpressionUtils.isNumber(leftExpression)) || !(ExpressionUtils.isNumber(rightExpression))) {
-            return new ErrorExpression("Unsupport Operand Type!");
+        if (!(ExpressionUtils.isNumber(leftExpression))) {
+            return new ErrorExpression(first(), "Unsupport Operand Type!");
+        } else if (!(ExpressionUtils.isNumber(rightExpression))) {
+            return new ErrorExpression(second(), "Unsupport Operand Type!");
         }
 
         BigDecimal leftValue = (BigDecimal) leftExpression;

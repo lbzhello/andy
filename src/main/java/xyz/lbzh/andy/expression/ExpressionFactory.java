@@ -88,5 +88,9 @@ public class ExpressionFactory {
         return new ErrorExpression(message);
     }
 
+    public static ErrorExpression error(Expression expression, String message) {
+        return new ErrorExpression(expression, message);
+    }
+
 
 }
