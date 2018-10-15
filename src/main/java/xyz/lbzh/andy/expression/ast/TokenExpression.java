@@ -6,12 +6,12 @@ import xyz.lbzh.andy.tokenizer.LineNumberToken;
 
 public class TokenExpression implements LineNumberToken, Expression, Name {
     protected Object value;
-    protected int lineNumber = -1;
+    protected int lineNumber = 0;
 
     public TokenExpression(){}
 
     public TokenExpression(Object value){
-        this(value, -1);
+        this(value, 0);
     }
 
     public TokenExpression(Object value, int lineNumber) {

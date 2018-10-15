@@ -21,7 +21,18 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     @Override
-    public Expression parse(String fileName){
+    public Expression parseString(String expression) {
+        tokenizer.init(new StringReader(expression));
+        try {
+            return expression();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ExpressionType.NIL;
+        }
+    }
+
+    @Override
+    public Expression parseFile(String fileName){
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         try {
             tokenizer.init(new FileReader(fileName));

@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class MainTest {
@@ -99,6 +100,14 @@ public class MainTest {
         Expression rst2 = ExpressionFactory.roundBracket(assign, a, rst1);
         replEngine.eval(rst2);
         replEngine.eval(a);
+    }
+
+    @Test
+    public void iterTest() throws IOException {
+        LineNumberReader reader = new LineNumberReader(new StringReader("123"));
+        while (true) {
+            System.out.println(reader.read());
+        }
     }
 
     /**

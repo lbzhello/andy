@@ -1,6 +1,5 @@
 package xyz.lbzh.andy.core;
 
-import xyz.lbzh.andy.config.AppConfig;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.parser.Parser;
 
@@ -13,7 +12,7 @@ public class Application {
 
         Parser<Expression> parser = new ObjectFactory().parser();
 
-        Expression curlyBracket  = parser.parse("andy.test");
+        Expression curlyBracket  = parser.parseFile("andy.test");
         System.out.println(curlyBracket);
 
         System.out.println();
