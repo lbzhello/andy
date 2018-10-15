@@ -36,6 +36,16 @@ public class DefaultParser implements Parser<Expression> {
         return curlyBracketExpression;
     }
 
+    @Override
+    public boolean hasNext() {
+        return tokenizer.hasNext();
+    }
+
+
+    @Override
+    public void close() throws IOException {
+        tokenizer.close();
+    }
 
     @Override
     public Expression next(){
@@ -137,7 +147,7 @@ public class DefaultParser implements Parser<Expression> {
             return squareBracketExpression();
         } else if (Objects.equals(getToken().toString(), "{") || Objects.equals(getToken().toString(), Definition.SPACE + "{")) { //e.g. {...}...
             return curlyBracketExpression();
-        } else if (getToken() == Definition.EOF) { //文件结尾
+        } else if (!hasNext()) { //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
             nextToken(); //eat
@@ -270,15 +280,4 @@ public class DefaultParser implements Parser<Expression> {
         return squareBracketExpression;
     }
 
-
-    @Override
-    public boolean hasNext() {
-        return getToken() != Definition.EOF;
-    }
-
-
-    @Override
-    public void close() throws IOException {
-        tokenizer.close();
-    }
 }

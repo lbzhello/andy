@@ -8,7 +8,7 @@ import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
 
-public class DefaultTokenizer implements Tokenizer<Token> {
+public class FileTokenizer implements Tokenizer<Token> {
     private LineNumberReader lineNumberReader;
     private int currentChar = ' ';
 
@@ -35,7 +35,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
     public Token next(){
         try {
             StringBuffer sb = new StringBuffer();
-            while (!isEOF()) {
+            while (hasNext()) {
                 if (!Character.isWhitespace(getChar())) { //不是空白字符
                    if(getChar() == '"'){ //String
                        return nextString();
