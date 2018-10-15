@@ -13,12 +13,14 @@ import org.springframework.context.annotation.*;
 @ImportResource("classpath:xyz/lbzh/andy/config/app-config.xml")
 public class AppConfig {
     @Bean
+    @Scope("prototype")
     public Tokenizer tokenizer(){
         Tokenizer<Token> tokenizer = new FileTokenizer();
         return tokenizer;
     }
 
     @Bean
+    @Scope("prototype")
     public Parser parser(){
         Parser<Expression> parser = new DefaultParser(tokenizer());
         return parser;

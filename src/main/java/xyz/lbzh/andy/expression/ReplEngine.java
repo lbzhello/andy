@@ -1,9 +1,20 @@
 package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.core.Definition;
+import xyz.lbzh.andy.core.ApplicationFactory;
+import xyz.lbzh.andy.parser.Parser;
 
 public class ReplEngine {
-    private Context<Name, Expression> context = new ExpressionContext(Definition.getCoreContext());
+    private final Context<Name, Expression> context = new ExpressionContext(Definition.getCoreContext());
+    private final Parser<Expression> parser = ApplicationFactory.getApplicationContext().getBean(Parser.class);
+
+    public Expression eval(String expression) {
+        return this.eval(parser.parseString(expression));
+    }
+
+    public Expression evalFile(String fileName) {
+        return this.eval(parser.parseFile(fileName));
+    }
 
     public Expression eval(Expression expression) {
         Expression rst;

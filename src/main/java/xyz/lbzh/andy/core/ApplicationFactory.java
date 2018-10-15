@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import xyz.lbzh.andy.config.AppConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import xyz.lbzh.andy.config.ApplicationContextBuilder;
 import xyz.lbzh.andy.expression.Context;
 import xyz.lbzh.andy.expression.ExpressionContext;
 
@@ -14,7 +15,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
 @Named
-public class ObjectFactory extends AppConfig implements ApplicationContextAware {
+public class ApplicationFactory extends AppConfig implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     @Override
@@ -23,6 +24,10 @@ public class ObjectFactory extends AppConfig implements ApplicationContextAware 
     }
 
     public static ApplicationContext getApplicationContext() {
+        if (applicationContext == null) {
+            //AppConfig.class as default
+            ApplicationContextBuilder.build(AppConfig.class);
+        }
         return applicationContext;
     }
 

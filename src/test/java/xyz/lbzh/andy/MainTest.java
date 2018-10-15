@@ -7,7 +7,6 @@ import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
-import xyz.lbzh.andy.expression.runtime.PlusExpression;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MainTest {
@@ -108,6 +106,14 @@ public class MainTest {
         while (true) {
             System.out.println(reader.read());
         }
+    }
+
+    @Test
+    public void parseStringTest() {
+        ReplEngine replEngine = new ReplEngine();
+
+        replEngine.eval("3 + 5");
+
     }
 
     /**
