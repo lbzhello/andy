@@ -9,8 +9,8 @@ import xyz.lbzh.andy.tokenizer.support.FileTokenizer;
 import org.springframework.context.annotation.*;
 
 @Configuration
-//@ComponentScan(basePackages = "xyz.lbzh.andy")
-//@ImportResource("classpath:/fun/mandy/config/app-config.xml")
+@ComponentScan(basePackages = "xyz.lbzh.andy")
+@ImportResource("classpath:xyz/lbzh/andy/config/app-config.xml")
 public class AppConfig {
     @Bean
     public Tokenizer tokenizer(){
