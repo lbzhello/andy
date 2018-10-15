@@ -8,5 +8,6 @@ public class Application {
         ApplicationContextBuilder.build(clazz);
         ReplEngine replEngine = new ReplEngine();
         replEngine.evalFile("andy.test");
+        replEngine.eval("3 + 2");
     }
 }

@@ -28,6 +28,7 @@ public class FileTokenizer implements Tokenizer<Token> {
 
     @Override
     public void close() throws IOException {
+        this.currentChar = ' ';
         lineNumberReader.close();
     }
 
