@@ -2,9 +2,7 @@ package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionType;
-import xyz.lbzh.andy.expression.ExpressionUtils;
-import xyz.lbzh.andy.expression.runtime.ReturnExpression;
-import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 
 public class ErrorExpression implements Expression {
     private String message;
@@ -19,8 +17,8 @@ public class ErrorExpression implements Expression {
 
     public ErrorExpression(Expression expression, String message) {
         this.expression = expression;
-        if (expression instanceof Token) {
-            this.lineNumber = ((Token) expression).getLineNumber();
+        if (expression instanceof LineNumberToken) {
+            this.lineNumber = ((LineNumberToken) expression).getLineNumber();
         }
         this.message = message;
     }

@@ -2,29 +2,29 @@ package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
 
-public class DefaultTokenizer implements Tokenizer<Token> {
+public class DefaultTokenizer implements Tokenizer<LineNumberToken> {
     private LineNumberReader lineNumberReader;
-    private Token token;
+    private LineNumberToken token;
     private int currentChar = ' ';
 
     /**
      * 提供给java config用于配置类
      */
     public static final class Builder {
-        private Token token;
+        private LineNumberToken token;
 
         public Builder(){}
 
-        public Tokenizer<Token> build(){
+        public Tokenizer<LineNumberToken> build(){
             return new DefaultTokenizer(this);
         }
 
-        public Builder token(Token token){
+        public Builder token(LineNumberToken token){
             this.token = token;
             return this;
         }
@@ -63,7 +63,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
     }
 
     @Override
-    public Token next(){
+    public LineNumberToken next(){
         try {
             StringBuffer sb = new StringBuffer();
             while (!isEOF()) {
@@ -71,7 +71,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       Token token = ExpressionFactory.token(String.valueOf(getChar()), getLineNumber());
+                       LineNumberToken token = ExpressionFactory.token(String.valueOf(getChar()), getLineNumber());
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -84,15 +84,15 @@ public class DefaultTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        Token token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return  token;
                     }
@@ -127,7 +127,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private Token nextString() throws IOException {
+    private LineNumberToken nextString() throws IOException {
         StringBuffer sb = new StringBuffer();
         nextChar(); //eat '"'
         while (getChar() != '"') {
@@ -143,7 +143,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private Token nextNumber() throws IOException {
+    private LineNumberToken nextNumber() throws IOException {
         StringBuffer sb = new StringBuffer();
         while (Character.isDigit(getChar()) || getChar() == '.') {
             sb.append(getChar());
@@ -162,7 +162,7 @@ public class DefaultTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private Token nextSymbol() throws IOException {
+    private LineNumberToken nextSymbol() throws IOException {
         StringBuffer sb = new StringBuffer();
         while (!Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());

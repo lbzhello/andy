@@ -2,7 +2,7 @@ package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.runtime.*;
-import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 
 import java.util.HashMap;
@@ -39,12 +39,12 @@ public final class Definition {
     /**
      * End of file
      */
-    public static final Token EOF = TokenFlag.EOF;
+    public static final LineNumberToken EOF = TokenFlag.EOF;
 
     /**
      * Head of file
      */
-    public static final Token HOF = TokenFlag.HOF;
+    public static final LineNumberToken HOF = TokenFlag.HOF;
 
     private static final Set<Character> delimiters = new HashSet<>();
 

@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression;
 
 
-import xyz.lbzh.andy.tokenizer.Token;
-
 import java.io.Serializable;
 
 public interface Expression extends Nameable, Serializable {

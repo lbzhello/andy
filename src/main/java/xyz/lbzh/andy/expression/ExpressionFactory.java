@@ -5,7 +5,6 @@ import xyz.lbzh.andy.expression.runtime.DefineExpression;
 import xyz.lbzh.andy.expression.runtime.LambdaExpression;
 import xyz.lbzh.andy.expression.runtime.PairExpression;
 import xyz.lbzh.andy.expression.runtime.ComplexExpression;
-import xyz.lbzh.andy.tokenizer.Token;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {

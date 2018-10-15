@@ -1,11 +1,10 @@
 package xyz.lbzh.andy.expression.ast;
 
-import org.springframework.objenesis.ObjenesisBase;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
-import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 
-public class TokenExpression implements Token, Expression, Name {
+public class TokenExpression implements LineNumberToken, Expression, Name {
     protected Object value;
     protected int lineNumber = -1;
 

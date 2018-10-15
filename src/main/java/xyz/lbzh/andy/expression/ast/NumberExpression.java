@@ -2,11 +2,11 @@ package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.Name;
-import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 
 import java.math.BigDecimal;
 
-public class NumberExpression extends BigDecimal implements Token, Expression, Name {
+public class NumberExpression extends BigDecimal implements LineNumberToken, Expression, Name {
     private int lineNumber = 0;
 
     public NumberExpression(String val) {
