@@ -4,6 +4,7 @@ import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.parser.support.DefaultParser;
 import xyz.lbzh.andy.tokenizer.LineNumberToken;
+import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 import xyz.lbzh.andy.tokenizer.support.DefaultTokenizer;
 import org.springframework.context.annotation.*;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.*;
 public class AppConfig {
     @Bean
     public  Tokenizer tokenizer(){
-        Tokenizer<LineNumberToken> tokenizer = new DefaultTokenizer();
+        Tokenizer<Token> tokenizer = new DefaultTokenizer();
         return tokenizer;
     }
 

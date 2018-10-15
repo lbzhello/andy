@@ -5,18 +5,18 @@ import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
 import xyz.lbzh.andy.parser.Parser;
-import xyz.lbzh.andy.tokenizer.LineNumberToken;
+import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
 import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
-    private Tokenizer<LineNumberToken> tokenizer;
+    private Tokenizer<Token> tokenizer;
 
-    private LineNumberToken currentToken = Definition.HOF;
+    private Token currentToken = Definition.HOF;
 
-    public DefaultParser(Tokenizer<LineNumberToken> tokenizer) {
+    public DefaultParser(Tokenizer<Token> tokenizer) {
         this.tokenizer = tokenizer;
     }
 
@@ -47,12 +47,12 @@ public class DefaultParser implements Parser<Expression> {
         return null;
     }
 
-    private LineNumberToken nextToken() {
+    private Token nextToken() {
         currentToken = tokenizer.next();
         return currentToken;
     }
 
-    private LineNumberToken getToken() {
+    private Token getToken() {
         return currentToken;
     }
 

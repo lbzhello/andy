@@ -3,45 +3,14 @@ package xyz.lbzh.andy.tokenizer.support;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.tokenizer.LineNumberToken;
+import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
 
-public class DefaultTokenizer implements Tokenizer<LineNumberToken> {
+public class DefaultTokenizer implements Tokenizer<Token> {
     private LineNumberReader lineNumberReader;
-    private LineNumberToken token;
     private int currentChar = ' ';
-
-    /**
-     * 提供给java config用于配置类
-     */
-    public static final class Builder {
-        private LineNumberToken token;
-
-        public Builder(){}
-
-        public Tokenizer<LineNumberToken> build(){
-            return new DefaultTokenizer(this);
-        }
-
-        public Builder token(LineNumberToken token){
-            this.token = token;
-            return this;
-        }
-    }
-
-    /**
-     * 提供默认构造函数
-     * 初始化资源
-     */
-    public DefaultTokenizer(){
-//        this.lineNumberReader = new LineNumberReader(new BufferedReader(NameExpression.getReader()));
-    }
-
-    //只能通过Builder调用
-    private DefaultTokenizer(Builder builder){
-        this.token = builder.token;
-    }
 
     @Override
     public void init(Reader reader) {
@@ -63,7 +32,7 @@ public class DefaultTokenizer implements Tokenizer<LineNumberToken> {
     }
 
     @Override
-    public LineNumberToken next(){
+    public Token next(){
         try {
             StringBuffer sb = new StringBuffer();
             while (!isEOF()) {
