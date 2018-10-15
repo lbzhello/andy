@@ -27,8 +27,4 @@ public class PlusExpression extends NativeExpression {
         return ExpressionFactory.number(accu.doubleValue());
     }
 
-    @Override
-    public Expression shift() {
-        return ExpressionFactory.roundBracket();
-    }
 }

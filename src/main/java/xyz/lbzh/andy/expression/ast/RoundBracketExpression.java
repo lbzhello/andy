@@ -21,15 +21,6 @@ public class RoundBracketExpression extends BracketExpression {
         return this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
     }
 
-    /**
-     * RoundBracketExpression => SquareBracketExpression
-     * @return
-     */
-    @Override
-    public Expression shift() {
-        return ExpressionFactory.squareBracket().list(this.list());
-    }
-
     @Override
     public Name getName() {
         return this.first().getName();

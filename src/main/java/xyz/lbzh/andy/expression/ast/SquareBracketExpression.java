@@ -23,15 +23,6 @@ public class SquareBracketExpression extends BracketExpression {
         return rstList;
     }
 
-    /**
-     * SquareBracketExpression => RoundBracketExpression
-     * @return
-     */
-    @Override
-    public Expression shift() {
-        return ExpressionFactory.roundBracket().list(this.list());
-    }
-
     @Override
     public String toString() {
         return "[" + super.toString() + "]";
