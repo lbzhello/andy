@@ -24,7 +24,9 @@ public class DefaultParser implements Parser<Expression> {
     public Expression parseString(String expression) {
         tokenizer.init(new StringReader(expression));
         try {
-            return expression();
+            Expression rst = expression();
+            tokenizer.close();
+            return rst;
         } catch (Exception e) {
             e.printStackTrace();
             return ExpressionType.NIL;

@@ -31,4 +31,8 @@ public class ApplicationFactory extends AppConfig implements ApplicationContextA
         return applicationContext;
     }
 
+    public static <T> T getBean(Class<T> clazz) {
+        return getApplicationContext().getBean(clazz);
+    }
+
 }
