@@ -41,7 +41,7 @@ public class FileTokenizer implements Tokenizer<Token> {
                    if(getChar() == '"'){ //String
                        return nextString();
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       LineNumberToken token = ExpressionFactory.token(String.valueOf(getChar()), getLineNumber());
+                       LineNumberToken token = ExpressionFactory.delimiter(String.valueOf(getChar()), getLineNumber());
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -54,15 +54,15 @@ public class FileTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '[') { //e.g. name [...
-                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return token;
                     } else if (getChar() == '{') { //e.g. name {...
-                        LineNumberToken token = ExpressionFactory.token(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
+                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
                         return  token;
                     }

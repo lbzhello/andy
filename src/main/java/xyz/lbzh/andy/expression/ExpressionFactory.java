@@ -63,6 +63,14 @@ public class ExpressionFactory {
         return new NumberExpression(val, lineNumber);
     }
 
+    public static DelimiterExpression delimiter(String value) {
+        return new DelimiterExpression(value);
+    }
+
+    public static DelimiterExpression delimiter(String value, int lineNumber) {
+        return new DelimiterExpression(value, lineNumber);
+    }
+
     public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
         return new LambdaExpression(bracket, curlyBracket);
     }

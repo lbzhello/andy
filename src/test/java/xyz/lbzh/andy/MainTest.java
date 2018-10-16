@@ -1,5 +1,6 @@
 package xyz.lbzh.andy;
 
+import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.ReplEngine;
@@ -7,6 +8,7 @@ import xyz.lbzh.andy.expression.RoundBracketed;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
+import xyz.lbzh.andy.parser.Parser;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -109,11 +111,12 @@ public class MainTest {
     }
 
     @Test
-    public void parseStringTest() {
+    public void parseTest() {
         ReplEngine replEngine = new ReplEngine();
-
-        replEngine.eval("3 + 5");
-
+        Parser<Expression> parser = ApplicationFactory.getBean(Parser.class);
+        System.out.println(parser.parseFile("andy.test"));
+        replEngine.eval("a = 5");
+        replEngine.eval("a / 8");
     }
 
     /**
@@ -140,13 +143,6 @@ public class MainTest {
 
     }
 
-}
-
-class EqTest {
-    @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
 }
 
 

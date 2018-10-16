@@ -29,6 +29,6 @@ public class DivideExpression extends NativeExpression {
         BigDecimal rightValue = (BigDecimal) rightExpression;
 
 
-        return ExpressionFactory.number(leftValue.divide(rightValue, 2, RoundingMode.HALF_EVEN).doubleValue());
+        return ExpressionFactory.number(leftValue.divide(rightValue, 2, RoundingMode.HALF_EVEN).toString());
     }
 }

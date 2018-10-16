@@ -117,7 +117,7 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), new PlusExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), new MinusExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), new MultiplyExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), new DivideExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.delimiter("/"), new DivideExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("."), new PointExpression());
 
