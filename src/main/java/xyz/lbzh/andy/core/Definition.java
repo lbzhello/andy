@@ -83,6 +83,7 @@ public final class Definition {
         binary.put("&&", 12);
 
         binary.put("==", 21);
+        binary.put("!=", 21);
         binary.put(">", 21);
         binary.put(">=", 21);
         binary.put("<", 21);
@@ -126,6 +127,12 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("."), new PointExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), new EqualExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), new NotEqualExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), new GtExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), new GeExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), new LtExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), new LeExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
