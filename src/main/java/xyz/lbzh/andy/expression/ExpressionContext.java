@@ -21,17 +21,27 @@ public class ExpressionContext implements Expression, Context<Name, Expression> 
     }
 
     @Override
-    public Expression bind(Name key, Expression value) {
-        if (!contains(key)) { //new key
-            return this.container.put(key, value);
+    public void bind(Name key, Expression value) {
+        if (!this.rebind(key, value)) {
+            this.newbind(key, value);
         }
+    }
+
+    @Override
+    public boolean rebind(Name key, Expression value) {
         if (container.containsKey(key)) { //update key
-            return container.put(key, value);
+            container.put(key, value);
+            return true;
         } else if (parent != null) {
-            return parent.bind(key, value);
+            return parent.rebind(key, value);
         } else {
-            return null;
+            return false;
         }
+    }
+
+    @Override
+    public Expression newbind(Name key, Expression value) {
+        return container.put(key, value);
     }
 
     @Override

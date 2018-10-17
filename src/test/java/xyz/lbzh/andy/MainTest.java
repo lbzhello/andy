@@ -115,8 +115,10 @@ public class MainTest {
         ReplEngine replEngine = new ReplEngine();
         Parser<Expression> parser = ApplicationFactory.getBean(Parser.class);
         System.out.println(parser.parseFile("andy.test"));
+        replEngine.eval(parser.parseFile("andy.test"));
         replEngine.eval("a = 5");
         replEngine.eval("a / 8");
+        replEngine.eval("test3.key");
     }
 
     /**

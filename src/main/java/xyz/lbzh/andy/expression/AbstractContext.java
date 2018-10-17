@@ -21,7 +21,7 @@ public abstract class AbstractContext<K, V> implements Context<K, V> {
     }
 
     @Override
-    public V bind(K key, V value) {
-        return container.put(key, value);
+    public void bind(K key, V value) {
+        container.put(key, value);
     }
 }
