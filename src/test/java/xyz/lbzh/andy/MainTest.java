@@ -119,6 +119,7 @@ public class MainTest {
         replEngine.eval("a = 5");
         replEngine.eval("a / 8");
         replEngine.eval("test3.key");
+        replEngine.eval("false");
     }
 
     /**

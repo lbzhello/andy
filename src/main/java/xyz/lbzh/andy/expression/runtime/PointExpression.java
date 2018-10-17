@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PointExpression extends NativeExpression {
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new PointExpression().list(list);
     }
 

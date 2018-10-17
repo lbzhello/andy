@@ -104,6 +104,10 @@ public final class Definition {
     }
 
     static {
+        unary.put("nil", 0);
+        unary.put("true", 0);
+        unary.put("false", 0);
+
         unary.put("++", 1);
         unary.put("--", 1);
         unary.put("!", 1);
@@ -123,7 +127,9 @@ public final class Definition {
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
 
-
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
     }
 

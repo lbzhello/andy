@@ -42,7 +42,7 @@ public class RoundBracketExpression extends BracketExpression {
         Expression name = first().eval(context);
         if (name == ExpressionType.NIL) return ExpressionType.NIL;
         if (name instanceof NativeExpression) {
-            return ((NativeExpression) name).build(this.getParameters()).eval(context);
+            return ((NativeExpression) name).parameters(this.getParameters()).eval(context);
         }
         if (name instanceof ComplexExpression) { //e.g. name = {...} (name x y)
             ComplexExpression complex = (ComplexExpression) name;

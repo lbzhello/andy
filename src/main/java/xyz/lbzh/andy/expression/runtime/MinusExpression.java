@@ -10,7 +10,7 @@ import java.util.List;
 public class MinusExpression extends NativeExpression {
 
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new MinusExpression().list(list);
     }
 

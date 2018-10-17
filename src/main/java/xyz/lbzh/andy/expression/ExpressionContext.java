@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ExpressionContext implements Expression, Context<Name, Expression> {
     private Map<Name, Expression> container = new HashMap<>();
-    private Context<Name, Expression> parent = null;
+    private Context<Name, Expression> parent;
 
     public ExpressionContext(Context<Name, Expression> parent) {
         this.parent = parent;

@@ -8,7 +8,7 @@ import java.util.List;
 public class PrintExpression extends NativeExpression {
 
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new PrintExpression().list(list);
     }
 

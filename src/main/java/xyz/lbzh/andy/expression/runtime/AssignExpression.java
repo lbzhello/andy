@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class AssignExpression extends NativeExpression {
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new AssignExpression().list(list);
     }
 
@@ -27,7 +27,7 @@ public class AssignExpression extends NativeExpression {
                     name = left.third() instanceof RoundBracketExpression ? left.third().eval(context).getName() : left.third().getName();
                     value = this.second().eval(context);
                 } else {
-                    return ExpressionFactory.error("Left value should be ComplexExpression");
+                    return ExpressionFactory.error(parent, "Left value should be ComplexExpression");
                 }
             } else if (second() instanceof CurlyBracketExpression) { //define a function. e.g. f(x) = { x }
                 CurlyBracketExpression right = (CurlyBracketExpression) second();

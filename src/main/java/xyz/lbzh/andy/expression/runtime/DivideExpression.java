@@ -11,7 +11,7 @@ import java.util.List;
 public class DivideExpression extends NativeExpression {
 
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new DivideExpression().list(list);
     }
 

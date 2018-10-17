@@ -39,7 +39,7 @@ public class ComplexExpression implements Expression {
         for (Expression expression : this.list) {
             rstValue = expression.eval(context);
             if (ExpressionUtils.isReturn(rstValue) || ExpressionUtils.hasError(rstValue)) {
-                return rstValue;
+                return rstValue.eval(context);
             }
         }
         return rstValue;

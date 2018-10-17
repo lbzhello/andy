@@ -13,14 +13,14 @@ import java.util.List;
 public class OrExpression extends NativeExpression {
 
     @Override
-    public Expression build(List<Expression> list) {
+    public Expression parameters(List<Expression> list) {
         return new OrExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression rst;
-        if ((rst = first().eval(context)) == ExpressionType.NIL) {
+        Expression rst = first().eval(context);
+        if (rst == ExpressionType.NIL || rst == ExpressionType.FALSE) {
             rst = second().eval(context);
         }
         return rst;
