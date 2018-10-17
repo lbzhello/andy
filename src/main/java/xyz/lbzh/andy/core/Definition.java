@@ -135,8 +135,13 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), new LeExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
+
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
+
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), new IfExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), new ForExpression());
+
         CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
     }
 
