@@ -28,10 +28,10 @@ public class PairExpression extends RoundBracketExpression {
             List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
             ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
             complexExpression.parameters(parameters);
-            context.bind(key.getName(), complexExpression);
+            context.newbind(key.getName(), complexExpression);
             return complexExpression;
         } else {
-            context.bind(key.getName(), value);
+            context.newbind(key.getName(), value);
             return value;
         }
 

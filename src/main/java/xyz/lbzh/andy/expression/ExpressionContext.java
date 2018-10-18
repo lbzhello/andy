@@ -7,6 +7,8 @@ public class ExpressionContext implements Expression, Context<Name, Expression> 
     private Map<Name, Expression> container = new HashMap<>();
     private Context<Name, Expression> parent;
 
+    public ExpressionContext() {}
+
     public ExpressionContext(Context<Name, Expression> parent) {
         this.parent = parent;
     }
@@ -49,4 +51,8 @@ public class ExpressionContext implements Expression, Context<Name, Expression> 
         return container.containsKey(key) || parent != null && parent.contains(key);
     }
 
+    @Override
+    public void setParent(Context<Name, Expression> parent) {
+        this.parent = parent;
+    }
 }

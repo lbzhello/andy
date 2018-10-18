@@ -2,10 +2,11 @@ package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.core.ApplicationFactory;
+import xyz.lbzh.andy.expression.runtime.ComplexExpression;
 import xyz.lbzh.andy.parser.Parser;
 
 public class ReplEngine {
-    private final Context<Name, Expression> context = new ExpressionContext(Definition.getCoreContext());
+    private final Context<Name, Expression> context = Definition.getCoreContext();
     private final Parser<Expression> parser = ApplicationFactory.getBean(Parser.class);
 
     public Expression eval(String expression) {
@@ -20,7 +21,7 @@ public class ReplEngine {
         Expression rst;
         if (ExpressionUtils.isCurlyBracket(expression)) {
             Expression complex = expression.eval(context); //parameters and generate a runtime expression
-            rst = complex.eval(new ExpressionContext(context));
+            rst = complex.eval(new ExpressionContext());
         } else {
             rst = expression.eval(context);
         }

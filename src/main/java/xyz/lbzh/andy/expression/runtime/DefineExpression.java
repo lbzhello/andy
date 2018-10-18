@@ -24,8 +24,8 @@ public class DefineExpression extends RoundBracketExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         //every ComplexExpression has it's own context
-        ComplexExpression complexExpression = this.curlyBracket.eval(new ExpressionContext(context)).parameters(bracket.getParameters());
-        context.bind(bracket.getName(), complexExpression);
+        ComplexExpression complexExpression = this.curlyBracket.eval(context).parameters(bracket.getParameters());
+        context.newbind(bracket.getName(), complexExpression);
         return complexExpression;
     }
 }

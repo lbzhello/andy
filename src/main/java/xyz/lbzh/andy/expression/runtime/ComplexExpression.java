@@ -35,6 +35,7 @@ public class ComplexExpression implements Expression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
+        context.setParent(this.context);
         Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.list) {
             rstValue = expression.eval(context);

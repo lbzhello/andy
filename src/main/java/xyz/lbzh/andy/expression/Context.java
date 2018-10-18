@@ -30,4 +30,6 @@ public interface Context<K,V> extends Serializable {
     Expression newbind(Name key, Expression value);
 
     boolean contains(K key);
+
+    void setParent(Context<Name, Expression> parent);
 }
