@@ -113,6 +113,8 @@ public final class Definition {
         unary.put("--", 1);
         unary.put("!", 1);
 
+        unary.put("return", 1);
+
         unary.put("if", 2);
         unary.put("for", 2);
     }
@@ -141,6 +143,8 @@ public final class Definition {
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), new IfExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), new ForExpression());
+
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), new ReturnBuilderExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
     }
