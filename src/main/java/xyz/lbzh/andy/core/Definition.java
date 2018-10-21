@@ -77,6 +77,8 @@ public final class Definition {
     }
 
     static {
+        binary.put("->", -1);
+
         binary.put("=", 0);
 
         binary.put("||", 11);
@@ -147,6 +149,8 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), new ReturnBuilderExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
+
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), new ArrowExpression());
     }
 
     public static final Context<Name, Expression> getCoreContext() {

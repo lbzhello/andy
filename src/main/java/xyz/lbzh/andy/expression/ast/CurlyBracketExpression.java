@@ -20,7 +20,8 @@ public class CurlyBracketExpression extends BracketExpression {
         super(expressions);
     }
 
-    public BracketExpression add(Expression expression) {
+    @Override
+    public CurlyBracketExpression add(Expression expression) {
         //record the order of the origin file
         super.add(expression);
 
