@@ -22,7 +22,14 @@ public class PointExpression extends NativeExpression {
             MethodExpression methodExpression = new MethodExpression(left);
             methodExpression.setMethodName(right.getName().toString());
             return methodExpression;
+        } else if (ExpressionUtils.isMethod(left)) { //java class call
+            MethodExpression methodExpression = (MethodExpression)left;
+            methodExpression.setMethodName(right.getName().toString());
+            return methodExpression;
+        } else if (left == ExpressionType.NIL){
+            return ExpressionType.NIL;
+        } else {
+            return ExpressionFactory.error(left, "Unsupport operation type!");
         }
-        return ExpressionType.NIL;
     }
 }

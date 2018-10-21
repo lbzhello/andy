@@ -25,12 +25,34 @@ public class SquareBracketExpression extends BracketExpression {
         return "[" + super.toString() + "]";
     }
 
-    public BracketExpression map(Expression func) {
+    //list operation
+    public Expression map(Expression func) {
+        BracketExpression squareBracket = ExpressionFactory.squareBracket();
+        Context<Name, Expression> context = new ExpressionContext();
+        for (Expression expression : this.list()) {
+            context.newbind(ExpressionFactory.symbol("$0"), expression); //put param in the context
+            squareBracket.add(func.eval(context));
+        }
+        return squareBracket;
+    }
+
+    public Expression each(Expression func) {
+        Context<Name, Expression> context = new ExpressionContext();
+        for (Expression expression : this.list()) {
+            context.newbind(ExpressionFactory.symbol("$0"), expression);
+            func.eval(context);
+        }
+        return ExpressionType.NIL;
+    }
+
+    public Expression filter(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression expression : this.list()) {
             context.newbind(ExpressionFactory.symbol("$0"), expression);
-            squareBracket.add(func.eval(context));
+            if (func.eval(context) == ExpressionType.TRUE) {
+                squareBracket.add(expression);
+            }
         }
         return squareBracket;
     }
