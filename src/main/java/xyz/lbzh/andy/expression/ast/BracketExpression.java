@@ -46,7 +46,7 @@ public class BracketExpression implements Expression {
         return ExpressionType.NIL;
     }
 
-    public List<Expression> tail() {
+    public List<Expression> rest() {
         return this.list.size() >= 2 ?this.list().subList(1, this.list().size()) : Collections.emptyList();
     }
 

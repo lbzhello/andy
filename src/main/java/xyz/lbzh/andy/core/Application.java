@@ -9,7 +9,6 @@ public class Application {
         ApplicationContextBuilder.build(clazz);
         ReplEngine replEngine = new ReplEngine();
         Parser<Expression> parser = ApplicationFactory.getBean(Parser.class);
-        System.out.println(parser.parseFile("andy.test"));
         replEngine.evalFile("andy.test");
     }
 }
