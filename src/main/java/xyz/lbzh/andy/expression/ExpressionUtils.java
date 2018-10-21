@@ -1,6 +1,7 @@
 package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.expression.ast.*;
+import xyz.lbzh.andy.expression.runtime.MethodExpression;
 import xyz.lbzh.andy.expression.runtime.LambdaExpression;
 import xyz.lbzh.andy.expression.runtime.ReturnExpression;
 
@@ -47,5 +48,21 @@ public class ExpressionUtils {
 
     public static boolean isSquareBracket(Expression expression) {
         return expression instanceof SquareBracketExpression;
+    }
+
+    public static boolean isMethod(Expression expression) {
+        return expression instanceof MethodExpression;
+    }
+
+    public static MethodExpression asMethod(Expression expression) {
+        return (MethodExpression)expression;
+    }
+
+    public static StringExpression asString(Expression expression) {
+        return (StringExpression)expression;
+    }
+
+    public static NumberExpression asNumber(Expression expression) {
+        return (NumberExpression)expression;
     }
 }

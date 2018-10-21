@@ -1,9 +1,6 @@
 package xyz.lbzh.andy.expression.ast;
 
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.expression.Name;
+import xyz.lbzh.andy.expression.*;
 
 /**
  * [...]
@@ -27,4 +24,15 @@ public class SquareBracketExpression extends BracketExpression {
     public String toString() {
         return "[" + super.toString() + "]";
     }
+
+    public BracketExpression map(Expression func) {
+        BracketExpression squareBracket = ExpressionFactory.squareBracket();
+        Context<Name, Expression> context = new ExpressionContext();
+        for (Expression expression : this.list()) {
+            context.newbind(ExpressionFactory.symbol("$0"), expression);
+            squareBracket.add(func.eval(context));
+        }
+        return squareBracket;
+    }
+
 }

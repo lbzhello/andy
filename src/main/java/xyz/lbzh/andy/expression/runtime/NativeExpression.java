@@ -8,6 +8,7 @@ import java.util.List;
 
 public class NativeExpression extends RoundBracketExpression {
     public Expression parameters(List<Expression> list) {
+        this.list(list);
         return this;
     }
 }

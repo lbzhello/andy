@@ -1,13 +1,12 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.core.ApplicationFactory;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.expression.ReplEngine;
-import xyz.lbzh.andy.expression.RoundBracketed;
+import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
+import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
+import xyz.lbzh.andy.expression.ast.StringExpression;
 import xyz.lbzh.andy.parser.Parser;
 
 import java.io.*;
@@ -15,11 +14,13 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainTest {
     public static void main(String[] args) throws Throwable {
@@ -53,6 +54,7 @@ public class MainTest {
         sb.replace(4, 5, "");
         sb.append("0");
         System.out.println(sb);
+        System.out.println("" == null);
     }
 
     @Test
@@ -90,16 +92,8 @@ public class MainTest {
     public void replTest() {
         ReplEngine replEngine = new ReplEngine();
 
-        Expression assign = ExpressionFactory.symbol("=");
-        Expression plus = ExpressionFactory.symbol("+");
-        Expression p1 = ExpressionFactory.number("344");
-        Expression p2 = ExpressionFactory.number(123);
-        Expression a = ExpressionFactory.symbol("a");
+        replEngine.evalFile("tmp.test");
 
-        Expression rst1 = ExpressionFactory.roundBracket(plus, p1, p2);
-        Expression rst2 = ExpressionFactory.roundBracket(assign, a, rst1);
-        replEngine.eval(rst2);
-        replEngine.eval(a);
     }
 
     @Test
@@ -116,6 +110,36 @@ public class MainTest {
         replEngine.eval("if 1 < 0 2");
     }
 
+    @Test
+    public void paramTest() {
+        Expression expr = ExpressionType.NIL;
+        changeParam(expr);
+        System.out.println(expr);
+    }
+
+    private void changeParam(Expression p1) {
+        p1 = ExpressionFactory.symbol("hello");
+        System.out.println(p1);
+    }
+
+    public String printTest(String str) throws NoSuchMethodException, IllegalAccessException, InstantiationException {
+        System.out.println(str);
+        str.getClass().newInstance();
+        return str;
+    }
+
+    @Test
+    public void commonTest() throws Throwable{
+        Method method = MainTest.class.getMethod("printTest", String.class);
+        MethodHandle mh = MethodHandles.lookup().unreflect(method);
+        method.invoke(new MainTest(), "222");
+//        MethodType methodType = MethodType.genericMethodType()
+        MethodType methodType = MethodType.methodType(BracketExpression.class, Expression.class);
+        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(SquareBracketExpression.class, "map", methodType);
+        SquareBracketExpression list = new SquareBracketExpression(ExpressionFactory.symbol("1"));
+        methodHandle = methodHandle.bindTo(list);
+        Object o = methodHandle.invoke(new StringExpression("123"));
+    }
     /**
      * Deep clone
      * @param obj
