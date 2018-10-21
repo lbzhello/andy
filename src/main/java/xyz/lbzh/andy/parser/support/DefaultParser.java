@@ -222,7 +222,7 @@ public class DefaultParser implements Parser<Expression> {
         Expression expression = expression();
         if (Objects.equals(getToken().toString(), ")")) { //e.g. (expression) => [expression]
             nextToken(); //eat ")"
-            return ExpressionFactory.squareBracket(expression);
+            return ExpressionFactory.roundBracket(expression);
         } else {
             return roundBracket(expression);
         }

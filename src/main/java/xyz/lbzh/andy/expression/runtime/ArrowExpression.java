@@ -3,6 +3,7 @@ package xyz.lbzh.andy.expression.runtime;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
+import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 
 import java.util.List;
 
@@ -15,8 +16,15 @@ public class ArrowExpression extends NativeExpression {
         if (list.size() != 2) return ExpressionFactory.error("Error ArrowExpression: " + list);
         BracketExpression left;
         CurlyBracketExpression right;
-        if (ExpressionUtils.isBracket(list.get(0))) { //e.g. (x) -> right
+        if (ExpressionUtils.isSquareBracket(list.get(0))) { //e.g. (x, y, z) -> right
             left = (BracketExpression)list.get(0);
+        } else if (ExpressionUtils.isRoundBracket(list.get(0))) {
+            BracketExpression roundBracket = (RoundBracketExpression) list.get(0);
+            if (roundBracket.list().size() == 1) { //e.g. (x) -> right
+                left = ExpressionFactory.squareBracket(roundBracket.list().get(0));
+            } else { //e.g. (x y z) -> right
+                return ExpressionFactory.error(roundBracket, "Error ArrowExpression!");
+            }
         } else { //e.g. x -> right
             left = ExpressionFactory.squareBracket(list.get(0));
         }

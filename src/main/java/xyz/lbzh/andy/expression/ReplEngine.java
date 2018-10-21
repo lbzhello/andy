@@ -18,6 +18,7 @@ public class ReplEngine {
     }
 
     public Expression eval(Expression expression) {
+        System.out.println(expression);
         Expression rst;
         if (ExpressionUtils.isCurlyBracket(expression)) {
             Expression complex = expression.eval(context); //parameters and generate a runtime expression
