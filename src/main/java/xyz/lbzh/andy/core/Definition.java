@@ -145,9 +145,9 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), new MinusExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), new MultiplyExpression());
 
-        //'.' and '/' is delimiter so it will be parse earlier on tokenizer
+        // '/' is delimiter so it will be parse earlier on tokenizer
         CORE_CONTEXT.bind(TokenFlag.SLASH_RIGHT, new DivideExpression());
-        CORE_CONTEXT.bind(TokenFlag.POINT, new PointExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), new DivideExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), new EqualExpression());

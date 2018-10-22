@@ -3,33 +3,39 @@ package xyz.lbzh.andy.expression.runtime;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
+import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.TokenFlag;
 
 import java.util.List;
 
-public class PointExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new PointExpression().list(list);
+public class PointExpression extends RoundBracketExpression {
+    private Expression left;
+    private Expression right;
+    
+    public PointExpression(Expression left, Expression right) {
+        super(TokenFlag.POINT, left, right);
+        this.left = left;
+        this.right = right;
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression left = first().eval(context);
-        Expression right = second() instanceof RoundBracketExpression ? second().eval(context) : second();
-        if (left instanceof ComplexExpression) { //e.g. left = { name:"liu" age:22 }  left.name
-            return ((ComplexExpression) left).getContext().lookup(right.getName());
-        } else if (ExpressionUtils.isSquareBracket(left)) { //e.g. left = [1 2 3 4]  left.map
-            MethodExpression methodExpression = new MethodExpression(left);
-            methodExpression.setMethodName(right.getName().toString());
+        Expression leftValue = left.eval(context);
+        Expression rightValue = right instanceof RoundBracketExpression ? right.eval(context) : right;
+        if (leftValue instanceof ComplexExpression) { //e.g. left = { name:"liu" age:22 }  left.name
+            return ((ComplexExpression) leftValue).getContext().lookup(rightValue.getName());
+        } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
+            MethodExpression methodExpression = new MethodExpression(leftValue);
+            methodExpression.setMethodName(rightValue.getName().toString());
             return methodExpression;
-        } else if (ExpressionUtils.isMethod(left)) { //java class call
-            MethodExpression methodExpression = (MethodExpression)left;
-            methodExpression.setMethodName(right.getName().toString());
+        } else if (ExpressionUtils.isMethod(leftValue)) { //java class call
+            MethodExpression methodExpression = (MethodExpression)leftValue;
+            methodExpression.setMethodName(rightValue.getName().toString());
             return methodExpression;
-        } else if (left == ExpressionType.NIL){
+        } else if (leftValue == ExpressionType.NIL){
             return ExpressionType.NIL;
         } else {
-            return ExpressionFactory.error(left, "Unsupport operation type!");
+            return ExpressionFactory.error(leftValue, "Unsupport operation type!");
         }
     }
 }

@@ -1,10 +1,7 @@
 package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.expression.ast.*;
-import xyz.lbzh.andy.expression.runtime.DefineExpression;
-import xyz.lbzh.andy.expression.runtime.LambdaExpression;
-import xyz.lbzh.andy.expression.runtime.PairExpression;
-import xyz.lbzh.andy.expression.runtime.ComplexExpression;
+import xyz.lbzh.andy.expression.runtime.*;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -85,6 +82,10 @@ public class ExpressionFactory {
 
     public static BracketExpression pair(Expression key, Expression value) {
         return new PairExpression(key, value);
+    }
+
+    public static BracketExpression point(Expression left, Expression right) {
+        return new PointExpression(left, right);
     }
 
     public static ComplexExpression complex(Context<Name, Expression> context) {
