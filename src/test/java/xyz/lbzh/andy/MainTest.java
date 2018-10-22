@@ -8,6 +8,7 @@ import org.junit.Test;
 import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
 import xyz.lbzh.andy.expression.ast.StringExpression;
 import xyz.lbzh.andy.parser.Parser;
+import xyz.lbzh.andy.tokenizer.TokenFlag;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -85,15 +86,16 @@ public class MainTest {
     }
 
     @Test
-    public void EnumTest() {
+    public void enumTest() {
+        System.out.println(String.valueOf(ETest.V));
     }
 
     @Test
     public void replTest() {
         ReplEngine replEngine = new ReplEngine();
 
-        replEngine.evalFile("tmp.test");
-
+//        replEngine.evalFile("tmp.test");
+        replEngine.eval("3 / 2");
     }
 
     @Test
@@ -164,6 +166,15 @@ public class MainTest {
 
     }
 
+}
+
+enum ETest {
+    V("value");
+    private String value;
+
+    ETest(String value) {
+        this.value = value;
+    }
 }
 
 

@@ -4,6 +4,7 @@ import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.tokenizer.LineNumberToken;
 import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
@@ -35,13 +36,12 @@ public class FileTokenizer implements Tokenizer<Token> {
     @Override
     public Token next(){
         try {
-            StringBuffer sb = new StringBuffer();
+            Token token;
             while (hasNext()) {
                 if (!Character.isWhitespace(getChar())) { //不是空白字符
                    if(getChar() == '"'){ //String
                        return nextString();
-                   } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       LineNumberToken token = ExpressionFactory.delimiter(String.valueOf(getChar()), getLineNumber());
+                   } else if ((token = Definition.getDelimiter(getChar())) != null) { //间隔符直接返回
                        nextChar(); //eat
                        return token;
                    } else if (Character.isDigit(getChar())) { //number
@@ -54,17 +54,14 @@ public class FileTokenizer implements Tokenizer<Token> {
                         nextChar(); //eat
                     }
                     if (getChar() == '(') {  //e.g. name {...
-                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
-                        return token;
+                        return TokenFlag.ROUND_BRACKET_FREE;
                     } else if (getChar() == '[') { //e.g. name [...
-                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
-                        return token;
+                        return TokenFlag.SQUARE_BRACKET_FREE;
                     } else if (getChar() == '{') { //e.g. name {...
-                        LineNumberToken token = ExpressionFactory.delimiter(Definition.SPACE + String.valueOf(getChar()), getLineNumber());
                         nextChar();
-                        return  token;
+                        return  TokenFlag.CURLY_BRACKET_FREE;
                     }
                 }
             }
@@ -115,16 +112,20 @@ public class FileTokenizer implements Tokenizer<Token> {
      */
     private LineNumberToken nextNumber() throws IOException {
         StringBuffer sb = new StringBuffer();
-        while (Character.isDigit(getChar()) || getChar() == '.') {
+//        while (Character.isDigit(getChar()) || getChar() == '.') {
+//            sb.append(getChar());
+//            nextChar();
+//        }
+//        if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
+//            return ExpressionFactory.number(sb.toString(), getLineNumber());
+//        } else {
+//            throw new NumberFormatException("Line: " + getLineNumber());
+//        }
+        while (getChar() == '.' || !Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());
             nextChar();
         }
-        if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-            return ExpressionFactory.number(sb.toString(), getLineNumber());
-        } else {
-            throw new NumberFormatException("Line: " + getLineNumber());
-        }
-
+        return ExpressionFactory.number(sb.toString(), getLineNumber());
     }
 
     /**

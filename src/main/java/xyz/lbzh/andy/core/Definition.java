@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 public final class Definition {
-    private Definition() {}
+    private Definition() {
+    }
 
 
     /**
@@ -48,8 +49,10 @@ public final class Definition {
 
     private static final Set<Character> delimiters = new HashSet<>();
 
+    private static final Map<Character, Token> delimiter = new HashMap<>();
+
     //e.g. a + 2
-    private static Map<String,Integer> binary = new HashMap<>();
+    private static Map<String, Integer> binary = new HashMap<>();
 
     /**
      * key: the name of unary
@@ -77,6 +80,23 @@ public final class Definition {
     }
 
     static {
+        delimiter.put(',', TokenFlag.COMMA);
+        delimiter.put(';', TokenFlag.SEMICOLON);
+        delimiter.put('.', TokenFlag.POINT);
+        delimiter.put(':', TokenFlag.COLON);
+        delimiter.put('(', TokenFlag.ROUND_BRACKET_LEFT);
+        delimiter.put(')', TokenFlag.ROUND_BRACKET_RIGHT);
+        delimiter.put('{', TokenFlag.CURLY_BRACKET_LEFT);
+        delimiter.put('}', TokenFlag.CURLY_BRACKET_RIGHT);
+        delimiter.put('[', TokenFlag.SQUARE_BRACKET_LEFT);
+        delimiter.put(']', TokenFlag.SQUARE_BRACKET_RIGHT);
+        delimiter.put('/', TokenFlag.SLASH_RIGHT);
+        delimiter.put('\\',TokenFlag.SLASH_LEFT);
+        delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
+        delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
+    }
+
+    static {
         binary.put("->", -1);
 
         binary.put("=", 0);
@@ -92,15 +112,13 @@ public final class Definition {
         binary.put("<=", 21);
 
         binary.put("+", 31);
-        binary.put("-",31);
+        binary.put("-", 31);
 
         binary.put("*", 41);
-        binary.put("/", 41);
 
-//        binary.put("++", 51);
-//        binary.put("--", 51);
-//
-//        binary.put("!", 1113);
+        binary.put("/", 41); // '/' is delimiter
+        binary.put(TokenFlag.SLASH_RIGHT.toString(), 41); //equal to '/'
+
         binary.put(".", 1314);
 
         binary.put("else", 1314);
@@ -126,9 +144,10 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), new PlusExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), new MinusExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), new MultiplyExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.delimiter("/"), new DivideExpression());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("."), new PointExpression());
+        //'.' and '/' is delimiter so it will be parse earlier on tokenizer
+        CORE_CONTEXT.bind(TokenFlag.SLASH_RIGHT, new DivideExpression());
+        CORE_CONTEXT.bind(TokenFlag.POINT, new PointExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), new EqualExpression());
@@ -157,15 +176,19 @@ public final class Definition {
         return CORE_CONTEXT;
     }
 
-    public static final boolean isDelimiter(Character c){
+    public static final Token getDelimiter(Character character) {
+        return delimiter.get(character);
+    }
+
+    public static final boolean isDelimiter(Character c) {
         return delimiters.contains(c);
     }
 
-    public static final void addDelimiter(Character c){
+    public static final void addDelimiter(Character c) {
         delimiters.add(c);
     }
 
-    public static final void removeDelimiter(Character c){
+    public static final void removeDelimiter(Character c) {
         delimiters.remove(c);
     }
 
@@ -174,7 +197,7 @@ public final class Definition {
     }
 
     public static final boolean isBinary(Object op) {
-        return isBinary(op.toString());
+        return isBinary(String.valueOf(op));
     }
 
     public static final boolean isUnary(String op) {
@@ -182,16 +205,17 @@ public final class Definition {
     }
 
     public static final boolean isUnary(Object op) {
-        return isUnary(op.toString());
+        return isUnary(String.valueOf(op));
     }
 
     /**
      * get  priority of the binary
+     *
      * @param op
      * @return
      */
     public static final int getPriority(String op) {
-        return binary.getOrDefault(op,1);
+        return binary.getOrDefault(op, 1);
     }
 
     public static final int getNumberOfOperands(String op) {
@@ -199,17 +223,15 @@ public final class Definition {
     }
 
     public static final int getNumberOfOperands(Object op) {
-        return getNumberOfOperands((String) op);
+        return getNumberOfOperands(String.valueOf(op));
     }
 
     /**
-     *
      * @param op1
      * @param op2
-     * @return
-     *      0 -> getPriority(op1) = getPriority(op2)
-     *      1 -> getPriority(op1) > getPriority(op2)
-     *      -1 -> getPriority(op1) < getPriority(op2)
+     * @return 0 -> getPriority(op1) = getPriority(op2)
+     * 1 -> getPriority(op1) > getPriority(op2)
+     * -1 -> getPriority(op1) < getPriority(op2)
      */
     public static final int comparePriority(String op1, String op2) {
         return getPriority(op1) == getPriority(op2) ? 0 : getPriority(op1) > getPriority(op2) ? 1 : -1;

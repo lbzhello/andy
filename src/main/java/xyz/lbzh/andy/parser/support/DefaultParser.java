@@ -6,10 +6,10 @@ import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
+import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
-import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<Token> tokenizer;
@@ -81,7 +81,7 @@ public class DefaultParser implements Parser<Expression> {
 
     private Expression expression() throws Exception {
         Expression expression = combine(combinator());
-        if (Definition.isBinary(getToken().toString())) { //e.g. expression op ...
+        if (Definition.isBinary(getToken())) { //e.g. expression op ...
             expression = operator(expression, getToken());
         }
         return expression;
@@ -95,7 +95,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression operator(Expression left, Expression op) throws Exception {
         nextToken(); //eat op
         Expression right = combine(combinator());
-        if (Definition.isBinary(getToken().toString())) { //e.g. left op right op2 ...
+        if (Definition.isBinary(getToken())) { //e.g. left op right op2 ...
             Expression op2 = getToken();
             if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
                 return ExpressionFactory.roundBracket(op, left, operator(right, op2));
@@ -113,16 +113,15 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combine(Expression left) throws Exception {
-        if (Objects.equals(getToken().toString(), "(")) { //e.g. left(...)...
+        if (getToken() == TokenFlag.ROUND_BRACKET_LEFT) { //e.g. left(...)...
             BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
             bracketExpression.list().addAll(this.roundBracketExpression().list());
             return combine(bracketExpression);
-        } else if (Objects.equals(getToken().toString(), "{")) { //e.g. left{...}...
-//            return combine(ExpressionFactory.roundBracket(NameExpression.DEFINE, left, curlyBracketExpression()));
+        } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
-        } else if (Objects.equals(getToken().toString(), ".")) { //e.g. left.right...
-            return combine(ExpressionFactory.roundBracket(ExpressionFactory.symbol(".", tokenizer.getLineNumber()), left, combinator()));
-        } else if (Objects.equals(getToken().toString(), ":")) { //e.g. left: ...
+        } else if (getToken() == TokenFlag.POINT) { //e.g. left.right...
+            return combine(ExpressionFactory.roundBracket(TokenFlag.POINT, left, combinator()));
+        } else if (getToken() == TokenFlag.COLON) { //e.g. left: ...
             nextToken();
 //            return ExpressionFactory.roundBracket(NameExpression.PAIR, left, expression());
             return ExpressionFactory.pair(left, expression());
@@ -142,7 +141,7 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = getToken();
             nextToken(); //eat "expression"
             //if it's unary operator
-            if (Definition.isUnary(expression.toString())) {
+            if (Definition.isUnary(expression)) {
                 return unaryExpression(expression);
             }
             return expression;
@@ -154,11 +153,11 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = getToken();
             nextToken(); //eat
             return expression;
-        } else if (Objects.equals(getToken().toString(), "(") || Objects.equals(getToken().toString(), Definition.SPACE + "(")) { //e.g. (...)...
+        } else if (getToken() == TokenFlag.ROUND_BRACKET_LEFT || getToken() == TokenFlag.ROUND_BRACKET_FREE) { //e.g. (...)...
             return roundBracketExpression();
-        } else if (Objects.equals(getToken().toString(), "[") || Objects.equals(getToken().toString(), Definition.SPACE + "[")) { //e.g. [...]...
+        } else if (getToken() == TokenFlag.SQUARE_BRACKET_LEFT || getToken() == TokenFlag.SQUARE_BRACKET_FREE) { //e.g. [...]...
             return squareBracketExpression();
-        } else if (Objects.equals(getToken().toString(), "{") || Objects.equals(getToken().toString(), Definition.SPACE + "{")) { //e.g. {...}...
+        } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT || getToken() == TokenFlag.CURLY_BRACKET_FREE) { //e.g. {...}...
             return curlyBracketExpression();
         } else if (!hasNext()) { //文件结尾
             return Definition.EOF;
@@ -185,7 +184,7 @@ public class DefaultParser implements Parser<Expression> {
     private CurlyBracketExpression curlyBracketExpression() throws Exception {
         nextToken(); //eat '{'
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        while (!Objects.equals(getToken().toString(), "}")) {
+        while (getToken() != TokenFlag.CURLY_BRACKET_RIGHT) {
             curlyBracketExpression.add(expression());
         }
         nextToken(); //eat '}'
@@ -200,7 +199,7 @@ public class DefaultParser implements Parser<Expression> {
     private BracketExpression squareBracketExpression() throws Exception {
         nextToken(); //eat '['
         BracketExpression squareBracketExpression = ExpressionFactory.squareBracket();
-        while (!Objects.equals(getToken().toString(), "]")) {
+        while (getToken() != TokenFlag.SQUARE_BRACKET_RIGHT) {
             squareBracketExpression.add(expression());
         }
 
@@ -214,13 +213,13 @@ public class DefaultParser implements Parser<Expression> {
      */
     private BracketExpression roundBracketExpression() throws Exception {
         nextToken(); //eat '('
-        if (Objects.equals(getToken().toString(), ")")) { //e.g. ()
+        if (getToken() == TokenFlag.ROUND_BRACKET_RIGHT) { //e.g. ()
             nextToken(); //eat ")"
             return ExpressionFactory.roundBracket();
         }
 
         Expression expression = expression();
-        if (Objects.equals(getToken().toString(), ")")) { //e.g. (expression) => [expression]
+        if (getToken() == TokenFlag.ROUND_BRACKET_RIGHT) { //e.g. (expression)
             nextToken(); //eat ")"
             return ExpressionFactory.roundBracket(expression);
         } else {
@@ -235,11 +234,11 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression roundBracket(Expression left) throws Exception {
-        if (Objects.equals(getToken().toString(), ",")) { //e.g. left, ...
+        if (getToken() == TokenFlag.COMMA) { //e.g. left, ...
             return roundBracket(commaExpression(ExpressionFactory.squareBracket(left)));
-        } else if (Objects.equals(getToken().toString(), ";")) { //e.g. left; ...
+        } else if (getToken() == TokenFlag.SEMICOLON) { //e.g. left; ...
             return roundBracket(semicolonExpression(ExpressionFactory.squareBracket(left)));
-        } else if (!Objects.equals(getToken().toString(), ")")){ //e.g. left ritht
+        } else if (getToken() != TokenFlag.ROUND_BRACKET_RIGHT){ //e.g. left ritht
             return roundBracket(parseRoundBracket(ExpressionFactory.roundBracket(left)));
         } else {
             nextToken(); //eat ")"
@@ -252,10 +251,10 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression semicolonExpression(BracketExpression squareBracketExpression) throws Exception {
-        while (Objects.equals(getToken().toString(), ";")) {
+        while (getToken() == TokenFlag.SEMICOLON) {
             nextToken(); //eat ";"
             Expression expression = expression();
-            if (Objects.equals(getToken().toString(), ",")) { //e.g. (expr1, expr2; expr3, expr4 ...
+            if (getToken() == TokenFlag.COMMA) { //e.g. (expr1, expr2; expr3, expr4 ...
                 expression = commaExpression(ExpressionFactory.squareBracket(expression));
             }
             squareBracketExpression.add(expression);
@@ -268,7 +267,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression parseRoundBracket(BracketExpression sexpression) throws Exception {
-        while (!Objects.equals(getToken().toString(), ")")) {
+        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
             sexpression.add(expression());
         }
         return sexpression;
@@ -279,7 +278,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression commaExpression(BracketExpression squareBracketExpression) throws Exception {
-        while (Objects.equals(getToken().toString(), ",")) {
+        while (getToken() == TokenFlag.COMMA) {
             nextToken(); //eat ","
             squareBracketExpression.add(expression());
         }
