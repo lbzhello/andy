@@ -1,5 +1,6 @@
 package xyz.lbzh.andy.config;
 
+import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.parser.support.DefaultParser;
@@ -10,8 +11,13 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan(basePackages = "xyz.lbzh.andy")
-@ImportResource("classpath:xyz/lbzh/andy/config/app-config.xml")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
+    @Bean
+    public ApplicationFactory applicationFactory() {
+        return new ApplicationFactory();
+    }
+
     @Bean
     @Scope("prototype")
     public Tokenizer tokenizer(){

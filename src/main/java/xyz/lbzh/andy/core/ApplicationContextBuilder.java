@@ -1,4 +1,4 @@
-package xyz.lbzh.andy.config;
+package xyz.lbzh.andy.core;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

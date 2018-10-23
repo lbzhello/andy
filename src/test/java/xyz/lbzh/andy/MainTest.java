@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class MainTest {
     public static void main(String[] args) throws Throwable {
@@ -29,6 +30,14 @@ public class MainTest {
         MethodType methodType = MethodType.methodType(String.class,String.class);
         MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "test",methodType);
         Object a = methodHandle.invoke(new MainTest(),"sss");
+    }
+
+    @Test
+    public void typeTest() {
+        Object o = new Object();
+        if (Supplier.class.isInstance(o)) {
+
+        }
     }
 
     @Test
@@ -124,9 +133,9 @@ public class MainTest {
         System.out.println(p1);
     }
 
-    public String printTest(String str) throws NoSuchMethodException, IllegalAccessException, InstantiationException {
+    public String printTest(String str) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         System.out.println(str);
-        str.getClass().newInstance();
+        str.getClass().getConstructor().newInstance();
         return str;
     }
 

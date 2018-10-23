@@ -4,18 +4,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import xyz.lbzh.andy.config.AppConfig;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import xyz.lbzh.andy.config.ApplicationContextBuilder;
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.ExpressionContext;
 
-import javax.inject.Named;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-
-@Named
-public class ApplicationFactory extends AppConfig implements ApplicationContextAware {
+public class ApplicationFactory implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     @Override
