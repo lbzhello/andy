@@ -134,36 +134,34 @@ public final class Definition {
     }
 
     static {
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), new AssignExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), new PlusExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), new MinusExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), new MultiplyExpression());
-
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), ExpressionFactory.getExpression("="));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), ExpressionFactory.getExpression("+"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), ExpressionFactory.getExpression("-"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), ExpressionFactory.getExpression("*"));
         // '/' is delimiter so it will be parse earlier on tokenizer
-        CORE_CONTEXT.bind(TokenFlag.SLASH_RIGHT, new DivideExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), new DivideExpression());
+        CORE_CONTEXT.bind(TokenFlag.SLASH_RIGHT, ExpressionFactory.getExpression("/"));
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), new OrExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), new EqualExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), new NotEqualExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), new GtExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), new GeExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), new LtExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), new LeExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), ExpressionFactory.getExpression("||"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), ExpressionFactory.getExpression("=="));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), ExpressionFactory.getExpression("!="));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), ExpressionFactory.getExpression(">"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), ExpressionFactory.getExpression(">="));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), ExpressionFactory.getExpression("<"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.getExpression("<="));
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), new IfExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), new ForExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), ExpressionFactory.getExpression("if"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), ExpressionFactory.getExpression("for"));
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), new ReturnBuilderExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), ExpressionFactory.getExpression("return"));
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), new PrintExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), ExpressionFactory.getExpression("print"));
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), new ArrowExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.getExpression("->"));
     }
 
     public static final Context<Name, Expression> getCoreContext() {

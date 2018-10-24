@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionType;
 import xyz.lbzh.andy.expression.runtime.*;
 
 /**
@@ -13,91 +14,122 @@ import xyz.lbzh.andy.expression.runtime.*;
 public class RuntimeConfig {
     @Bean("=")
     @Scope("prototype")
-    public Expression assign() {
+    public AssignExpression assign() {
         return new AssignExpression();
     }
 
     @Bean("+")
     @Scope("prototype")
-    public Expression plus() {
+    public PlusExpression plus() {
         return new PlusExpression();
     }
 
     @Bean("-")
     @Scope("prototype")
-    public Expression minus() {
+    public MinusExpression minus() {
         return new MinusExpression();
     }
 
     @Bean("*")
     @Scope("prototype")
-    public Expression Multiply() {
+    public MultiplyExpression Multiply() {
         return new MultiplyExpression();
     }
 
     @Bean("/")
     @Scope("prototype")
-    public Expression divide() {
+    public DivideExpression divide() {
         return new DivideExpression();
     }
 
     @Bean("==")
     @Scope("prototype")
-    public Expression equal() {
+    public EqualExpression equal() {
         return new EqualExpression();
     }
 
     @Bean("!=")
     @Scope("prototype")
-    public Expression notEqual() {
+    public NotEqualExpression notEqual() {
         return new NotEqualExpression();
     }
 
     @Bean(">")
     @Scope("prototype")
-    public Expression greaterThan() {
+    public GtExpression greaterThan() {
         return new GtExpression();
     }
 
     @Bean(">=")
     @Scope("prototype")
-    public Expression greaterEqual() {
+    public GeExpression greaterEqual() {
         return new GeExpression();
     }
 
     @Bean("<")
     @Scope("prototype")
-    public Expression lessThan() {
+    public LtExpression lessThan() {
         return new LtExpression();
     }
 
     @Bean("<=")
     @Scope("prototype")
-    public Expression lessEqual() {
+    public LeExpression lessEqual() {
         return new LeExpression();
     }
 
     @Bean("||")
     @Scope("prototype")
-    public Expression or() {
+    public OrExpression or() {
         return new OrExpression();
+    }
+
+    @Bean("true")
+    @Scope("prototype")
+    public Expression trueExpression() {
+        return ExpressionType.TRUE;
+    }
+
+    @Bean("false")
+    @Scope("prototype")
+    public Expression falseExpression() {
+        return ExpressionType.FALSE;
+    }
+
+    @Bean("nil")
+    @Scope("prototype")
+    public Expression nil() {
+        return ExpressionType.NIL;
+    }
+
+    @Bean("return")
+    @Scope("prototype")
+    public ReturnBuilderExpression returnExpression() {
+        return new ReturnBuilderExpression();
     }
 
     @Bean("if")
     @Scope("prototype")
-    public Expression ifExpression() {
+    public IfExpression ifExpression() {
         return new IfExpression();
     }
 
     @Bean("for")
     @Scope("prototype")
-    public Expression forExpression() {
+    public ForExpression forExpression() {
         return new ForExpression();
     }
 
     @Bean("->")
     @Scope("prototype")
-    public Expression arrow() {
+    public ArrowExpression arrow() {
         return new ArrowExpression();
     }
+
+    @Bean("print")
+    @Scope("prototype")
+    public PrintExpression print() {
+        return new PrintExpression();
+    }
+
 }

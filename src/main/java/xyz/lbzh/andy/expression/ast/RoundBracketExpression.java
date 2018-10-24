@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.runtime.ComplexExpression;
-import xyz.lbzh.andy.expression.runtime.NativeExpression;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,10 +39,10 @@ public class RoundBracketExpression extends BracketExpression {
         if (list().size() == 0) return ExpressionType.NIL; //e.g. ()
         Expression name = first().eval(context);
         if (name == ExpressionType.NIL) return ExpressionType.NIL;
-        if (name instanceof NativeExpression) {
-            return ((NativeExpression) name).parameters(this.getParameters()).eval(context);
+        if (ExpressionUtils.isNative(name)) {
+            return ExpressionUtils.asNative(name).parameters(this.getParameters()).eval(context);
         }
-        if (name instanceof ComplexExpression) { //e.g. name = {...} (name x y)
+        if (ExpressionUtils.isComplex(name)) { //e.g. name = {...} (name x y)
             Context<Name, Expression> childContext = new ExpressionContext();
             //put args in context
             for (int i = 0; i < this.getParameters().size(); i++) {
