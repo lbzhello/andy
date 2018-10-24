@@ -1,5 +1,6 @@
 package xyz.lbzh.andy.expression;
 
+import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 
@@ -100,5 +101,8 @@ public class ExpressionFactory {
         return new ErrorExpression(expression, message);
     }
 
+    public static Expression getExpression(String name) {
+        return ApplicationFactory.get(name, Expression.class);
+    }
 
 }

@@ -10,6 +10,7 @@ import xyz.lbzh.andy.tokenizer.support.FileTokenizer;
 import org.springframework.context.annotation.*;
 
 @Configuration
+@Import(RuntimeConfig.class)
 @ComponentScan(basePackages = "xyz.lbzh.andy")
 @PropertySource("classpath:application.properties")
 public class AppConfig {

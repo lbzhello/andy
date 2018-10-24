@@ -6,7 +6,7 @@ import xyz.lbzh.andy.parser.Parser;
 
 public class ReplEngine {
     private final Context<Name, Expression> context = Definition.getCoreContext();
-    private final Parser<Expression> parser = ApplicationFactory.getBean(Parser.class);
+    private final Parser<Expression> parser = ApplicationFactory.get(Parser.class);
 
     public Expression eval(String expression) {
         return this.eval(parser.parseString(expression));

@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import xyz.lbzh.andy.config.AppConfig;
+import xyz.lbzh.andy.expression.Expression;
 
 public class ApplicationFactory implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
@@ -21,8 +22,11 @@ public class ApplicationFactory implements ApplicationContextAware {
         return applicationContext;
     }
 
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T get(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
     }
 
+    public static <T> T get(String name, Class<T> clazz) {
+        return getApplicationContext().getBean(name, clazz);
+    }
 }
