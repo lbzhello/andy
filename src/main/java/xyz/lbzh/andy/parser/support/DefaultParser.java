@@ -120,11 +120,9 @@ public class DefaultParser implements Parser<Expression> {
         } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
         } else if (getToken() == TokenFlag.POINT) { //e.g. left.right...
-//            return combine(ExpressionFactory.roundBracket(TokenFlag.POINT, left, combinator()));
             return combine(ExpressionFactory.point(left, combinator()));
         } else if (getToken() == TokenFlag.COLON) { //e.g. left: ...
             nextToken();
-//            return ExpressionFactory.roundBracket(NameExpression.PAIR, left, expression());
             return ExpressionFactory.pair(left, expression());
         } else {
             return left;
