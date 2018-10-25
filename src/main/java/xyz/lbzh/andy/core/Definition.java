@@ -1,7 +1,6 @@
 package xyz.lbzh.andy.core;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 
@@ -71,6 +70,11 @@ public final class Definition {
         delimiters.add('/');
         delimiters.add('\'');
         delimiters.add('\\');
+
+        delimiters.add('!');
+        delimiters.add('=');
+        delimiters.add('<');
+        delimiters.add('>');
     }
 
     static {
