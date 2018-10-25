@@ -120,7 +120,7 @@ public class RuntimeConfig {
         return new ForExpression();
     }
 
-    @Bean("->")
+    @Bean("=>")
     @Scope("prototype")
     public ArrowExpression arrow() {
         return new ArrowExpression();
