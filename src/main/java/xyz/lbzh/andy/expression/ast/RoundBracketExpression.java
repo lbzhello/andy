@@ -38,7 +38,7 @@ public class RoundBracketExpression extends BracketExpression {
     public Expression eval(Context<Name, Expression> context) {
         if (list().size() == 0) return ExpressionType.NIL; //e.g. ()
         Expression name = first().eval(context);
-        if (name == ExpressionType.NIL) return ExpressionType.NIL;
+        if (name == ExpressionType.NIL && first() == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
         if (ExpressionUtils.isNative(name)) {
             return ExpressionUtils.asNative(name).parameters(this.getParameters()).eval(context);
         }

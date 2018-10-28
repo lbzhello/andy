@@ -8,6 +8,8 @@ import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 import xyz.lbzh.andy.tokenizer.support.FileTokenizer;
 import org.springframework.context.annotation.*;
+import xyz.lbzh.andy.tokenizer.support.StringTokenizer;
+import xyz.lbzh.andy.tokenizer.support.TemplateTokenizer;
 
 @Configuration
 @Import(RuntimeConfig.class)
@@ -31,6 +33,18 @@ public class AppConfig {
     public Parser parser(){
         Parser<Expression> parser = new DefaultParser(tokenizer());
         return parser;
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Tokenizer<Token> templateTokenizer() {
+        return new TemplateTokenizer();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Tokenizer<Token> stringTokenizer() {
+        return new StringTokenizer();
     }
 
 }

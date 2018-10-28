@@ -3,6 +3,7 @@ package xyz.lbzh.andy.expression;
 import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
+import xyz.lbzh.andy.expression.runtime.ColonExpression;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -81,8 +82,8 @@ public class ExpressionFactory {
         return new DefineExpression(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
     }
 
-    public static BracketExpression pair(Expression key, Expression value) {
-        return new PairExpression(key, value);
+    public static BracketExpression colon(Expression key, Expression value) {
+        return new ColonExpression(key, value);
     }
 
     public static BracketExpression point(Expression left, Expression right) {
@@ -91,6 +92,14 @@ public class ExpressionFactory {
 
     public static ComplexExpression complex(Context<Name, Expression> context) {
         return new ComplexExpression(context);
+    }
+
+    public static TemplateExpression template() {
+        return new TemplateExpression();
+    }
+
+    public static AngleBracketExpression angleBracket() {
+        return new AngleBracketExpression();
     }
 
     public static ErrorExpression error(String message) {

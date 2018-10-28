@@ -1,5 +1,6 @@
 package xyz.lbzh.andy.parser.support;
 
+import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.BracketExpression;
@@ -13,6 +14,8 @@ import java.io.*;
 
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<Token> tokenizer;
+    private Tokenizer<Token> templateTokenizer = ApplicationFactory.get("templateTokenizer", Tokenizer.class);
+    private Tokenizer<Token> stringTokenizer = ApplicationFactory.get("stringTokenizer", Tokenizer.class);
 
     private Token currentToken = Definition.HOF;
 
@@ -23,6 +26,8 @@ public class DefaultParser implements Parser<Expression> {
     @Override
     public Expression parseString(String expression) {
         tokenizer.init(new StringReader(expression));
+        templateTokenizer.init(tokenizer.getReader());
+        stringTokenizer.init(tokenizer.getReader());
         try {
             Expression rst = expression();
             tokenizer.close();
@@ -123,7 +128,7 @@ public class DefaultParser implements Parser<Expression> {
             return combine(ExpressionFactory.point(left, combinator()));
         } else if (getToken() == TokenFlag.COLON) { //e.g. left: ...
             nextToken();
-            return ExpressionFactory.pair(left, expression());
+            return ExpressionFactory.colon(left, expression());
         } else {
             return left;
         }
@@ -158,6 +163,8 @@ public class DefaultParser implements Parser<Expression> {
             return squareBracketExpression();
         } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT || getToken() == TokenFlag.CURLY_BRACKET_FREE) { //e.g. {...}...
             return curlyBracketExpression();
+        } else if (getToken() == TokenFlag.ANGLE_BRACKET) { //e.g. <name>...
+            return angleBracketExpression();
         } else if (!hasNext()) { //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
@@ -165,6 +172,16 @@ public class DefaultParser implements Parser<Expression> {
             return combinator();
         }
 
+    }
+
+    /**
+     * e.g. <books><book>some</book></books>
+     * @return
+     * @throws Exception
+     */
+    private Expression angleBracketExpression() throws Exception {
+        templateTokenizer.next();
+        return null;
     }
 
     private BracketExpression unaryExpression(Expression op) throws Exception {

@@ -9,9 +9,9 @@ public class StringExpression extends TokenExpression {
         super(value, lineNumber);
     }
 
-    @Override
-    public String toString() {
-        return "\"" + this.value.toString() + "\"";
-    }
+//    @Override
+//    public String toString() {
+//        return "\"" + this.value.toString() + "\"";
+//    }
 
 }

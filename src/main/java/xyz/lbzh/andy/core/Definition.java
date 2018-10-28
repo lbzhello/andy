@@ -67,14 +67,14 @@ public final class Definition {
         delimiters.add('[');
         delimiters.add(']');
         delimiters.add('"');
-        delimiters.add('/');
+//        delimiters.add('/');
         delimiters.add('\'');
         delimiters.add('\\');
 
-        delimiters.add('!');
-        delimiters.add('=');
-        delimiters.add('<');
-        delimiters.add('>');
+//        delimiters.add('!');
+//        delimiters.add('=');
+//        delimiters.add('<');
+//        delimiters.add('>');
     }
 
     static {
@@ -88,10 +88,15 @@ public final class Definition {
         delimiter.put('}', TokenFlag.CURLY_BRACKET_RIGHT);
         delimiter.put('[', TokenFlag.SQUARE_BRACKET_LEFT);
         delimiter.put(']', TokenFlag.SQUARE_BRACKET_RIGHT);
-        delimiter.put('/', TokenFlag.SLASH_RIGHT);
+//        delimiter.put('/', TokenFlag.SLASH_RIGHT);
         delimiter.put('\\',TokenFlag.SLASH_LEFT);
         delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
         delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
+
+//        delimiter.put('!', ExpressionFactory.symbol("!"));
+//        delimiter.put('=', ExpressionFactory.symbol("="));
+//        delimiter.put('<', ExpressionFactory.symbol("<"));
+//        delimiter.put('>', ExpressionFactory.symbol(">"));
     }
 
     static {
@@ -114,8 +119,8 @@ public final class Definition {
 
         binary.put("*", 41);
 
-        binary.put("/", 41); // '/' is delimiter
-        binary.put(TokenFlag.SLASH_RIGHT.toString(), 41); //equal to '/'
+        binary.put("/", 41);
+//        binary.put(TokenFlag.SLASH_RIGHT.toString(), 41); //equal to '/'
 
         binary.put(".", 1314);
 
@@ -143,7 +148,7 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), ExpressionFactory.getExpression("-"));
         CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), ExpressionFactory.getExpression("*"));
         // '/' is delimiter so it will be parse earlier on tokenizer
-        CORE_CONTEXT.bind(TokenFlag.SLASH_RIGHT, ExpressionFactory.getExpression("/"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), ExpressionFactory.getExpression("/"));
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), ExpressionFactory.getExpression("||"));
         CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), ExpressionFactory.getExpression("=="));

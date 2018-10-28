@@ -10,13 +10,13 @@ import java.util.List;
 /**
  * e.g. name: "some name"
  */
-public class PairExpression extends RoundBracketExpression {
+public class ColonExpression extends RoundBracketExpression {
     //e.g. (f a b) || f
     private Expression key;
     //e.g. "some text" || {...} || (...){...}
     private Expression value;
 
-    public PairExpression(Expression key, Expression value) {
+    public ColonExpression(Expression key, Expression value) {
         super(ExpressionType.PAIR, key, value);
         this.key = key;
         this.value = value;
