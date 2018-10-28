@@ -4,6 +4,14 @@ import xyz.lbzh.andy.expression.Expression;
 
 import java.util.*;
 
+/**
+ * e.g.
+ *   line
+ *   line
+ *   line
+ *   ...
+ */
 public class AngleBracketExpression extends TemplateExpression {
-    private List<Expression> children = new LinkedList<>();
+    private List<TemplateExpression> lines = new LinkedList<>();
+
 }

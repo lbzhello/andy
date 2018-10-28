@@ -170,7 +170,7 @@ public final class Definition {
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), ExpressionFactory.getExpression("print"));
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("=>"), ExpressionFactory.getExpression("=>"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.getExpression("->"));
     }
 
     public static final Context<Name, Expression> getCoreContext() {

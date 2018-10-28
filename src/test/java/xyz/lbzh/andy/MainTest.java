@@ -102,9 +102,8 @@ public class MainTest {
     @Test
     public void replTest() {
         ReplEngine replEngine = new ReplEngine();
+        replEngine.evalFile("tmp.test");
 
-//        replEngine.evalFile("tmp.test");
-        replEngine.eval("3 / 2");
     }
 
     @Test
