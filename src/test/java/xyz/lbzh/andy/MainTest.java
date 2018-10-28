@@ -18,10 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class MainTest {
@@ -30,6 +27,15 @@ public class MainTest {
         MethodType methodType = MethodType.methodType(String.class,String.class);
         MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "test",methodType);
         Object a = methodHandle.invoke(new MainTest(),"sss");
+    }
+
+    @Test
+    public void myTest() {
+        char[] space = new char[10];
+
+        Arrays.fill(space, '1');
+
+        System.out.println(String.valueOf(space));
     }
 
     @Test

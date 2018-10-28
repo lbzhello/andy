@@ -2,6 +2,7 @@ package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
+import xyz.lbzh.andy.expression.template.TemplateExpression;
 
 public class ExpressionUtils {
     public static boolean isReturn(Expression expression) {
@@ -48,6 +49,10 @@ public class ExpressionUtils {
         return expression instanceof SquareBracketExpression;
     }
 
+    public static SquareBracketExpression asSquareBracket(Expression expression) {
+        return (SquareBracketExpression)expression;
+    }
+
     public static boolean isComplex(Expression expression) {
         return expression instanceof ComplexExpression;
     }
@@ -74,5 +79,9 @@ public class ExpressionUtils {
 
     public static NativeExpression asNative(Expression expression) {
         return (NativeExpression)expression;
+    }
+
+    public static boolean isTemplate(Expression expression) {
+        return expression instanceof TemplateExpression;
     }
 }

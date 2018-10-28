@@ -4,6 +4,8 @@ import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.expression.runtime.ColonExpression;
+import xyz.lbzh.andy.expression.template.LineExpression;
+import xyz.lbzh.andy.expression.template.TemplateExpression;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -94,12 +96,12 @@ public class ExpressionFactory {
         return new ComplexExpression(context);
     }
 
-    public static TemplateExpression template() {
-        return new TemplateExpression();
+    public static LineExpression line() {
+        return new LineExpression();
     }
 
-    public static AngleBracketExpression angleBracket() {
-        return new AngleBracketExpression();
+    public static TemplateExpression template() {
+        return new TemplateExpression();
     }
 
     public static ErrorExpression error(String message) {
