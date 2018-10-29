@@ -31,9 +31,9 @@ public class MainTest {
 
     @Test
     public void myTest() throws FileNotFoundException {
-        LineNumberReader reader1 = new LineNumberReader(new BufferedReader(new FileReader("tmp.test")));
-        LineNumberReader reader2 = reader1;
+
         System.out.println(String.valueOf('\n').equals("\n"));
+        System.out.println("        \n".isBlank());
     }
 
     @Test

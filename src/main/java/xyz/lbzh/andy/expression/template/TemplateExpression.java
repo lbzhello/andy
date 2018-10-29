@@ -16,17 +16,17 @@ import java.util.*;
  * @see LineExpression
  */
 public class TemplateExpression implements Expression {
-    private List<LineExpression> lines = new LinkedList<>();
+    private List<Expression> lines = new LinkedList<>();
 
-    public void addLine(LineExpression line) {
+    public void addLine(Expression line) {
         this.lines.add(line);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         LinesExpression linesExpression = new LinesExpression();
-        for (LineExpression line : this.lines) {
-            linesExpression.add(ExpressionFactory.string(line.eval(context) + "\n"));
+        for (Expression line : this.lines) {
+            linesExpression.add(ExpressionFactory.string(line.eval(context).toString()));
         }
         return linesExpression;
     }

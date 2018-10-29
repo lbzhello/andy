@@ -10,6 +10,7 @@ import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
+import xyz.lbzh.andy.util.Pair;
 
 import java.io.*;
 import java.util.Objects;
@@ -188,18 +189,51 @@ public class DefaultParser implements Parser<Expression> {
     private Expression templateExpression() throws Exception {
         Expression token = templateTokenizer.next(); //eat '`'
         TemplateExpression template = ExpressionFactory.template();
-        LineExpression line = ExpressionFactory.line();
-
-        while (!Objects.equals(token.toString(), "/")) {
-            if (Objects.equals(token.toString(), "\n")) {
-                template.addLine(line);
-                line = ExpressionFactory.line(); //new line
-                token = templateTokenizer.next(); //eat
+        //skip until end of line
+        while (!Objects.equals(token.toString(), "\n")) {
+            token = templateTokenizer.next();
+        }
+        Pair<Integer, Expression> offset = getOffset(template);
+        if (offset.getKey() == -1) return template;
+        token = offset.getValue();
+        while (!String.valueOf(token).equals("`")) {
+            LineExpression line = new LineExpression();
+            while (!String.valueOf(token).equals("\n")) {
+                if (String.valueOf(token).equals("(")) {
+                    line.add(roundBracketExpression());
+                } else {
+                    StringBuffer sb = new StringBuffer(String.valueOf(token));
+                    token = templateTokenizer.next();
+                }
             }
 
         }
 
         return null;
+
+    }
+    //获取首行偏移空格数和当前token
+    private Pair<Integer, Expression> getOffset(TemplateExpression template) {
+        int charCount = 0; //record offset space num
+        Expression token = templateTokenizer.next(); //eat '\n'
+        while (token.toString().isBlank() && !String.valueOf(token).equals("\n")) {
+            charCount += 1;
+            token = templateTokenizer.next();
+        }
+
+        if (String.valueOf(token).equals("\n")) { //empty line
+            template.addLine(ExpressionFactory.string("\n"));
+            return getOffset(template);
+        } else if (String.valueOf(token).equals("`")) { //end
+            return new Pair<Integer, Expression>(-1, token);
+        } else {
+            return new Pair<Integer, Expression>(charCount, token);
+        }
+    }
+
+    private void parseLineTemplate(Expression curToken,LineExpression line) {
+        if (curToken.toString().equals("(")) {
+        }
     }
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
