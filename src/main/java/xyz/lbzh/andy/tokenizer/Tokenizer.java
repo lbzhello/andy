@@ -13,6 +13,8 @@ public interface Tokenizer<T> extends Iterator<T>,Closeable {
      */
     void init(Reader reader);
 
+    T getToken();
+
     default int getLineNumber() {
         return 0;
     }

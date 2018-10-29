@@ -1,5 +1,6 @@
 package xyz.lbzh.andy.tokenizer.support;
 
+import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.ast.StringExpression;
 import xyz.lbzh.andy.tokenizer.Token;
@@ -13,6 +14,7 @@ import java.util.Set;
 public class StringTokenizer implements Tokenizer<Token> {
     private Reader reader;
     private int currentChar = ' ';
+    private Token currentToken = Definition.HOF;
 
     private static final Set<Character> delimiter = new HashSet<>();
     static {
@@ -28,6 +30,11 @@ public class StringTokenizer implements Tokenizer<Token> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Token getToken() {
+        return currentToken;
     }
 
     @Override
@@ -50,9 +57,11 @@ public class StringTokenizer implements Tokenizer<Token> {
         if (this.isDelimiter(getChar())) {
             char delimiter = getChar();
             nextChar(); //eat
-            return ExpressionFactory.symbol(String.valueOf(delimiter), getLineNumber());
+            currentToken = ExpressionFactory.symbol(String.valueOf(delimiter), getLineNumber());
+            return currentToken;
         } else {
-            return nextFragment();
+            currentToken = nextFragment();
+            return currentToken;
         }
     }
 

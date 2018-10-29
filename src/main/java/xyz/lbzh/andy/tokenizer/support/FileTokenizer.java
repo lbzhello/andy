@@ -12,6 +12,7 @@ import java.io.*;
 public class FileTokenizer implements Tokenizer<Token> {
     private LineNumberReader lineNumberReader;
     private int currentChar = ' ';
+    private Token currentToken = Definition.HOF;
 
     @Override
     public void init(Reader reader) {
@@ -20,6 +21,11 @@ public class FileTokenizer implements Tokenizer<Token> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Token getToken() {
+        return currentToken;
     }
 
     @Override
@@ -44,11 +50,12 @@ public class FileTokenizer implements Tokenizer<Token> {
             while (hasNext()) {
                 if (!Character.isWhitespace(getChar())) { //不是空白字符
                    if(getChar() == '"'){ //String
-                       return nextString();
+                       currentToken = nextString();
+                       return currentToken;
                    } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       Token token = Definition.getDelimiter(getChar());
+                       currentToken = Definition.getDelimiter(getChar());
                        nextChar(); //eat
-                       return token;
+                       return currentToken;
 //                       Character c1 = getChar(),c2;
 //                       nextChar(); //eat c1
 //                       if (c1 == '=') {
@@ -85,9 +92,11 @@ public class FileTokenizer implements Tokenizer<Token> {
 //                           return Definition.getDelimiter(c1);
 //                       }
                    } else if (Character.isDigit(getChar())) { //number
-                       return nextNumber();
+                       currentToken = nextNumber();
+                       return currentToken;
                    } else {
-                       return nextSymbol();
+                       currentToken = nextSymbol();
+                       return currentToken;
                    }
                 } else { //空白字符
                     while (Character.isWhitespace(getChar())) {
@@ -95,13 +104,16 @@ public class FileTokenizer implements Tokenizer<Token> {
                     }
                     if (getChar() == '(') {  //e.g. name {...
                         nextChar();
-                        return TokenFlag.ROUND_BRACKET_FREE;
+                        currentToken = TokenFlag.ROUND_BRACKET_FREE;
+                        return currentToken;
                     } else if (getChar() == '[') { //e.g. name [...
                         nextChar();
-                        return TokenFlag.SQUARE_BRACKET_FREE;
+                        currentToken = TokenFlag.SQUARE_BRACKET_FREE;
+                        return currentToken;
                     } else if (getChar() == '{') { //e.g. name {...
                         nextChar();
-                        return  TokenFlag.CURLY_BRACKET_FREE;
+                        currentToken = TokenFlag.CURLY_BRACKET_FREE;
+                        return currentToken;
                     }
                 }
             }
