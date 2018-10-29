@@ -5,15 +5,13 @@ import xyz.lbzh.andy.expression.ast.StringExpression;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.HashSet;
 import java.util.Set;
 
 public class StringTokenizer implements Tokenizer<Token> {
-    private LineNumberReader lineNumberReader;
+    private Reader reader;
     private int currentChar = ' ';
 
     private static final Set<Character> delimiter = new HashSet<>();
@@ -26,7 +24,7 @@ public class StringTokenizer implements Tokenizer<Token> {
     @Override
     public void init(Reader reader) {
         try {
-            this.lineNumberReader = new LineNumberReader(new BufferedReader(reader));
+            this.reader = reader;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,12 +32,12 @@ public class StringTokenizer implements Tokenizer<Token> {
 
     @Override
     public Reader getReader() {
-        return this.lineNumberReader;
+        return this.reader;
     }
 
     @Override
     public void close() throws IOException {
-        this.lineNumberReader.close();
+        this.reader.close();
     }
 
     @Override
@@ -69,7 +67,7 @@ public class StringTokenizer implements Tokenizer<Token> {
 
     private char nextChar() {
         try {
-            currentChar = lineNumberReader.read();
+            currentChar = reader.read();
         } catch (IOException e) {
             e.printStackTrace();
         }

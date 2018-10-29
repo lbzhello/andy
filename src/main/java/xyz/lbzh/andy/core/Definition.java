@@ -71,6 +71,8 @@ public final class Definition {
         delimiters.add('\'');
         delimiters.add('\\');
 
+        delimiters.add('`');
+
 //        delimiters.add('!');
 //        delimiters.add('=');
 //        delimiters.add('<');
@@ -92,6 +94,8 @@ public final class Definition {
         delimiter.put('\\',TokenFlag.SLASH_LEFT);
         delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
         delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
+
+        delimiter.put('`',TokenFlag.BACK_QUOTE);
 
 //        delimiter.put('!', ExpressionFactory.symbol("!"));
 //        delimiter.put('=', ExpressionFactory.symbol("="));

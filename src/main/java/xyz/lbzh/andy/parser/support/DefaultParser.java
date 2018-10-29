@@ -165,8 +165,8 @@ public class DefaultParser implements Parser<Expression> {
             return squareBracketExpression();
         } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT || getToken() == TokenFlag.CURLY_BRACKET_FREE) { //e.g. {...}...
             return curlyBracketExpression();
-        } else if (getToken() == TokenFlag.ANGLE_BRACKET) { //e.g. <name>...
-            return angleBracketExpression();
+        } else if (getToken() == TokenFlag.BACK_QUOTE) { //e.g. ``
+            return templateExpression();
         } else if (!hasNext()) { //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
@@ -177,16 +177,19 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * e.g. <books><book>some</book></books>
+     * e.g.
+     *     str = "world"
+     *     `
+     *         hello (str)!
+     *     `
      * @return
      * @throws Exception
      */
-    private Expression angleBracketExpression() throws Exception {
+    private Expression templateExpression() throws Exception {
+        Expression token = templateTokenizer.next(); //eat '`'
         TemplateExpression template = ExpressionFactory.template();
         LineExpression line = ExpressionFactory.line();
-        line.add(ExpressionFactory.string("<"));
 
-        Expression token = templateTokenizer.next(); //eat
         while (!Objects.equals(token.toString(), "/")) {
             if (Objects.equals(token.toString(), "\n")) {
                 template.addLine(line);

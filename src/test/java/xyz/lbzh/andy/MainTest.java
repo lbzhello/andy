@@ -30,11 +30,9 @@ public class MainTest {
     }
 
     @Test
-    public void myTest() {
-        char[] space = new char[10];
-
-        Arrays.fill(space, '1');
-
+    public void myTest() throws FileNotFoundException {
+        LineNumberReader reader1 = new LineNumberReader(new BufferedReader(new FileReader("tmp.test")));
+        LineNumberReader reader2 = reader1;
         System.out.println(String.valueOf('\n').equals("\n"));
     }
 

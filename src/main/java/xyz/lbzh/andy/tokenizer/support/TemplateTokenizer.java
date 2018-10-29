@@ -19,11 +19,9 @@ public class TemplateTokenizer implements Tokenizer<Token> {
 
     private static final Set<Character> delimiter = new HashSet<>();
     static {
-        delimiter.add('<');
-        delimiter.add('>');
+        delimiter.add('`');
         delimiter.add('(');
         delimiter.add(')');
-        delimiter.add('/');
         delimiter.add('\n');
     }
 
