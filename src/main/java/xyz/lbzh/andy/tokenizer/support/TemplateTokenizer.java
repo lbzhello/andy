@@ -2,6 +2,7 @@ package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.ast.StringExpression;
+import xyz.lbzh.andy.expression.ast.TokenExpression;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
@@ -23,6 +24,7 @@ public class TemplateTokenizer implements Tokenizer<Token> {
         delimiter.add('(');
         delimiter.add(')');
         delimiter.add('/');
+        delimiter.add('\n');
     }
 
     @Override
@@ -54,7 +56,7 @@ public class TemplateTokenizer implements Tokenizer<Token> {
         if (this.isDelimiter(getChar())) {
             char delimiter = getChar();
             nextChar(); //eat
-            return ExpressionFactory.symbol(String.valueOf(delimiter), getLineNumber());
+            return ExpressionFactory.string(String.valueOf(delimiter), getLineNumber());
         } else {
             return nextFragment();
         }

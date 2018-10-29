@@ -35,7 +35,7 @@ public class MainTest {
 
         Arrays.fill(space, '1');
 
-        System.out.println(String.valueOf(space));
+        System.out.println(String.valueOf('\n').equals("\n"));
     }
 
     @Test

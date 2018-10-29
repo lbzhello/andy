@@ -17,6 +17,10 @@ public class ExpressionUtils {
         return expression instanceof SymbolExpression;
     }
 
+    public static SymbolExpression asSymbol(Expression expression) {
+        return (SymbolExpression)expression;
+    }
+
     public static boolean isNumber(Expression expression) {
         return expression instanceof NumberExpression;
     }

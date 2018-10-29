@@ -3,14 +3,16 @@ package xyz.lbzh.andy.parser.support;
 import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.ast.BracketExpression;
-import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
+import xyz.lbzh.andy.expression.ast.*;
+import xyz.lbzh.andy.expression.template.LineExpression;
+import xyz.lbzh.andy.expression.template.TemplateExpression;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
 import java.io.*;
+import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<Token> tokenizer;
@@ -180,7 +182,20 @@ public class DefaultParser implements Parser<Expression> {
      * @throws Exception
      */
     private Expression angleBracketExpression() throws Exception {
-        templateTokenizer.next();
+        TemplateExpression template = ExpressionFactory.template();
+        LineExpression line = ExpressionFactory.line();
+        line.add(ExpressionFactory.string("<"));
+
+        Expression token = templateTokenizer.next(); //eat
+        while (!Objects.equals(token.toString(), "/")) {
+            if (Objects.equals(token.toString(), "\n")) {
+                template.addLine(line);
+                line = ExpressionFactory.line(); //new line
+                token = templateTokenizer.next(); //eat
+            }
+
+        }
+
         return null;
     }
 
