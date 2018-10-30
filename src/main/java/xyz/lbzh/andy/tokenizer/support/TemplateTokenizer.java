@@ -71,7 +71,6 @@ public class TemplateTokenizer implements Tokenizer<Token> {
 
     private StringExpression nextFragment() {
         StringBuffer sb = new StringBuffer();
-        //e.g. <name date=(var 1)>liu</name> => < | name date= | (var 1) | > | liu | < | / | name | >
         while (hasNext() && !this.isDelimiter(getChar()) && getChar() != '\uFFFF') {
             sb.append(getChar());
             nextChar();

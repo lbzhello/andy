@@ -46,6 +46,8 @@ public class DefaultParser implements Parser<Expression> {
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         try {
             tokenizer.init(new FileReader(fileName));
+            templateTokenizer.init(tokenizer.getReader());
+            stringTokenizer.init(tokenizer.getReader());
             while (hasNext()) {
                 curlyBracketExpression.add(expression());
             }
@@ -187,53 +189,23 @@ public class DefaultParser implements Parser<Expression> {
      * @throws Exception
      */
     private Expression templateExpression() throws Exception {
-        Expression token = templateTokenizer.next(); //eat '`'
+        templateTokenizer.next(); //eat '`'
         TemplateExpression template = ExpressionFactory.template();
-        //skip until end of line
-        while (!Objects.equals(token.toString(), "\n")) {
-            token = templateTokenizer.next();
-        }
-        Pair<Integer, Expression> offset = getOffset(template);
-        if (offset.getKey() == -1) return template;
-        token = offset.getValue();
-        while (!String.valueOf(token).equals("`")) {
-            LineExpression line = new LineExpression();
-            while (!String.valueOf(token).equals("\n")) {
-                if (String.valueOf(token).equals("(")) {
+        while (!templateTokenizer.getToken().toString().equals("`")) {
+            LineExpression line = ExpressionFactory.line();
+            while (!templateTokenizer.getToken().toString().equals("\n") && templateTokenizer.hasNext()) {
+                if (templateTokenizer.getToken().toString().equals("(")) {
                     line.add(roundBracketExpression());
                 } else {
-                    StringBuffer sb = new StringBuffer(String.valueOf(token));
-                    token = templateTokenizer.next();
+                    line.add(templateTokenizer.getToken());
                 }
+                templateTokenizer.next();
             }
-
+            if (templateTokenizer.getToken().toString().equals("\n")) line.add(templateTokenizer.getToken()); //"\n"
+            template.addLine(line);
         }
-
-        return null;
-
-    }
-    //获取首行偏移空格数和当前token
-    private Pair<Integer, Expression> getOffset(TemplateExpression template) {
-        int charCount = 0; //record offset space num
-        Expression token = templateTokenizer.next(); //eat '\n'
-        while (token.toString().isBlank() && !String.valueOf(token).equals("\n")) {
-            charCount += 1;
-            token = templateTokenizer.next();
-        }
-
-        if (String.valueOf(token).equals("\n")) { //empty line
-            template.addLine(ExpressionFactory.string("\n"));
-            return getOffset(template);
-        } else if (String.valueOf(token).equals("`")) { //end
-            return new Pair<Integer, Expression>(-1, token);
-        } else {
-            return new Pair<Integer, Expression>(charCount, token);
-        }
-    }
-
-    private void parseLineTemplate(Expression curToken,LineExpression line) {
-        if (curToken.toString().equals("(")) {
-        }
+        nextToken(); //eat '`'
+        return template;
     }
 
     private BracketExpression unaryExpression(Expression op) throws Exception {

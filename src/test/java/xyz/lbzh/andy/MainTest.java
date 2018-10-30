@@ -31,6 +31,7 @@ public class MainTest {
 
     @Test
     public void myTest() throws FileNotFoundException {
+        String str = "    nnn";
 
         System.out.println(String.valueOf('\n').equals("\n"));
         System.out.println("        \n".isBlank());
