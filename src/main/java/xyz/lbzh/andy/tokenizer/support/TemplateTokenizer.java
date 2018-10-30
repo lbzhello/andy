@@ -21,7 +21,7 @@ public class TemplateTokenizer implements Tokenizer<Token> {
 
     private static final Set<Character> delimiter = new HashSet<>();
     static {
-        delimiter.add('`');
+//        delimiter.add('`');
         delimiter.add('(');
         delimiter.add(')');
         delimiter.add('\n');
@@ -62,6 +62,9 @@ public class TemplateTokenizer implements Tokenizer<Token> {
             char delimiter = getChar();
             nextChar(); //eat
             currentToken = ExpressionFactory.string(String.valueOf(delimiter), getLineNumber());
+            return currentToken;
+        } else if (getChar() == '`') { //结尾直接返回不再解析
+            currentToken = ExpressionFactory.string(String.valueOf("`"), getLineNumber());
             return currentToken;
         } else {
             currentToken = nextFragment();

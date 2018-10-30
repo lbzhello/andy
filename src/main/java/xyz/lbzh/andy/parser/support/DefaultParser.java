@@ -10,10 +10,8 @@ import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
-import xyz.lbzh.andy.util.Pair;
 
 import java.io.*;
-import java.util.Objects;
 
 public class DefaultParser implements Parser<Expression> {
     private Tokenizer<Token> tokenizer;
@@ -201,7 +199,9 @@ public class DefaultParser implements Parser<Expression> {
                 }
                 templateTokenizer.next();
             }
-            if (templateTokenizer.getToken().toString().equals("\n")) line.add(templateTokenizer.getToken()); //"\n"
+            line.add(templateTokenizer.getToken()); //"\n"
+            templateTokenizer.next();
+
             template.addLine(line);
         }
         nextToken(); //eat '`'

@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.CharacterIterator;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -31,10 +32,10 @@ public class MainTest {
 
     @Test
     public void myTest() throws FileNotFoundException {
-        String str = "    nnn";
-
-        System.out.println(String.valueOf('\n').equals("\n"));
-        System.out.println("        \n".isBlank());
+        char[] obj = new char[4];
+        obj[0] = '1';
+        obj[1] = '2';
+        System.out.println(obj);
     }
 
     @Test

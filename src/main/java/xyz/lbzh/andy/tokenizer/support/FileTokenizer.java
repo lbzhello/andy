@@ -94,6 +94,9 @@ public class FileTokenizer implements Tokenizer<Token> {
                    } else if (Character.isDigit(getChar())) { //number
                        currentToken = nextNumber();
                        return currentToken;
+                   } else if (getChar() == '`') {
+                       currentChar = ' '; //reset
+                       return TokenFlag.BACK_QUOTE;
                    } else {
                        currentToken = nextSymbol();
                        return currentToken;

@@ -71,7 +71,7 @@ public final class Definition {
         delimiters.add('\'');
         delimiters.add('\\');
 
-        delimiters.add('`');
+//        delimiters.add('`');
 
 //        delimiters.add('!');
 //        delimiters.add('=');
