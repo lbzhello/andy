@@ -31,4 +31,12 @@ public class TemplateExpression implements Expression {
         return linesExpression;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (Expression expression : lines) {
+            sb.append(expression);
+        }
+        return sb.toString();
+    }
 }
