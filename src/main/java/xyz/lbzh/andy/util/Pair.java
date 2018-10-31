@@ -1,29 +1,36 @@
 package xyz.lbzh.andy.util;
 
 public class Pair<K, V> {
-    private K key;
-    private V value;
+    private K first;
+    private V second;
 
     public Pair() {}
 
-    public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
+    public Pair(K first, V second) {
+        this.first = first;
+        this.second = second;
     }
 
-    public K getKey() {
-        return key;
+    public static <K, V> Pair<K, V> of(K first, V second) {
+        return new Pair<>(first, second);
     }
 
-    public void setKey(K key) {
-        this.key = key;
+    public K first() {
+        return first;
     }
 
-    public V getValue() {
-        return value;
+    public V second() {
+        return second;
     }
 
-    public void setValue(V value) {
-        this.value = value;
+    public Pair<K, V> first(K first) {
+        this.first = first;
+        return this;
     }
+
+    public Pair<K, V> second(V second) {
+        this.second = second;
+        return this;
+    }
+
 }
