@@ -2,21 +2,32 @@ package xyz.lbzh.andy.io;
 
 import xyz.lbzh.andy.util.Iter;
 
-import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 
 /**
  * @see StringCharacterIterator
  */
 public class CharIter implements Iter<char> {
-    private CharacterIterator iterator;
+    private StringCharacterIterator iterator;
+
 
     public CharIter(String text) {
         this.iterator = new StringCharacterIterator(text);
     }
 
-    private CharIter(CharacterIterator iterator) {
+    private CharIter(StringCharacterIterator iterator) {
         this.iterator = iterator;
+    }
+
+    /**
+     * reuse current iterator
+     * @param text
+     * @return
+     */
+    @Override
+    public Iter<char> from(String text) {
+        iterator.setText(text);
+        return this;
     }
 
     @Override
@@ -66,6 +77,6 @@ public class CharIter implements Iter<char> {
 
     @Override
     public Object clone() {
-        return new CharIter((CharacterIterator) iterator.clone());
+        return new CharIter((StringCharacterIterator) iterator.clone());
     }
 }

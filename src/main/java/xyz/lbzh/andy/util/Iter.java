@@ -7,5 +7,5 @@ import java.text.CharacterIterator;
  * @param <T>
  */
 public interface Iter<T> extends CharacterIterator {
-
+    Iter<T> from(String text);
 }
