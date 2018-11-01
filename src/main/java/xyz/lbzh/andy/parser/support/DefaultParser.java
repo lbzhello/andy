@@ -6,6 +6,8 @@ import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.template.LineExpression;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
+import xyz.lbzh.andy.io.CharIter;
+import xyz.lbzh.andy.io.support.FileCharIter;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
@@ -14,6 +16,7 @@ import xyz.lbzh.andy.tokenizer.Tokenizer;
 import java.io.*;
 
 public class DefaultParser implements Parser<Expression> {
+    private CharIter iterator;
     private Tokenizer<Token> tokenizer;
     private Tokenizer<Token> templateTokenizer = ApplicationFactory.get("templateTokenizer", Tokenizer.class);
     private Tokenizer<Token> stringTokenizer = ApplicationFactory.get("stringTokenizer", Tokenizer.class);
@@ -26,30 +29,31 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression parseString(String expression) {
-        tokenizer.init(new StringReader(expression));
-        templateTokenizer.init(tokenizer.getReader());
-        stringTokenizer.init(tokenizer.getReader());
-        try {
-            Expression rst = expression();
-            tokenizer.close();
-            return rst;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ExpressionType.NIL;
-        }
+//        tokenizer.init(new StringReader(expression));
+//        templateTokenizer.init(tokenizer.getReader());
+//        stringTokenizer.init(tokenizer.getReader());
+//        try {
+//            Expression rst = expression();
+//            tokenizer.close();
+//            return rst;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ExpressionType.NIL;
+//        }
+        return null;
     }
 
     @Override
     public Expression parseFile(String fileName){
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         try {
-            tokenizer.init(new FileReader(fileName));
-            templateTokenizer.init(tokenizer.getReader());
-            stringTokenizer.init(tokenizer.getReader());
+            iterator = new FileCharIter(fileName);
+            tokenizer.init(iterator);
+            templateTokenizer.init(iterator);
+            stringTokenizer.init(iterator);
             while (hasNext()) {
                 curlyBracketExpression.add(expression());
             }
-            tokenizer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,13 +63,12 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public boolean hasNext() {
-        return tokenizer.hasNext();
+        return getToken() != Definition.EOF;
     }
 
 
     @Override
     public void close() throws IOException {
-        tokenizer.close();
     }
 
     @Override
@@ -187,19 +190,19 @@ public class DefaultParser implements Parser<Expression> {
      * @throws Exception
      */
     private Expression templateExpression() throws Exception {
-        templateTokenizer.next(); //eat '`'
+        templateTokenizer.next(); //begin
         TemplateExpression template = ExpressionFactory.template();
-        while (!templateTokenizer.getToken().toString().equals("`")) {
+        while (!templateTokenizer.current().toString().equals("`")) {
             LineExpression line = ExpressionFactory.line();
-            while (!templateTokenizer.getToken().toString().equals("\n") && templateTokenizer.hasNext()) {
-                if (templateTokenizer.getToken().toString().equals("(")) {
+            while (!templateTokenizer.current().toString().equals("\n") && templateTokenizer.hasNext()) {
+                if (templateTokenizer.current().toString().equals("(")) {
                     line.add(roundBracketExpression());
                 } else {
-                    line.add(templateTokenizer.getToken());
+                    line.add(templateTokenizer.current());
                 }
                 templateTokenizer.next();
             }
-            line.add(templateTokenizer.getToken()); //"\n"
+            line.add(templateTokenizer.current()); //"\n"
             templateTokenizer.next();
 
             template.addLine(line);

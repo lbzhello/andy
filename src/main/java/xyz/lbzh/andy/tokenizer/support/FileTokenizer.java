@@ -2,6 +2,7 @@ package xyz.lbzh.andy.tokenizer.support;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.ExpressionFactory;
+import xyz.lbzh.andy.io.CharIter;
 import xyz.lbzh.andy.tokenizer.LineNumberToken;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
@@ -10,80 +11,65 @@ import xyz.lbzh.andy.tokenizer.Tokenizer;
 import java.io.*;
 
 public class FileTokenizer implements Tokenizer<Token> {
-    private LineNumberReader lineNumberReader;
-    private int currentChar = ' ';
+    private CharIter iterator;
+    private int lineNumber = 1;
     private Token currentToken = Definition.HOF;
 
     @Override
-    public void init(Reader reader) {
-        try {
-            this.lineNumberReader = new LineNumberReader(new BufferedReader(reader));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void init(CharIter iterator) {
+        this.iterator = iterator;
     }
 
     @Override
-    public Token getToken() {
+    public Token current() {
         return currentToken;
     }
 
     @Override
-    public Reader getReader() {
-        return this.lineNumberReader;
-    }
-
-    @Override
     public int getLineNumber() {
-        return this.lineNumberReader.getLineNumber() + 1; //1 based
-    }
-
-    @Override
-    public void close() throws IOException {
-        this.currentChar = ' ';
-        lineNumberReader.close();
+        return this.lineNumber; //1 based
     }
 
     @Override
     public Token next(){
         try {
             while (hasNext()) {
-                if (!Character.isWhitespace(getChar())) { //不是空白字符
-                   if(getChar() == '"'){ //String
+                if (!Character.isWhitespace(iterator.current())) { //不是空白字符
+                   if(iterator.current() == '"'){ //String
                        currentToken = nextString();
                        return currentToken;
-                   } else if (Definition.isDelimiter(getChar())) { //间隔符直接返回
-                       currentToken = Definition.getDelimiter(getChar());
-                       nextChar(); //eat
+                   } else if (Definition.isDelimiter(iterator.current())) { //间隔符直接返回
+                       currentToken = Definition.getDelimiter(iterator.current());
+                       iterator.next(); //eat
                        return currentToken;
-//                       Character c1 = getChar(),c2;
-//                       nextChar(); //eat c1
+//                       Character c1 = iterator.current(),c2;
+//                       iterator.next(); //eat c1
 //                       if (c1 == '=') {
-//                           if ((c2 = getChar()) == '>' || c2 == '=') { // => or ==
-//                               nextChar(); //eat '>' or '='
+//                           if ((c2 = iterator.current()) == '>' || c2 == '=') { // => or ==
+//                               iterator.next(); //eat '>' or '='
 //                               return ExpressionFactory.symbol(c1.toString() + c2.toString(), getLineNumber());
 //                           } else {
 //                               return ExpressionFactory.symbol("=", getLineNumber());
 //                           }
 //                       } else if (c1 == '<') {
-//                           if (Character.isWhitespace(getChar())){
+//                           if (Character.isWhitespace(iterator.current())){
 //                               return ExpressionFactory.symbol(c1.toString(), getLineNumber());
-//                           } else if ((c2 = getChar()) == '=') {
-//                               nextChar(); //eat '='
+//                           } else if ((c2 = iterator.current()) == '=') {
+//                               iterator.next(); //eat '='
 //                               return ExpressionFactory.symbol("<=", getLineNumber());
 //                           } else { //left angle bracket
 //                               return TokenFlag.ANGLE_BRACKET;
 //                           }
 //                       } else if (c1 == '>') {
-//                           if (getChar() == '=') {
-//                               nextChar(); //eat '='
+//                           if (iterator.current() == '=') {
+//                               iterator.next(); //eat '='
 //                               return ExpressionFactory.symbol(">=", getLineNumber());
 //                           } else {
 //                               return ExpressionFactory.symbol(">", getLineNumber());
 //                           }
 //                       } else if (c1 == '!') {
-//                           if (getChar() == '=') {
-//                               nextChar(); //eat
+//                           if (iterator.current() == '=') {
+//                               iterator.next(); //eat
 //                               return ExpressionFactory.symbol("!=", getLineNumber());
 //                           } else {
 //                               return ExpressionFactory.symbol("!");
@@ -91,30 +77,30 @@ public class FileTokenizer implements Tokenizer<Token> {
 //                       } else {
 //                           return Definition.getDelimiter(c1);
 //                       }
-                   } else if (Character.isDigit(getChar())) { //number
+                   } else if (Character.isDigit(iterator.current())) { //number
                        currentToken = nextNumber();
                        return currentToken;
-                   } else if (getChar() == '`') {
-                       currentChar = ' '; //reset
+                   } else if (iterator.current() == '`') {
+                       iterator.next(); //eat '`'
                        return TokenFlag.BACK_QUOTE;
                    } else {
                        currentToken = nextSymbol();
                        return currentToken;
                    }
                 } else { //空白字符
-                    while (Character.isWhitespace(getChar())) {
-                        nextChar(); //eat
+                    while (Character.isWhitespace(iterator.current())) {
+                        iterator.next(); //eat
                     }
-                    if (getChar() == '(') {  //e.g. name {...
-                        nextChar();
+                    if (iterator.current() == '(') {  //e.g. name {...
+                        iterator.next();
                         currentToken = TokenFlag.ROUND_BRACKET_FREE;
                         return currentToken;
-                    } else if (getChar() == '[') { //e.g. name [...
-                        nextChar();
+                    } else if (iterator.current() == '[') { //e.g. name [...
+                        iterator.next();
                         currentToken = TokenFlag.SQUARE_BRACKET_FREE;
                         return currentToken;
-                    } else if (getChar() == '{') { //e.g. name {...
-                        nextChar();
+                    } else if (iterator.current() == '{') { //e.g. name {...
+                        iterator.next();
                         currentToken = TokenFlag.CURLY_BRACKET_FREE;
                         return currentToken;
                     }
@@ -128,24 +114,7 @@ public class FileTokenizer implements Tokenizer<Token> {
 
     @Override
     public boolean hasNext(){
-        return !isEOF();
-    }
-
-    private boolean isEOF() {
-        return currentChar == -1;
-    }
-
-    private char nextChar() {
-        try {
-            currentChar = lineNumberReader.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return (char)currentChar;
-    }
-
-    private char getChar() {
-        return (char)currentChar;
+        return iterator.current() != CharIter.DONE;
     }
 
     /**
@@ -153,14 +122,14 @@ public class FileTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private LineNumberToken nextString() throws IOException {
+    private LineNumberToken nextString() {
         StringBuffer sb = new StringBuffer();
-        nextChar(); //eat '"'
-        while (getChar() != '"') {
-            sb.append(getChar());
-            nextChar();
+        iterator.next(); //eat '"'
+        while (iterator.current() != '"') {
+            sb.append(iterator.current());
+            iterator.next();
         }
-        nextChar(); //eat '"'
+        iterator.next(); //eat '"'
         return ExpressionFactory.string(sb.toString(), getLineNumber());
     }
 
@@ -169,20 +138,11 @@ public class FileTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private LineNumberToken nextNumber() throws IOException {
+    private LineNumberToken nextNumber() {
         StringBuffer sb = new StringBuffer();
-//        while (Character.isDigit(getChar()) || getChar() == '.') {
-//            sb.append(getChar());
-//            nextChar();
-//        }
-//        if (Character.isWhitespace(getChar()) || Definition.isDelimiter(getChar()) || isEOF()) {
-//            return ExpressionFactory.number(sb.toString(), getLineNumber());
-//        } else {
-//            throw new NumberFormatException("Line: " + getLineNumber());
-//        }
-        while (getChar() == '.' || !Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
-            sb.append(getChar());
-            nextChar();
+        while (iterator.current() == '.' || !Character.isWhitespace(iterator.current()) && !Definition.isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
+            sb.append(iterator.current());
+            iterator.next();
         }
         return ExpressionFactory.number(sb.toString(), getLineNumber());
     }
@@ -192,22 +152,22 @@ public class FileTokenizer implements Tokenizer<Token> {
      * @return
      * @throws IOException
      */
-    private Token nextSymbol() throws IOException {
+    private Token nextSymbol() {
         StringBuffer sb = new StringBuffer();
-        if (getChar() == '<') { //judgement if it's template
-            sb.append(getChar());
-            nextChar(); //eat '<'
-            if (Character.isWhitespace(getChar()) || getChar() == '=') {
-                sb.append(getChar());
-                nextChar(); //eat
+        if (iterator.current() == '<') { //judgement if it's template
+            sb.append(iterator.current());
+            iterator.next(); //eat '<'
+            if (Character.isWhitespace(iterator.current()) || iterator.current() == '=') {
+                sb.append(iterator.current());
+                iterator.next(); //eat
                 return ExpressionFactory.symbol(sb.toString().trim(), getLineNumber());
             } else {
                 return TokenFlag.ANGLE_BRACKET;
             }
         } else {
-            while (!Character.isWhitespace(getChar()) && !Definition.isDelimiter(getChar()) && getChar() != '\uFFFF') {
-                sb.append(getChar());
-                nextChar();
+            while (!Character.isWhitespace(iterator.current()) && !Definition.isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
+                sb.append(iterator.current());
+                iterator.next();
             }
             return ExpressionFactory.symbol(sb.toString(), getLineNumber());
         }
