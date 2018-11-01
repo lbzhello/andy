@@ -32,6 +32,8 @@ public class LineExpression extends BracketExpression {
                     } else if (lines.size() == 1){
                         sb.append(lines.get(0));
                     }
+                } else {
+                    sb.append(rst);
                 }
             } else {
                 sb.append(expression);
