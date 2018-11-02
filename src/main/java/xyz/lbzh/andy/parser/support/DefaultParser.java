@@ -195,8 +195,13 @@ public class DefaultParser implements Parser<Expression> {
         while (!templateTokenizer.current().toString().equals("`")) {
             LineExpression line = ExpressionFactory.line();
             while (!templateTokenizer.current().toString().equals("\n") && templateTokenizer.hasNext()) {
-                if (templateTokenizer.current().toString().equals("(")) {
-                    line.add(roundBracketExpression());
+                if (templateTokenizer.current().toString().equals("(")) { //调用tokenizer解析
+                    nextToken(); //eat '('
+                    BracketExpression roundBracket = ExpressionFactory.roundBracket();
+                    while (!(getToken() == TokenFlag.ROUND_BRACKET_RIGHT)) {
+                        roundBracket.add(expression());
+                    }
+                    line.add(roundBracket);
                 } else {
                     line.add(templateTokenizer.current());
                 }
