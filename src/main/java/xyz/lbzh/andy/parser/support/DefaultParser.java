@@ -194,7 +194,9 @@ public class DefaultParser implements Parser<Expression> {
         TemplateExpression template = ExpressionFactory.template();
         while (!templateTokenizer.current().toString().equals("`")) {
             LineExpression line = ExpressionFactory.line();
-            while (!templateTokenizer.current().toString().equals("\n") && templateTokenizer.hasNext()) {
+            while (!templateTokenizer.current().toString().equals("\n")
+                    && !templateTokenizer.current().toString().equals("`")
+                    && templateTokenizer.hasNext()) {
                 if (templateTokenizer.current().toString().equals("(")) { //调用tokenizer解析
                     nextToken(); //eat '('
                     BracketExpression roundBracket = ExpressionFactory.roundBracket();
@@ -207,9 +209,10 @@ public class DefaultParser implements Parser<Expression> {
                 }
                 templateTokenizer.next();
             }
-            line.add(templateTokenizer.current()); //"\n"
-            templateTokenizer.next();
-
+            if (templateTokenizer.current().toString().equals("\n")) {
+                line.add(templateTokenizer.current()); //"\n"
+                templateTokenizer.next();
+            }
             template.addLine(line);
         }
         nextToken(); //eat '`'
