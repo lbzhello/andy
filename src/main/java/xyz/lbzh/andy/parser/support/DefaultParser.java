@@ -290,30 +290,14 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * e.g. (expr1,expr2, ...; expr3, expr4; ...) => [[expr1 expr2 ...] [expr3 expr4] [...]]
-     * @return
-     */
-    private BracketExpression semicolonExpression(BracketExpression squareBracketExpression) throws Exception {
-        while (getToken() == TokenFlag.SEMICOLON) {
-            nextToken(); //eat ";"
-            Expression expression = expression();
-            if (getToken() == TokenFlag.COMMA) { //e.g. (expr1, expr2; expr3, expr4 ...
-                expression = commaExpression(ExpressionFactory.squareBracket(expression));
-            }
-            squareBracketExpression.add(expression);
-        }
-        return squareBracketExpression;
-    }
-
-    /**
      * e.g. (exp1 exp2 ...)
      * @return
      */
-    private BracketExpression parseRoundBracket(BracketExpression sexpression) throws Exception {
+    private BracketExpression parseRoundBracket(BracketExpression roundBracket) throws Exception {
         while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
-            sexpression.add(expression());
+            roundBracket.add(expression());
         }
-        return sexpression;
+        return roundBracket;
     }
 
     /**
@@ -327,6 +311,22 @@ public class DefaultParser implements Parser<Expression> {
         }
 //        if (!Objects.equals(getToken().toString(), ";")
 //                || !Objects.equals(getToken().toString(), ")")) throw new Exception("Syntax Error!");
+        return squareBracketExpression;
+    }
+
+    /**
+     * e.g. (expr1,expr2, ...; expr3, expr4; ...) => [[expr1 expr2 ...] [expr3 expr4] [...]]
+     * @return
+     */
+    private BracketExpression semicolonExpression(BracketExpression squareBracketExpression) throws Exception {
+        while (getToken() == TokenFlag.SEMICOLON) {
+            nextToken(); //eat ";"
+            Expression expression = expression();
+            if (getToken() == TokenFlag.COMMA) { //e.g. (expr1, expr2; expr3, expr4 ...
+                expression = commaExpression(ExpressionFactory.squareBracket(expression));
+            }
+            squareBracketExpression.add(expression);
+        }
         return squareBracketExpression;
     }
 
