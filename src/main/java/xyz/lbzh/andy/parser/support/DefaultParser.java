@@ -208,8 +208,7 @@ public class DefaultParser implements Parser<Expression> {
 //                iterator.next(); //eat ')'
                 line.add(roundBracket);
             } else {
-                templateTokenizer.next();
-                line.add(templateTokenizer.current());
+                line.add(templateTokenizer.next());
             }
 
         }
