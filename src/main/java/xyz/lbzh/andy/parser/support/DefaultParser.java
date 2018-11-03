@@ -8,6 +8,7 @@ import xyz.lbzh.andy.expression.template.LineExpression;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
 import xyz.lbzh.andy.io.CharIter;
 import xyz.lbzh.andy.io.support.FileCharIter;
+import xyz.lbzh.andy.io.support.StringCharIter;
 import xyz.lbzh.andy.parser.Parser;
 import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
@@ -29,18 +30,16 @@ public class DefaultParser implements Parser<Expression> {
 
     @Override
     public Expression parseString(String expression) {
-//        tokenizer.init(new StringReader(expression));
-//        templateTokenizer.init(tokenizer.getReader());
-//        stringTokenizer.init(tokenizer.getReader());
-//        try {
-//            Expression rst = expression();
-//            tokenizer.close();
-//            return rst;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ExpressionType.NIL;
-//        }
-        return null;
+        iterator = new StringCharIter(expression);
+        tokenizer.init(iterator);
+        templateTokenizer.init(iterator);
+        stringTokenizer.init(iterator);
+        try {
+            return expression();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ExpressionType.NIL;
+        }
     }
 
     @Override

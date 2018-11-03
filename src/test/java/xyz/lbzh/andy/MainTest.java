@@ -123,7 +123,7 @@ public class MainTest {
     @Test
     public void parseTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.eval("if 1 < 0 2");
+        replEngine.eval("if 1 > 0 2");
     }
 
     @Test
