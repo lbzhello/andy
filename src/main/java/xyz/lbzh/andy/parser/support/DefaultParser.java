@@ -190,34 +190,76 @@ public class DefaultParser implements Parser<Expression> {
      * @throws Exception
      */
     private Expression templateExpression() throws Exception {
-        templateTokenizer.next(); //begin
         TemplateExpression template = ExpressionFactory.template();
-        while (!templateTokenizer.current().toString().equals("`")) {
-            LineExpression line = ExpressionFactory.line();
-            while (!templateTokenizer.current().toString().equals("\n")
-                    && !templateTokenizer.current().toString().equals("`")
-                    && templateTokenizer.hasNext()) {
-                if (templateTokenizer.current().toString().equals("(")) { //调用tokenizer解析
-                    nextToken(); //eat '('
-                    BracketExpression roundBracket = ExpressionFactory.roundBracket();
-                    while (!(getToken() == TokenFlag.ROUND_BRACKET_RIGHT)) {
-                        roundBracket.add(expression());
-                    }
-                    line.add(roundBracket);
-                } else {
-                    line.add(templateTokenizer.current());
+        LineExpression line = ExpressionFactory.line();
+        while (iterator.current() != '`') {
+            if (iterator.current() == '\n') {
+                iterator.next(); //eat '\n'
+                line.add(ExpressionFactory.string("\n"));
+                template.addLine(line);
+                line = ExpressionFactory.line(); //new line
+            } else if (iterator.current() == '(') { //e.g. '...(...)...'
+                iterator.next(); //eat '('
+                BracketExpression roundBracket = ExpressionFactory.roundBracket();
+                this.currentToken = Definition.HOF;
+                while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
+                    roundBracket.add(expression());
                 }
+//                iterator.next(); //eat ')'
+                line.add(roundBracket);
+            } else {
                 templateTokenizer.next();
+                line.add(templateTokenizer.current());
             }
-            if (templateTokenizer.current().toString().equals("\n")) {
-                line.add(templateTokenizer.current()); //"\n"
-                templateTokenizer.next();
-            }
-            template.addLine(line);
+
         }
-        nextToken(); //eat '`'
+        template.addLine(line);
+        if (line.toString().length() > 0) {
+        }
+        iterator.next(); //eat '`'
+        nextToken(); //continue parse
         return template;
+
     }
+
+//    /**
+//     * e.g.
+//     *     str = "world"
+//     *     `
+//     *         hello (str)!
+//     *     `
+//     * @return
+//     * @throws Exception
+//     */
+//    private Expression templateExpression() throws Exception {
+//        templateTokenizer.next(); //begin
+//        TemplateExpression template = ExpressionFactory.template();
+//        while (!templateTokenizer.current().toString().equals("`")) {
+//            LineExpression line = ExpressionFactory.line();
+//            while (!templateTokenizer.current().toString().equals("\n")
+//                    && !templateTokenizer.current().toString().equals("`")
+//                    && templateTokenizer.hasNext()) {
+//                if (templateTokenizer.current().toString().equals("(")) { //调用tokenizer解析
+//                    nextToken(); //eat '('
+//                    BracketExpression roundBracket = ExpressionFactory.roundBracket();
+//                    while (!(getToken() == TokenFlag.ROUND_BRACKET_RIGHT)) {
+//                        roundBracket.add(expression());
+//                    }
+//                    line.add(roundBracket);
+//                } else {
+//                    line.add(templateTokenizer.current());
+//                }
+//                templateTokenizer.next();
+//            }
+//            if (templateTokenizer.current().toString().equals("\n")) {
+//                line.add(templateTokenizer.current()); //"\n"
+//                templateTokenizer.next();
+//            }
+//            template.addLine(line);
+//        }
+//        nextToken(); //eat '`'
+//        return template;
+//    }
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());
