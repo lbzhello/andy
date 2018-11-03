@@ -1,9 +1,7 @@
 package xyz.lbzh.andy.expression.template;
 
-import xyz.lbzh.andy.expression.Context;
-import xyz.lbzh.andy.expression.Expression;
-import xyz.lbzh.andy.expression.ExpressionFactory;
-import xyz.lbzh.andy.expression.Name;
+import xyz.lbzh.andy.expression.*;
+import xyz.lbzh.andy.expression.ast.StringExpression;
 
 import java.util.*;
 
@@ -45,8 +43,8 @@ public class TemplateExpression implements Expression {
             if (!first.isBlank()) linesExpression.add(ExpressionFactory.string(first));
             int index = 1;
             while (index < this.lines.size() - 1) {
-                String lineStr = lines.get(index++).eval(context).toString();
-                linesExpression.add(ExpressionFactory.string(lineStr.substring(offset, lineStr.length())));
+                String lineStr = moveLine(lines.get(index++), offset).eval(context).toString();
+                linesExpression.add(ExpressionFactory.string(lineStr));
             }
             if (!last.isBlank()) linesExpression.add(ExpressionFactory.string(last));
         } else if (this.lines.size() == 1){
@@ -55,6 +53,18 @@ public class TemplateExpression implements Expression {
             return ExpressionFactory.error(this, "Template should not empty!");
         }
         return linesExpression;
+    }
+
+    //向左平移offset单位
+    private Expression moveLine(Expression expression, int offset) {
+        if (expression instanceof LineExpression && offset > 0) {
+            List<Expression> list = ((LineExpression) expression).list();
+            if (list.size() > 0 && ExpressionUtils.isString(list.get(0))) {
+                String str = list.get(0).toString();
+                list.set(0, ExpressionFactory.string(str.substring(offset, str.length())));
+            }
+        }
+        return expression;
     }
 
     @Override
