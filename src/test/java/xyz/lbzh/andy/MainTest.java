@@ -120,10 +120,8 @@ public class MainTest {
 
     @Test
     public void iterTest() throws IOException {
-        LineNumberReader reader = new LineNumberReader(new StringReader("123"));
-        while (true) {
-            System.out.println(reader.read());
-        }
+        ReplEngine replEngine = new ReplEngine();
+        replEngine.evalFile("docs/examples/iter.test");
     }
 
     @Test

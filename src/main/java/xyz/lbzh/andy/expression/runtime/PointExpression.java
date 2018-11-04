@@ -25,9 +25,14 @@ public class PointExpression extends RoundBracketExpression {
         if (leftValue instanceof ComplexExpression) { //e.g. left = { name:"liu" age:22 }  left.name
             return ((ComplexExpression) leftValue).getContext().lookup(rightValue.getName());
         } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
-            MethodExpression methodExpression = new MethodExpression(leftValue);
-            methodExpression.setMethodName(rightValue.getName().toString());
-            return methodExpression;
+            if (ExpressionUtils.isNumber(rightValue)) { //e.g. left.1 left.2
+                int index = ExpressionUtils.asNumber(rightValue).intValue();
+                return ExpressionUtils.asSquareBracket(leftValue).list().get(index);
+            } else {
+                MethodExpression methodExpression = new MethodExpression(leftValue);
+                methodExpression.setMethodName(rightValue.getName().toString());
+                return methodExpression;
+            }
         } else if (ExpressionUtils.isMethod(leftValue)) { //java class call
             MethodExpression methodExpression = (MethodExpression)leftValue;
             methodExpression.setMethodName(rightValue.getName().toString());

@@ -1,4 +1,5 @@
 square = [1 2 3 4]
-
-square.map(x -> x + 1).filter({$0 > 3}).each(x -> print(x))
+a = 2
+square.map(x -> x + a).filter({$0 > 3}).each(x -> print(x))
+square.(a) + 5
 
