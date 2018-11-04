@@ -2,6 +2,7 @@ content = "hello world!"
 a = {
     <books>
       123
+      <book />
       <book>(content)</book>
       123
     </books>
