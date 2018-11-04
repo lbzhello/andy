@@ -1,7 +1,6 @@
 package xyz.lbzh.andy.expression.template;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.ast.StringExpression;
 
 import java.util.*;
 
@@ -22,8 +21,12 @@ public class TemplateExpression implements Expression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-
-        return relative(context);
+        TemplateExpression template = ExpressionFactory.template();
+        this.lines.stream().forEach(line ->  {
+            template.addLine(line.eval(context));
+        });
+        return template;
+//        return relative(context);
     }
 
     /**

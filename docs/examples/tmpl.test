@@ -16,4 +16,4 @@ c = `
         (a)
     </animal>
 `
-c
+print(c)

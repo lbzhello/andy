@@ -62,24 +62,8 @@ public class DefaultParser implements Parser<Expression> {
         return curlyBracketExpression;
     }
 
-    @Override
     public boolean hasNext() {
         return getToken() != Definition.EOF;
-    }
-
-
-    @Override
-    public void close() throws IOException {
-    }
-
-    @Override
-    public Expression next(){
-        try {
-            return expression();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private Token nextToken() {

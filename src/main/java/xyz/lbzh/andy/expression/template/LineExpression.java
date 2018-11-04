@@ -15,7 +15,13 @@ import java.util.List;
 public class LineExpression extends BracketExpression {
 
     @Override
-    public Expression eval(Context<Name, Expression> context) {
+    public LineExpression eval(Context<Name, Expression> context) {
+        LineExpression line = ExpressionFactory.line();
+        this.list().stream().forEach(element -> line.add(element.eval(context)));
+        return line;
+    }
+
+    public Expression evalOld(Context<Name, Expression> context) {
         StringBuffer sb = new StringBuffer();
         int charCount = 0, acc = 0;
         for (Expression expression : this.list()) {
