@@ -30,7 +30,11 @@ public class ReplEngine {
         if (ExpressionUtils.hasError(rst)) {
             System.err.println(rst);
         } else {
-            System.out.println(ExpressionUtils.formatXml((XmlExpression) rst));
+            if (ExpressionUtils.isXml(rst)) { //format
+                System.out.println(ExpressionUtils.formatXml(ExpressionUtils.asXml(rst)));
+            } else {
+                System.out.println(rst);
+            }
         }
         return rst;
     }
