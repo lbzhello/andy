@@ -8,9 +8,9 @@ import xyz.lbzh.andy.expression.ast.BracketExpression;
 
 
 public class XmlExpression implements Expression {
-    private XmlTagExpression startTag;
-    private BracketExpression body;
-    private XmlTagExpression closeTag;
+    private XmlTagExpression startTag = ExpressionFactory.xmlTag();
+    private BracketExpression body = ExpressionFactory.bracket();
+    private XmlTagExpression closeTag = ExpressionFactory.xmlTag();
 
     public void setStartTag(XmlTagExpression startTag) {
         this.startTag = startTag;
