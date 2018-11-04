@@ -1,11 +1,14 @@
 package xyz.lbzh.andy.expression;
 
+import org.springframework.util.CollectionUtils;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
+import xyz.lbzh.andy.expression.template.XmlExpression;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
 
 public class ExpressionUtils {
     public static boolean isReturn(Expression expression) {
@@ -42,6 +45,10 @@ public class ExpressionUtils {
 
     public static boolean isBracket(Expression expression) {
         return expression instanceof BracketExpression;
+    }
+
+    public static BracketExpression asBracket(Expression expression) {
+        return (BracketExpression)expression;
     }
 
     public static boolean isRoundBracket(Expression expression) {
@@ -88,7 +95,53 @@ public class ExpressionUtils {
         return (NativeExpression) expression;
     }
 
+    public static boolean isXml(Expression expression) {
+        return expression instanceof XmlExpression;
+    }
+
+    public static XmlExpression asXml(Expression expression) {
+        return (XmlExpression) expression;
+    }
+
     public static boolean isTemplate(Expression expression) {
         return expression instanceof TemplateExpression;
     }
+
+    public static boolean isEmpty(Expression expression) {
+        if (expression == null) return true;
+        if (isBracket(expression)) {
+            return asBracket(expression).list().isEmpty();
+        } else if (isString(expression)) {
+            return asString(expression).toString().length() == 0;
+        } else {
+            return false;
+        }
+    }
+
+    public static String formatXml(XmlExpression xmlExpression) {
+        return xmlToString(xmlExpression, "");
+    }
+
+    private static String xmlToString(XmlExpression xml, String indent) {
+        StringBuffer xmlStr = new StringBuffer();
+        String indentInc = indent + "    "; //add 4 spaces
+        if (!isEmpty(xml.getStartTag())) {
+            xmlStr.append(indent + xml.getStartTag() + "\n");
+        }
+        for (Expression element : xml.getBody().list()) {
+            if (ExpressionUtils.isXml(element)) {
+                xmlStr.append(xmlToString(ExpressionUtils.asXml(element), indentInc));
+            } else {
+                if (element.toString().trim().length() != 0) {
+                    xmlStr.append(indentInc + element + "\n");
+                }
+            }
+        }
+        if (!isEmpty(xml.getCloseTag())) {
+            xmlStr.append(indent + xml.getCloseTag() + "\n");
+        }
+
+        return xmlStr.toString();
+    }
+
 }

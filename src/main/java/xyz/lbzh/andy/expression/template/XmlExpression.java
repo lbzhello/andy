@@ -12,6 +12,19 @@ public class XmlExpression implements Expression {
     private BracketExpression body = ExpressionFactory.bracket();
     private XmlTagExpression closeTag = ExpressionFactory.xmlTag();
 
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        XmlExpression xml = ExpressionFactory.xml();
+        BracketExpression bracket = ExpressionFactory.squareBracket();
+        for (Expression expression : body.list()) {
+            bracket.add(expression.eval(context));
+        }
+        xml.setStartTag(this.startTag.eval(context));
+        xml.setBody(bracket);
+        xml.setCloseTag(this.closeTag.eval(context));
+        return xml;
+    }
+
     public void setStartTag(XmlTagExpression startTag) {
         this.startTag = startTag;
     }
@@ -24,17 +37,16 @@ public class XmlExpression implements Expression {
         this.closeTag = closeTag;
     }
 
-    @Override
-    public Expression eval(Context<Name, Expression> context) {
-        XmlExpression xml = ExpressionFactory.xml();
-        BracketExpression bracket = ExpressionFactory.squareBracket();
-        for (Expression expression : body.list()) {
-            bracket.add(expression.eval(context));
-        }
-        xml.setStartTag(this.startTag.eval(context));
-        xml.setBody(bracket);
-        xml.setCloseTag(this.closeTag.eval(context));
-        return xml;
+    public XmlTagExpression getStartTag() {
+        return startTag;
+    }
+
+    public BracketExpression getBody() {
+        return body;
+    }
+
+    public XmlTagExpression getCloseTag() {
+        return closeTag;
     }
 
     @Override

@@ -2,6 +2,7 @@ package xyz.lbzh.andy.expression;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.core.ApplicationFactory;
+import xyz.lbzh.andy.expression.template.XmlExpression;
 import xyz.lbzh.andy.parser.Parser;
 
 public class ReplEngine {
@@ -29,7 +30,7 @@ public class ReplEngine {
         if (ExpressionUtils.hasError(rst)) {
             System.err.println(rst);
         } else {
-            System.out.println(rst);
+            System.out.println(ExpressionUtils.formatXml((XmlExpression) rst));
         }
         return rst;
     }

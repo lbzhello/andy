@@ -1,11 +1,10 @@
-content = "hello world!"
+content = <name>liu</name>
 a = {
     <books>
-      123
       <book />
       <book>(content)</book>
       123
     </books>
 }
 
-a()
+(a)

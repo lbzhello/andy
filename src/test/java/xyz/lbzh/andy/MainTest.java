@@ -31,8 +31,9 @@ public class MainTest {
 
     @Test
     public void myTest() throws FileNotFoundException {
-        CharIter charIter = new FileCharIter("tmpl.test");
-
+        char[] chars = new char[6];
+        Arrays.fill(chars, ' ');
+        Arrays.toString(chars);
         System.out.println();
     }
 
