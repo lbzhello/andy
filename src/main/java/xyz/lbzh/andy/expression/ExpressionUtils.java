@@ -107,17 +107,6 @@ public class ExpressionUtils {
         return expression instanceof TemplateExpression;
     }
 
-    public static boolean isEmpty(Expression expression) {
-        if (expression == null) return true;
-        if (isBracket(expression)) {
-            return asBracket(expression).list().isEmpty();
-        } else if (isString(expression)) {
-            return asString(expression).toString().length() == 0;
-        } else {
-            return false;
-        }
-    }
-
     public static String formatXml(XmlExpression xmlExpression) {
         return xmlToString(xmlExpression, "");
     }
@@ -125,7 +114,7 @@ public class ExpressionUtils {
     private static String xmlToString(XmlExpression xml, String indent) {
         StringBuffer xmlStr = new StringBuffer();
         String indentInc = indent + "    "; //add 4 spaces
-        if (!isEmpty(xml.getStartTag())) {
+        if (!xml.getStartTag().isEmpty()) {
             xmlStr.append(indent + xml.getStartTag() + "\n");
         }
         for (Expression element : xml.getBody().list()) {
@@ -137,7 +126,7 @@ public class ExpressionUtils {
                 }
             }
         }
-        if (!isEmpty(xml.getCloseTag())) {
+        if (!xml.getCloseTag().isEmpty()) {
             xmlStr.append(indent + xml.getCloseTag() + "\n");
         }
 

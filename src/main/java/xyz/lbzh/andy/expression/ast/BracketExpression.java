@@ -55,6 +55,10 @@ public class BracketExpression implements Expression {
         return this;
     }
 
+    public boolean isEmpty() {
+        return this.list.isEmpty();
+    }
+
     public List<Expression> getParameters() {
         return list();
     }
