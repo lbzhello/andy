@@ -4,8 +4,10 @@ import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.*;
+import xyz.lbzh.andy.expression.template.XmlTagExpression;
 import xyz.lbzh.andy.expression.template.LineExpression;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
+import xyz.lbzh.andy.expression.template.XmlExpression;
 import xyz.lbzh.andy.io.CharIter;
 import xyz.lbzh.andy.io.support.FileCharIter;
 import xyz.lbzh.andy.io.support.StringCharIter;
@@ -169,7 +171,13 @@ public class DefaultParser implements Parser<Expression> {
         } else if (getToken() == TokenFlag.CURLY_BRACKET_LEFT || getToken() == TokenFlag.CURLY_BRACKET_FREE) { //e.g. {...}...
             return curlyBracketExpression();
         } else if (getToken() == TokenFlag.BACK_QUOTE) { //e.g. ``
-            return templateExpression();
+            Expression template = templateExpression();
+            nextToken(); //continue parse
+            return template;
+        } else if (getToken() == TokenFlag.ANGLE_BRACKET) {
+            Expression xml = xmlExpression();
+            nextToken(); //continue
+            return xml;
         } else if (!hasNext()) { //文件结尾
             return Definition.EOF;
         } else { //其他字符跳过
@@ -177,6 +185,73 @@ public class DefaultParser implements Parser<Expression> {
             return combinator();
         }
 
+    }
+
+    /**
+     * match <expe / expr>
+     * @return
+     * @throws Exception
+     */
+    private Expression xmlExpression() throws Exception {
+        XmlExpression xml = ExpressionFactory.xml();
+        XmlTagExpression angleBracket = parseXmlLable();
+        if (angleBracket.isClose()) {
+            xml.setCloseTag(angleBracket);
+        } else {
+            xml.setStartTag(angleBracket);
+            xml.setBody(parseXmlBody());
+            xml.setCloseTag(parseXmlLable());
+        }
+        return xml;
+    }
+
+    private XmlTagExpression parseXmlLable() throws Exception {
+        XmlTagExpression angleBracket = ExpressionFactory.xmlTag();
+        while (iterator.current() != '>') {
+            if (iterator.current() == '(') {
+                angleBracket.add(insertRoundBracket());
+            } else if (iterator.current() == '/') {
+                angleBracket.setClose(true);
+                angleBracket.add(ExpressionFactory.string("/"));
+                iterator.next();
+            } else {
+                StringBuffer sb = new StringBuffer();
+                while (iterator.current() != '(' && iterator.current() != '>' && iterator.current() != '/') {
+                    sb.append(iterator.current());
+                    iterator.next();
+                }
+                angleBracket.add(ExpressionFactory.string(sb.toString()));
+            }
+        }
+        angleBracket.add(ExpressionFactory.string(">"));
+        iterator.next(); //eat '>'
+        return angleBracket;
+    }
+
+    //
+    private BracketExpression parseXmlBody() throws Exception {
+        BracketExpression bracketExpression = ExpressionFactory.bracket();
+        while (true) {
+            if (iterator.current() == '<') {
+                iterator.next();
+                if (iterator.current() == '/') { //e.g. </...
+                    iterator.previous(); //back to '<'
+                    return bracketExpression;
+                } else {
+                    iterator.previous(); //back to '<'
+                    bracketExpression.add(xmlExpression());
+                }
+            } else if (iterator.current() == '(') {
+                bracketExpression.add(insertRoundBracket());
+            } else {
+                StringBuffer sb = new StringBuffer();
+                while (iterator.current() != '(' && iterator.current() != '<' && iterator.current() != '>') {
+                    sb.append(iterator.current());
+                    iterator.next();
+                }
+                bracketExpression.add(ExpressionFactory.string(sb.toString().trim()));
+            }
+        }
     }
 
     /**
@@ -198,14 +273,7 @@ public class DefaultParser implements Parser<Expression> {
                 template.addLine(line);
                 line = ExpressionFactory.line(); //new line
             } else if (iterator.current() == '(') { //e.g. '...(...)...'
-                iterator.next(); //eat '('
-                BracketExpression roundBracket = ExpressionFactory.roundBracket();
-                this.currentToken = Definition.HOF;
-                while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
-                    roundBracket.add(expression());
-                }
-//                iterator.next(); //eat ')'
-                line.add(roundBracket);
+                line.add(insertRoundBracket());
             } else {
                 line.add(templateTokenizer.next());
             }
@@ -215,9 +283,17 @@ public class DefaultParser implements Parser<Expression> {
         if (line.toString().length() > 0) {
         }
         iterator.next(); //eat '`'
-        nextToken(); //continue parse
         return template;
-
+    }
+    //在模板中嵌入(...)
+    private Expression insertRoundBracket() throws Exception {
+        iterator.next(); //eat '('
+        BracketExpression roundBracket = ExpressionFactory.roundBracket();
+        this.currentToken = Definition.HOF;
+        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
+            roundBracket.add(expression());
+        }
+        return roundBracket;
     }
 
 //    /**

@@ -32,10 +32,9 @@ public class MainTest {
 
     @Test
     public void myTest() throws FileNotFoundException {
-        char[] obj = new char[4];
-        obj[0] = '1';
-        obj[1] = '2';
-        System.out.println(obj);
+        CharIter charIter = new FileCharIter("tmpl.test");
+
+        System.out.println();
     }
 
     @Test
@@ -106,9 +105,16 @@ public class MainTest {
     }
 
     @Test
-    public void replTest() {
+    public void tmplTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("tmp.test");
+        replEngine.evalFile("tmpl.test");
+
+    }
+
+    @Test
+    public void xmlTest() {
+        ReplEngine replEngine = new ReplEngine();
+        replEngine.evalFile("xml.test");
 
     }
 

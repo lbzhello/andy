@@ -4,8 +4,10 @@ import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.expression.runtime.ColonExpression;
+import xyz.lbzh.andy.expression.template.XmlTagExpression;
 import xyz.lbzh.andy.expression.template.LineExpression;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
+import xyz.lbzh.andy.expression.template.XmlExpression;
 
 public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
@@ -94,6 +96,14 @@ public class ExpressionFactory {
 
     public static ComplexExpression complex(Context<Name, Expression> context) {
         return new ComplexExpression(context);
+    }
+
+    public static XmlExpression xml() {
+        return new XmlExpression();
+    }
+
+    public static XmlTagExpression xmlTag() {
+        return new XmlTagExpression();
     }
 
     public static LineExpression line() {

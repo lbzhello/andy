@@ -162,6 +162,7 @@ public class FileTokenizer implements Tokenizer<Token> {
                 iterator.next(); //eat
                 return ExpressionFactory.symbol(sb.toString().trim(), getLineNumber());
             } else {
+                iterator.previous(); //back to '<'
                 return TokenFlag.ANGLE_BRACKET;
             }
         } else {

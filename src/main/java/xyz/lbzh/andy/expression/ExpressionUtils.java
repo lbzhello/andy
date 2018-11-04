@@ -4,6 +4,9 @@ import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExpressionUtils {
     public static boolean isReturn(Expression expression) {
         return expression instanceof ReturnExpression;
@@ -18,7 +21,7 @@ public class ExpressionUtils {
     }
 
     public static SymbolExpression asSymbol(Expression expression) {
-        return (SymbolExpression)expression;
+        return (SymbolExpression) expression;
     }
 
     public static boolean isNumber(Expression expression) {
@@ -54,7 +57,7 @@ public class ExpressionUtils {
     }
 
     public static SquareBracketExpression asSquareBracket(Expression expression) {
-        return (SquareBracketExpression)expression;
+        return (SquareBracketExpression) expression;
     }
 
     public static boolean isComplex(Expression expression) {
@@ -66,15 +69,15 @@ public class ExpressionUtils {
     }
 
     public static MethodExpression asMethod(Expression expression) {
-        return (MethodExpression)expression;
+        return (MethodExpression) expression;
     }
 
     public static StringExpression asString(Expression expression) {
-        return (StringExpression)expression;
+        return (StringExpression) expression;
     }
 
     public static NumberExpression asNumber(Expression expression) {
-        return (NumberExpression)expression;
+        return (NumberExpression) expression;
     }
 
     public static boolean isNative(Expression expression) {
@@ -82,7 +85,7 @@ public class ExpressionUtils {
     }
 
     public static NativeExpression asNative(Expression expression) {
-        return (NativeExpression)expression;
+        return (NativeExpression) expression;
     }
 
     public static boolean isTemplate(Expression expression) {
