@@ -8,6 +8,6 @@ public class Application {
         ApplicationContextBuilder.build(clazz);
         ReplEngine replEngine = new ReplEngine();
         Parser<Expression> parser = ApplicationFactory.get(Parser.class);
-        replEngine.evalFile("andy.test");
+        replEngine.evalFile("docs/examples/andy.test");
     }
 }

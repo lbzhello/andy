@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.CharacterIterator;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -107,14 +106,14 @@ public class MainTest {
     @Test
     public void tmplTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("tmpl.test");
+        replEngine.evalFile("docs/examples/tmpl.test");
 
     }
 
     @Test
     public void xmlTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("xml.test");
+        replEngine.evalFile("docs/examples/xml.test");
 
     }
 
