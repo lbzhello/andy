@@ -1,0 +1,10 @@
+content = "hello world!"
+a = {
+    <books>
+      123
+      <book>(content)</book>
+      123
+    </books>
+}
+
+a()

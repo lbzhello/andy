@@ -1,0 +1,19 @@
+f(x) = x + 1
+tmpl = `
+    <name>
+        liu
+    </name>
+`
+a = `
+    <books>
+      <book>
+        (tmpl)
+      </book>
+    </books>
+`
+c = `
+    <animal>
+        (a)
+    </animal>
+`
+c
