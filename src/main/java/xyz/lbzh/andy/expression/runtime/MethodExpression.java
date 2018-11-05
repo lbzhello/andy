@@ -50,7 +50,11 @@ public class MethodExpression extends NativeExpression {
             Method method = methodClass.getMethod(methodName, paramTypes.toArray(new Class[paramTypes.size()]));
             MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, paramValues.size()).bindTo(methodObject);
             Object rstObj = methodHandle.invoke(paramValues.toArray());
-            return new MethodExpression(rstObj);
+            if (ExpressionUtils.isExpression(rstObj)) {
+                return (Expression)rstObj;
+            } else {
+                return new MethodExpression(rstObj);
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

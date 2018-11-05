@@ -133,4 +133,7 @@ public class ExpressionUtils {
         return xmlStr.toString();
     }
 
+    public static boolean isExpression(Object rst) {
+        return rst instanceof Expression;
+    }
 }

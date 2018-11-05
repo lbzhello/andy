@@ -98,6 +98,10 @@ public class ExpressionFactory {
         return new ComplexExpression(context);
     }
 
+    public static MethodExpression method(Object o) {
+        return new MethodExpression(o);
+    }
+
     public static XmlExpression xml() {
         return new XmlExpression();
     }

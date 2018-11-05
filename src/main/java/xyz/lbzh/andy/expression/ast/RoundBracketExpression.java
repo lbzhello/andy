@@ -2,6 +2,7 @@ package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.*;
 
+import java.lang.invoke.MethodHandle;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,19 @@ public class RoundBracketExpression extends BracketExpression {
         if (name == ExpressionType.NIL && first() == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
         if (ExpressionUtils.isNative(name)) {
             return ExpressionUtils.asNative(name).parameters(this.getParameters()).eval(context);
+        }
+        if (name instanceof MethodHandle) {
+            Object[] args = this.getParameters().toArray();
+            try {
+                Object rst = ((MethodHandle) name).asSpreader(Object[].class, args.length).invoke(args);
+                if (ExpressionUtils.isExpression(rst)) {
+                    return (Expression)rst;
+                } else {
+                    return ExpressionFactory.method(rst);
+                }
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
         if (ExpressionUtils.isComplex(name)) { //e.g. name = {...} (name x y)
             Context<Name, Expression> childContext = new ExpressionContext();
