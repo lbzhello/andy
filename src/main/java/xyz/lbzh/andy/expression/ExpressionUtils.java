@@ -71,6 +71,14 @@ public class ExpressionUtils {
         return expression instanceof ComplexExpression;
     }
 
+    public static boolean isObject(Expression expression) {
+        return expression instanceof ObjectExpression;
+    }
+
+    public static ObjectExpression asObject(Expression expression) {
+        return (ObjectExpression)expression;
+    }
+
     public static boolean isMethod(Expression expression) {
         return expression instanceof MethodExpression;
     }
@@ -135,5 +143,9 @@ public class ExpressionUtils {
 
     public static boolean isExpression(Object rst) {
         return rst instanceof Expression;
+    }
+
+    public static Expression asExpression(Object obj) {
+        return (Expression)obj;
     }
 }

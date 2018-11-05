@@ -29,15 +29,12 @@ public class PointExpression extends RoundBracketExpression {
                 int index = ExpressionUtils.asNumber(rightValue).intValue();
                 return ExpressionUtils.asSquareBracket(leftValue).list().get(index);
             } else {
-                MethodExpression methodExpression = new MethodExpression(leftValue);
-                methodExpression.setMethodName(rightValue.getName().toString());
+                MethodExpression methodExpression = ExpressionFactory.method(leftValue, rightValue.getName().toString());
                 return methodExpression;
             }
-        } else if (ExpressionUtils.isMethod(leftValue)) { //java class call
-            MethodExpression methodExpression = (MethodExpression)leftValue;
-            methodExpression.setMethodName(rightValue.getName().toString());
-            return methodExpression;
-        } else if (leftValue == ExpressionType.NIL){
+        } else if (ExpressionUtils.isObject(leftValue)) {
+            return ExpressionFactory.method(leftValue, rightValue.getName().toString());
+        } else if (leftValue == ExpressionType.NIL) {
             return ExpressionType.NIL;
         } else {
             return ExpressionFactory.error(leftValue, "Unsupport operation type!");

@@ -43,24 +43,12 @@ public class RoundBracketExpression extends BracketExpression {
         if (ExpressionUtils.isNative(name)) {
             return ExpressionUtils.asNative(name).parameters(this.getParameters()).eval(context);
         }
-        if (name instanceof MethodHandle) {
-            Object[] args = this.getParameters().toArray();
-            try {
-                Object rst = ((MethodHandle) name).asSpreader(Object[].class, args.length).invoke(args);
-                if (ExpressionUtils.isExpression(rst)) {
-                    return (Expression)rst;
-                } else {
-                    return ExpressionFactory.method(rst);
-                }
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        }
+
         if (ExpressionUtils.isComplex(name)) { //e.g. name = {...} (name x y)
             Context<Name, Expression> childContext = new ExpressionContext();
             //put args in context
             for (int i = 0; i < this.getParameters().size(); i++) {
-                childContext.bind(ExpressionFactory.symbol("$" + i), this.rest().get(i).eval(context));
+                childContext.bind(ExpressionFactory.symbol("$" + i), this.getParameters().get(i).eval(context));
             }
             return name.eval(childContext);
         } else if (this.list().size() == 1) { //e.g. (name)

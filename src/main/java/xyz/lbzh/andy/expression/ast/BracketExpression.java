@@ -2,14 +2,16 @@ package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionFactory;
 import xyz.lbzh.andy.expression.ExpressionType;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BracketExpression implements Expression {
-    private List<Expression> list = new LinkedList<>();
+    private List<Expression> list = new ArrayList<>();
 
     public BracketExpression(Expression... expressions) {
         Collections.addAll(list, expressions);
@@ -44,10 +46,6 @@ public class BracketExpression implements Expression {
     public Expression after(Expression expression) {
         this.list().add(expression);
         return ExpressionType.NIL;
-    }
-
-    public List<Expression> rest() {
-        return this.list.size() >= 2 ?this.list().subList(1, this.list().size()) : Collections.emptyList();
     }
 
     public BracketExpression add(Expression expression) {

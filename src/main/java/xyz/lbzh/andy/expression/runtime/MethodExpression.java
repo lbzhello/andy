@@ -17,7 +17,8 @@ public class MethodExpression extends NativeExpression {
     private Class<?> methodClass;
     private Object methodObject;
 
-    public MethodExpression(Object methodObject) {
+    public MethodExpression(Object methodObject, String methodName) {
+        this.methodName = methodName;
         this.methodObject = methodObject;
         this.methodClass = methodObject.getClass();
     }
@@ -36,9 +37,9 @@ public class MethodExpression extends NativeExpression {
                 //number as int
                 paramTypes.add(int.class);
                 paramValues.add(ExpressionUtils.asNumber(param).intValue());
-            } else if (ExpressionUtils.isMethod(param)) {
-                paramTypes.add(ExpressionUtils.asMethod(param).getMethodClass());
-                paramValues.add(ExpressionUtils.asMethod(param).getMethodObject());
+            } else if (ExpressionUtils.isObject(param)) {
+                paramTypes.add(ExpressionUtils.asObject(param).getObject().getClass());
+                paramValues.add(ExpressionUtils.asObject(param).getObject());
             } else {  //type Expression
 //                paramTypes.add(param.getClass());
                 paramTypes.add(Expression.class); //通用类型参数
@@ -51,9 +52,9 @@ public class MethodExpression extends NativeExpression {
             MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, paramValues.size()).bindTo(methodObject);
             Object rstObj = methodHandle.invoke(paramValues.toArray());
             if (ExpressionUtils.isExpression(rstObj)) {
-                return (Expression)rstObj;
+                return ExpressionUtils.asExpression(rstObj);
             } else {
-                return new MethodExpression(rstObj);
+                return ExpressionFactory.object(rstObj);
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -63,30 +64,6 @@ public class MethodExpression extends NativeExpression {
             throwable.printStackTrace();
         }
         return ExpressionType.NIL;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public Class<?> getMethodClass() {
-        return methodClass;
-    }
-
-    public void setMethodClass(Class<?> methodClass) {
-        this.methodClass = methodClass;
-    }
-
-    public Object getMethodObject() {
-        return methodObject;
-    }
-
-    public void setMethodObject(Object methodObject) {
-        this.methodObject = methodObject;
     }
 
     @Override

@@ -2,6 +2,9 @@ package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.*;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * [...]
  */
@@ -55,6 +58,11 @@ public class SquareBracketExpression extends BracketExpression {
             }
         }
         return squareBracket;
+    }
+
+    public Expression rest() {
+        List<Expression> rst = this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
+        return ExpressionFactory.squareBracket().list(rst);
     }
 
 }
