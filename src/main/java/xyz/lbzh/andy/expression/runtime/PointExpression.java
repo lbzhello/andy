@@ -22,8 +22,8 @@ public class PointExpression extends RoundBracketExpression {
     public Expression eval(Context<Name, Expression> context) {
         Expression leftValue = left.eval(context);
         Expression rightValue = right instanceof RoundBracketExpression ? right.eval(context) : right;
-        if (leftValue instanceof ComplexExpression) { //e.g. left = { name:"liu" age:22 }  left.name
-            return ((ComplexExpression) leftValue).getContext().lookup(rightValue.getName());
+        if (ExpressionUtils.isComplex(leftValue)) { //e.g. left = { name:"liu" age:22 }  left.name
+            return ExpressionUtils.asComplex(leftValue).getContext().lookup(rightValue.getName());
         } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
             if (ExpressionUtils.isNumber(rightValue)) { //e.g. left.1 left.2
                 int index = ExpressionUtils.asNumber(rightValue).intValue();

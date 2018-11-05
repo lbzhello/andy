@@ -71,6 +71,10 @@ public class ExpressionUtils {
         return expression instanceof ComplexExpression;
     }
 
+    public static ComplexExpression asComplex(Expression expression) {
+        return (ComplexExpression)expression;
+    }
+
     public static boolean isObject(Expression expression) {
         return expression instanceof ObjectExpression;
     }
