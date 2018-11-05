@@ -29,10 +29,11 @@ public class PointExpression extends RoundBracketExpression {
                 int index = ExpressionUtils.asNumber(rightValue).intValue();
                 return ExpressionUtils.asSquareBracket(leftValue).list().get(index);
             } else {
-                MethodExpression methodExpression = ExpressionFactory.method(leftValue, rightValue.getName().toString());
-                return methodExpression;
+                return ExpressionFactory.method(leftValue, rightValue.getName().toString());
             }
         } else if (ExpressionUtils.isObject(leftValue)) {
+            return ExpressionFactory.method(ExpressionUtils.asObject(leftValue).getObject(), rightValue.getName().toString());
+        } else if (ExpressionUtils.isString(leftValue)) {
             return ExpressionFactory.method(leftValue, rightValue.getName().toString());
         } else if (leftValue == ExpressionType.NIL) {
             return ExpressionType.NIL;

@@ -102,7 +102,7 @@ public class ExpressionFactory {
         return new ObjectExpression(o);
     }
 
-    public static MethodExpression method(Expression methodObject, String methodName) {
+    public static MethodExpression method(Object methodObject, String methodName) {
         return new MethodExpression(methodObject, methodName);
     }
 

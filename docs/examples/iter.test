@@ -5,3 +5,5 @@ a = square.map(x -> x + 1)
 
 a.rest()
 
+"abc".toArray()
+

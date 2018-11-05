@@ -12,4 +12,9 @@ public class ObjectExpression implements Expression {
     public Object getObject() {
         return object;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(object);
+    }
 }

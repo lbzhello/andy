@@ -1,5 +1,8 @@
 package xyz.lbzh.andy.expression.ast;
 
+import xyz.lbzh.andy.expression.Expression;
+import xyz.lbzh.andy.expression.ExpressionFactory;
+
 public class StringExpression extends TokenExpression {
     public StringExpression(String value){
         super(value);
@@ -13,5 +16,11 @@ public class StringExpression extends TokenExpression {
 //    public String toString() {
 //        return "\"" + this.value.toString() + "\"";
 //    }
+
+    /************func****************/
+
+    public Expression toArray() {
+        return ExpressionFactory.object(((String)value).toCharArray());
+    }
 
 }
