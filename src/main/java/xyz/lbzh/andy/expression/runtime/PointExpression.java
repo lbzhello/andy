@@ -24,17 +24,14 @@ public class PointExpression extends RoundBracketExpression {
         Expression rightValue = right instanceof RoundBracketExpression ? right.eval(context) : right;
         if (ExpressionUtils.isComplex(leftValue)) { //e.g. left = { name:"liu" age:22 }  left.name
             return ExpressionUtils.asComplex(leftValue).getContext().lookup(rightValue.getName());
-        } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
-            if (ExpressionUtils.isNumber(rightValue)) { //e.g. left.1 left.2
-                int index = ExpressionUtils.asNumber(rightValue).intValue();
-                return ExpressionUtils.asSquareBracket(leftValue).list().get(index);
-            } else {
-                return ExpressionFactory.method(leftValue, rightValue.getName().toString());
-            }
         } else if (ExpressionUtils.isObject(leftValue)) {
             return ExpressionFactory.method(ExpressionUtils.asObject(leftValue).getObject(), rightValue.getName().toString());
+        } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
+            return ExpressionFactory.method(leftValue, rightValue.getName().toString());
         } else if (ExpressionUtils.isString(leftValue)) {
             return ExpressionFactory.method(leftValue, rightValue.getName().toString());
+        } else if (leftValue == ExpressionType.ARRAY) { //e.g. Array.fromString()
+            return ExpressionFactory.error(leftValue, "Not Realized");
         } else if (leftValue == ExpressionType.NIL) {
             return ExpressionType.NIL;
         } else {
