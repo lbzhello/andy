@@ -1,14 +1,10 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.ast.BracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
 import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
 import xyz.lbzh.andy.expression.ast.StringExpression;
-import xyz.lbzh.andy.io.CharIter;
-import xyz.lbzh.andy.io.support.FileCharIter;
-import xyz.lbzh.andy.util.Iter;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -23,85 +19,12 @@ import java.util.function.Supplier;
 
 public class MainTest {
     public static void main(String[] args) throws Throwable {
-        MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodType methodType = MethodType.methodType(String.class,String.class);
-        MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "test",methodType);
-        Object a = methodHandle.invoke(new MainTest(),"sss");
+
     }
 
     @Test
-    public void myTest() throws FileNotFoundException {
-        char[] chars = new char[6];
-        Arrays.fill(chars, ' ');
-        Arrays.toString(chars);
-        System.out.println();
-    }
-
-    @Test
-    public void typeTest() {
-        Object o = new Object();
-        if (Supplier.class.isInstance(o)) {
-
-        }
-    }
-
-    @Test
-    public void NumberTest(){
-        Object n = 223;
-        BigDecimal a = new BigDecimal(n.toString());
-        BigDecimal b = a.divide(new BigDecimal(3),5,RoundingMode.HALF_EVEN);
-        System.out.println(b);
-    }
-
-    @Test
-    public void AnnotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        Expression expression = ExpressionFactory.roundBracket(ExpressionFactory.token("expr"));
-        RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
-        Class<? extends RoundBracketExpression> v = roundBracketed.value();
-        RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
-
-        System.out.println();
-    }
-
-    @Test
-    public void StringBufferTest(){
-        StringBuffer sb = new StringBuffer("test ");
-        sb.replace(4, 5, "");
-        sb.append("0");
-        System.out.println(sb);
-        System.out.println("" == null);
-    }
-
-    @Test
-    public void roundBracketTest() {
-        BracketExpression r = ExpressionFactory.roundBracket(ExpressionFactory.symbol("22"));
-    }
-
-    @Test
-    public void equalTest() {
-        Expression a = ExpressionFactory.token("t");
-        Expression b = ExpressionFactory.roundBracket(a);
-        System.out.println(a.equals(b));
-        System.out.println(b.equals(a));
-        Map<Expression, Object> map = new HashMap<>();
-        map.put(a, "t");
-        map.put(b, "t2");
-        System.out.println(map);
-    }
-
-    @Test
-    public void objTest() {
-        var list = new ArrayList<String>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("4");
-        System.out.println(list.subList(1, 4));
-    }
-
-    @Test
-    public void enumTest() {
-        System.out.println(String.valueOf(ETest.V));
+    public void mainTest() throws Exception {
+        Main.main(new String[]{"docs/examples/andy.test"});
     }
 
     @Test
@@ -131,6 +54,56 @@ public class MainTest {
     }
 
     @Test
+    public void typeTest() {
+        Object o = new Object();
+        if (Supplier.class.isInstance(o)) {
+            System.out.println("Supplier.class.isInstance(o)");
+        }
+        if (o instanceof Object) {
+
+        }
+    }
+
+    @Test
+    public void numberTest(){
+        Object n = 223;
+        BigDecimal a = new BigDecimal(n.toString());
+        BigDecimal b = a.divide(new BigDecimal(3),5,RoundingMode.HALF_EVEN);
+        System.out.println(b);
+    }
+
+    @Test
+    public void annotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Expression expression = ExpressionFactory.roundBracket(ExpressionFactory.token("expr"));
+        RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
+        Class<? extends RoundBracketExpression> v = roundBracketed.value();
+        RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
+
+        System.out.println();
+    }
+
+    @Test
+    public void stringBufferTest(){
+        StringBuffer sb = new StringBuffer("test ");
+        sb.replace(4, 5, "");
+        sb.append("0");
+        System.out.println(sb);
+        System.out.println("" == null);
+    }
+
+    @Test
+    public void equalTest() {
+        Expression a = ExpressionFactory.token("t");
+        Expression b = ExpressionFactory.roundBracket(a);
+        System.out.println(a.equals(b));
+        System.out.println(b.equals(a));
+        Map<Expression, Object> map = new HashMap<>();
+        map.put(a, "t");
+        map.put(b, "t2");
+        System.out.println(map);
+    }
+
+    @Test
     public void paramTest() {
         Expression expr = ExpressionType.NIL;
         changeParam(expr);
@@ -142,24 +115,33 @@ public class MainTest {
         System.out.println(p1);
     }
 
+    @Test
+    public void methodTest() throws Throwable {
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        MethodType methodType = MethodType.methodType(String.class,String.class);
+        MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "test",methodType);
+        Object a = methodHandle.invoke(new MainTest(),"sss");
+    }
+
+    @Test
+    public void reflectTest() throws Throwable{
+        Method method = MainTest.class.getMethod("printTest", String.class);
+        MethodHandle mh = MethodHandles.lookup().unreflect(method);
+        method.invoke(new MainTest(), "222");
+//        MethodType methodType = MethodType.genericMethodType()
+        MethodType methodType = MethodType.methodType(Expression.class, Expression.class);
+        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(SquareBracketExpression.class, "map", methodType);
+        SquareBracketExpression list = new SquareBracketExpression(ExpressionFactory.symbol("1"));
+        methodHandle = methodHandle.bindTo(list);
+        Object o = methodHandle.invoke(new StringExpression("123"));
+    }
+
     public String printTest(String str) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         System.out.println(str);
         str.getClass().getConstructor().newInstance();
         return str;
     }
 
-    @Test
-    public void commonTest() throws Throwable{
-        Method method = MainTest.class.getMethod("printTest", String.class);
-        MethodHandle mh = MethodHandles.lookup().unreflect(method);
-        method.invoke(new MainTest(), "222");
-//        MethodType methodType = MethodType.genericMethodType()
-        MethodType methodType = MethodType.methodType(BracketExpression.class, Expression.class);
-        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(SquareBracketExpression.class, "map", methodType);
-        SquareBracketExpression list = new SquareBracketExpression(ExpressionFactory.symbol("1"));
-        methodHandle = methodHandle.bindTo(list);
-        Object o = methodHandle.invoke(new StringExpression("123"));
-    }
     /**
      * Deep clone
      * @param obj
@@ -186,14 +168,6 @@ public class MainTest {
 
 }
 
-enum ETest {
-    V("value");
-    private String value;
-
-    ETest(String value) {
-        this.value = value;
-    }
-}
 
 
 
