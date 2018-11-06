@@ -36,7 +36,7 @@ public class FileCharIter implements CharIter {
 
     @Override
     public boolean hasNext() {
-        return this.current() == DONE;
+        return this.current() != DONE;
     }
 
     @Override

@@ -215,7 +215,7 @@ public class DefaultParser implements Parser<Expression> {
     //
     private BracketExpression parseXmlBody() throws Exception {
         BracketExpression bracketExpression = ExpressionFactory.bracket();
-        while (true) {
+        while (iterator.hasNext()) {
             if (iterator.current() == '<') {
                 iterator.next();
                 if (iterator.current() == '/') { //e.g. </...
@@ -236,6 +236,7 @@ public class DefaultParser implements Parser<Expression> {
                 bracketExpression.add(ExpressionFactory.string(sb.toString().trim()));
             }
         }
+        throw new Exception("Lack close tag in xml: " + bracketExpression);
     }
 
     /**

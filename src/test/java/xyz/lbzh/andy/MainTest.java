@@ -1,6 +1,7 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.*;
+import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
 import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
 import org.junit.Test;
 import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
@@ -18,7 +19,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 public class MainTest {
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) {
 
     }
 
@@ -74,10 +75,9 @@ public class MainTest {
 
     @Test
     public void annotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        Expression expression = ExpressionFactory.roundBracket(ExpressionFactory.token("expr"));
-        RoundBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(RoundBracketed.class);
-        Class<? extends RoundBracketExpression> v = roundBracketed.value();
-        RoundBracketExpression o = v.getDeclaredConstructor().newInstance();
+        Expression expression = ExpressionFactory.curlyBracket(ExpressionFactory.token("expr"));
+        CurlyBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(CurlyBracketed.class);
+        Class<? extends CurlyBracketExpression> v = roundBracketed.value();
 
         System.out.println();
     }
@@ -119,7 +119,7 @@ public class MainTest {
     public void methodTest() throws Throwable {
         MethodHandles.Lookup lookup = MethodHandles.lookup();
         MethodType methodType = MethodType.methodType(String.class,String.class);
-        MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "test",methodType);
+        MethodHandle methodHandle = lookup.findVirtual(MainTest.class, "printTest",methodType);
         Object a = methodHandle.invoke(new MainTest(),"sss");
     }
 
