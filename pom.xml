@@ -76,6 +76,37 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <!--main class-->
+              <manifest>
+                <mainClass>xyz.lbzh.andy.Main</mainClass>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+              </manifest>
+              <manifestEntries>
+                <Class-Path>.</Class-Path>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <includeTypes>jar</includeTypes>
+            <overWriteSnapshots>true</overWriteSnapshots>
+            <type>jar</type>
+            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
