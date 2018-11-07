@@ -3,6 +3,9 @@ package xyz.lbzh.andy.expression.ast;
 import xyz.lbzh.andy.expression.Expression;
 import xyz.lbzh.andy.expression.ExpressionFactory;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+
 public class StringExpression extends TokenExpression {
     public StringExpression(String value){
         super(value);
@@ -20,7 +23,13 @@ public class StringExpression extends TokenExpression {
     /************func****************/
 
     public Expression toArray() {
-        return ExpressionFactory.object(((String)value).toCharArray());
+        BracketExpression squareBracket = ExpressionFactory.squareBracket();
+        CharacterIterator iterator = new StringCharacterIterator(value.toString());
+        while (iterator.current() != CharacterIterator.DONE) {
+            squareBracket.add(ExpressionFactory.string(String.valueOf(iterator.current())));
+            iterator.next();
+        }
+        return squareBracket;
     }
 
 }

@@ -6,3 +6,14 @@ a = square.map(x -> x + 1)
 a.rest()
 (print 2)
 a(2) * a(1) + a(0)
+"abc".toArray()
+iter(obj){
+ value:nil
+ call(f){
+    (return f(value))
+ }
+ value = obj
+ self
+}
+rst = iter(3)
+rst.call(x -> x + 2)

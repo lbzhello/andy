@@ -40,10 +40,10 @@ public class ComplexExpression implements Expression {
         for (Expression expression : this.list) {
             rstValue = expression.eval(context);
             if (ExpressionUtils.isReturn(rstValue) || ExpressionUtils.hasError(rstValue)) {
-                return rstValue.eval(context);
+                rstValue = rstValue.eval(context);
             }
         }
-        return rstValue;
+        return rstValue == ExpressionType.SELF ? this : rstValue;
     }
 
 }

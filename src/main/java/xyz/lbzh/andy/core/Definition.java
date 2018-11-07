@@ -135,6 +135,7 @@ public final class Definition {
         unary.put("nil", 0);
         unary.put("true", 0);
         unary.put("false", 0);
+        unary.put("self", 0);
 
         unary.put("++", 1);
         unary.put("--", 1);
@@ -163,6 +164,7 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.getExpression("<="));
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("self"), ExpressionType.SELF);
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
