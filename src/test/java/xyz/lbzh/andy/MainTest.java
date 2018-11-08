@@ -3,7 +3,6 @@ package xyz.lbzh.andy;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.*;
 import org.junit.Test;
-import xyz.lbzh.andy.util.Iter;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;

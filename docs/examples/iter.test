@@ -18,4 +18,4 @@ iter(obj){
 rst = iter(3)
 (print rst.call(x -> x + 2))
 pair = [1 2]
-pair.reverse()
+pair.reverse()(0)
