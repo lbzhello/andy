@@ -25,7 +25,6 @@ public class MethodExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        if (Objects.isNull(methodName)) return this;
         List<Class<?>> paramTypes = new ArrayList<>(this.list().size());
         List<Object> paramValues = new ArrayList<>(this.list().size());
         for (Expression expression : list()) {

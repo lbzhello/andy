@@ -6,6 +6,9 @@ import java.util.List;
 
 @CurlyBracketed
 public class ComplexExpression implements Expression {
+    //represent expression it self
+    private static final Name SELF = ExpressionFactory.symbol("self");
+
     private List<Expression> parameters;
     private List<Expression> list;
 
@@ -36,14 +39,15 @@ public class ComplexExpression implements Expression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         context.setParent(this.context);
+        context.newbind(SELF, this);
         Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.list) {
             rstValue = expression.eval(context);
             if (ExpressionUtils.isReturn(rstValue) || ExpressionUtils.hasError(rstValue)) {
-                rstValue = rstValue.eval(context);
+                return rstValue.eval(context);
             }
         }
-        return rstValue == ExpressionType.SELF ? this : rstValue;
+        return rstValue;
     }
 
 }
