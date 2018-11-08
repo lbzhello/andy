@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * [...]
  */
-public class SquareBracketExpression extends BracketExpression {
+public class SquareBracketExpression extends BracketExpression implements ExpressionArray {
 
     public SquareBracketExpression(Expression... expressions) {
         super(expressions);
@@ -65,4 +65,12 @@ public class SquareBracketExpression extends BracketExpression {
         return ExpressionFactory.squareBracket().list(rst);
     }
 
+    @Override
+    public Expression reverse() {
+        BracketExpression squareBracket = ExpressionFactory.squareBracket();
+        for (int i = list().size() - 1; i >= 0; i--) {
+            squareBracket.add(list().get(i));
+        }
+        return squareBracket;
+    }
 }

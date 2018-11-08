@@ -16,4 +16,6 @@ iter(obj){
  self
 }
 rst = iter(3)
-rst.call(x -> x + 2)
+(print rst.call(x -> x + 2))
+pair = [1 2]
+pair.reverse()

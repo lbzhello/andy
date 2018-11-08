@@ -106,6 +106,10 @@ public class ExpressionFactory {
         return new MethodExpression(methodObject, methodName);
     }
 
+    public static ArrayMethodExpression arrayMethod(Expression methodObject, String methodName) {
+        return new ArrayMethodExpression(methodObject, methodName);
+    }
+
     public static XmlExpression xml() {
         return new XmlExpression();
     }

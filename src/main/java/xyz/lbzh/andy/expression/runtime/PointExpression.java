@@ -27,7 +27,7 @@ public class PointExpression extends RoundBracketExpression {
         } else if (ExpressionUtils.isObject(leftValue)) {
             return ExpressionFactory.method(ExpressionUtils.asObject(leftValue).getObject(), rightValue.getName().toString());
         } else if (ExpressionUtils.isSquareBracket(leftValue)) { //e.g. left = [1 2 3 4]  left.map
-            return ExpressionFactory.method(leftValue, rightValue.getName().toString());
+            return ExpressionFactory.arrayMethod(leftValue, rightValue.getName().toString());
         } else if (ExpressionUtils.isString(leftValue)) {
             return ExpressionFactory.method(leftValue, rightValue.getName().toString());
         } else if (leftValue == ExpressionType.ARRAY) { //e.g. Array.fromString()

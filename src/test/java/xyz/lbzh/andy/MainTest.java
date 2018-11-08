@@ -1,11 +1,9 @@
 package xyz.lbzh.andy;
 
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.ast.CurlyBracketExpression;
-import xyz.lbzh.andy.expression.ast.RoundBracketExpression;
+import xyz.lbzh.andy.expression.ast.*;
 import org.junit.Test;
-import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
-import xyz.lbzh.andy.expression.ast.StringExpression;
+import xyz.lbzh.andy.util.Iter;
 
 import java.io.*;
 import java.lang.invoke.MethodHandle;
@@ -21,6 +19,15 @@ import java.util.function.Supplier;
 public class MainTest {
     public static void main(String[] args) {
 
+    }
+
+    @Test
+    public void tmpTest() throws Throwable {
+        BracketExpression bracketExpression = ExpressionFactory.squareBracket(ExpressionFactory.symbol("testtt"));
+        MethodType methodType = MethodType.methodType(Expression.class, Expression.class);
+        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(ExpressionArray.class, "map", methodType);
+        Expression expression = (Expression) methodHandle.invoke(bracketExpression,ExpressionType.NIL);
+        System.out.println(expression);
     }
 
     @Test

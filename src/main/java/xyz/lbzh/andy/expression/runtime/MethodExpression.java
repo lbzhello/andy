@@ -1,8 +1,6 @@
 package xyz.lbzh.andy.expression.runtime;
 
-import org.springframework.util.StringUtils;
 import xyz.lbzh.andy.expression.*;
-import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -11,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * use reflect/invoke to invoke a java method
+ * @see ArrayMethodExpression
+ */
 public class MethodExpression extends NativeExpression {
     private String methodName = "";
     private Class<?> methodClass;
