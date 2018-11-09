@@ -20,10 +20,12 @@ public class ArrayMethodExpression extends NativeExpression {
             cachedMethod.put("map", mapMethod());
             cachedMethod.put("each", eachMethod());
             cachedMethod.put("filter", filterMethod());
+            cachedMethod.put("reduce", reduceMethod());
 
             cachedMethod.put("first", firstMethod());
             cachedMethod.put("rest", restMethod());
             cachedMethod.put("reverse", reverseMethod());
+            cachedMethod.put("count", countMethod());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -73,6 +75,11 @@ public class ArrayMethodExpression extends NativeExpression {
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
+    private static MethodHandle reduceMethod() throws NoSuchMethodException, IllegalAccessException {
+        return MethodHandles.lookup().findVirtual(ExpressionArray.class, "reduce",
+                MethodType.methodType(Expression.class, Expression.class));
+    }
+
     private static MethodHandle firstMethod() throws NoSuchMethodException, IllegalAccessException {
         return MethodHandles.lookup().findVirtual(ExpressionArray.class, "first",
                 MethodType.methodType(Expression.class));
@@ -85,6 +92,11 @@ public class ArrayMethodExpression extends NativeExpression {
 
     private static MethodHandle reverseMethod() throws NoSuchMethodException, IllegalAccessException {
         return MethodHandles.lookup().findVirtual(ExpressionArray.class, "reverse",
+                MethodType.methodType(Expression.class));
+    }
+
+    private static MethodHandle countMethod() throws NoSuchMethodException, IllegalAccessException {
+        return MethodHandles.lookup().findVirtual(ExpressionArray.class, "count",
                 MethodType.methodType(Expression.class));
     }
 }

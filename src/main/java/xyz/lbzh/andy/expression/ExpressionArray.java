@@ -12,9 +12,13 @@ public interface ExpressionArray {
 
     Expression filter(Expression func);
 
+    Expression reduce(Expression func);
+
     Expression first();
 
     Expression rest();
 
     Expression reverse();
+
+    Expression count();
 }
