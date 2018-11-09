@@ -3,7 +3,7 @@ a = 2
 square.map(x -> x + a).filter({$0 > 3}).each(x -> print(x))
 a = square.map(x -> x + 1)
 
-a.rest()
+a.other()
 (print 2)
 a(2) * a(1) + a(0)
 "abc".toArray()
@@ -22,3 +22,6 @@ pair.reverse()(0)
 arr = [1 2 3]
 (print arr.count())
 arr.reduce((x,y) -> x + y)
+
+group = [["a" 1] ["b" 2] ["a" 2]]
+group.groupByKey()

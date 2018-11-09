@@ -1,10 +1,9 @@
 package xyz.lbzh.andy.expression.ast;
 
 import xyz.lbzh.andy.expression.*;
+import xyz.lbzh.andy.expression.runtime.ArrayMethodExpression;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * [...]
@@ -102,8 +101,35 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     }
 
     @Override
-    public Expression rest() {
+    public Expression groupByKey() {
+        Map<Expression, SquareBracketExpression> parentMap = new HashMap<>();
+        SquareBracketExpression parent = ExpressionFactory.squareBracket(); //[[...] [...] [...]]
+        Iterator<Expression> iterator = list().iterator();
+        while (iterator.hasNext()) {
+            ExpressionArray array = ExpressionUtils.asArray(iterator.next());
+            Expression key = array.first();
+            Expression value = array.other();
+            SquareBracketExpression child = parentMap.get(key); //[...]
+            if (child == null) { //new key
+                child = ExpressionFactory.squareBracket();
+                child.add(key); child.add(value);
+                parent.add(child);
+                parentMap.put(key, child); //记录
+            } else { //group
+                child.add(value);
+            }
+        }
+        return parent;
+    }
+
+    @Override
+    public Expression other() {
         List<Expression> rst = this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
+        if (rst.size() == 0) { //e.g. []
+            return ExpressionType.NIL;
+        } else if (rst.size() == 1) { //e.g. [first second]
+            return rst.get(0);
+        }
         return ExpressionFactory.squareBracket().list(rst);
     }
 

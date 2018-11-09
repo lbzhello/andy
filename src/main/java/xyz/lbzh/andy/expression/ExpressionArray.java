@@ -5,7 +5,7 @@ package xyz.lbzh.andy.expression;
  * e.g. [expr1 expr2 expr3 ...]
  * @see xyz.lbzh.andy.expression.runtime.ArrayMethodExpression
  */
-public interface ExpressionArray {
+public interface ExpressionArray extends Expression {
     Expression map(Expression func);
 
     Expression each(Expression func);
@@ -14,9 +14,11 @@ public interface ExpressionArray {
 
     Expression reduce(Expression func);
 
+    Expression groupByKey();
+
     Expression first();
 
-    Expression rest();
+    Expression other();
 
     Expression reverse();
 

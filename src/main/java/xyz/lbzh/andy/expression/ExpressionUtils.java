@@ -67,6 +67,14 @@ public class ExpressionUtils {
         return (SquareBracketExpression) expression;
     }
 
+    public static boolean isArray(Expression expression) {
+        return expression instanceof ExpressionArray;
+    }
+
+    public static ExpressionArray asArray(Expression expression) {
+        return (ExpressionArray) expression;
+    }
+
     public static boolean isComplex(Expression expression) {
         return expression instanceof ComplexExpression;
     }
