@@ -129,20 +129,40 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     }
 
     @Override
+    public Expression groupBy(Expression func) {
+        Map<Expression, SquareBracketExpression> keyMap = new HashMap<>();
+        SquareBracketExpression parrent = ExpressionFactory.squareBracket(); //rst [[...] [...]]
+        Context<Name, Expression> context = new ExpressionContext();
+        for (Expression element : list()) {
+            context.newbind(ExpressionFactory.symbol("$0"), element); //传参
+            Expression key = func.eval(context);
+            SquareBracketExpression child = keyMap.get(key);
+            if (child == null) { //new
+                child = ExpressionFactory.squareBracket(key, element);
+                parrent.add(child);
+                keyMap.put(key, child);
+            } else {
+                child.add(element);
+            }
+        }
+        return parrent;
+    }
+
+    @Override
     public Expression groupByKey() {
-        Map<Expression, SquareBracketExpression> parentMap = new HashMap<>();
+        Map<Expression, SquareBracketExpression> keyMap = new HashMap<>();
         SquareBracketExpression parent = ExpressionFactory.squareBracket(); //[[...] [...] [...]]
         Iterator<Expression> iterator = list().iterator();
         while (iterator.hasNext()) {
             ExpressionArray array = ExpressionUtils.asArray(iterator.next());
             Expression key = array.first();
             Expression value = array.other();
-            SquareBracketExpression child = parentMap.get(key); //[...]
+            SquareBracketExpression child = keyMap.get(key); //[...]
             if (child == null) { //new key
                 child = ExpressionFactory.squareBracket();
                 child.add(key); child.add(value);
                 parent.add(child);
-                parentMap.put(key, child); //记录
+                keyMap.put(key, child); //记录
             } else { //group
                 child.add(value);
             }

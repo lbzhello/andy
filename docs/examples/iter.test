@@ -27,3 +27,9 @@ group = [["a" 1] ["b" 2] ["a" 2] ["b", 5] ["c" 1]]
 (print group.groupByKey())
 (print group.reduceByKey((x, y) -> x + y).map(x -> x.other()))
 (print group.mapValues(x -> x + 1))
+reverseGroup = group.map(x -> x.reverse())
+(print reverseGroup)
+(print group.groupBy(x -> if x.other() > 2 "up" else "down"))
+
+groupBy = [1 2 3 4 5 6 7]
+(print groupBy.groupBy(x -> if x > 4 "bigger" else "smaller"))

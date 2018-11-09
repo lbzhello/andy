@@ -24,7 +24,8 @@ public class ArrayMethodExpression extends NativeExpression {
             cachedMethod.put("reduce", reduceMethod());
             cachedMethod.put("reduceByKey", reduceByKeyMethod());
 
-            cachedMethod.put("groupByKey", groupByKey());
+            cachedMethod.put("groupBy", groupByMethod());
+            cachedMethod.put("groupByKey", groupByKeyMethod());
 
             cachedMethod.put("first", firstMethod());
             cachedMethod.put("other", otherMethod());
@@ -94,7 +95,12 @@ public class ArrayMethodExpression extends NativeExpression {
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
-    private static MethodHandle groupByKey() throws NoSuchMethodException, IllegalAccessException {
+    private static MethodHandle groupByMethod() throws NoSuchMethodException, IllegalAccessException {
+        return MethodHandles.lookup().findVirtual(ExpressionArray.class, "groupBy",
+                MethodType.methodType(Expression.class, Expression.class));
+    }
+
+    private static MethodHandle groupByKeyMethod() throws NoSuchMethodException, IllegalAccessException {
         return MethodHandles.lookup().findVirtual(ExpressionArray.class, "groupByKey",
                 MethodType.methodType(Expression.class));
     }
