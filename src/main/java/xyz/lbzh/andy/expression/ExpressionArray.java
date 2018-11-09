@@ -14,6 +14,8 @@ public interface ExpressionArray extends Expression {
 
     Expression reduce(Expression func);
 
+    Expression reduceByKey(Expression func);
+
     Expression groupByKey();
 
     Expression first();

@@ -101,6 +101,22 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     }
 
     @Override
+    public Expression reduceByKey(Expression func) {
+        SquareBracketExpression squareBracket = ExpressionUtils.asSquareBracket(groupByKey());
+        SquareBracketExpression rst = ExpressionFactory.squareBracket();
+        for (Expression expression : squareBracket.list()) { //e.g. [[...] [...] [...]]
+            ExpressionArray array = ExpressionUtils.asArray(expression);
+            Expression first = array.first();
+            Expression other = array.other();
+            if (ExpressionUtils.isArray(other)) {
+                other = ExpressionUtils.asArray(other).reduce(func);
+            }
+            rst.add(ExpressionFactory.squareBracket(first, other));
+        }
+        return rst;
+    }
+
+    @Override
     public Expression groupByKey() {
         Map<Expression, SquareBracketExpression> parentMap = new HashMap<>();
         SquareBracketExpression parent = ExpressionFactory.squareBracket(); //[[...] [...] [...]]

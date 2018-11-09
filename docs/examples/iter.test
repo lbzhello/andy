@@ -23,5 +23,6 @@ arr = [1 2 3]
 (print arr.count())
 arr.reduce((x,y) -> x + y)
 
-group = [["a" 1] ["b" 2] ["a" 2]]
-group.groupByKey()
+group = [["a" 1] ["b" 2] ["a" 2] ["b", 5] ["c" 1]]
+(print group.groupByKey())
+(print group.reduceByKey((x, y) -> x + y).map(x -> x.other()))
