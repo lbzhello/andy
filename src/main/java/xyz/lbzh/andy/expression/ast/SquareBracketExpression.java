@@ -64,6 +64,18 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     }
 
     @Override
+    public Expression mapValues(Expression func) {
+        SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
+        Context<Name, Expression> context = new ExpressionContext();
+        for (Expression expression : list()) {
+            ExpressionArray array = ExpressionUtils.asArray(expression);
+            context.newbind(ExpressionFactory.symbol("$0"), array.other());
+            squareBracket.add(ExpressionFactory.squareBracket(array.first(), func.eval(context)));
+        }
+        return squareBracket;
+    }
+
+    @Override
     public Expression reduce(Expression func) {
         Context<Name, Expression> context = new ExpressionContext();
         Iterator<Expression> iterator = list().iterator();

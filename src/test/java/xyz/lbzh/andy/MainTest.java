@@ -81,7 +81,7 @@ public class MainTest {
 
     @Test
     public void annotationTest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        Expression expression = ExpressionFactory.curlyBracket(ExpressionFactory.token("expr"));
+        Expression expression = ExpressionFactory.curlyBracket();
         CurlyBracketed roundBracketed = expression.getClass().getDeclaredAnnotation(CurlyBracketed.class);
         Class<? extends CurlyBracketExpression> v = roundBracketed.value();
 

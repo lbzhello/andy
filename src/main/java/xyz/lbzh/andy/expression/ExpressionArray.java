@@ -12,6 +12,8 @@ public interface ExpressionArray extends Expression {
 
     Expression filter(Expression func);
 
+    Expression mapValues(Expression func);
+
     Expression reduce(Expression func);
 
     Expression reduceByKey(Expression func);

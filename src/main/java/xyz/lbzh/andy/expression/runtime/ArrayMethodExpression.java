@@ -20,6 +20,7 @@ public class ArrayMethodExpression extends NativeExpression {
             cachedMethod.put("map", mapMethod());
             cachedMethod.put("each", eachMethod());
             cachedMethod.put("filter", filterMethod());
+            cachedMethod.put("mapValues", mapValuesMethod());
             cachedMethod.put("reduce", reduceMethod());
             cachedMethod.put("reduceByKey", reduceByKeyMethod());
 
@@ -75,6 +76,11 @@ public class ArrayMethodExpression extends NativeExpression {
 
     private static MethodHandle filterMethod() throws NoSuchMethodException, IllegalAccessException {
         return MethodHandles.lookup().findVirtual(ExpressionArray.class, "filter",
+                MethodType.methodType(Expression.class, Expression.class));
+    }
+
+    private static MethodHandle mapValuesMethod() throws NoSuchMethodException, IllegalAccessException {
+        return MethodHandles.lookup().findVirtual(ExpressionArray.class, "mapValues",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
