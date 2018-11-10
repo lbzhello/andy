@@ -1,3 +1,2 @@
-a = "ab cd ef  ab ";
-a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.other())
-a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.reverse()).groupByKey()
+f(x, y, z){x + y + z}
+f(1, 2, 3)

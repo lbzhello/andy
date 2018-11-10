@@ -16,11 +16,12 @@ public class SquareBracketExpression extends BracketExpression implements Expres
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        BracketExpression rstList = ExpressionFactory.squareBracket();
-        for (Expression element : list()) {
-            rstList.add(element.eval(context));
-        }
-        return rstList;
+//        BracketExpression rstList = ExpressionFactory.squareBracket();
+//        for (Expression element : list()) {
+//            rstList.add(element.eval(context));
+//        }
+//        return rstList;
+        return this;
     }
 
     @Override

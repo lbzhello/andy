@@ -67,6 +67,10 @@ public class ExpressionUtils {
         return (SquareBracketExpression) expression;
     }
 
+    public static boolean isComma(Expression expression) {
+        return expression instanceof CommaExpression;
+    }
+
     public static boolean isArray(Expression expression) {
         return expression instanceof ExpressionArray;
     }

@@ -16,7 +16,7 @@ public class ArrowExpression extends NativeExpression {
         if (list.size() != 2) return ExpressionFactory.error("Error ArrowExpression: " + list);
         BracketExpression left;
         CurlyBracketExpression right;
-        if (ExpressionUtils.isSquareBracket(list.get(0))) { //e.g. (x, y, z) -> right
+        if (ExpressionUtils.isSquareBracket(list.get(0)) || ExpressionUtils.isComma(list.get(0))) { //e.g. (x, y, z) -> right
             left = (BracketExpression)list.get(0);
         } else if (ExpressionUtils.isRoundBracket(list.get(0))) {
             BracketExpression roundBracket = (RoundBracketExpression) list.get(0);

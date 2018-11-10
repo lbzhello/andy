@@ -90,6 +90,10 @@ public class ExpressionFactory {
         return new ColonExpression(key, value);
     }
 
+    public static BracketExpression comma(Expression... expressions) {
+        return new CommaExpression(expressions);
+    }
+
     public static BracketExpression point(Expression left, Expression right) {
         return new PointExpression(left, right);
     }

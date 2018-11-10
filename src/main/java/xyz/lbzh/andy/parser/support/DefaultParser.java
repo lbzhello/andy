@@ -104,7 +104,7 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * Generate an expressione
+     * Generate an expression
      * e.g. combinator() || name(...) || name(...)(...) || name(...){...} || (...){...}(...)(...) || var a ||...
      * @return
      */
@@ -387,7 +387,7 @@ public class DefaultParser implements Parser<Expression> {
      */
     private BracketExpression roundBracket(Expression left) throws Exception {
         if (getToken() == TokenFlag.COMMA) { //e.g. left, ...
-            return roundBracket(commaExpression(ExpressionFactory.squareBracket(left)));
+            return roundBracket(commaExpression(ExpressionFactory.comma(left)));
         } else if (getToken() == TokenFlag.SEMICOLON) { //e.g. left; ...
             return roundBracket(semicolonExpression(ExpressionFactory.squareBracket(left)));
         } else if (getToken() != TokenFlag.ROUND_BRACKET_RIGHT){ //e.g. left ritht

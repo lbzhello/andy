@@ -33,3 +33,7 @@ reverseGroup = group.map(x -> x.reverse())
 
 groupBy = [1 2 3 4 5 6 7]
 (print groupBy.groupBy(x -> if x > 4 "bigger" else "smaller"))
+
+a = "ab cd ef  ab "
+a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.other())
+a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.reverse()).groupByKey()
