@@ -28,7 +28,7 @@
 
 #### 2. Expression  
 
-In here everything is Expression and will return a value  
+In here everything is expression and will return a value  
 
 * Round bracket expression  
   ```
