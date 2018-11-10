@@ -55,7 +55,7 @@ In here everything is expression and will return a value
   see next chapter
 
 #### 3. Operator
-operator is just a way to write round bracket expression  
+operator is just a kind of round bracket expression  
 
 * Binary  
   *expr1 op expr2*  
@@ -90,13 +90,13 @@ operator is just a way to write round bracket expression
   ```
   > belows are equals  
   > *op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
-  > //if accepts 2 args  
+  > //*if* expression accepts 2 args  
   > if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
   > 
-  > //else is binary  
+  > //*else* expression is binary  
   > if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
   > 
-  > //return accepts 1 args     
+  > //*return* expression accepts 1 args     
   > return 2 => (return 2)
   
   if the operator isn't a delimiter, and you write it like
@@ -113,12 +113,12 @@ operator is just a way to write round bracket expression
     x + y
   }
   
-  //lambda 1
+  //lambda
   f2(x, y) = {
     x + y
   }
   
-  //lambda 2
+  //lambda
   f3 = (x, y){
     x + y
   }
@@ -138,14 +138,11 @@ operator is just a way to write round bracket expression
   f1(1, 2)
   
   ``` 
-  > you can also define a function like   
+  > you can also define a function like:  
   > (f x y) = x + y  
-  > or in lisp style  
-  > (= (f x y) (+ x y))
-  > or mixed use like  
-  > (= (f x y) x + y)  
-  > or  
-  > (= f(x, y) x + y)
+  >
+  > in lisp style:  
+  > (= (f x y) (+ x y))  
   
 * Function call
   ```
@@ -179,7 +176,7 @@ operator is just a way to write round bracket expression
   ```
   
   * for expr1 expr2 => (for expr1 expr2)  
-  for will return a array
+  for will return an array
   ```
   i = 0
   rst = for i < 5 {
@@ -230,45 +227,43 @@ operator is just a way to write round bracket expression
   arr.reverse() //[5 4 3 2 1]
   ```
   
-  * map(expr) expr: x -> y
+  * map(expr)  
   ```
   arr.map(x -> x + 1)  //[2 3 4 5 6]
   ```
   
-  * filter(expr) expr: x -> boolean
+  * filter(expr)  
   ```
   arr.filter(x -> x > 2)  //[3 4 5]
   ```
   
-  * each(expr) expr: x -> nil
+  * each(expr)  
   ```
   arr.each(print x)  //nil  console: 1 2 3 4 5
   ```
   
-  * reduce(expr) expr: (x, y) -> z
+  * reduce(expr)  
   ```
   arr.reduce((x, y) -> x + y)  //15
   ```
   
-  * mapValues(expr) expr: x -> y
+  * mapValues(expr)  
   ```
   arr2 = arr.map(x -> (x, 1))  //arr2 = [[1 1] [2 1] [3 1] [4 1] [5 1]]
   arr.mapValues(x -> x + 1)    //arr2 = [[1, 2] [2 2] [3 2] [4 2] [5 2]]
   ```
   
-  * reduceByKey(expr) expr: (x, y) -> z
+  * reduceByKey(expr)  
   ```
   arr3 = [12 12 14 15 15]
   arr4 = arr3.map(x -> (x, 1)) //arr4 = [[12 1] [12 1] [14 1] [15 1] [15 1]]
   arr5 = arr4.reduceByKey((x,y) -> x + y) //arr5 = [[12 2] [14 1] [15 2]]
   ```
   
-  * groupBy(expr) expr: x -> y  
+  * groupBy(expr)  
   根据expr表达式的值对元素进行分组
   ```
-  arr.groupBy(x -> {
-    if x > 2 "bigger" else "smaller"
-  })   //[["smaller" 1 2] ["bigger" 3 4 5]]
+  arr.groupBy(x -> if x > 2 "bigger" else "smaller") //[["smaller" 1 2] ["bigger" 3 4 5]]
   ```
   
   * groupByKey()  
