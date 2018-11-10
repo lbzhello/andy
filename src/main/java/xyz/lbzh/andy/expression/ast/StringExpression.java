@@ -32,4 +32,15 @@ public class StringExpression extends TokenExpression {
         return squareBracket;
     }
 
+    public Expression split() {
+        BracketExpression squareBracket = ExpressionFactory.squareBracket();
+        String[] strArr = value.toString().split(" ");
+        for (String element : strArr) {
+            if (!element.isEmpty()) {
+                squareBracket.add(ExpressionFactory.string(element));
+            }
+        }
+        return squareBracket;
+    }
+
 }
