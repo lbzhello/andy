@@ -71,6 +71,18 @@ public class ExpressionUtils {
         return expression instanceof CommaExpression;
     }
 
+    public static SquareBracketExpression pair(Expression... expressions) {
+        SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
+        for (Expression expression : expressions) {
+            if (isSquareBracket(expression)) {
+                squareBracket.list().addAll(asSquareBracket(expression).list());
+            } else {
+                squareBracket.add(expression);
+            }
+        }
+        return squareBracket;
+    }
+
     public static boolean isArray(Expression expression) {
         return expression instanceof ExpressionArray;
     }
