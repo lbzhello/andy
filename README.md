@@ -106,7 +106,7 @@ operator is just a way to write round bracket expression
   > a = 3
 
 #### 4. function  
-函数是括号表达式得一种简写
+函数是括号表达式的一种简写
 * Define  
   ```
   f1(x, y){
