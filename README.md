@@ -210,7 +210,7 @@ operator is just a way to write round bracket expression
   方括号不会计算表达式的值，直接当作字面量返回  
   
   * curly: {expr1 expr2 expr3} => (expr3)  
-  花括号不会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
+  花括号会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
   
   例如：  
   ```
