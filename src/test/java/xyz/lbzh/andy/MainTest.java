@@ -22,11 +22,8 @@ public class MainTest {
 
     @Test
     public void tmpTest() throws Throwable {
-        BracketExpression bracketExpression = ExpressionFactory.squareBracket(ExpressionFactory.symbol("testtt"));
-        MethodType methodType = MethodType.methodType(Expression.class, Expression.class);
-        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(ExpressionArray.class, "map", methodType);
-        Expression expression = (Expression) methodHandle.invoke(bracketExpression,ExpressionType.NIL);
-        System.out.println(expression);
+        ReplEngine replEngine = new ReplEngine();
+        replEngine.evalFile("docs/examples/tmp.test");
     }
 
     @Test

@@ -251,7 +251,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression templateExpression() throws Exception {
         TemplateExpression template = ExpressionFactory.template();
         LineExpression line = ExpressionFactory.line();
-        while (iterator.current() != '`') {
+        while (iterator.current() != '`' && iterator.hasNext()) {
             if (iterator.current() == '\n') {
                 iterator.next(); //eat '\n'
                 line.add(ExpressionFactory.string("\n"));
@@ -275,7 +275,7 @@ public class DefaultParser implements Parser<Expression> {
         iterator.next(); //eat '('
         BracketExpression roundBracket = ExpressionFactory.roundBracket();
         this.currentToken = Definition.HOF;
-        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
+        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT && hasNext()) {
             roundBracket.add(expression());
         }
         return roundBracket;
@@ -336,7 +336,7 @@ public class DefaultParser implements Parser<Expression> {
     private CurlyBracketExpression curlyBracketExpression() throws Exception {
         nextToken(); //eat '{'
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        while (getToken() != TokenFlag.CURLY_BRACKET_RIGHT) {
+        while (getToken() != TokenFlag.CURLY_BRACKET_RIGHT && hasNext()) {
             curlyBracketExpression.add(expression());
         }
         nextToken(); //eat '}'
@@ -351,7 +351,7 @@ public class DefaultParser implements Parser<Expression> {
     private BracketExpression squareBracketExpression() throws Exception {
         nextToken(); //eat '['
         BracketExpression squareBracketExpression = ExpressionFactory.squareBracket();
-        while (getToken() != TokenFlag.SQUARE_BRACKET_RIGHT) {
+        while (getToken() != TokenFlag.SQUARE_BRACKET_RIGHT && hasNext()) {
             squareBracketExpression.add(expression());
         }
 
@@ -403,7 +403,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression parseRoundBracket(BracketExpression roundBracket) throws Exception {
-        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT) {
+        while (getToken() != TokenFlag.ROUND_BRACKET_RIGHT && hasNext()) {
             roundBracket.add(expression());
         }
         return roundBracket;
