@@ -14,7 +14,7 @@
   ``` 
   
 * Symbol  
-  All characters except delimiter can be use as symbol. e.g.  
+  All characters except delimiter can be use as symbol  
   ```
   var, num, str+, a-b ...
   ```
@@ -28,7 +28,7 @@
 
 #### 2. Expression  
 
-In here else thing is Expression and will return a value  
+In here everything is Expression and will return a value  
 
 * Round bracket expression  
   ```
