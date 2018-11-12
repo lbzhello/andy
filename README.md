@@ -85,9 +85,11 @@ see next chapter
 
 ## 3. Operator
 
-operator is just a kind of round bracket expression  
+operator is a kind of round bracket expression  
 
 #### Binary  
+
+binary is a kind of round bracket expression than can omit '(' and ')'
 
 *expr1 op expr2*  
 just like other scripts  
@@ -123,6 +125,8 @@ else if the operator is a delimiter
     
 #### Unary  
 
+unary is a kind of round bracket expression that can omit '(' and ')'
+
 *op expr1 expr2 ...*  
 
     a = 13
@@ -142,17 +146,23 @@ belows are equals
 
 *op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
   
-*if* expression accepts 2 args  
+*if* is unary and accepts 2 args  
 
     if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
     
-*else* expression is binary  
+*else* is binary  
 
     if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
     
-*return* expression accepts 1 args   
+*return* is unary and accepts 1 args   
 
     return 2 => (return 2)
+    
+*true*, *false*, *nil* are unary and accept 0 args
+
+    true => (true)
+    false =>  (false)
+    nil => (nil)
   
 if the operator isn't a delimiter, and you write it like  
 
