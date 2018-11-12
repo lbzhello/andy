@@ -61,7 +61,7 @@ In here everything is expression and will return a value
 
     (f a b)
     
-> *f* is name of the expression, other is parameters, just like lisp  
+> *f* is name of the expression, other is parameters, like lisp  
 
 #### Square bracket expression
 
@@ -73,7 +73,7 @@ In here everything is expression and will return a value
 
     {expr1 expr2 expr3}
 
-> curly bracket expression will return value of last expression as it's result
+> curly bracket expression will return value of last expression
 
 #### Binary expression   
 
@@ -91,23 +91,16 @@ operator is a kind of round bracket expression
 
 binary is a kind of round bracket expression than can omit '(' and ')'
 
-*expr1 op expr2*  
-just like other scripts  
-
-    a = 3
-    b = 4
-    c = a + b  //c = 7
-    d = b || "nil value"  //d = 4
-    ...
-
-e.g.  *=  +  -  *  /  >  <  >=  <=  !=  &&  || -> ...*  
-
-belows are equals  
-
 *expr1 op expr2* => *(op expr1 expr2)*  
 
+> e.g.  *=  +  -  *  /  >  <  >=  <=  !=  &&  || -> ...*  
+
+belows are equals   
+
+    a = 8 => (= a 8)
     3 + 2 => (+ 3 2)  
     3 + 2 * 5  => (+ 3 (* 2 5))  
+    rst = a || "it is nil"  => (= rst (|| a "it is nil"))
     
 attention  
 
@@ -127,25 +120,10 @@ else if the operator is a delimiter
 
 unary is a kind of round bracket expression that can omit '(' and ')'
 
-*op expr1 expr2 ...*  
-
-    a = 13
-    b = 14
-    rst = nil
-    if (a < b) {
-      rst = "it's true" 
-    } else { 
-      rst = "it's false"
-    }
-    print(rst)  //"it's true
-    ...
-
-e.g.  *true  false  nil  if  for  return ...*  
-   
-belows are equals  
-
 *op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
-  
+
+> e.g.  *true  false  nil  if  for  return ...*  
+   
 *if* is unary and accepts 2 args  
 
     if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
