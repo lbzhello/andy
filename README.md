@@ -1,4 +1,4 @@
-# [**Andy**](http://lbzh.xyz)
+# [**Andy**](http://lbzh.xyz/andy)
 
 ## Build
 
