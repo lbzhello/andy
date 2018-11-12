@@ -89,6 +89,7 @@ public class FileTokenizer implements Tokenizer<Token> {
                    }
                 } else { //空白字符
                     while (Character.isWhitespace(iterator.current())) {
+                        if (iterator.current() == '\n') lineNumber++;
                         iterator.next(); //eat
                     }
                     if (iterator.current() == '(') {  //e.g. name {...

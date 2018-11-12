@@ -1,14 +1,9 @@
 package xyz.lbzh.andy.expression;
 
-import org.springframework.util.CollectionUtils;
 import xyz.lbzh.andy.expression.ast.*;
 import xyz.lbzh.andy.expression.runtime.*;
 import xyz.lbzh.andy.expression.template.TemplateExpression;
 import xyz.lbzh.andy.expression.template.XmlExpression;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Objects;
 
 public class ExpressionUtils {
     public static boolean isReturn(Expression expression) {

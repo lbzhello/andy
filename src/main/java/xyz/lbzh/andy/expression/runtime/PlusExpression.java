@@ -3,6 +3,7 @@ package xyz.lbzh.andy.expression.runtime;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.ErrorExpression;
 import xyz.lbzh.andy.expression.ast.SquareBracketExpression;
+import xyz.lbzh.andy.tokenizer.LineNumberToken;
 
 import java.lang.annotation.ElementType;
 import java.math.BigDecimal;
@@ -30,8 +31,13 @@ public class PlusExpression extends NativeExpression {
             Double value = ExpressionUtils.asNumber(first).add(ExpressionUtils.asNumber(second)).doubleValue();
             return ExpressionFactory.number(value);
         } else {
-            return ExpressionFactory.error(ExpressionFactory.roundBracket(
-                    ExpressionFactory.symbol("+"), first, second),"Unsupport Operand Type![+]");
+            Expression error;
+            if (!ExpressionUtils.isNumber(first)) {
+                error = first();
+            } else {
+                error = second();
+            }
+            return ExpressionFactory.error(error,"operator(+): unsupport Operand Type!");
         }
 //        BigDecimal accu = BigDecimal.ZERO;
 //        for (Expression expression : list()) {
