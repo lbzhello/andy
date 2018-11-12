@@ -259,7 +259,7 @@ for will return an array
 
 different of bracket expression  
 
-* round: (expr1 expr2 expr3 ...) t expr1(expr2, expr3 ...)  
+* round: (expr1 expr2 expr3 ...) => expr1(expr2, expr3 ...)  
 圆括号表达式是一个算子，计算单元，如果用逗号隔开会计算每个表达式的值然后返回一个array，例：  
 (expr1, expr2, expr3, ...) => \[(expr1) (expr2) (expr3)]
 
@@ -311,7 +311,7 @@ different of bracket expression
 *    mapValues(expr)  
 
     arr2 = arr.map(x -> (x, 1))  //arr2 = [[1 1] [2 1] [3 1] [4 1] [5 1]]
-    arr.mapValues(x -> x + 1)    //arr2 = [[1, 2] [2 2] [3 2] [4 2] [5 2]]
+    arr.mapValues(x -> x + 1)    //arr2 = [[1 2] [2 2] [3 2] [4 2] [5 2]]
 
   
 *    reduceByKey(expr)  
@@ -335,8 +335,7 @@ different of bracket expression
   
 *    word count  
 
-> words = \["abc" "rng" "xyz" "ig" "ig" "rng" "ig"]
-
+    words = \["abc" "rng" "xyz" "ig" "ig" "rng" "ig"]
     words.map(x -> (x, 1)).reduceByKey((x, y) -> x + y).map(x -> x.reverse())
     //[[1 "abc"] [2 "rng"] [1 "xyz"] [3 "ig"]]
 
