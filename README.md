@@ -47,11 +47,11 @@ In here everything is expression and will return a value
 
 > curly bracket expression will return value of last expression as it's result
 
-#### binary expression   
+#### Binary expression   
 
 see next chapter
   
-#### unary expression  
+#### Bnary expression  
 
 see next chapter
 
@@ -70,11 +70,14 @@ just like other scripts
     d = b || "nil value"  //d = 4
     ...
 
-> e.g. : *=  +  -  *  /  >  <  >=  <=  !=  &&  || -> ...*  
-> belows are equals  
-> *expr1 op expr2* => *(op expr1 expr2)*  
-> 3 + 2 => (+ 3 2)  
-> 3 + 2 * 5  => (+ 3 (* 2 5))  
+e.g.  *=  +  -  *  /  >  <  >=  <=  !=  &&  || -> ...*  
+
+belows are equals  
+
+*expr1 op expr2* => *(op expr1 expr2)*  
+
+    3 + 2 => (+ 3 2)  
+    3 + 2 * 5  => (+ 3 (* 2 5))  
 
 #### Unary  
 
@@ -91,17 +94,23 @@ just like other scripts
     print(rst)  //"it's true
     ...
 
-> e.g. : *true  false  nil  if  for  return ...*  
-> belows are equals  
-> *op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
-> //*if* expression accepts 2 args  
-> if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
-> 
-> //*else* expression is binary  
-> if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
-> 
-> //*return* expression accepts 1 args     
-> return 2 => (return 2)
+e.g.  *true  false  nil  if  for  return ...*  
+   
+belows are equals  
+
+*op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
+  
+*if* expression accepts 2 args  
+
+    if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
+    
+*else* expression is binary  
+
+    if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
+    
+*return* expression accepts 1 args   
+
+    return 2 => (return 2)
   
 if the operator isn't a delimiter, and you write it like  
 
@@ -145,11 +154,13 @@ Function is a kind of round bracket expression
     //function call
     f1(1, 2)
 
-> you can also define a function like:  
-> (f x y) = x + y  
->
-> in lisp style:  
-> (= (f x y) (+ x y))  
+you can also define a function like:  
+
+    (f x y) = x + y  
+
+in lisp style:  
+
+    (= (f x y) (+ x y))  
   
 #### Function call
 
@@ -169,8 +180,9 @@ Function is a kind of round bracket expression
     f.name = "xyz"
     b = f.name //b = "xyz"
 
-> above will be parsed as  
-> *(= (f x y) {(: name "abc") (+ x y)})*
+above will be parsed as  
+
+    (= (f x y) {(: name "abc") (+ x y)})
 
 #### Function provide by system  
 
