@@ -243,7 +243,7 @@ for will return an array
 *return expr1* => *(return expr1)*
 
     a = 2
-    if a > 0 return 0  //rst = 0
+    if a > 0 return a  //rst = 2
 
 #### other
 
