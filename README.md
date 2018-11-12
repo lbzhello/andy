@@ -106,7 +106,21 @@ belows are equals
 
     3 + 2 => (+ 3 2)  
     3 + 2 * 5  => (+ 3 (* 2 5))  
+    
+attention  
 
+if operator isn't a delimiter it will be parsed as:
+
+    3 + 2 =>  3 ; + ; 2  //3 expressions
+    3+ 2  =>  3+ ; 2     //2 expressions
+    3 +2  =>  3 ; +2     //2 expressions
+    3+2   =>  3+2        //1 expressions
+    
+else if the operator is a delimiter
+
+    book.name == book .name == book. name == book . name =>  (. book name)
+    name: "xyz" == name:"xyz" == name :"xyz" == name : "xyz" => (: name "xyz")
+    
 #### Unary  
 
 *op expr1 expr2 ...*  
@@ -181,6 +195,15 @@ Function is a kind of round bracket expression
   
     //function call
     f1(1, 2)
+    
+attention  
+
+    f(x,y) => (f x y)       //1 expression
+    f (x, y) => f ; (x, y)  //2 expressions
+    f(x, y){c = 1 x + y} =>  f(x, y){c = 1 x + y}          //1 expression
+    f(x, y) {c = 1 x + y} => (f x y) ; {c = 1 x + y}       //2 expression
+    f (x, y){c = 1 x + y} => f ; (x, y){c = 1 x + y}       //2 expression
+    f (x, y) {c = 1 x + y} => f ; (x, y) ; {c = 1 x + y}   //3 expression
 
 you can also define a function like:  
 
