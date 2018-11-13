@@ -236,7 +236,7 @@ above will be parsed as
     greeting = "hello world"
     print(greeting)  //"hello world" 
 
-####Compare between operator/function
+#### Compare between operator/function
 
 * they both are round bracket expression
 * operator can omit '(' and ')'  
