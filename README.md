@@ -32,7 +32,7 @@ Java 11+
 
 #### Delimiter  
 
-There are only the following symbols can be use as delimiter  
+There are only the following symbols can be used as delimiter  
 
     , ; . : ( ) { } [ ] " '
   
@@ -42,7 +42,7 @@ There are only the following symbols can be use as delimiter
 
 #### Symbol  
 
-All characters except delimiter can be use as symbol  
+All characters except delimiter can be used as symbol  
 
     var, num, str+, a-b ...
 
@@ -55,7 +55,7 @@ Quote by '"' or '`'
 
 ## 2. Expression  
 
-In here everything is expression and will return a value  
+Everything is an expression and will returns a value  
 
 #### Round bracket expression  
 
@@ -73,7 +73,7 @@ In here everything is expression and will return a value
 
     {expr1 expr2 expr3}
 
-> curly bracket expression will return value of last expression
+> curly bracket expression will return the value of the last expression
 
 #### Binary expression   
 
