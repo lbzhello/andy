@@ -132,6 +132,11 @@ unary is a kind of round bracket expression that can omit '(' and ')'
 
     if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
     
+*for* is unary and accepts 2 args, it returns an array
+
+    int i = 0
+    for (i < 5) {i = i + 1 i} => (for (i < t) {(= i (+ i 1) i})  //[1 2 3 4]    
+
 *return* is unary and accepts 1 args   
 
     return 2 => (return 2)
@@ -223,43 +228,18 @@ above will be parsed as
 
     (= (f x y) {(: name "abc") (+ x y)})
 
-#### Function provide by system  
 
-#### operators
+#### Function provide by system
 
-    (+ 1 2), x -> x + 1, ...  
-  
-#### if
+*print(expr)* => *(print expr)*
 
-*if expr1 expr2* => *(if expr1 expr2)*
+    greeting = "hello world"
+    print(greeting)  //"hello world" 
 
-    rst = if 2 > 3 "i'm big"  //rst = nil
+####Compare between operator/function
 
-  
-#### for 
-
-*(for expr1 expr2)* => *(for expr1 expr2)*  
-for will return an array
-
-    i = 0
-    rst = for i < 5 {
-      i = i + 1
-      i
-    }
-    //rst = [2 3 4]
-
-  
-#### return 
-
-*return expr1* => *(return expr1)*
-
-    a = 2
-    if a > 0 return a  //rst = 2
-
-#### other
-
-    ....
-
+* they both are round bracket expression
+* operator can omit '(' and ')'  
 
 ## 5. Array  
 
