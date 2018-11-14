@@ -75,13 +75,6 @@ Everything is an expression and will returns a value
 
 > curly bracket expression will return the value of the last expression
 
-#### Binary expression   
-
-see next chapter
-  
-#### Bnary expression  
-
-see next chapter
 
 ## 3. Operator
 
@@ -89,7 +82,7 @@ operator is a kind of round bracket expression
 
 #### Binary  
 
-binary is a kind of round bracket expression than can omit '(' and ')'
+Binary is a kind of round bracket expression that can omit '(' and ')'
 
 *expr1 op expr2* => *(op expr1 expr2)*  
 
@@ -102,7 +95,8 @@ belows are equals
     3 + 2 * 5  => (+ 3 (* 2 5))  
     rst = a || "it is nil"  => (= rst (|| a "it is nil"))
     
-attention  
+    
+**Attention!**
 
 if operator isn't a delimiter it will be parsed as:
 
@@ -118,7 +112,7 @@ else if the operator is a delimiter
     
 #### Unary  
 
-unary is a kind of round bracket expression that can omit '(' and ')'
+Unary is a kind of round bracket expression that can omit '(' and ')'
 
 *op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
 
@@ -189,7 +183,7 @@ Function is a kind of round bracket expression
     //function call
     f1(1, 2)
     
-attention  
+**Attention!**
 
     f(x,y) => (f x y)       //1 expression
     f (x, y) => f ; (x, y)  //2 expressions
@@ -258,18 +252,19 @@ different of bracket expression
 方括号不会计算表达式的值，直接当作字面量返回  
 
 * curly: {expr1 expr2 expr3} => (expr3)  
-花括号会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
+花括号**求值时**会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
   
 例如：  
 
     a = 1 b = 2
     rst1 = (1, 2, a + b)  //rst1 = [1 2 3]
     rst2 = [1 2 a + b]    //rst2 = [1 2 a + b]
-    rst3 = {1 2 a + b}    //rst3 = 3
+    f = {1 2 a + b}       //f = (){1 2 (+ a b)}
+    rst3 = f()  ////rst3 = 3
 
 #### Method on array  
 
-> arr = \[1 2 3 4 5]  
+> arr = [1 2 3 4 5]  
 
 *    first() other() count() reverse()
 
