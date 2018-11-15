@@ -2,30 +2,27 @@
 
 ## Build
 
-#### environment
+#### Environment
  
 Maven 3.5.3+  
 Java 11+
 
-#### clone from git
+#### Step
 
-    git clone https://github.com/lbzhello/andy.git
+    //clone from git
+    $ git clone https://github.com/lbzhello/andy.git
     
-#### cd the root directory
-
-    cd andy
+    //cd the root directory
+    $ cd andy
     
-#### run maven
-
-    mvn assembly:assembly
+    //run maven
+    $ mvn assembly:assembly
     
-#### cd output directory
-
-    cd target
+    //cd output directory
+    $ cd target
     
-#### run
-
-    java -jar andy-1.0-SNAPSHOT-jar-with-dependencies.jar ../docs/examples/andy.test
+    //run
+    $ java -jar andy-1.0-SNAPSHOT-jar-with-dependencies.jar ../docs/examples/andy.test
 
 
 ## 1. Delimiter, Number, Symbol, String  
@@ -74,6 +71,27 @@ Everything is an expression and will returns a value
     {expr1 expr2 expr3}
 
 > curly bracket expression will return the value of the last expression
+
+
+different of bracket expression  
+
+* round: (expr1 expr2 expr3 ...) => expr1(expr2, expr3 ...)  
+圆括号表达式是一个算子，计算单元，如果用逗号隔开会计算每个表达式的值然后返回一个array，例：  
+(expr1, expr2, expr3, ...) => \[(expr1) (expr2) (expr3)]
+
+* square: \[expr1 expr2 expr3] => \[expr1 expr2 expr3]  
+方括号不会计算表达式的值，直接当作字面量返回  
+
+* curly: {expr1 expr2 expr3} => (expr3)  
+花括号**求值时**会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
+  
+例如：  
+
+    a = 1 b = 2
+    rst1 = (1, 2, a + b)  //rst1 = [1 2 3]
+    rst2 = [1 2 a + b]    //rst2 = [1 2 a + b]
+    f = {1 2 a + b}       //f = (){1 2 (+ a b)}
+    rst3 = f()  ////rst3 = 3
 
 
 ## 3. Operator
@@ -242,25 +260,6 @@ above will be parsed as
     arr1 = [1 2 3 4 5]
     arr2 = ["hello" "world" 1 2 3]
 
-different of bracket expression  
-
-* round: (expr1 expr2 expr3 ...) => expr1(expr2, expr3 ...)  
-圆括号表达式是一个算子，计算单元，如果用逗号隔开会计算每个表达式的值然后返回一个array，例：  
-(expr1, expr2, expr3, ...) => \[(expr1) (expr2) (expr3)]
-
-* square: \[expr1 expr2 expr3] => \[expr1 expr2 expr3]  
-方括号不会计算表达式的值，直接当作字面量返回  
-
-* curly: {expr1 expr2 expr3} => (expr3)  
-花括号**求值时**会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
-  
-例如：  
-
-    a = 1 b = 2
-    rst1 = (1, 2, a + b)  //rst1 = [1 2 3]
-    rst2 = [1 2 a + b]    //rst2 = [1 2 a + b]
-    f = {1 2 a + b}       //f = (){1 2 (+ a b)}
-    rst3 = f()  ////rst3 = 3
 
 #### Method on array  
 
