@@ -367,3 +367,7 @@ xml中只有括号表达式会被计算
      //rst = 
      first line
      second line
+     
+#### Using '\' as escaped char
+     
+     str = `hello \(mabc)`  //str = "hello \(mabc)"

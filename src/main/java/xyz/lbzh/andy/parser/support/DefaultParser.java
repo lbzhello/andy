@@ -293,12 +293,26 @@ public class DefaultParser implements Parser<Expression> {
                     sb.delete(0, sb.length());
                     iterator.next(); //eat
                     break;
+                case '\\':
+                    iterator.next(); //eat '\'
+                    escapedChar(sb);
+                    break;
                 default:
                     sb.append(iterator.current());
                     iterator.next();
             }
         }
         return ExpressionFactory.error("Missing closing symbol when parse template");
+    }
+
+    //转意字符
+    private void escapedChar(StringBuffer sb) {
+        if (iterator.current() == '(') { //转意括号
+            sb.append('(');
+            iterator.next();
+        } else {
+            iterator.next(); //skip
+        }
     }
 
     //在模板中嵌入(...)

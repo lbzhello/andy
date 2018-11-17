@@ -1,19 +1,18 @@
 f(x) = x + 1
-tmpl = `
-    <name>
-        liu
-    </name>
+tmpl = `this is (f 1)`
+print("tmpl: ")
+print(tmpl)
+
+tmpl2 = `\
+    this is (f 0) line.
+    this is (f 1) line
 `
-a = `
-    <books>
-      <book>
-        (tmpl)
-      </book>
-    </books>
+print("tmpl2: ")
+print(tmpl2)
+
+tmpl3 = `\
+    |this is (f 0) line
+    |this is (f 1) line
 `
-c = `
-    <animal>
-        |(a)
-    |</animal>
-`
-print(c)
+print("tmpl3: ")
+print(tmpl3)
