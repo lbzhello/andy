@@ -348,4 +348,22 @@ xml中只有括号表达式会被计算
 #### Grammar
 
     greeting = "hello world"
-    tmpl = `this is kangkang (greeting)`
+    tmpl = `this is kangkang (greeting)`  //tmpl = "this is kangkang hello world"
+
+#### Using '|' as delimiter
+
+    tmpl = `
+        first line
+        second line
+    `
+    //rst = 
+        first line
+        second line
+        
+     tmpl = `
+         |first line
+         |second line
+         
+     //rst = 
+     first line
+     second line
