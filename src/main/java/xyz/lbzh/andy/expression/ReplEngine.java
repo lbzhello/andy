@@ -27,6 +27,7 @@ public class ReplEngine {
             rst = expression.eval(context);
         }
 
+        System.out.println("RST: ");
         if (ExpressionUtils.hasError(rst)) {
             System.err.println(rst);
         } else {

@@ -81,7 +81,7 @@ public class FileTokenizer implements Tokenizer<Token> {
                        currentToken = nextNumber();
                        return currentToken;
                    } else if (iterator.current() == '`') {
-                       iterator.next(); //eat '`'
+//                       iterator.next(); //eat '`'
                        return TokenFlag.BACK_QUOTE;
                    } else {
                        currentToken = nextSymbol();

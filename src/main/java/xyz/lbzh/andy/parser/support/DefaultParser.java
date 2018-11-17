@@ -1,6 +1,5 @@
 package xyz.lbzh.andy.parser.support;
 
-import xyz.lbzh.andy.core.ApplicationFactory;
 import xyz.lbzh.andy.core.Definition;
 import xyz.lbzh.andy.expression.*;
 import xyz.lbzh.andy.expression.ast.*;
@@ -16,13 +15,9 @@ import xyz.lbzh.andy.tokenizer.Token;
 import xyz.lbzh.andy.tokenizer.TokenFlag;
 import xyz.lbzh.andy.tokenizer.Tokenizer;
 
-import java.io.*;
-
 public class DefaultParser implements Parser<Expression> {
     private CharIter iterator;
     private Tokenizer<Token> tokenizer;
-    private Tokenizer<Token> templateTokenizer = ApplicationFactory.get("templateTokenizer", Tokenizer.class);
-    private Tokenizer<Token> stringTokenizer = ApplicationFactory.get("stringTokenizer", Tokenizer.class);
 
     private Token currentToken = Definition.HOF;
 
@@ -34,8 +29,6 @@ public class DefaultParser implements Parser<Expression> {
     public Expression parseString(String expression) {
         iterator = new StringCharIter(expression);
         tokenizer.init(iterator);
-        templateTokenizer.init(iterator);
-        stringTokenizer.init(iterator);
         try {
             return expression();
         } catch (Exception e) {
@@ -50,8 +43,6 @@ public class DefaultParser implements Parser<Expression> {
         try {
             iterator = new FileCharIter(fileName);
             tokenizer.init(iterator);
-            templateTokenizer.init(iterator);
-            stringTokenizer.init(iterator);
             while (hasNext()) {
                 curlyBracketExpression.add(expression());
             }
@@ -249,27 +240,67 @@ public class DefaultParser implements Parser<Expression> {
      * @throws Exception
      */
     private Expression templateExpression() throws Exception {
-        TemplateExpression template = ExpressionFactory.template();
-        LineExpression line = ExpressionFactory.line();
-        while (iterator.current() != '`' && iterator.hasNext()) {
-            if (iterator.current() == '\n') {
-                iterator.next(); //eat '\n'
-                line.add(ExpressionFactory.string("\n"));
-                template.addLine(line);
-                line = ExpressionFactory.line(); //new line
-            } else if (iterator.current() == '(') { //e.g. '...(...)...'
-                line.add(insertRoundBracket());
-            } else {
-                line.add(templateTokenizer.next());
-            }
-
-        }
-        template.addLine(line);
-        if (line.toString().length() > 0) {
-        }
         iterator.next(); //eat '`'
+        TemplateExpression template = ExpressionFactory.template();
+        while (iterator.hasNext()) {
+            if (iterator.current() == '`') {
+                iterator.next();
+                return template;
+            } else {
+                template.addLine(lineExpression());
+            }
+        }
+
         return template;
     }
+
+    //parse one line
+    private Expression lineExpression() throws Exception {
+        LineExpression line = ExpressionFactory.line();
+        while (iterator.hasNext()) {
+            switch (iterator.current()) {
+                case '\n':
+                    line.add(ExpressionFactory.string("\n"));
+                    iterator.next(); //eat '\n'
+                    return line;
+                case '`':
+                    return line;
+                case '(':
+                    line.add(insertRoundBracket());
+                    break;
+                case '|':
+                    iterator.next();
+                    break;
+                default:
+                    line.add(stringExpression());
+            }
+        }
+        return ExpressionFactory.error("Missing closing symbol when parse template");
+    }
+
+    //解析模板中得string片段, '|' 为定界符
+    private Expression stringExpression() {
+        StringBuffer sb = new StringBuffer();
+        while (iterator.hasNext()) {
+            switch (iterator.current()) {
+                case '\n':
+                    return ExpressionFactory.string(sb.toString());
+                case '(':
+                    return ExpressionFactory.string(sb.toString());
+                case '`':
+                    return ExpressionFactory.string(sb.toString());
+                case '|': //定界符
+                    sb.delete(0, sb.length());
+                    iterator.next(); //eat
+                    break;
+                default:
+                    sb.append(iterator.current());
+                    iterator.next();
+            }
+        }
+        return ExpressionFactory.error("Missing closing symbol when parse template");
+    }
+
     //在模板中嵌入(...)
     private Expression insertRoundBracket() throws Exception {
         iterator.next(); //eat '('
@@ -280,45 +311,6 @@ public class DefaultParser implements Parser<Expression> {
         }
         return roundBracket;
     }
-
-//    /**
-//     * e.g.
-//     *     str = "world"
-//     *     `
-//     *         hello (str)!
-//     *     `
-//     * @return
-//     * @throws Exception
-//     */
-//    private Expression templateExpression() throws Exception {
-//        templateTokenizer.next(); //begin
-//        TemplateExpression template = ExpressionFactory.template();
-//        while (!templateTokenizer.current().toString().equals("`")) {
-//            LineExpression line = ExpressionFactory.line();
-//            while (!templateTokenizer.current().toString().equals("\n")
-//                    && !templateTokenizer.current().toString().equals("`")
-//                    && templateTokenizer.hasNext()) {
-//                if (templateTokenizer.current().toString().equals("(")) { //调用tokenizer解析
-//                    nextToken(); //eat '('
-//                    BracketExpression roundBracket = ExpressionFactory.roundBracket();
-//                    while (!(getToken() == TokenFlag.ROUND_BRACKET_RIGHT)) {
-//                        roundBracket.add(expression());
-//                    }
-//                    line.add(roundBracket);
-//                } else {
-//                    line.add(templateTokenizer.current());
-//                }
-//                templateTokenizer.next();
-//            }
-//            if (templateTokenizer.current().toString().equals("\n")) {
-//                line.add(templateTokenizer.current()); //"\n"
-//                templateTokenizer.next();
-//            }
-//            template.addLine(line);
-//        }
-//        nextToken(); //eat '`'
-//        return template;
-//    }
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());

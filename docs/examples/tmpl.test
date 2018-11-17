@@ -13,7 +13,7 @@ a = `
 `
 c = `
     <animal>
-        (a)
-    </animal>
+        |(a)
+    |</animal>
 `
 print(c)
