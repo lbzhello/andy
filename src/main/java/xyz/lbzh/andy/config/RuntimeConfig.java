@@ -132,4 +132,10 @@ public class RuntimeConfig {
         return new PrintExpression();
     }
 
+    @Bean("new")
+    @Scope("prototype")
+    public NewExpression newExpression() {
+        return new NewExpression();
+    }
+
 }

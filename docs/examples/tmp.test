@@ -1,4 +1,4 @@
-arr = [1 2 3]
-arr + "abc" //this is test one
-
-1 / 3  //this is test
+str = new java.lang.StringBuffer
+str.append("2")
+str.append("asdf")
+str.toString()

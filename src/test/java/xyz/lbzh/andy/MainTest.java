@@ -24,9 +24,6 @@ public class MainTest {
     public void tmpTest() throws Throwable {
         ReplEngine replEngine = new ReplEngine();
         replEngine.evalFile("docs/examples/tmp.test");
-
-        String[] strings = "123|456".split("\\|");
-        System.out.println(String.valueOf(strings));
     }
 
     @Test

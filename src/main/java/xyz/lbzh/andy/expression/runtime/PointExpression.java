@@ -38,4 +38,9 @@ public class PointExpression extends RoundBracketExpression {
             return ExpressionFactory.error(leftValue, "Unsupport operation type!");
         }
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + "." + right.toString();
+    }
 }

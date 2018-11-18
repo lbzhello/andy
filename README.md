@@ -25,7 +25,7 @@ Java 11+
     $ java -jar andy-1.0-SNAPSHOT-jar-with-dependencies.jar ../docs/examples/andy.test
 
 
-## 1. Delimiter, Number, Symbol, String  
+## Delimiter, Number, Symbol, String  
 
 #### Delimiter  
 
@@ -49,8 +49,14 @@ Quote by '"' or '`'
 
     str1 = "this is a string"
     str2 = `this is another string`
+    
+#### Explanatory
 
-## 2. Expression  
+Using "//"
+
+    a = 3  //assign 3 to a
+
+## Expression  
 
 Everything is an expression and will returns a value  
 
@@ -94,7 +100,7 @@ different of bracket expression
     rst3 = f()  ////rst3 = 3
 
 
-## 3. Operator
+## Operator
 
 operator is a kind of round bracket expression  
 
@@ -153,6 +159,14 @@ Unary is a kind of round bracket expression that can omit '(' and ')'
 
     return 2 => (return 2)
     
+*new* create an object from class
+
+    str = new java.lang.StringBuffer
+    str.append("hello")
+    str.append(" ")
+    str.append("world")
+    (print str)  //"hello world"
+    
 *true*, *false*, *nil* are unary and accept 0 args
 
     true => (true)
@@ -167,7 +181,7 @@ it will be parsed as a symbol like "a=3", so you should write like
 
     a = 3
 
-## 4. Function  
+## Function  
 
 Function is a kind of round bracket expression
 
@@ -253,7 +267,7 @@ above will be parsed as
 * they both are round bracket expression
 * operator can omit '(' and ')'  
 
-## 5. Array  
+## Array  
 
 #### Introduce  
 
@@ -325,7 +339,7 @@ above will be parsed as
     //[[1 "abc"] [2 "rng"] [1 "xyz"] [3 "ig"]]
 
   
-## 6. Simple Xml
+## Simple Xml
 
 #### Grammar  
 
@@ -343,7 +357,7 @@ xml中只有括号表达式会被计算
         </book>
     }
 
-## 7. Template
+## Template
 
 #### Grammar
 
