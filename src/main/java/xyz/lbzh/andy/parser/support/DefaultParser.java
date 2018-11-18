@@ -251,7 +251,7 @@ public class DefaultParser implements Parser<Expression> {
             }
         }
 
-        return template;
+        return ExpressionFactory.error(template, "Missing closing tag '`'");
     }
 
     //parse one line

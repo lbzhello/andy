@@ -83,6 +83,16 @@ public class FileTokenizer implements Tokenizer<Token> {
                    } else if (iterator.current() == '`') {
 //                       iterator.next(); //eat '`'
                        return TokenFlag.BACK_QUOTE;
+                   } else if (iterator.current() == '/') {
+                       iterator.next();  //eat '/'
+                       if (iterator.current() == '/') { //注释
+                           iterator.next(); //eat '/'
+                           while (iterator.current() != '\n' && iterator.hasNext()) {
+                               iterator.next();
+                           }
+                       } else {
+                           return ExpressionFactory.symbol("/");
+                       }
                    } else {
                        currentToken = nextSymbol();
                        return currentToken;
