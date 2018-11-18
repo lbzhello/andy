@@ -368,6 +368,7 @@ xml中只有括号表达式会被计算
      first line
      second line
      
-#### Using '\' as escaped char
+#### Using '\\' as escaped char
      
-     str = `hello \(mabc)`  //str = "hello \(mabc)"
+     greet = "abc"
+     str = `hello \(greet)`  //str = "hello \(greet)"

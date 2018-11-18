@@ -307,10 +307,10 @@ public class DefaultParser implements Parser<Expression> {
 
     //转意字符
     private void escapedChar(StringBuffer sb) {
-        if (iterator.current() == '(') { //转意括号
-            sb.append('(');
+        if (Character.isWhitespace(iterator.current())) { //skip whitespace
             iterator.next();
         } else {
+            sb.append(iterator.current());
             iterator.next(); //skip
         }
     }
