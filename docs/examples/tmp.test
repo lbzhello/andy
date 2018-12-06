@@ -1,4 +1,2 @@
-str = new java.lang.StringBuffer
-str.append("2")
-str.append("asdf")
-str.toString()
+this is first line.
+this is first line.

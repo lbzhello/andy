@@ -16,12 +16,16 @@ import java.util.*;
 import java.util.function.Supplier;
 
 public class MainTest {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws FileNotFoundException {
+        File f = new File("docs/examples/tmp.test");
+        PrintWriter printWriter = new PrintWriter(f);
+        printWriter.println("this is first line.");
+        printWriter.println("this is first line.");
+        printWriter.close();
     }
 
     @Test
-    public void tmpTest() throws Throwable {
+    public void tmpTest() {
         ReplEngine replEngine = new ReplEngine();
         replEngine.evalFile("docs/examples/tmp.test");
     }
