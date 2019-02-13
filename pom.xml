@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>xyz.lbzh.andy</groupId>
+    <groupId>xyz.lius.andy</groupId>
     <artifactId>andy</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>andy</name>
     <!-- FIXME change it to the project's website -->
-    <url>http://lbzh.xyz/andy</url>
+    <url>http://lius.xyz/andy</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -84,7 +84,7 @@
                         <archive>
                             <!--main class-->
                             <manifest>
-                                <mainClass>xyz.lbzh.andy.Main</mainClass>
+                                <mainClass>xyz.lius.andy.Main</mainClass>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
                             </manifest>
@@ -120,7 +120,7 @@
                         <!--这部分可有可无,加上的话则直接生成可运行jar包-->
                         <archive>
                             <manifest>
-                                <mainClass>xyz.lbzh.andy.Main</mainClass>
+                                <mainClass>xyz.lius.andy.Main</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
