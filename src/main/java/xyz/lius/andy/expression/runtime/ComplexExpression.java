@@ -43,7 +43,10 @@ public class ComplexExpression implements Expression {
         Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.list) {
             rstValue = expression.eval(context);
-            if (ExpressionUtils.isReturn(rstValue) || ExpressionUtils.hasError(rstValue)) {
+            if (ExpressionUtils.isReturn(rstValue)) {
+                return ExpressionUtils.asReturn(rstValue).getValue();
+            }
+            if (ExpressionUtils.hasError(rstValue)) {
                 return rstValue.eval(context);
             }
         }

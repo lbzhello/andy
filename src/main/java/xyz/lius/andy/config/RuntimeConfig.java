@@ -104,8 +104,8 @@ public class RuntimeConfig {
 
     @Bean("return")
     @Scope("prototype")
-    public ReturnBuilderExpression returnExpression() {
-        return new ReturnBuilderExpression();
+    public ReturnExpression returnExpression() {
+        return new ReturnExpression();
     }
 
     @Bean("if")

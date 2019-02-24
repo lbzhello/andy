@@ -10,6 +10,10 @@ public class ExpressionUtils {
         return expression instanceof ReturnExpression;
     }
 
+    public static ReturnExpression asReturn(Expression rstValue) {
+        return (ReturnExpression) rstValue;
+    }
+
     public static boolean hasError(Expression expression) {
         return expression instanceof ErrorExpression;
     }

@@ -4,15 +4,30 @@ import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
 
-public class ReturnExpression implements Expression {
-    private Expression retValue;
+import java.util.List;
 
-    public ReturnExpression(Expression retValue) {
-        this.retValue = retValue;
+public class ReturnExpression extends NativeExpression {
+    private Expression value;
+    public ReturnExpression() {}
+    public ReturnExpression(Expression value) {
+        this.value = value;
+    }
+
+    @Override
+    public Expression parameters(List<Expression> list) {
+        return new ReturnExpression().list(list);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        return retValue;
+        return new ReturnExpression(first().eval(context));
+    }
+
+    public Expression getValue() {
+        return value;
+    }
+
+    public void setValue(Expression value) {
+        this.value = value;
     }
 }
