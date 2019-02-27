@@ -5,6 +5,9 @@ import xyz.lius.andy.core.ApplicationFactory;
 import xyz.lius.andy.expression.template.XmlExpression;
 import xyz.lius.andy.parser.Parser;
 
+/**
+ * 表达式求值引擎
+ */
 public class ReplEngine {
     private final Context<Name, Expression> context = Definition.getCoreContext();
     private final Parser<Expression> parser = ApplicationFactory.get(Parser.class);

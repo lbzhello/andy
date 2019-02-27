@@ -31,6 +31,11 @@ public final class Definition {
     public static Expression PAIR = ExpressionType.PAIR;
 
     /**
+     * 脚本文件所在的目录
+     */
+    public static Name FILE_PARENT = ExpressionFactory.symbol("FILE_PARENT");
+
+    /**
      * End of file
      */
     public static final Token EOF = TokenFlag.EOF;

@@ -2,6 +2,9 @@ package xyz.lius.andy.expression.runtime;
 
 import xyz.lius.andy.expression.Expression;
 
+/**
+ * 对象表达式，代表任一个java对象
+ */
 public class ObjectExpression implements Expression {
     private Object object;
 
