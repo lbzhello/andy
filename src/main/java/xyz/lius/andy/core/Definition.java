@@ -145,6 +145,8 @@ public final class Definition {
         unary.put("--", 1);
         unary.put("!", 1);
 
+        unary.put("import", 1);
+
         unary.put("new", 1);
 
         unary.put("return", 1);
@@ -184,6 +186,8 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.getExpression("->"));
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.getExpression("new"));
+
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.getExpression("import"));
     }
 
     public static final Context<Name, Expression> getCoreContext() {

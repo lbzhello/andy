@@ -11,6 +11,7 @@ import java.util.Objects;
 
 /**
  * import file
+ * e.g. import some_script.andy
  */
 public class ImportExpression extends NativeExpression {
     @Override

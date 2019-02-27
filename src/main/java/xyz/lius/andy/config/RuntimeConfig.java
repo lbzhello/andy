@@ -138,4 +138,10 @@ public class RuntimeConfig {
         return new NewExpression();
     }
 
+    @Bean("import")
+    @Scope("prototype")
+    public ImportExpression importExpression() {
+        return new ImportExpression();
+    }
+
 }
