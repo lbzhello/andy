@@ -1,0 +1,5 @@
+import test
+
+test.f(2, 3)
+
+test.f.name

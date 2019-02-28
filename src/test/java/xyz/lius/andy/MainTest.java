@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public class MainTest {
     public static void main(String[] args) throws FileNotFoundException {
-        File f = new File("docs/examples/tmp.test");
+        File f = new File("docs/examples/tmp.andy");
         PrintWriter printWriter = new PrintWriter(f);
         printWriter.println("this is first line.");
         printWriter.println("this is first line.");
@@ -27,32 +27,32 @@ public class MainTest {
     @Test
     public void tmpTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("docs/examples/tmp.test");
+        replEngine.evalFile("docs/examples/tmp.andy");
     }
 
     @Test
     public void mainTest() throws Exception {
-        Main.main(new String[]{"docs/examples/andy.test"});
+        Main.main(new String[]{"docs/examples/test.andy"});
     }
 
     @Test
     public void tmplTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("docs/examples/tmpl.test");
+        replEngine.evalFile("docs/examples/tmpl.andy");
 
     }
 
     @Test
     public void xmlTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("docs/examples/xml.test");
+        replEngine.evalFile("docs/examples/xml.andy");
 
     }
 
     @Test
     public void iterTest() throws IOException {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("docs/examples/iter.test");
+        replEngine.evalFile("docs/examples/iter.andy");
     }
 
     @Test

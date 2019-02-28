@@ -18,7 +18,7 @@ public class ImportExpression extends NativeExpression {
     public Expression eval(Context<Name, Expression> context) {
         //默认从父目录里面查找
         String fileParent = context.lookup(Definition.FILE_PARENT).toString();
-        String fileName = fileParent + "/" + first().toString();
+        String fileName = fileParent + "/" + first().toString() + ".andy";
         try {
             for (File file : new File(fileParent).listFiles()) {
                 if (Objects.equals(fileName, file.getCanonicalPath())) {
@@ -26,7 +26,7 @@ public class ImportExpression extends NativeExpression {
                     Parser<Expression> parser = ApplicationFactory.get(Parser.class);
                     Expression expression = parser.parseFile(file.getCanonicalPath());
                     String importFileName = file.getName();
-                    if (file.getName().contains("")) { //e.g. remove file suffix
+                    if (file.getName().contains(".")) { //e.g. remove file suffix
                         importFileName = importFileName.split("[.]")[0];
                     }
                     context.newbind(ExpressionFactory.symbol(importFileName), expression.eval(context));
