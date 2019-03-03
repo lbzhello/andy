@@ -2,6 +2,8 @@ package xyz.lius.andy.expression;
 
 import xyz.lius.andy.core.ApplicationFactory;
 import xyz.lius.andy.expression.ast.*;
+import xyz.lius.andy.expression.core.FileExpression;
+import xyz.lius.andy.expression.core.StringIterExpression;
 import xyz.lius.andy.expression.runtime.*;
 import xyz.lius.andy.expression.runtime.ColonExpression;
 import xyz.lius.andy.expression.template.XmlTagExpression;
@@ -140,6 +142,10 @@ public class ExpressionFactory {
 
     public static Expression getExpression(String name) {
         return ApplicationFactory.get(name, Expression.class);
+    }
+
+    public static Expression iter(String value) {
+        return new StringIterExpression(value);
     }
 
 }

@@ -2,6 +2,7 @@ package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.expression.core.StringIterExpression;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
@@ -43,4 +44,7 @@ public class StringExpression extends TokenExpression {
         return squareBracket;
     }
 
+    public Expression iter() {
+        return ExpressionFactory.iter((String) this.value);
+    }
 }

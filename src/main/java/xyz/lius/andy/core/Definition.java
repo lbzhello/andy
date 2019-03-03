@@ -188,6 +188,8 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.getExpression("new"));
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.getExpression("import"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("file") , ExpressionFactory.getExpression("file"));
+
     }
 
     public static final Context<Name, Expression> getCoreContext() {

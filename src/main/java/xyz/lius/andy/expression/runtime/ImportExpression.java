@@ -29,8 +29,9 @@ public class ImportExpression extends NativeExpression {
                     if (file.getName().contains(".")) { //e.g. remove file suffix
                         importFileName = importFileName.split("[.]")[0];
                     }
-                    context.newbind(ExpressionFactory.symbol(importFileName), expression.eval(context));
-                    return ExpressionType.NIL;
+                    Expression value = expression.eval(context);
+                    context.newbind(ExpressionFactory.symbol(importFileName), value);
+                    return value;
                 }
             }
         } catch (IOException e) {

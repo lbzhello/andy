@@ -38,16 +38,6 @@ public class BracketExpression implements Expression {
         return this.list.size() >= 3 ? list.get(2) : Definition.NIL;
     }
 
-    public Expression before(Expression expression) {
-        this.list().add(0, expression);
-        return ExpressionType.NIL;
-    }
-
-    public Expression after(Expression expression) {
-        this.list().add(expression);
-        return ExpressionType.NIL;
-    }
-
     public BracketExpression add(Expression expression) {
         this.list.add(expression);
         return this;

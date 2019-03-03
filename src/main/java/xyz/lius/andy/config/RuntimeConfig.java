@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionType;
+import xyz.lius.andy.expression.core.FileExpression;
 import xyz.lius.andy.expression.runtime.*;
 
 /**
@@ -144,4 +145,9 @@ public class RuntimeConfig {
         return new ImportExpression();
     }
 
+    @Bean("file")
+    @Scope("prototype")
+    public FileExpression file() {
+        return new FileExpression();
+    }
 }
