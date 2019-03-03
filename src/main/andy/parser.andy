@@ -1,0 +1,10 @@
+(= srcFile (file "docs/examples/tmp.andy"))
+(= it srcFile.iter())
+(for (it.current() != nil) {
+    (print it.current())
+    it.next()
+})
+if (true) (3 + 5)
+a = [1 2 4 6]
+a.count()
+a.first()

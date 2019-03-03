@@ -1,16 +1,4 @@
-import test
-
-test.f(2, 3)
-
-test.f.name
-
-it = "qwer0".iter()
-it.current()
-it.next()
-it.previous()
-it.previous()
-it.next()
-
-f = file("docs/examples/test.andy")
-it = f.iter()
-it.current()
+a = 3
+b = 4
+c = a + b
+c

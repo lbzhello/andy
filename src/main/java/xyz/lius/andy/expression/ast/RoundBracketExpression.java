@@ -51,7 +51,7 @@ public class RoundBracketExpression extends BracketExpression {
                 childContext.bind(ExpressionFactory.symbol("$" + i), this.getParameters().get(i).eval(context));
             }
             return name.eval(childContext);
-        } else if (ExpressionUtils.isSquareBracket(name)) { //e.g. name = [...]; name(1)
+        } else if (ExpressionUtils.isSquareBracket(name) && this.list().size() > 1) { //e.g. name = [...]; name(1)
             Expression index = second().eval(context);
             if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
             return ExpressionUtils.asSquareBracket(name).list().get(ExpressionUtils.asNumber(index).intValue());

@@ -25,6 +25,12 @@ public class MainTest {
     }
 
     @Test
+    public void andyTest() {
+        ReplEngine replEngine = new ReplEngine();
+        replEngine.evalFile("src/main/andy/parser.andy");
+    }
+
+    @Test
     public void tmpTest() {
         ReplEngine replEngine = new ReplEngine();
         replEngine.evalFile("docs/examples/tmp.andy");
