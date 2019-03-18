@@ -1,9 +1,9 @@
 package xyz.lius.andy.expression.runtime;
 
-import xyz.lius.andy.core.ApplicationFactory;
+import xyz.lius.andy.compiler.Compiler;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.parser.Parser;
+import xyz.lius.andy.compiler.parser.Parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class ImportExpression extends NativeExpression {
             for (File file : new File(fileParent).listFiles()) {
                 if (Objects.equals(fileName, file.getCanonicalPath())) {
                     //从当前目录找到文件，导入到命名空间
-                    Parser<Expression> parser = ApplicationFactory.get(Parser.class);
+                    Parser<Expression> parser = Compiler.parser();
                     Expression expression = parser.parseFile(file.getCanonicalPath());
                     String importFileName = file.getName();
                     if (file.getName().contains(".")) { //e.g. remove file suffix

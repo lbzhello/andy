@@ -1,4 +1,4 @@
-package xyz.lius.andy.tokenizer;
+package xyz.lius.andy.compiler.tokenizer;
 
 import xyz.lius.andy.expression.Expression;
 

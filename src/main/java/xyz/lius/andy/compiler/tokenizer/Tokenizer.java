@@ -1,11 +1,6 @@
-package xyz.lius.andy.tokenizer;
+package xyz.lius.andy.compiler.tokenizer;
 
 import xyz.lius.andy.io.CharIter;
-
-import java.io.Closeable;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Iterator;
 
 public interface Tokenizer<T> {
 

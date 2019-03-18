@@ -1,13 +1,7 @@
 package xyz.lius.andy.expression.runtime;
 
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.ast.ErrorExpression;
-import xyz.lius.andy.expression.ast.SquareBracketExpression;
-import xyz.lius.andy.tokenizer.LineNumberToken;
 
-import java.lang.annotation.ElementType;
-import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.List;
 
 @RoundBracketed

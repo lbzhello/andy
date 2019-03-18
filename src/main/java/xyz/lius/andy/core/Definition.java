@@ -1,8 +1,8 @@
 package xyz.lius.andy.core;
 
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.tokenizer.Token;
-import xyz.lius.andy.tokenizer.TokenFlag;
+import xyz.lius.andy.compiler.tokenizer.Token;
+import xyz.lius.andy.compiler.tokenizer.TokenFlag;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -156,40 +156,39 @@ public final class Definition {
     }
 
     static {
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), ExpressionFactory.getExpression("="));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), ExpressionFactory.getExpression("+"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), ExpressionFactory.getExpression("-"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), ExpressionFactory.getExpression("*"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), ExpressionFactory.assign());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), ExpressionFactory.plus());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), ExpressionFactory.minus());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), ExpressionFactory.Multiply());
         // '/' is delimiter so it will be parse earlier on tokenizer
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), ExpressionFactory.getExpression("/"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), ExpressionFactory.divide());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), ExpressionFactory.getExpression("||"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), ExpressionFactory.getExpression("=="));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), ExpressionFactory.getExpression("!="));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), ExpressionFactory.getExpression(">"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), ExpressionFactory.getExpression(">="));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), ExpressionFactory.getExpression("<"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.getExpression("<="));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), ExpressionFactory.or());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), ExpressionFactory.equal());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), ExpressionFactory.notEqual());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), ExpressionFactory.greaterThan());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), ExpressionFactory.greaterEqual());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), ExpressionFactory.lessThan());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.lessEqual());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), ExpressionFactory.getExpression("if"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), ExpressionFactory.getExpression("for"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), ExpressionFactory.ifExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), ExpressionFactory.forExpression());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), ExpressionFactory.getExpression("return"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), ExpressionFactory.returnExpression());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), ExpressionFactory.getExpression("print"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), ExpressionFactory.print());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.getExpression("->"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.arrow());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.getExpression("new"));
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.newExpression());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.getExpression("import"));
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("file") , ExpressionFactory.getExpression("file"));
-
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.importExpression());
+        CORE_CONTEXT.bind(ExpressionFactory.symbol("file") , ExpressionFactory.file());
     }
 
     public static final Context<Name, Expression> getCoreContext() {

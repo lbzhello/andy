@@ -1,17 +1,17 @@
 package xyz.lius.andy.expression;
 
-import xyz.lius.andy.core.ApplicationFactory;
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.core.FileExpression;
 import xyz.lius.andy.expression.core.StringIterExpression;
 import xyz.lius.andy.expression.runtime.*;
-import xyz.lius.andy.expression.runtime.ColonExpression;
-import xyz.lius.andy.expression.template.XmlTagExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
+import xyz.lius.andy.expression.template.XmlTagExpression;
 
-public class ExpressionFactory {
+/**
+ * 用于提供各种表达式语法树
+ */
+public class ExpressionFactory extends NativeFactory {
     public static BracketExpression bracket(Expression... expressions) {
         return new BracketExpression(expressions);
     }
@@ -138,10 +138,6 @@ public class ExpressionFactory {
 
     public static ErrorExpression error(Expression expression, String message) {
         return new ErrorExpression(expression, message);
-    }
-
-    public static Expression getExpression(String name) {
-        return ApplicationFactory.get(name, Expression.class);
     }
 
     public static Expression iter(String value) {

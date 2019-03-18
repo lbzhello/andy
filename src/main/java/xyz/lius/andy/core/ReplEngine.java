@@ -1,9 +1,8 @@
-package xyz.lius.andy.expression;
+package xyz.lius.andy.core;
 
-import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.core.ApplicationFactory;
-import xyz.lius.andy.expression.template.XmlExpression;
-import xyz.lius.andy.parser.Parser;
+import xyz.lius.andy.compiler.Compiler;
+import xyz.lius.andy.expression.*;
+import xyz.lius.andy.compiler.parser.Parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.io.IOException;
  */
 public class ReplEngine {
     private final Context<Name, Expression> context = Definition.getCoreContext();
-    private final Parser<Expression> parser = ApplicationFactory.get(Parser.class);
+    private final Parser<Expression> parser = Compiler.parser();
 
     public Expression eval(String expression) {
         return this.eval(parser.parseString(expression));

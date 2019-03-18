@@ -2,11 +2,7 @@ package xyz.lius.andy.expression.runtime;
 
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
-import xyz.lius.andy.expression.ast.SquareBracketExpression;
-import xyz.lius.andy.tokenizer.Token;
-import xyz.lius.andy.tokenizer.TokenFlag;
-
-import java.util.List;
+import xyz.lius.andy.compiler.tokenizer.TokenFlag;
 
 public class PointExpression extends RoundBracketExpression {
     private Expression left;

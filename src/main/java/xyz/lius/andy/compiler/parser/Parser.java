@@ -1,4 +1,4 @@
-package xyz.lius.andy.parser;
+package xyz.lius.andy.compiler.parser;
 
 public interface Parser<T> {
     T parseFile(String fileName);

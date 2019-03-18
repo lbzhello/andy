@@ -1,5 +1,6 @@
 package xyz.lius.andy;
 
+import xyz.lius.andy.core.ReplEngine;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.*;
 import org.junit.Test;

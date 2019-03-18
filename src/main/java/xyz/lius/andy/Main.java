@@ -1,17 +1,13 @@
 package xyz.lius.andy;
 
-import xyz.lius.andy.config.AppConfig;
 import xyz.lius.andy.core.Application;
-import org.springframework.context.annotation.*;
 
 /**
  * Hello world!
  *
  */
-@Configuration
-@Import(AppConfig.class)
 public class Main {
-    public static void main( String[] args ) throws Exception {
+    public static void main( String[] args ) {
         System.out.println("*********************************");
         System.out.println("* *  Application starting...  * *");
         System.out.println("*********************************");

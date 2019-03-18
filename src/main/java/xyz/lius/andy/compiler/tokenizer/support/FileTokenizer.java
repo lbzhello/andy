@@ -1,12 +1,12 @@
-package xyz.lius.andy.tokenizer.support;
+package xyz.lius.andy.compiler.tokenizer.support;
 
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.io.CharIter;
-import xyz.lius.andy.tokenizer.LineNumberToken;
-import xyz.lius.andy.tokenizer.Token;
-import xyz.lius.andy.tokenizer.TokenFlag;
-import xyz.lius.andy.tokenizer.Tokenizer;
+import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
+import xyz.lius.andy.compiler.tokenizer.Token;
+import xyz.lius.andy.compiler.tokenizer.TokenFlag;
+import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 
 import java.io.*;
 

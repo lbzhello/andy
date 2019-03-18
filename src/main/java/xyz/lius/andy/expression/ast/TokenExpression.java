@@ -3,7 +3,7 @@ package xyz.lius.andy.expression.ast;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
-import xyz.lius.andy.tokenizer.LineNumberToken;
+import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 
 public class TokenExpression implements LineNumberToken, Expression, Name {
     protected Object value;
