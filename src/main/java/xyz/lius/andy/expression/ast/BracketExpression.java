@@ -1,9 +1,7 @@
 package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.expression.ExpressionType;
+import xyz.lius.andy.expression.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,5 +60,10 @@ public class BracketExpression implements Expression {
             sb.replace(sb.length()-1, sb.length(), "");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        return this;
     }
 }

@@ -3,8 +3,15 @@ package xyz.lius.andy.expression;
 
 import java.io.Serializable;
 
-public interface Expression extends Nameable, Serializable {
-    default Expression eval(Context<Name, Expression> context){
-        return this;
+@FunctionalInterface
+public interface Expression extends Serializable, Cloneable {
+    Expression eval(Context<Name, Expression> context);
+
+    /**
+     * transfer an object to a name
+     * @return
+     */
+    default Name getName() {
+        return Name.NIL;
     }
 }

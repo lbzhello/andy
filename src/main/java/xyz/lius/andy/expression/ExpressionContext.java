@@ -55,4 +55,9 @@ public class ExpressionContext implements Expression, Context<Name, Expression> 
     public void setParent(Context<Name, Expression> parent) {
         this.parent = parent;
     }
+
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        return this;
+    }
 }

@@ -1,7 +1,9 @@
 package xyz.lius.andy.expression.ast;
 
+import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionType;
+import xyz.lius.andy.expression.Name;
 import xyz.lius.andy.tokenizer.LineNumberToken;
 
 public class ErrorExpression implements Expression {
@@ -32,5 +34,10 @@ public class ErrorExpression implements Expression {
     @Override
     public String toString() {
         return toSting;
+    }
+
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        return this;
     }
 }

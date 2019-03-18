@@ -6,5 +6,10 @@ public enum ExpressionType implements Expression {
     OR, AND, NOT,
     TRUE, FALSE,
     PRINT,
-    ARRAY,
+    ARRAY,;
+
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        return this;
+    }
 }
