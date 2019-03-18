@@ -12,7 +12,7 @@ public class Main {
         System.out.println("* *  Application starting...  * *");
         System.out.println("*********************************");
 
-        Application.start(Main.class,args);
+        Application.start(args);
 
         System.out.println("*********************************");
         System.out.println("* *  Application ended        * *");
