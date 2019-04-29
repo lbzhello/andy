@@ -193,7 +193,7 @@ Java 11+
     xml(tag, prise) = {
         <book>
           <(tag)>inception</(tag)>
-          <price>(value</price>
+          <price>(value)</price>
         </book>
     }
     
@@ -201,7 +201,7 @@ Java 11+
     //rst 
     <book>
       <name>inception</name>
-      <prise>7</prise>
+      <price>7</price>
     </book>
     
 
@@ -216,7 +216,7 @@ Java 11+
         first line
         second line
     `
-    //rst = 
+    //tmpl = 
         first line
         second line
         
@@ -224,10 +224,10 @@ Java 11+
          |first line
          |second line
          
-     //rst = 
+     //tmpl = 
      first line
      second line
      
-     //using '\\' as escaped char
+     //using '\' as escaped char
      greet = "abc"
      str = `hello \(greet)`  //str = "hello (greet)"
