@@ -1,0 +1,39 @@
+square = [1 2 3 4 5 6]
+a = 2
+square.map(x -> x + a).filter({$0 > 3}).each(x -> print(x))
+a = square.map(x -> x + 1)
+
+a.other()
+(print 2)
+a(2) * a(1) + a(0)
+"abc".toArray()
+iter(obj){
+ value:nil
+ call(f){
+    (return f(value))
+ }
+ value = obj
+ self
+}
+rst = iter(3)
+(print rst.call(x -> x + 2))
+pair = [1 2]
+pair.reverse()(0)
+arr = [1 2 3]
+(print arr.count())
+arr.reduce((x,y) -> x + y)
+
+group = [["a" 1] ["b" 2] ["a" 2] ["b", 5] ["c" 1]]
+(print group.groupByKey())
+(print group.reduceByKey((x, y) -> x + y).map(x -> x.other()))
+(print group.mapValues(x -> x + 1))
+reverseGroup = group.map(x -> x.reverse())
+(print reverseGroup)
+(print group.groupBy(x -> if x.other() > 2 "up" else "down"))
+
+groupBy = [1 2 3 4 5 6 7]
+(print groupBy.groupBy(x -> if x > 4 "bigger" else "smaller"))
+
+a = "ab cd ef  ab "
+a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.other())
+a.split().map(x -> (x, 1)).reverse().reduceByKey((x, y) -> x + y).map(x -> x.reverse()).groupByKey()

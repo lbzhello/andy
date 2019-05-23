@@ -52,9 +52,12 @@
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.20.1</version>
-                    <!--测试报错,原因未知,跳过再说 -->
                     <configuration>
+                        <!--测试报错,原因未知,跳过再说 -->
                         <skip>true</skip>
+                        <!--<includes>-->
+                            <!--<include>**/*Test.java</include>-->
+                        <!--</includes>-->
                     </configuration>
                 </plugin>
                 <plugin>

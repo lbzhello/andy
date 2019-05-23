@@ -1,0 +1,10 @@
+content = <name>liu</name>
+a = {
+    <books>
+      <book />
+      <book>(content)</book>
+      123
+    </books>
+}
+
+(a)

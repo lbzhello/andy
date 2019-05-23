@@ -1,0 +1,19 @@
+f(x) = x + 1
+tmpl = `this is (f 1)`
+print("tmpl: ")
+print(tmpl)
+
+tmpl2 = `\
+    this is (f 0) line.
+    this is (f 1) line
+`
+print("tmpl2: ")
+print(tmpl2)
+
+tmpl3 = `\
+    |this is \(f 0) line
+    \|this is (f 1) line
+    |this is (f 2) line
+`
+print("tmpl3: ")
+print(tmpl3)
