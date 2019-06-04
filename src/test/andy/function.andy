@@ -1,0 +1,41 @@
+debug = import debug
+print("Function")
+
+max(a, b) = {
+    return if (a > b) a else b
+}
+
+min(a, b) = if (a > b) b else a
+
+sum(a, b) = a + b
+debug.test("max(13, 14)", 14, max(13, 14))
+debug.test("min(13, 14)", 13, min(13, 14))
+debug.test("sum(13, 14)", 27, sum(13, 14))
+
+print()
+print("Object")
+
+book = {
+    name: "Harry Potter"
+    author: "J.K. Rowling"
+    publish: "1997-06-30"
+    type: "Novel"
+
+    setName(newName){
+        name = newName
+    }
+
+    getName(){
+        return self.name
+    }
+}
+debug.test("book.name", "Harry Potter", book.name)
+
+book.setName("first book")
+debug.test("book.getName()", "first book", book.getName())
+
+book.name = "second book"
+debug.test("book.getName()", "second book", book.getName())
+
+n = "name"
+debug.test("book.getName()", "second book", book.(n))
