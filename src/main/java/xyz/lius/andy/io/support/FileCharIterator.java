@@ -1,6 +1,6 @@
 package xyz.lius.andy.io.support;
 
-import xyz.lius.andy.io.CharIter;
+import xyz.lius.andy.io.CharIterator;
 
 import java.io.*;
 import java.text.StringCharacterIterator;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * @see StringCharacterIterator
  */
-public class FileCharIter implements CharIter {
+public class FileCharIterator implements CharIterator {
     private StringCharacterIterator iterator;
     private BufferedReader reader;
     private char[] buf = new char[1024]; //缓冲
@@ -18,7 +18,7 @@ public class FileCharIter implements CharIter {
      * generate iter from reader
      * @param fileName
      */
-    public FileCharIter(String fileName) {
+    public FileCharIterator(String fileName) {
         try {
             this.reader = new BufferedReader(new FileReader(fileName));
             int capacity = this.reader.read(buf);
@@ -30,23 +30,9 @@ public class FileCharIter implements CharIter {
         }
     }
 
-    private FileCharIter(StringCharacterIterator iterator) {
-        this.iterator = iterator;
-    }
-
     @Override
     public boolean hasNext() {
         return this.current() != DONE;
-    }
-
-    @Override
-    public char first() {
-        return iterator.first();
-    }
-
-    @Override
-    public char last() {
-        return iterator.last();
     }
 
     @Override
@@ -79,28 +65,4 @@ public class FileCharIter implements CharIter {
         return iterator.previous();
     }
 
-    @Override
-    public char setIndex(int position) {
-        return iterator.setIndex(position);
-    }
-
-    @Override
-    public int getBeginIndex() {
-        return iterator.getBeginIndex();
-    }
-
-    @Override
-    public int getEndIndex() {
-        return iterator.getEndIndex();
-    }
-
-    @Override
-    public int getIndex() {
-        return iterator.getIndex();
-    }
-
-    @Override
-    public Object clone() {
-        return new FileCharIter((StringCharacterIterator) iterator.clone());
-    }
 }

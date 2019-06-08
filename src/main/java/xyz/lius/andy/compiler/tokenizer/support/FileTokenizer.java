@@ -2,7 +2,7 @@ package xyz.lius.andy.compiler.tokenizer.support;
 
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.io.CharIter;
+import xyz.lius.andy.io.CharIterator;
 import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.TokenFlag;
@@ -11,12 +11,12 @@ import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import java.io.*;
 
 public class FileTokenizer implements Tokenizer<Token> {
-    private CharIter iterator;
+    private CharIterator iterator;
     private int lineNumber = 1;
     private Token currentToken = Definition.HOF;
 
     @Override
-    public void init(CharIter iterator) {
+    public void setResource(CharIterator iterator) {
         this.iterator = iterator;
     }
 
@@ -42,41 +42,6 @@ public class FileTokenizer implements Tokenizer<Token> {
                        currentToken = Definition.getDelimiter(iterator.current());
                        iterator.next(); //eat
                        return currentToken;
-//                       Character c1 = iterator.current(),c2;
-//                       iterator.next(); //eat c1
-//                       if (c1 == '=') {
-//                           if ((c2 = iterator.current()) == '>' || c2 == '=') { // => or ==
-//                               iterator.next(); //eat '>' or '='
-//                               return ExpressionFactory.symbol(c1.toString() + c2.toString(), getLineNumber());
-//                           } else {
-//                               return ExpressionFactory.symbol("=", getLineNumber());
-//                           }
-//                       } else if (c1 == '<') {
-//                           if (Character.isWhitespace(iterator.current())){
-//                               return ExpressionFactory.symbol(c1.toString(), getLineNumber());
-//                           } else if ((c2 = iterator.current()) == '=') {
-//                               iterator.next(); //eat '='
-//                               return ExpressionFactory.symbol("<=", getLineNumber());
-//                           } else { //left angle bracket
-//                               return TokenFlag.ANGLE_BRACKET;
-//                           }
-//                       } else if (c1 == '>') {
-//                           if (iterator.current() == '=') {
-//                               iterator.next(); //eat '='
-//                               return ExpressionFactory.symbol(">=", getLineNumber());
-//                           } else {
-//                               return ExpressionFactory.symbol(">", getLineNumber());
-//                           }
-//                       } else if (c1 == '!') {
-//                           if (iterator.current() == '=') {
-//                               iterator.next(); //eat
-//                               return ExpressionFactory.symbol("!=", getLineNumber());
-//                           } else {
-//                               return ExpressionFactory.symbol("!");
-//                           }
-//                       } else {
-//                           return Definition.getDelimiter(c1);
-//                       }
                    } else if (Character.isDigit(iterator.current())) { //number
                        currentToken = nextNumber();
                        return currentToken;
@@ -125,7 +90,7 @@ public class FileTokenizer implements Tokenizer<Token> {
 
     @Override
     public boolean hasNext(){
-        return iterator.current() != CharIter.DONE;
+        return iterator.current() != CharIterator.DONE;
     }
 
     /**

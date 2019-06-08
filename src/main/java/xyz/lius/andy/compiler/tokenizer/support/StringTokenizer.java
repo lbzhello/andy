@@ -5,13 +5,13 @@ import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ast.StringExpression;
 import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
-import xyz.lius.andy.io.CharIter;
+import xyz.lius.andy.io.CharIterator;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class StringTokenizer implements Tokenizer<Token> {
-    private CharIter iterator;
+    private CharIterator iterator;
     private Token currentToken = Definition.HOF;
 
     private static final Set<Character> delimiter = new HashSet<>();
@@ -22,7 +22,7 @@ public class StringTokenizer implements Tokenizer<Token> {
     }
 
     @Override
-    public void init(CharIter iterator) {
+    public void setResource(CharIterator iterator) {
         this.iterator = iterator;
     }
 
@@ -33,7 +33,7 @@ public class StringTokenizer implements Tokenizer<Token> {
 
     @Override
     public boolean hasNext() {
-        return this.iterator.current() != CharIter.DONE;
+        return this.iterator.current() != CharIterator.DONE;
     }
 
     @Override

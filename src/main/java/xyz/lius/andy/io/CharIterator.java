@@ -5,6 +5,14 @@ import java.text.CharacterIterator;
 /**
  * @see CharacterIterator
  */
-public interface CharIter extends CharacterIterator {
+public interface CharIterator {
+    char DONE = '\uFFFF';
+
     boolean hasNext();
+
+    char current();
+
+    char next();
+
+    char previous();
 }
