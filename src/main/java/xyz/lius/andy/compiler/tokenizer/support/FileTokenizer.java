@@ -1,23 +1,30 @@
 package xyz.lius.andy.compiler.tokenizer.support;
 
-import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.io.CharIterator;
 import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.TokenFlag;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
+import xyz.lius.andy.core.Definition;
+import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.io.CharIterator;
 
-import java.io.*;
+import java.io.IOException;
 
 public class FileTokenizer implements Tokenizer<Token> {
     private CharIterator iterator;
-    private int lineNumber = 1;
-    private Token currentToken = Definition.HOF;
+    private int lineNumber;
+    private Token currentToken;
 
     @Override
     public void setResource(CharIterator iterator) {
         this.iterator = iterator;
+        lineNumber = 1;
+        currentToken = Definition.HOF;
+    }
+
+    @Override
+    public void reset() {
+        currentToken = Definition.HOF;
     }
 
     @Override
@@ -45,9 +52,14 @@ public class FileTokenizer implements Tokenizer<Token> {
                    } else if (Character.isDigit(iterator.current())) { //number
                        currentToken = nextNumber();
                        return currentToken;
-                   } else if (iterator.current() == '`') {
-//                       iterator.next(); //eat '`'
-                       return TokenFlag.BACK_QUOTE;
+                   } else if (iterator.current() == '`') { //交给外部解析器解析
+                       if (currentToken != TokenFlag.BACK_QUOTE) { //初次进入
+                           currentToken = TokenFlag.BACK_QUOTE;
+                       } else { // '`'已经被消费
+                           iterator.next(); //eat '`'
+                           currentToken = Definition.HOF;
+                       }
+                       return currentToken;
                    } else if (iterator.current() == '/') {
                        iterator.next();  //eat '/'
                        if (iterator.current() == '/') { //注释
@@ -90,7 +102,7 @@ public class FileTokenizer implements Tokenizer<Token> {
 
     @Override
     public boolean hasNext(){
-        return iterator.current() != CharIterator.DONE;
+        return iterator.hasNext();
     }
 
     /**
@@ -137,9 +149,13 @@ public class FileTokenizer implements Tokenizer<Token> {
                 sb.append(iterator.current());
                 iterator.next(); //eat
                 return ExpressionFactory.symbol(sb.toString().trim(), getLineNumber());
-            } else {
+            } else { //xml 交给外部处理
                 iterator.previous(); //back to '<'
-                return TokenFlag.ANGLE_BRACKET;
+                if (currentToken != TokenFlag.ANGLE_BRACKET) { //初次进入
+                    return TokenFlag.ANGLE_BRACKET;
+                } else { //已经处理
+                    return TokenFlag.HOF;
+                }
             }
         } else {
             while (!Character.isWhitespace(iterator.current()) && !Definition.isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
