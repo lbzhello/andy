@@ -5,7 +5,6 @@ import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
 
 import java.util.List;
-import java.util.Objects;
 
 public class AssignExpression extends NativeExpression {
     @Override
@@ -35,7 +34,7 @@ public class AssignExpression extends NativeExpression {
                 value = right.eval(context).parameters(left.getParameters());
             } else { //e.g. f(x) = x + 1
                 name = left.getName();
-                value = ExpressionFactory.complex(new ExpressionContext(context)).parameters(left.getParameters()).list(List.of(second()));
+                value = ExpressionFactory.complex(new ExpressionContext(context)).parameters(left.getParameters()).code(List.of(second()));
             }
         } else { //e.g. f = x + 1
             name = this.first().getName();

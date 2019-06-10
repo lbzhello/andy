@@ -34,7 +34,7 @@ public class PlusExpression extends NativeExpression {
             return ExpressionFactory.error(error,"operator(+): unsupport Operand Type!");
         }
 //        BigDecimal accu = BigDecimal.ZERO;
-//        for (Expression expression : list()) {
+//        for (Expression expression : code()) {
 //            Expression factor = expression.eval(context);
 //            if (!(ExpressionUtils.isNumber(factor))) {
 //                return new ErrorExpression(factor, "Unsupport Operand Type!");

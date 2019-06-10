@@ -13,8 +13,8 @@ import java.util.Objects;
  */
 @CurlyBracketed
 public class CurlyBracketExpression extends BracketExpression {
-    private List<Expression> fieldList = new ArrayList<>();
-    private List<Expression> evalList = new ArrayList<>();
+    private List<Expression> data = new ArrayList<>();
+    private List<Expression> code = new ArrayList<>();
 
     public CurlyBracketExpression(Expression... expressions) {
         super(expressions);
@@ -28,9 +28,9 @@ public class CurlyBracketExpression extends BracketExpression {
         if (expression instanceof RoundBracketExpression && (
                 Objects.equals(((RoundBracketExpression) expression).first(), Definition.DEFINE) ||
                 Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR))) {
-            this.fieldList.add(expression);
+            this.data.add(expression);
         } else {
-            this.evalList.add(expression);
+            this.code.add(expression);
         }
 
         return this;
@@ -39,13 +39,10 @@ public class CurlyBracketExpression extends BracketExpression {
     @Override
     public ComplexExpression eval(Context<Name, Expression> context) {
         Context<Name, Expression> childContext = new ExpressionContext(context);
-        for (Expression expression : this.fieldList) {
+        for (Expression expression : this.data) {
             expression.eval(childContext);
         }
-//        this.fieldList.stream().forEach(expression -> {
-//            expression.eval(childChild);
-//        });
-        return ExpressionFactory.complex(childContext).list(this.evalList);
+        return ExpressionFactory.complex(childContext).code(this.code);
     }
 
     @Override
@@ -53,26 +50,4 @@ public class CurlyBracketExpression extends BracketExpression {
         return "{" + super.toString() + "}";
     }
 
-    private String toStringTest() {
-        StringBuffer buildListSB = new StringBuffer();
-        StringBuffer evalListSB = new StringBuffer();
-
-        for (Expression expression : fieldList) {
-            buildListSB.append(expression + " ");
-        }
-
-        for (Expression expression : evalList) {
-            evalListSB.append(expression + " ");
-        }
-
-        if (buildListSB.length() > 0 && evalListSB.length() == 0) { //去掉 buildStreamSB 最后空格
-            buildListSB.deleteCharAt(buildListSB.length() - 1);
-        }
-
-        if (evalListSB.length() > 0) { //去掉evalStreamSB最后空格
-            evalListSB.deleteCharAt(evalListSB.length() - 1);
-        }
-
-        return "{" + buildListSB + evalListSB + "}";
-    }
 }

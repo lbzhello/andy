@@ -17,7 +17,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     @Override
     public Expression eval(Context<Name, Expression> context) {
 //        BracketExpression rstList = ExpressionFactory.squareBracket();
-//        for (Expression element : list()) {
+//        for (Expression element : code()) {
 //            rstList.add(element.eval(context));
 //        }
 //        return rstList;
@@ -29,7 +29,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         return "[" + super.toString() + "]";
     }
 
-    //list operation
+    //code operation
     @Override
     public Expression map(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();

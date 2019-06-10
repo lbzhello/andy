@@ -10,7 +10,7 @@ public class ComplexExpression implements Expression {
     private static final Name SELF = ExpressionFactory.symbol("self");
 
     private List<Expression> parameters;
-    private List<Expression> list;
+    private List<Expression> code;
 
     private Context<Name, Expression> context;
 
@@ -32,8 +32,8 @@ public class ComplexExpression implements Expression {
         return context;
     }
 
-    public ComplexExpression list(List<Expression> list) {
-        this.list = list;
+    public ComplexExpression code(List<Expression> code) {
+        this.code = code;
         return this;
     }
 
@@ -42,7 +42,7 @@ public class ComplexExpression implements Expression {
         context.setParent(this.context);
         context.newbind(SELF, this);
         Expression rstValue = ExpressionType.NIL;
-        for (Expression expression : this.list) {
+        for (Expression expression : this.code) {
             rstValue = expression.eval(context);
             if (ExpressionUtils.isReturn(rstValue)) {
                 return ExpressionUtils.asReturn(rstValue).getValue();
