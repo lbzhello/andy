@@ -30,7 +30,7 @@ public class ImportExpression extends NativeExpression {
                         importFileName = importFileName.split("[.]")[0];
                     }
                     Expression value = expression.eval(context);
-                    context.newbind(ExpressionFactory.symbol(importFileName), value);
+                    context.add(ExpressionFactory.symbol(importFileName), value);
                     return value;
                 }
             }

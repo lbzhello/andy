@@ -13,8 +13,8 @@ import java.util.Objects;
  */
 @CurlyBracketed
 public class CurlyBracketExpression extends BracketExpression {
-    private List<Expression> data = new ArrayList<>();
-    private List<Expression> code = new ArrayList<>();
+    private List<Expression> fields = new ArrayList<>();
+    private List<Expression> codes = new ArrayList<>();
 
     public CurlyBracketExpression(Expression... expressions) {
         super(expressions);
@@ -28,9 +28,9 @@ public class CurlyBracketExpression extends BracketExpression {
         if (expression instanceof RoundBracketExpression && (
                 Objects.equals(((RoundBracketExpression) expression).first(), Definition.DEFINE) ||
                 Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR))) {
-            this.data.add(expression);
+            this.fields.add(expression);
         } else {
-            this.code.add(expression);
+            this.codes.add(expression);
         }
 
         return this;
@@ -39,10 +39,10 @@ public class CurlyBracketExpression extends BracketExpression {
     @Override
     public ComplexExpression eval(Context<Name, Expression> context) {
         Context<Name, Expression> childContext = new ExpressionContext(context);
-        for (Expression expression : this.data) {
+        for (Expression expression : this.fields) {
             expression.eval(childContext);
         }
-        return ExpressionFactory.complex(childContext).code(this.code);
+        return ExpressionFactory.complex(childContext).code(this.codes);
     }
 
     @Override

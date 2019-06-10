@@ -19,17 +19,20 @@ public interface Context<K,V> extends Serializable {
      * @param value
      * @return
      */
-    boolean rebind(Name key, Expression value);
+    boolean update(K key, V value);
 
     /**
-     * create a (key, value) pair in this context
+     * add a (key, value) pair in this context
      * @param key
      * @param value
      * @return
      */
-    Expression newbind(Name key, Expression value);
+    default V add(K key, V value) {
+        bind(key, value);
+        return null;
+    }
 
     boolean contains(K key);
 
-    void setParent(Context<Name, Expression> parent);
+    void setParent(Context<K, V> parent);
 }

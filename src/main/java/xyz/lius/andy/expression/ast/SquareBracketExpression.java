@@ -1,7 +1,6 @@
 package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.runtime.ArrayMethodExpression;
 
 import java.util.*;
 
@@ -35,7 +34,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression expression : this.list()) {
-            context.newbind(ExpressionFactory.symbol("$0"), expression); //put param in the context
+            context.add(ExpressionFactory.symbol("$0"), expression); //put param in the context
             squareBracket.add(func.eval(context));
         }
         return squareBracket;
@@ -45,7 +44,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
     public Expression each(Expression func) {
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression expression : this.list()) {
-            context.newbind(ExpressionFactory.symbol("$0"), expression);
+            context.add(ExpressionFactory.symbol("$0"), expression);
             func.eval(context);
         }
         return ExpressionType.NIL;
@@ -56,7 +55,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression expression : this.list()) {
-            context.newbind(ExpressionFactory.symbol("$0"), expression);
+            context.add(ExpressionFactory.symbol("$0"), expression);
             if (func.eval(context) == ExpressionType.TRUE) {
                 squareBracket.add(expression);
             }
@@ -70,7 +69,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression expression : list()) {
             ExpressionArray array = ExpressionUtils.asArray(expression);
-            context.newbind(ExpressionFactory.symbol("$0"), array.other());
+            context.add(ExpressionFactory.symbol("$0"), array.other());
             squareBracket.add(ExpressionFactory.squareBracket(array.first(), func.eval(context)));
         }
         return squareBracket;
@@ -82,7 +81,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         Iterator<Expression> iterator = list().iterator();
         if (iterator.hasNext()) {
             Expression first = iterator.next();
-            context.newbind(ExpressionFactory.symbol("$0"), first);
+            context.add(ExpressionFactory.symbol("$0"), first);
             if (iterator.hasNext()) {
                 return reduceCircle(iterator, func, context);
             } else { //e.g. [fist]
@@ -102,10 +101,10 @@ public class SquareBracketExpression extends BracketExpression implements Expres
      * @return
      */
     private Expression reduceCircle(Iterator<Expression> iterator, Expression func, Context<Name, Expression> context) {
-        context.newbind(ExpressionFactory.symbol("$1"), iterator.next()); //绑定第二个参数
+        context.add(ExpressionFactory.symbol("$1"), iterator.next()); //绑定第二个参数
         Expression first = func.eval(context);
         if (iterator.hasNext()) {
-            context.newbind(ExpressionFactory.symbol("$0"), first);
+            context.add(ExpressionFactory.symbol("$0"), first);
             return reduceCircle(iterator, func, context);
         } else {
             return first;
@@ -135,7 +134,7 @@ public class SquareBracketExpression extends BracketExpression implements Expres
         SquareBracketExpression parrent = ExpressionFactory.squareBracket(); //rst [[...] [...]]
         Context<Name, Expression> context = new ExpressionContext();
         for (Expression element : list()) {
-            context.newbind(ExpressionFactory.symbol("$0"), element); //传参
+            context.add(ExpressionFactory.symbol("$0"), element); //传参
             Expression key = func.eval(context);
             SquareBracketExpression child = keyMap.get(key);
             if (child == null) { //new

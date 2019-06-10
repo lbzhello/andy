@@ -28,10 +28,10 @@ public class ColonExpression extends RoundBracketExpression {
             List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
             ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
             complexExpression.parameters(parameters);
-            context.newbind(key.getName(), complexExpression);
+            context.add(key.getName(), complexExpression);
             return complexExpression;
         } else {
-            context.newbind(key.getName(), value);
+            context.add(key.getName(), value);
             return value;
         }
 
