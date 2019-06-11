@@ -30,6 +30,9 @@ public final class Definition {
      */
     public static Expression PAIR = ExpressionType.PAIR;
 
+    //represent expression it self
+    public static final Name SELF = ExpressionFactory.symbol("self");
+
     /**
      * 脚本文件所在的目录
      */

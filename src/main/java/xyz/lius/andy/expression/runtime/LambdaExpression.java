@@ -21,6 +21,6 @@ public class LambdaExpression extends RoundBracketExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         //every ComplexExpression has it's own context
-        return this.curlyBracket.eval(context).parameters(bracket.getParameters());
+        return this.curlyBracket.eval(context).setParameters(bracket.getParameters());
     }
 }

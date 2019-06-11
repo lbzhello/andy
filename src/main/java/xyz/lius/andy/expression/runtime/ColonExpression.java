@@ -27,7 +27,7 @@ public class ColonExpression extends RoundBracketExpression {
         if (ExpressionUtils.isCurlyBracket(value) || ExpressionUtils.isLambda(value)) {
             List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
             ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
-            complexExpression.parameters(parameters);
+            complexExpression.setParameters(parameters);
             context.add(key.getName(), complexExpression);
             return complexExpression;
         } else {

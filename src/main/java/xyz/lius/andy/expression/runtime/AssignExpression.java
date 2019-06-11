@@ -31,10 +31,10 @@ public class AssignExpression extends NativeExpression {
             } else if (second() instanceof CurlyBracketExpression) { //define a function. e.g. f(x) = { x }
                 CurlyBracketExpression right = (CurlyBracketExpression) second();
                 name = left.getName();
-                value = right.eval(context).parameters(left.getParameters());
+                value = right.eval(context).setParameters(left.getParameters());
             } else { //e.g. f(x) = x + 1
                 name = left.getName();
-                value = ExpressionFactory.complex(new ExpressionContext(context)).parameters(left.getParameters()).code(List.of(second()));
+                value = ExpressionFactory.complex(new ExpressionContext(context)).setParameters(left.getParameters()).setCodes(List.of(second()));
             }
         } else { //e.g. f = x + 1
             name = this.first().getName();

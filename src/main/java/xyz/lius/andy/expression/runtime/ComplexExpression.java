@@ -1,13 +1,12 @@
 package xyz.lius.andy.expression.runtime;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 
 import java.util.List;
 
 @CurlyBracketed
 public class ComplexExpression implements Expression {
-    //represent expression it self
-    private static final Name SELF = ExpressionFactory.symbol("self");
 
     private List<Expression> parameters;
     private List<Expression> codes;
@@ -19,7 +18,7 @@ public class ComplexExpression implements Expression {
     }
 
     //形参
-    public ComplexExpression parameters(List<Expression> parameters) {
+    public ComplexExpression setParameters(List<Expression> parameters) {
         this.parameters = parameters;
         // param1 -> NameExpression.$0; param2 -> NameExpression.$1; ...
         for (int i = 0; i < this.parameters.size(); i++) {
@@ -28,19 +27,27 @@ public class ComplexExpression implements Expression {
         return this;
     }
 
+    public List<Expression> getParameters() {
+        return parameters;
+    }
+
     public Context<Name, Expression> getContext() {
         return context;
     }
 
-    public ComplexExpression code(List<Expression> codes) {
+    public ComplexExpression setCodes(List<Expression> codes) {
         this.codes = codes;
         return this;
+    }
+
+    public List<Expression> getCodes() {
+        return codes;
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         context.setParent(this.context);
-        context.add(SELF, this);
+        context.add(Definition.SELF, this);
         Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.codes) {
             rstValue = expression.eval(context);

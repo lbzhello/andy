@@ -27,7 +27,7 @@ public class LineExpression extends BracketExpression {
         for (Expression expression : this.list()) {
             if (ExpressionUtils.isRoundBracket(expression)) { //only eval (...)
                 Expression rst = expression.eval(context);
-                if (ExpressionUtils.isSquareBracket(rst)) { //if it's a code
+                if (ExpressionUtils.isSquareBracket(rst)) { //if it's a setCodes
                     List<Expression> lines = ExpressionUtils.asSquareBracket(rst).list();
                     if (lines.size() > 1) { //add space to other lines except line 1
                         char[] spaces = new char[charCount];

@@ -42,7 +42,7 @@ public class CurlyBracketExpression extends BracketExpression {
         for (Expression expression : this.fields) {
             expression.eval(childContext);
         }
-        return ExpressionFactory.complex(childContext).code(this.codes);
+        return ExpressionFactory.complex(childContext).setCodes(this.codes);
     }
 
     @Override
