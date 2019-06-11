@@ -33,7 +33,7 @@ public class MainTest {
     @Test
     public void operatorTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("src/test/andy/operator.andy");
+        replEngine.evalFile("src/test/andy/test.andy");
     }
 
     @Test

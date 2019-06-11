@@ -22,7 +22,7 @@ debug.test("a >= a", true, a >= a)
 debug.test("a <= b", true, a <= b)
 
 print()
-debug.test("Logical")
+print("Logical")
 debug.test("a || b", a, a || b)
 debug.test("t || b", t, t || b)
 debug.test("f || b", b, f || b)
