@@ -112,8 +112,8 @@ public class ExpressionFactory extends NativeFactory {
         return new MethodExpression(methodObject, methodName);
     }
 
-    public static ArrayMethodExpression arrayMethod(Expression methodObject, String methodName) {
-        return new ArrayMethodExpression(methodObject, methodName);
+    public static ArrayMethodCache arrayMethod(Expression methodObject, String methodName) {
+        return new ArrayMethodCache(methodObject, methodName);
     }
 
     public static XmlExpression xml() {

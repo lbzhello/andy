@@ -83,11 +83,11 @@ public class ExpressionUtils {
     }
 
     public static boolean isArray(Expression expression) {
-        return expression instanceof ExpressionArray;
+        return expression instanceof ArrayMethod;
     }
 
-    public static ExpressionArray asArray(Expression expression) {
-        return (ExpressionArray) expression;
+    public static ArrayMethod asArray(Expression expression) {
+        return (ArrayMethod) expression;
     }
 
     public static boolean isComplex(Expression expression) {

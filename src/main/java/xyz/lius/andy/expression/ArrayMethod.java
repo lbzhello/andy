@@ -1,11 +1,13 @@
 package xyz.lius.andy.expression;
 
+import xyz.lius.andy.expression.runtime.ArrayMethodCache;
+
 /**
- * 表达式数组迭代接口,实现此接口可以通过 ArrayMethodExpression MethodHandle 方式调用
+ * 表达式数组迭代接口,实现此接口可以通过 ArrayMethodCache MethodHandle 方式调用
  * e.g. [expr1 expr2 expr3 ...]
- * @see xyz.lius.andy.expression.runtime.ArrayMethodExpression
+ * @see ArrayMethodCache
  */
-public interface ExpressionArray extends Expression {
+public interface ArrayMethod extends Expression {
     //x -> y
     Expression map(Expression func);
 

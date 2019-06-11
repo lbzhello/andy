@@ -11,6 +11,7 @@ import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.ExpressionUtils;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
+import xyz.lius.andy.expression.runtime.ReturnExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
@@ -320,7 +321,15 @@ public class DefaultParser implements Parser<Expression> {
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());
-        BracketExpression roundBracketExpression = ExpressionFactory.roundBracket(op);
+        BracketExpression roundBracketExpression;
+        switch (op.toString()) {
+            case "return":
+                roundBracketExpression = new ReturnExpression();
+                break;
+            default:
+                roundBracketExpression = ExpressionFactory.roundBracket(op);
+
+        }
         for (int i = 0; i < size; i++) {
             roundBracketExpression.add(expression());
         }

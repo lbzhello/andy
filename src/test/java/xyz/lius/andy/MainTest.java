@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class MainTest {
     public static void main(String[] args) {
-        Main.main(new String[]{"docs/examples/test.andy"});
+        Main.main(new String[]{"src/test/andy/test.andy"});
     }
 
     @Test
@@ -33,7 +33,7 @@ public class MainTest {
     @Test
     public void operatorTest() {
         ReplEngine replEngine = new ReplEngine();
-        replEngine.evalFile("src/test/andy/test.andy");
+        replEngine.evalFile("src/test/andy/operator.andy");
     }
 
     @Test

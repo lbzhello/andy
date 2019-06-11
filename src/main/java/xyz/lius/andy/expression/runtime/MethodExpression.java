@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /**
  * use reflect/invoke to invoke a java method
- * @see ArrayMethodExpression
+ * @see ArrayMethodCache
  */
 public class MethodExpression extends NativeExpression {
     private String methodName = "";

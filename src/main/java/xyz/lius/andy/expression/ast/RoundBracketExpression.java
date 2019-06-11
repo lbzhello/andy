@@ -38,20 +38,20 @@ public class RoundBracketExpression extends BracketExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         if (list().size() == 0) return this; //e.g. ()
-        Expression name = first().eval(context);
-        if (name == ExpressionType.NIL && first() == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
-        if (ExpressionUtils.isNative(name)) {
-            return ExpressionUtils.asNative(name).parameters(this.getParameters()).eval(context);
+        Expression first = first().eval(context);
+        if (first == ExpressionType.NIL && first() == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
+        if (ExpressionUtils.isNative(first)) {
+            return ExpressionUtils.asNative(first).parameters(this.getParameters()).eval(context);
         }
 
-        if (ExpressionUtils.isComplex(name)) { //e.g. name = {...}; (name x y)
-            return new StackFrame((ComplexExpression) name, context, getParameters()).eval(null);
-        } else if (ExpressionUtils.isSquareBracket(name) && this.list().size() > 1) { //e.g. name = [...]; name(1)
+        if (ExpressionUtils.isComplex(first)) { //e.g. name = {...}; (name x y)
+            return new StackFrame((ComplexExpression) first, context, getParameters()).eval(null);
+        } else if (ExpressionUtils.isSquareBracket(first) && this.list().size() > 1) { //e.g. name = [...]; name(1)
             Expression index = second().eval(context);
             if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
-            return ExpressionUtils.asSquareBracket(name).list().get(ExpressionUtils.asNumber(index).intValue());
+            return ExpressionUtils.asSquareBracket(first).list().get(ExpressionUtils.asNumber(index).intValue());
         } else if (this.list().size() == 1) { //e.g. (name)
-            return name;
+            return first;
         } else {
             return ExpressionFactory.error(first(), "Expression must be ComplexExpression!");
         }
