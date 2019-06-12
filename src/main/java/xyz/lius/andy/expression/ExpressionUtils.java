@@ -1,7 +1,7 @@
 package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.runtime.*;
+import xyz.lius.andy.expression.base.*;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
 
@@ -98,20 +98,20 @@ public class ExpressionUtils {
         return (ComplexExpression)expression;
     }
 
-    public static boolean isObject(Expression expression) {
-        return expression instanceof ObjectExpression;
+    public static boolean isJavaObject(Expression expression) {
+        return expression instanceof JavaObjectExpression;
     }
 
-    public static ObjectExpression asObject(Expression expression) {
-        return (ObjectExpression)expression;
+    public static JavaObjectExpression asJavaObject(Expression expression) {
+        return (JavaObjectExpression)expression;
     }
 
-    public static boolean isMethod(Expression expression) {
-        return expression instanceof MethodExpression;
+    public static boolean isJavaMethod(Expression expression) {
+        return expression instanceof JavaMethodExpression;
     }
 
-    public static MethodExpression asMethod(Expression expression) {
-        return (MethodExpression) expression;
+    public static JavaMethodExpression asJavaMethod(Expression expression) {
+        return (JavaMethodExpression) expression;
     }
 
     public static StringExpression asString(Expression expression) {

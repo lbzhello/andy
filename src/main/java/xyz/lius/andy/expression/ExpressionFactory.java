@@ -1,8 +1,8 @@
 package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.core.StringIterExpression;
-import xyz.lius.andy.expression.runtime.*;
+import xyz.lius.andy.expression.base.StringIterExpression;
+import xyz.lius.andy.expression.base.*;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
@@ -104,16 +104,16 @@ public class ExpressionFactory extends NativeFactory {
         return new ComplexExpression(context);
     }
 
-    public static ObjectExpression object(Object o) {
-        return new ObjectExpression(o);
+    public static JavaObjectExpression javaObject(Object o) {
+        return new JavaObjectExpression(o);
     }
 
-    public static MethodExpression method(Object methodObject, String methodName) {
-        return new MethodExpression(methodObject, methodName);
+    public static JavaMethodExpression javaMethod(Object methodObject, String methodName) {
+        return new JavaMethodExpression(methodObject, methodName);
     }
 
-    public static ArrayMethodCache arrayMethod(Expression methodObject, String methodName) {
-        return new ArrayMethodCache(methodObject, methodName);
+    public static ArrayMethodInvoker arrayMethod(Expression methodObject, String methodName) {
+        return new ArrayMethodInvoker(methodObject, methodName);
     }
 
     public static XmlExpression xml() {

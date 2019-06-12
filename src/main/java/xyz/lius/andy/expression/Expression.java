@@ -8,7 +8,7 @@ public interface Expression extends Serializable, Cloneable {
     Expression eval(Context<Name, Expression> context);
 
     /**
-     * transfer an object to a name
+     * transfer an javaObject to a name
      * @return
      */
     default Name getName() {
