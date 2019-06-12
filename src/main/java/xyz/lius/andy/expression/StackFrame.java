@@ -1,7 +1,6 @@
 package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.context.AbstractContext;
-import xyz.lius.andy.expression.base.ComplexExpression;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class StackFrame extends AbstractContext<Name, Expression> implements Exp
 
     private List<Expression> codes;
 
-    public StackFrame(ComplexExpression complex, Context<Name, Expression> argsContext, List<Expression> args) {
+    public StackFrame(Complex complex, Context<Name, Expression> argsContext, List<Expression> args) {
         super(complex.getContext());
         this.codes = complex.getCodes();
         List<Expression> params = complex.getParameters();

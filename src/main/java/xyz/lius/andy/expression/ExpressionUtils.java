@@ -91,11 +91,11 @@ public class ExpressionUtils {
     }
 
     public static boolean isComplex(Expression expression) {
-        return expression instanceof ComplexExpression;
+        return expression instanceof Complex;
     }
 
-    public static ComplexExpression asComplex(Expression expression) {
-        return (ComplexExpression)expression;
+    public static Complex asComplex(Expression expression) {
+        return (Complex)expression;
     }
 
     public static boolean isJavaObject(Expression expression) {

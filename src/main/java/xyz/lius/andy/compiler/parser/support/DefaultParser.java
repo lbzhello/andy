@@ -5,12 +5,10 @@ import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.TokenFlag;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.expression.ExpressionType;
-import xyz.lius.andy.expression.ExpressionUtils;
+import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
+import xyz.lius.andy.expression.ast.RoundBracketExpression;
 import xyz.lius.andy.expression.base.ReturnExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
@@ -321,15 +319,11 @@ public class DefaultParser implements Parser<Expression> {
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());
-        BracketExpression roundBracketExpression;
-        switch (op.toString()) {
-            case "return":
-                roundBracketExpression = new ReturnExpression();
-                break;
-            default:
-                roundBracketExpression = ExpressionFactory.roundBracket(op);
-
+        BracketExpression roundBracketExpression = BaseSupplier.getInstance().apply(op.toString());
+        if (roundBracketExpression instanceof RoundBracketExpression) {
+            roundBracketExpression.add(op);
         }
+
         for (int i = 0; i < size; i++) {
             roundBracketExpression.add(expression());
         }

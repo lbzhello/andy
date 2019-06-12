@@ -6,7 +6,7 @@ import xyz.lius.andy.expression.*;
 import java.util.List;
 
 @CurlyBracketed
-public class ComplexExpression implements Expression {
+public class ComplexExpression implements Complex {
 
     private List<Expression> parameters;
     private List<Expression> codes;
@@ -18,6 +18,7 @@ public class ComplexExpression implements Expression {
     }
 
     //形参
+    @Override
     public ComplexExpression setParameters(List<Expression> parameters) {
         this.parameters = parameters;
         // param1 -> NameExpression.$0; param2 -> NameExpression.$1; ...
@@ -27,19 +28,23 @@ public class ComplexExpression implements Expression {
         return this;
     }
 
+    @Override
     public List<Expression> getParameters() {
         return parameters;
     }
 
+    @Override
     public Context<Name, Expression> getContext() {
         return context;
     }
 
+    @Override
     public ComplexExpression setCodes(List<Expression> codes) {
         this.codes = codes;
         return this;
     }
 
+    @Override
     public List<Expression> getCodes() {
         return codes;
     }

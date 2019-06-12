@@ -153,7 +153,7 @@ public final class Definition {
 
         unary.put("new", 1);
 
-        unary.put("return", 1);
+        unary.put(Constant.RETURN, 1);
 
         unary.put("if", 2);
         unary.put("for", 2);

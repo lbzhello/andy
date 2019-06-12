@@ -1,7 +1,6 @@
 package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.base.ComplexExpression;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +44,7 @@ public class RoundBracketExpression extends BracketExpression {
         }
 
         if (ExpressionUtils.isComplex(first)) { //e.g. name = {...}; (name x y)
-            return new StackFrame((ComplexExpression) first, context, getParameters()).eval(null);
+            return new StackFrame((Complex) first, context, getParameters()).eval(null);
         } else if (ExpressionUtils.isSquareBracket(first) && this.list().size() > 1) { //e.g. name = [...]; name(1)
             Expression index = second().eval(context);
             if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");

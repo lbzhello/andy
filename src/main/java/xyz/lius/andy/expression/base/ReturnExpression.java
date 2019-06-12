@@ -3,19 +3,15 @@ package xyz.lius.andy.expression.base;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
+import xyz.lius.andy.expression.ast.BracketExpression;
 
 import java.util.List;
 
-public class ReturnExpression extends NativeExpression {
+public class ReturnExpression extends BracketExpression {
     private Expression value;
     public ReturnExpression() {}
     public ReturnExpression(Expression value) {
         this.value = value;
-    }
-
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new ReturnExpression().list(list);
     }
 
     @Override
