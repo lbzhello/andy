@@ -9,7 +9,6 @@ import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
-import xyz.lius.andy.expression.base.ReturnExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
@@ -319,7 +318,7 @@ public class DefaultParser implements Parser<Expression> {
 
     private BracketExpression unaryExpression(Expression op) throws Exception {
         int size = Definition.getNumberOfOperands(op.toString());
-        BracketExpression roundBracketExpression = BaseSupplier.getInstance().apply(op.toString());
+        BracketExpression roundBracketExpression = OperatorSupplier.INSTANCE.apply(op.toString());
         if (roundBracketExpression instanceof RoundBracketExpression) {
             roundBracketExpression.add(op);
         }
