@@ -71,7 +71,7 @@ public class DefaultParser implements Parser<Expression> {
         Expression right = combine(combinator());
         if (Definition.isBinary(tokenizer.current())) { //e.g. left op right op2 ...
             Expression op2 = tokenizer.current();
-            if (Definition.comparePriority(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
+            if (Definition.compare(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
                 return ExpressionFactory.roundBracket(op, left, operator(right, op2));
             } else { //e.g. (left op right) op2 ...
                 return operator(ExpressionFactory.roundBracket(op, left, right),op2);
@@ -316,17 +316,17 @@ public class DefaultParser implements Parser<Expression> {
         return roundBracket;
     }
 
-    private BracketExpression unaryExpression(Expression op) throws Exception {
-        int size = Definition.getNumberOfOperands(op.toString());
-        BracketExpression roundBracketExpression = OperatorSupplier.INSTANCE.apply(op.toString());
-        if (roundBracketExpression instanceof RoundBracketExpression) {
-            roundBracketExpression.add(op);
+    private Addable<Expression> unaryExpression(Expression op) throws Exception {
+        int size = Definition.getOperands(op.toString());
+        Addable<Expression> addable = Definition.getOperator(op.toString());
+        if (addable instanceof RoundBracketExpression) {
+            addable.add(op);
         }
 
         for (int i = 0; i < size; i++) {
-            roundBracketExpression.add(expression());
+            addable.add(expression());
         }
-        return roundBracketExpression;
+        return addable;
     }
 
     /**
