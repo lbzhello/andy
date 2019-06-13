@@ -16,12 +16,12 @@ public class DivideExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression leftExpression = first().eval(context);
-        Expression rightExpression = second().eval(context);
+        Expression leftExpression = get(0).eval(context);
+        Expression rightExpression = get(1).eval(context);
         if (!(ExpressionUtils.isNumber(leftExpression))) {
-            return ExpressionFactory.error(first(), "Unsupport Operand Type!");
+            return ExpressionFactory.error(get(0), "Unsupport Operand Type!");
         } else if (!(ExpressionUtils.isNumber(rightExpression))) {
-            return ExpressionFactory.error(second(), "Unsupport Operand Type!");
+            return ExpressionFactory.error(get(1), "Unsupport Operand Type!");
         }
 
         BigDecimal leftValue = (BigDecimal) leftExpression;

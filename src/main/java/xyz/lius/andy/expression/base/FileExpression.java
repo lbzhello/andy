@@ -22,7 +22,7 @@ public class FileExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        String fileName = first().eval(context).toString();
+        String fileName = get(0).eval(context).toString();
         File f = new File(fileName);
         if (f.exists() && f.isFile()) {
             try (FileReader fileReader = new FileReader(f)) {

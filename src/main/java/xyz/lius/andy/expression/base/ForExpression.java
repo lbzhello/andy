@@ -18,9 +18,9 @@ public class ForExpression extends NativeExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         BracketExpression squareBracketExpression = ExpressionFactory.squareBracket();
-        while (first().eval(context) == ExpressionType.TRUE) {
-            squareBracketExpression.add(ExpressionUtils.isCurlyBracket(second()) ? second().eval(context).eval(new ExpressionContext())
-                    : second().eval(context));
+        while (get(0).eval(context) == ExpressionType.TRUE) {
+            squareBracketExpression.add(ExpressionUtils.isCurlyBracket(get(1)) ? get(1).eval(context).eval(new ExpressionContext())
+                    : get(1).eval(context));
         }
         return squareBracketExpression;
     }

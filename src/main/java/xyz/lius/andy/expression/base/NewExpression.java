@@ -16,11 +16,11 @@ public class NewExpression extends NativeExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         try {
-            Class<?> c = Class.forName(first().toString());
+            Class<?> c = Class.forName(get(0).toString());
             return ExpressionFactory.javaObject(c.getConstructor().newInstance());
         } catch (Exception e) {
             e.printStackTrace();
-            return ExpressionFactory.error(first(), e.getMessage());
+            return ExpressionFactory.error(get(0), e.getMessage());
         }
     }
 }

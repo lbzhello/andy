@@ -19,9 +19,9 @@ public class OrExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression rst = first().eval(context);
+        Expression rst = get(0).eval(context);
         if (rst == ExpressionType.NIL || rst == ExpressionType.FALSE) {
-            rst = second().eval(context);
+            rst = get(1).eval(context);
         }
         return rst;
     }

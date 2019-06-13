@@ -15,10 +15,10 @@ public class IfExpression extends NativeExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         Expression selectExpression;
-        if (first().eval(context) == ExpressionType.TRUE) {
-            selectExpression = second().getName().toString().equals("else") ? ((BracketExpression) second()).second() : second();
+        if (get(0).eval(context) == ExpressionType.TRUE) {
+            selectExpression = get(1).getName().toString().equals("else") ? ((BracketExpression) get(1)).get(1) : get(1);
         } else {
-            selectExpression = second().getName().toString().equals("else") ? ((BracketExpression) second()).third() : ExpressionType.NIL;
+            selectExpression = get(1).getName().toString().equals("else") ? ((BracketExpression) get(1)).get(2) : ExpressionType.NIL;
         }
         if (ExpressionUtils.isCurlyBracket(selectExpression)) {
             return selectExpression.eval(context).eval(new ExpressionContext());

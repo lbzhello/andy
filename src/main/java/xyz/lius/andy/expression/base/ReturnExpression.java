@@ -16,7 +16,7 @@ public class ReturnExpression extends BracketExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        return new ReturnExpression(first().eval(context));
+        return new ReturnExpression(get(0).eval(context));
     }
 
     public Expression getValue() {
@@ -25,5 +25,10 @@ public class ReturnExpression extends BracketExpression {
 
     public void setValue(Expression value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "(return " + super.toString() + ")";
     }
 }

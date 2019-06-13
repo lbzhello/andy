@@ -21,7 +21,7 @@ public class RoundBracketExpression extends BracketExpression {
 
     @Override
     public Name getName() {
-        return this.first().getName();
+        return this.get(0).getName();
     }
 
     @Override
@@ -37,8 +37,8 @@ public class RoundBracketExpression extends BracketExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         if (list().size() == 0) return this; //e.g. ()
-        Expression first = first().eval(context);
-        if (first == ExpressionType.NIL && first() == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
+        Expression first = get(0).eval(context);
+        if (first == ExpressionType.NIL && get(0) == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
         if (ExpressionUtils.isNative(first)) {
             return ExpressionUtils.asNative(first).parameters(this.getParameters()).eval(context);
         }
@@ -46,13 +46,13 @@ public class RoundBracketExpression extends BracketExpression {
         if (ExpressionUtils.isComplex(first)) { //e.g. name = {...}; (name x y)
             return new StackFrame((Complex) first, context, getParameters()).eval(null);
         } else if (ExpressionUtils.isSquareBracket(first) && this.list().size() > 1) { //e.g. name = [...]; name(1)
-            Expression index = second().eval(context);
+            Expression index = get(1).eval(context);
             if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
             return ExpressionUtils.asSquareBracket(first).list().get(ExpressionUtils.asNumber(index).intValue());
         } else if (this.list().size() == 1) { //e.g. (name)
             return first;
         } else {
-            return ExpressionFactory.error(first(), "Expression must be ComplexExpression!");
+            return ExpressionFactory.error(get(0), "Expression must be ComplexExpression!");
         }
     }
 

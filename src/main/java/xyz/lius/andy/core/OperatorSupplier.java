@@ -3,6 +3,7 @@ package xyz.lius.andy.core;
 import xyz.lius.andy.expression.Addable;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.base.ReturnExpression;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public enum  OperatorSupplier implements Function<String, Addable<Expression>> {
         defaultSupplier = () -> ExpressionFactory.roundBracket();
 
         operator.put(OperatorSingleton.RETURN, () -> new ReturnExpression());
+        operator.put(OperatorSingleton.NIL, () -> ExpressionType.NIL);
     }
 
     @Override

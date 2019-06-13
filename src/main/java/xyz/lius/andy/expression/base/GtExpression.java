@@ -16,8 +16,8 @@ public class GtExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Expression left = first().eval(context);
-        Expression right = second().eval(context);
+        Expression left = get(0).eval(context);
+        Expression right = get(1).eval(context);
         if (ExpressionUtils.isNumber(left) && ExpressionUtils.isNumber(right)) {
             if (((NumberExpression) left).doubleValue() > ((NumberExpression) right).doubleValue()) {
                 return ExpressionType.TRUE;

@@ -172,6 +172,11 @@ public class SquareBracketExpression extends BracketExpression implements ArrayM
     }
 
     @Override
+    public Expression first() {
+        return get(0);
+    }
+
+    @Override
     public Expression other() {
         List<Expression> rst = this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
         if (rst.size() == 0) { //e.g. []

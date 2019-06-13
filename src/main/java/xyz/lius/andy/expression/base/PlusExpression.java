@@ -15,8 +15,8 @@ public class PlusExpression extends NativeExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
 
-        Expression first = first().eval(context);
-        Expression second = second().eval(context);
+        Expression first = get(0).eval(context);
+        Expression second = get(1).eval(context);
         if (ExpressionUtils.isSquareBracket(first) || ExpressionUtils.isSquareBracket(second)) { //e.g. [1 2 3] + 4
             return ExpressionUtils.pair(first, second);
         } else if (ExpressionUtils.isString(first) || ExpressionUtils.isString(second)) { //e.g. "abc" + "xyz"
@@ -27,9 +27,9 @@ public class PlusExpression extends NativeExpression {
         } else {
             Expression error;
             if (!ExpressionUtils.isNumber(first)) {
-                error = first();
+                error = get(0);
             } else {
-                error = second();
+                error = get(1);
             }
             return ExpressionFactory.error(error,"operator(+): unsupport Operand Type!");
         }

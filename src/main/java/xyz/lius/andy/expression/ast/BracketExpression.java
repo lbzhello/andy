@@ -24,16 +24,8 @@ public class BracketExpression implements Addable<Expression> {
         return this;
     }
 
-    public Expression first() {
-        return this.list.size() >= 1 ? list.get(0) : Definition.NIL;
-    }
-
-    public Expression second() {
-        return this.list.size() >= 2 ? list.get(1) : Definition.NIL;
-    }
-
-    public Expression third() {
-        return this.list.size() >= 3 ? list.get(2) : Definition.NIL;
+    public Expression get(int i) {
+        return i < this.list.size() ? list.get(i) : Definition.NIL;
     }
 
     public BracketExpression add(Expression expression) {

@@ -9,3 +9,7 @@ iter(obj){
 rst = iter(3)
 rst2 = rst.call(x -> x + 2)
 (print rst2)
+
+a = nil
+print(a)
+return a

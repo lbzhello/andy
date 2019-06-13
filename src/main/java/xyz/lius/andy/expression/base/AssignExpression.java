@@ -18,28 +18,28 @@ public class AssignExpression extends NativeExpression {
         Context<Name, Expression> bindContext = context;
         Name name;
         Expression value;
-        if (first() instanceof RoundBracketExpression) { //lambda (f x) = ...
-            RoundBracketExpression left = (RoundBracketExpression) this.first();
+        if (get(0) instanceof RoundBracketExpression) { //lambda (f x) = ...
+            RoundBracketExpression left = (RoundBracketExpression) this.get(0);
             if (left instanceof PointExpression) { //e.g. (. a b) = ...
-                Expression parent = left.second().eval(context);
+                Expression parent = left.get(1).eval(context);
                 if (parent instanceof ComplexExpression) {
                     bindContext = ((ComplexExpression) parent).getContext();
-                    name = left.third() instanceof RoundBracketExpression ? left.third().eval(context).getName() : left.third().getName();
-                    value = this.second().eval(context);
+                    name = left.get(2) instanceof RoundBracketExpression ? left.get(2).eval(context).getName() : left.get(2).getName();
+                    value = this.get(1).eval(context);
                 } else {
                     return ExpressionFactory.error(parent, "Left value should be ComplexExpression");
                 }
-            } else if (second() instanceof CurlyBracketExpression) { //define a function. e.g. f(x) = { x }
-                CurlyBracketExpression right = (CurlyBracketExpression) second();
+            } else if (get(1) instanceof CurlyBracketExpression) { //define a function. e.g. f(x) = { x }
+                CurlyBracketExpression right = (CurlyBracketExpression) get(1);
                 name = left.getName();
                 value = right.eval(context).setParameters(left.getParameters());
             } else { //e.g. f(x) = x + 1
                 name = left.getName();
-                value = ExpressionFactory.complex(new ExpressionContext(context)).setParameters(left.getParameters()).setCodes(List.of(second()));
+                value = ExpressionFactory.complex(new ExpressionContext(context)).setParameters(left.getParameters()).setCodes(List.of(get(1)));
             }
         } else { //e.g. f = x + 1
-            name = this.first().getName();
-            value = this.second().eval(context);
+            name = this.get(0).getName();
+            value = this.get(1).eval(context);
         }
         bindContext.bind(name, value);
         return ExpressionType.NIL;

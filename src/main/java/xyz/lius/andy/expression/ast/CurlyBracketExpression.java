@@ -27,8 +27,8 @@ public class CurlyBracketExpression extends BracketExpression {
         super.add(expression);
 
         if (expression instanceof RoundBracketExpression && (
-                Objects.equals(((RoundBracketExpression) expression).first(), Definition.DEFINE) ||
-                Objects.equals(((RoundBracketExpression) expression).first(), Definition.PAIR))) {
+                Objects.equals(((RoundBracketExpression) expression).get(0), Definition.DEFINE) ||
+                Objects.equals(((RoundBracketExpression) expression).get(0), Definition.PAIR))) {
             this.fields.add(expression);
         } else {
             this.codes.add(expression);

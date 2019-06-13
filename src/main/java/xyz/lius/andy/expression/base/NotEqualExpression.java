@@ -15,7 +15,7 @@ public class NotEqualExpression extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        if (first().eval(context).equals(second().eval(context))) {
+        if (get(0).eval(context).equals(get(1).eval(context))) {
             return ExpressionType.FALSE;
         } else {
             return ExpressionType.TRUE;
