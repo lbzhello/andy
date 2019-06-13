@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.expression.AbstructAddable;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
@@ -7,7 +8,7 @@ import xyz.lius.andy.expression.ast.BracketExpression;
 
 import java.util.List;
 
-public class ReturnExpression extends BracketExpression {
+public class ReturnExpression extends AbstructAddable {
     private Expression value;
     public ReturnExpression() {}
     public ReturnExpression(Expression value) {

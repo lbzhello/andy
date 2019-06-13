@@ -318,7 +318,7 @@ public class DefaultParser implements Parser<Expression> {
 
     private Addable<Expression> unaryExpression(Expression op) throws Exception {
         int size = Definition.getOperands(op.toString());
-        Addable<Expression> addable = Definition.getOperator(op.toString());
+        Addable<Expression> addable = Definition.getExpression(op.toString());
         if (addable instanceof RoundBracketExpression) {
             addable.add(op);
         }

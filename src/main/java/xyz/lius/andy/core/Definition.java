@@ -97,14 +97,11 @@ public final class Definition {
         CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), ExpressionFactory.lessThan());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.lessEqual());
 
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("nil"), ExpressionType.NIL);
-
         CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
         CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), ExpressionFactory.ifExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), ExpressionFactory.forExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("return"), ExpressionFactory.returnExpression());
 
         CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.newExpression());
         CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.importExpression());
@@ -151,7 +148,7 @@ public final class Definition {
         return operator.compare(op1, op2);
     }
 
-    public static final Addable<Expression> getOperator(String op) {
+    public static final Addable<Expression> getExpression(String op) {
         return operatorSupplier.apply(op);
     }
 

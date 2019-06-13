@@ -1,6 +1,9 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.*;
+import xyz.lius.andy.expression.Context;
+import xyz.lius.andy.expression.Expression;
+import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.expression.Name;
 
 import java.util.List;
 

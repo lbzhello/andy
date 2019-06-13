@@ -4,6 +4,7 @@ import xyz.lius.andy.expression.Addable;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ExpressionType;
+import xyz.lius.andy.expression.base.NewExpression;
 import xyz.lius.andy.expression.base.ReturnExpression;
 
 import java.util.HashMap;
@@ -24,8 +25,13 @@ public enum  OperatorSupplier implements Function<String, Addable<Expression>> {
         operator = new HashMap<>();
         defaultSupplier = () -> ExpressionFactory.roundBracket();
 
-        operator.put(OperatorSingleton.RETURN, () -> new ReturnExpression());
         operator.put(OperatorSingleton.NIL, () -> ExpressionType.NIL);
+        operator.put(OperatorSingleton.TRUE, () -> ExpressionType.TRUE);
+        operator.put(OperatorSingleton.FALSE, () -> ExpressionType.FALSE);
+
+        operator.put(OperatorSingleton.RETURN, () -> new ReturnExpression());
+//        operator.put(OperatorSingleton.NEW, () -> new NewExpression());
+//        operator.put(OperatorSingleton.IMPORT, () -> new ReturnExpression());
     }
 
     @Override
