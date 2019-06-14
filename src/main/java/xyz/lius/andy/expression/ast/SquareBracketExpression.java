@@ -33,20 +33,20 @@ public class SquareBracketExpression extends BracketExpression implements ArrayM
     @Override
     public Expression map(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
-        Context<Name, Expression> context = new ExpressionContext();
+        StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : this.list()) {
-            context.add(ExpressionFactory.symbol("$0"), expression); //put param in the context
-            squareBracket.add(func.eval(context));
+            stackFrame.add(ExpressionFactory.symbol("$0"), expression);
+            squareBracket.add(stackFrame.eval(null));
         }
         return squareBracket;
     }
 
     @Override
     public Expression each(Expression func) {
-        Context<Name, Expression> context = new ExpressionContext();
+        StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : this.list()) {
-            context.add(ExpressionFactory.symbol("$0"), expression);
-            func.eval(context);
+            stackFrame.add(ExpressionFactory.symbol("$0"), expression);
+            stackFrame.eval(null);
         }
         return ExpressionType.NIL;
     }
@@ -54,10 +54,10 @@ public class SquareBracketExpression extends BracketExpression implements ArrayM
     @Override
     public Expression filter(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
-        Context<Name, Expression> context = new ExpressionContext();
+        StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : this.list()) {
-            context.add(ExpressionFactory.symbol("$0"), expression);
-            if (func.eval(context) == ExpressionType.TRUE) {
+            stackFrame.add(ExpressionFactory.symbol("$0"), expression);
+            if (stackFrame.eval(null) == ExpressionType.TRUE) {
                 squareBracket.add(expression);
             }
         }
@@ -67,31 +67,30 @@ public class SquareBracketExpression extends BracketExpression implements ArrayM
     @Override
     public Expression mapValues(Expression func) {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
-        Context<Name, Expression> context = new ExpressionContext();
+        StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : list()) {
             ArrayMethod array = ExpressionUtils.asArray(expression);
-            context.add(ExpressionFactory.symbol("$0"), array.other());
-            squareBracket.add(ExpressionFactory.squareBracket(array.first(), func.eval(context)));
+            stackFrame.add(ExpressionFactory.symbol("$0"), array.other());
+            squareBracket.add(ExpressionFactory.squareBracket(array.first(), stackFrame.eval(null)));
         }
         return squareBracket;
     }
 
     @Override
     public Expression reduce(Expression func) {
-        Context<Name, Expression> context = new ExpressionContext();
-        Iterator<Expression> iterator = list().iterator();
-        if (iterator.hasNext()) {
-            Expression first = iterator.next();
-            context.add(ExpressionFactory.symbol("$0"), first);
-            if (iterator.hasNext()) {
-                return reduceCircle(iterator, func, context);
-            } else { //e.g. [fist]
-                return first;
-            }
-        } else { //e.g. []
+        if (list().size() < 2) {
             return ExpressionType.NIL;
+        } else {
+            StackFrame stackFrame = new StackFrame((Complex) func);
+            Iterator<Expression> iterator = list().iterator();
+            Expression acc = iterator.next();
+            while (iterator.hasNext()) {
+                stackFrame.add(ExpressionFactory.symbol("$0"), acc);
+                stackFrame.add(ExpressionFactory.symbol("$1"), iterator.next());
+                acc = stackFrame.eval(null);
+            }
+            return acc;
         }
-
     }
 
     /**
@@ -133,10 +132,10 @@ public class SquareBracketExpression extends BracketExpression implements ArrayM
     public Expression groupBy(Expression func) {
         Map<Expression, SquareBracketExpression> keyMap = new HashMap<>();
         SquareBracketExpression parrent = ExpressionFactory.squareBracket(); //rst [[...] [...]]
-        Context<Name, Expression> context = new ExpressionContext();
+        StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression element : list()) {
-            context.add(ExpressionFactory.symbol("$0"), element); //传参
-            Expression key = func.eval(context);
+            stackFrame.add(ExpressionFactory.symbol("$0"), element); //传参
+            Expression key = stackFrame.eval(null);
             SquareBracketExpression child = keyMap.get(key);
             if (child == null) { //new
                 child = ExpressionFactory.squareBracket(key, element);
