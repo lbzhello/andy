@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BracketExpression implements Operator {
+public class BracketExpression implements Expression {
     private List<Expression> list = new ArrayList<>();
 
     public BracketExpression(Expression... expressions) {

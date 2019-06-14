@@ -1,9 +1,8 @@
 package xyz.lius.andy.core;
 
-import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.Operator;
-import xyz.lius.andy.expression.base.*;
+import xyz.lius.andy.expression.operator.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ public enum  OperatorSupplier implements Function<String, Operator> {
 
     OperatorSupplier() {
         operator = new HashMap<>();
-        defaultSupplier = () -> ExpressionFactory.roundBracket();
+        defaultSupplier = () -> new DefaultOperator();
 
         //---------------- unary -----------------//
         operator.put(OperatorSingleton.NIL, () -> ExpressionType.NIL);
