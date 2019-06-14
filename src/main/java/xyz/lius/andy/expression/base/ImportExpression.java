@@ -1,9 +1,10 @@
 package xyz.lius.andy.expression.base;
 
 import xyz.lius.andy.compiler.Compiler;
-import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.*;
 import xyz.lius.andy.compiler.parser.Parser;
+import xyz.lius.andy.core.Definition;
+import xyz.lius.andy.core.OperatorSingleton;
+import xyz.lius.andy.expression.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,11 @@ import java.util.Objects;
  * import file
  * e.g. import some_script.andy
  */
-public class ImportExpression extends NativeExpression {
+public class ImportExpression extends AbstractContainer implements Operator {
+    public ImportExpression() {
+        super(1);
+    }
+
     @Override
     public Expression eval(Context<Name, Expression> context) {
         //默认从父目录里面查找
@@ -39,5 +44,10 @@ public class ImportExpression extends NativeExpression {
         }
 
         return ExpressionType.NIL;
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.IMPORT, super.toString());
     }
 }

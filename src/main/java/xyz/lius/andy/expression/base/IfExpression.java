@@ -1,15 +1,13 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.context.ExpressionContext;
 
-import java.util.List;
-
-public class IfExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new IfExpression().list(list);
+public class IfExpression extends AbstractContainer implements Operator {
+    public IfExpression() {
+        super(2);
     }
 
     @Override
@@ -25,5 +23,10 @@ public class IfExpression extends NativeExpression {
         } else {
             return selectExpression.eval(context);
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.IF, super.toString());
     }
 }

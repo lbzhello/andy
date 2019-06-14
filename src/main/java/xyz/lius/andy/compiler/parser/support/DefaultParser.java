@@ -68,16 +68,32 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression operator(Expression left, Expression op) throws Exception {
         tokenizer.next(); //eat op
+        Operator binary = Definition.getOperator(op.toString());
         Expression right = combine(combinator());
         if (Definition.isBinary(tokenizer.current())) { //e.g. left op right op2 ...
             Expression op2 = tokenizer.current();
             if (Definition.compare(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                return ExpressionFactory.roundBracket(op, left, operator(right, op2));
+                if (binary instanceof RoundBracketExpression) {
+                    return ExpressionFactory.roundBracket(op, left, operator(right, op2));
+                }
+                binary.add(left);
+                binary.add(operator(right, op2));
+                return binary;
             } else { //e.g. (left op right) op2 ...
-                return operator(ExpressionFactory.roundBracket(op, left, right),op2);
+                if (binary instanceof RoundBracketExpression) {
+                    return operator(ExpressionFactory.roundBracket(op, left, right),op2);
+                }
+                binary.add(left);
+                binary.add(right);
+                return operator(binary, op2);
             }
         } else { //e.g. left op right
-            return ExpressionFactory.roundBracket(op, left, right);
+            if (binary instanceof RoundBracketExpression) {
+                return ExpressionFactory.roundBracket(op, left, right);
+            }
+            binary.add(left);
+            binary.add(right);
+            return binary;
         }
     }
 
@@ -319,9 +335,6 @@ public class DefaultParser implements Parser<Expression> {
     private Expression unaryExpression(Expression op) throws Exception {
         int size = Definition.getOperands(op.toString());
         Operator operator = Definition.getOperator(op.toString());
-        if (operator instanceof RoundBracketExpression) {
-            operator.add(op);
-        }
 
         for (int i = 0; i < size; i++) {
             operator.add(expression());

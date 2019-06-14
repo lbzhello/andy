@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.context.ExpressionContext;
@@ -9,10 +10,9 @@ import java.util.List;
 /**
  * e.g. for(first, second)
  */
-public class ForExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new ForExpression().list(list);
+public class ForExpression extends AbstractContainer implements Operator {
+    public ForExpression() {
+        super(2);
     }
 
     @Override
@@ -23,5 +23,10 @@ public class ForExpression extends NativeExpression {
                     : get(1).eval(context));
         }
         return squareBracketExpression;
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.FOR, super.toString());
     }
 }

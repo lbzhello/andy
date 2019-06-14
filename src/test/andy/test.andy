@@ -1,15 +1,3 @@
-iter(obj){
- value:nil
- call(f){
-    (return f(value))
- }
- value = obj
- self
-}
-rst = iter(3)
-rst2 = rst.call(x -> x + 2)
-(print rst2)
-
-a = nil
-print(a)
-return a
+sb = new java.lang.StringBuffer
+sb.append("hh")
+sb

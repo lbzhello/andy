@@ -1,19 +1,14 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.Context;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.expression.Name;
-
-import java.util.List;
+import xyz.lius.andy.core.OperatorSingleton;
+import xyz.lius.andy.expression.*;
 
 /**
  * Create an javaObject from class file
  */
-public class NewExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new NewExpression().list(list);
+public class NewExpression extends AbstractContainer implements Operator {
+    public NewExpression() {
+        super(1);
     }
 
     @Override
@@ -25,5 +20,10 @@ public class NewExpression extends NativeExpression {
             e.printStackTrace();
             return ExpressionFactory.error(get(0), e.getMessage());
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.NEW, super.toString());
     }
 }

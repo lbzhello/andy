@@ -1,5 +1,7 @@
 package xyz.lius.andy.expression;
 
+import java.util.Arrays;
+
 public abstract class AbstractContainer implements Container<Expression> {
     private static final Expression[] EMPTY_ELEMENT_DATA = {};
 
@@ -52,7 +54,7 @@ public abstract class AbstractContainer implements Container<Expression> {
 
     @Override
     public Expression[] toArray() {
-        return elementData;
+        return Arrays.copyOf(elementData, count);
     }
 
     @Override
@@ -63,6 +65,16 @@ public abstract class AbstractContainer implements Container<Expression> {
         }
         sb.replace(sb.length()-1, sb.length(), "");
         return sb.toString();
+    }
+
+    /**
+     * lisp表达式
+     * @param name
+     * @Param oprands
+     * @return
+     */
+    protected String show(String name, String oprands) {
+        return "(" + name + " " + oprands + ")";
     }
 
 }
