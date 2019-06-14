@@ -1,17 +1,15 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.NumberExpression;
-
-import java.util.List;
 
 /**
  * >
  */
-public class GtExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new GtExpression().list(list);
+public class GtExpression extends AbstractContainer implements Operator {
+    public GtExpression() {
+        super(2);
     }
 
     @Override
@@ -32,5 +30,10 @@ public class GtExpression extends NativeExpression {
                 return ExpressionType.FALSE;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.GT, super.toString());
     }
 }

@@ -1,14 +1,13 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.NumberExpression;
 
-import java.util.List;
+public class GeExpression extends AbstractContainer implements Operator {
 
-public class GeExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new GeExpression().list(list);
+    public GeExpression() {
+        super(2);
     }
 
     @Override
@@ -29,5 +28,10 @@ public class GeExpression extends NativeExpression {
                 return ExpressionType.FALSE;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.GE, super.toString());
     }
 }

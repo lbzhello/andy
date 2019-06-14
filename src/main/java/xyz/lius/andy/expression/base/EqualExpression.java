@@ -1,16 +1,11 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.Context;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionType;
-import xyz.lius.andy.expression.Name;
+import xyz.lius.andy.core.OperatorSingleton;
+import xyz.lius.andy.expression.*;
 
-import java.util.List;
-
-public class EqualExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new EqualExpression().list(list);
+public class EqualExpression extends AbstractContainer implements Operator {
+    public EqualExpression() {
+        super(2);
     }
 
     @Override
@@ -20,5 +15,10 @@ public class EqualExpression extends NativeExpression {
         } else {
             return ExpressionType.FALSE;
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.EQUAL, super.toString());
     }
 }

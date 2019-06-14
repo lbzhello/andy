@@ -73,24 +73,15 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isBinary(tokenizer.current())) { //e.g. left op right op2 ...
             Expression op2 = tokenizer.current();
             if (Definition.compare(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
-                if (binary instanceof RoundBracketExpression) {
-                    return ExpressionFactory.roundBracket(op, left, operator(right, op2));
-                }
                 binary.add(left);
                 binary.add(operator(right, op2));
                 return binary;
             } else { //e.g. (left op right) op2 ...
-                if (binary instanceof RoundBracketExpression) {
-                    return operator(ExpressionFactory.roundBracket(op, left, right),op2);
-                }
                 binary.add(left);
                 binary.add(right);
                 return operator(binary, op2);
             }
         } else { //e.g. left op right
-            if (binary instanceof RoundBracketExpression) {
-                return ExpressionFactory.roundBracket(op, left, right);
-            }
             binary.add(left);
             binary.add(right);
             return binary;

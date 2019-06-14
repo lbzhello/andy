@@ -40,7 +40,26 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         operator.put(OperatorSingleton.FOR, () -> new ForExpression());
 
         //---------------- binary -----------------//
-//        operator.put(OperatorSingleton.ARROW, () -> new ArrowExpression());
+        operator.put(OperatorSingleton.ARROW, () -> new ArrowExpression());
+        operator.put(OperatorSingleton.ASSIGN, () -> new AssignExpression());
+        operator.put(OperatorSingleton.OR, () -> new OrExpression());
+        operator.put(OperatorSingleton.AND, () -> ExpressionType.NIL);
+
+        operator.put(OperatorSingleton.EQUAL, () -> new EqualExpression());
+        operator.put(OperatorSingleton.NOT_EQUAL, () -> new NotEqualExpression());
+
+        operator.put(OperatorSingleton.GT, () -> new GtExpression());
+        operator.put(OperatorSingleton.GE, () -> new GeExpression());
+        operator.put(OperatorSingleton.LT, () -> new LtExpression());
+        operator.put(OperatorSingleton.LE, () -> new LeExpression());
+
+        operator.put(OperatorSingleton.PLUS, () -> new PlusExpression());
+        operator.put(OperatorSingleton.MINUS, () -> new MinusExpression());
+        operator.put(OperatorSingleton.MUL, () -> new MultiplyExpression());
+        operator.put(OperatorSingleton.DIV, () -> new DivideExpression());
+
+        operator.put(OperatorSingleton.POINT, () -> new PointExpression());
+        operator.put(OperatorSingleton.ELSE, () -> new ElseExpression());
     }
 
     @Override

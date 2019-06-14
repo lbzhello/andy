@@ -1,10 +1,25 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ast.RoundBracketExpression;
+import xyz.lius.andy.core.OperatorSingleton;
+import xyz.lius.andy.expression.*;
 
-public class ElseExpression extends RoundBracketExpression {
-    public ElseExpression(Expression left, Expression right) {
-        super(left, right);
+public class ElseExpression extends AbstractContainer implements Operator {
+    public ElseExpression() {
+        super(2);
+    }
+
+    @Override
+    public Expression eval(Context<Name, Expression> context) {
+        return this;
+    }
+
+    @Override
+    public Name getName() {
+        return ExpressionFactory.symbol(OperatorSingleton.ELSE);
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.ELSE, super.toString());
     }
 }

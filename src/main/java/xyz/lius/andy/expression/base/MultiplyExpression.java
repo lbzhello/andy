@@ -1,23 +1,21 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.ErrorExpression;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @RoundBracketed
-public class MultiplyExpression extends NativeExpression {
-
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new MultiplyExpression().list(list);
+public class MultiplyExpression extends AbstractContainer implements Operator {
+    public MultiplyExpression() {
+        super(2);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         BigDecimal accu = BigDecimal.ONE;
-        for (Expression expression : list()) {
+        for (Expression expression : toArray()) {
             Expression factor = expression.eval(context);
             if (!(ExpressionUtils.isNumber(factor))) {
                 return new ErrorExpression(expression, "Unsupport Operand Type!");
@@ -25,5 +23,10 @@ public class MultiplyExpression extends NativeExpression {
             accu = accu.multiply(((BigDecimal) factor));
         }
         return ExpressionFactory.number(accu.doubleValue());
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.MUL, super.toString());
     }
 }

@@ -1,17 +1,15 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.ErrorExpression;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @RoundBracketed
-public class MinusExpression extends NativeExpression {
-
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new MinusExpression().list(list);
+public class MinusExpression extends AbstractContainer implements Operator {
+    public MinusExpression() {
+        super(2);
     }
 
     @Override
@@ -29,5 +27,10 @@ public class MinusExpression extends NativeExpression {
 
 
         return ExpressionFactory.number(leftValue.subtract(rightValue).doubleValue());
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.MINUS, super.toString());
     }
 }

@@ -1,20 +1,15 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.Context;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionType;
-import xyz.lius.andy.expression.Name;
-
-import java.util.List;
+import xyz.lius.andy.core.OperatorSingleton;
+import xyz.lius.andy.expression.*;
 
 /**
  *  a || b
  */
-public class OrExpression extends NativeExpression {
+public class OrExpression extends AbstractContainer implements Operator {
 
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new OrExpression().list(list);
+    public OrExpression() {
+        super(2);
     }
 
     @Override
@@ -24,5 +19,10 @@ public class OrExpression extends NativeExpression {
             rst = get(1).eval(context);
         }
         return rst;
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.OR, super.toString());
     }
 }

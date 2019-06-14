@@ -1,7 +1,6 @@
 package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.base.StringIterExpression;
 import xyz.lius.andy.expression.base.*;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
@@ -96,8 +95,11 @@ public class ExpressionFactory extends NativeFactory {
         return new CommaExpression(expressions);
     }
 
-    public static BracketExpression point(Expression left, Expression right) {
-        return new PointExpression(left, right);
+    public static Operator point(Expression left, Expression right) {
+        Operator pointExpression = new PointExpression();
+        pointExpression.add(left);
+        pointExpression.add(right);
+        return pointExpression;
     }
 
     public static ComplexExpression complex(Context<Name, Expression> context) {

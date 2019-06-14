@@ -1,17 +1,15 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 @RoundBracketed
-public class DivideExpression extends NativeExpression {
-
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new DivideExpression().list(list);
+public class DivideExpression extends AbstractContainer implements Operator {
+    public DivideExpression() {
+        super(2);
     }
 
     @Override
@@ -29,5 +27,10 @@ public class DivideExpression extends NativeExpression {
 
 
         return ExpressionFactory.number(leftValue.divide(rightValue, 2, RoundingMode.HALF_EVEN).toString());
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.DIV, super.toString());
     }
 }

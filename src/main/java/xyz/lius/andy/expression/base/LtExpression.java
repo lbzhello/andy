@@ -1,14 +1,12 @@
 package xyz.lius.andy.expression.base;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.NumberExpression;
 
-import java.util.List;
-
-public class LtExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        return new LtExpression().list(list);
+public class LtExpression extends AbstractContainer implements Operator {
+    public LtExpression() {
+        super(2);
     }
 
     @Override
@@ -29,5 +27,10 @@ public class LtExpression extends NativeExpression {
                 return ExpressionType.FALSE;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return show(OperatorSingleton.LT, super.toString());
     }
 }
