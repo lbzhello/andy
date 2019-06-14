@@ -1,6 +1,6 @@
 package xyz.lius.andy.core;
 
-public interface Operator {
+public interface OperatorDefinition {
     boolean isUnary(String name);
 
     boolean isBinary(String name);

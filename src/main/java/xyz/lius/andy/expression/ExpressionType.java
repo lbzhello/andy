@@ -1,6 +1,6 @@
 package xyz.lius.andy.expression;
 
-public enum ExpressionType implements Addable<Expression> {
+public enum ExpressionType implements Operator {
     NIL, DEFINE, PAIR, LAMBDA, PARENT,
     PLUS, MINUS, MULTIPLY, DIVIDE,
     OR, AND, NOT,
@@ -14,7 +14,5 @@ public enum ExpressionType implements Addable<Expression> {
     }
 
     @Override
-    public Addable add(Expression element) {
-        return this;
-    }
+    public void add(Expression element) {}
 }

@@ -32,7 +32,8 @@ public class ArrowExpression extends NativeExpression {
         if (ExpressionUtils.isCurlyBracket(list.get(1))) { //e.g. left -> {...}
             right = (CurlyBracketExpression) list.get(1);
         } else { //e.g. left -> x + 1
-            right = ExpressionFactory.curlyBracket().add(list.get(1));
+            right = ExpressionFactory.curlyBracket();
+            right.add(list.get(1));
         }
         return ExpressionFactory.lambda(left, right);
     }

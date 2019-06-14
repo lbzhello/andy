@@ -5,10 +5,9 @@ import xyz.lius.andy.expression.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
-public class BracketExpression implements Addable<Expression> {
+public class BracketExpression implements Operator {
     private List<Expression> list = new ArrayList<>();
 
     public BracketExpression(Expression... expressions) {
@@ -28,9 +27,8 @@ public class BracketExpression implements Addable<Expression> {
         return i < this.list.size() ? list.get(i) : Definition.NIL;
     }
 
-    public BracketExpression add(Expression expression) {
+    public void add(Expression expression) {
         this.list.add(expression);
-        return this;
     }
 
     public boolean isEmpty() {

@@ -316,17 +316,17 @@ public class DefaultParser implements Parser<Expression> {
         return roundBracket;
     }
 
-    private Addable<Expression> unaryExpression(Expression op) throws Exception {
+    private Expression unaryExpression(Expression op) throws Exception {
         int size = Definition.getOperands(op.toString());
-        Addable<Expression> addable = Definition.getExpression(op.toString());
-        if (addable instanceof RoundBracketExpression) {
-            addable.add(op);
+        Operator operator = Definition.getOperator(op.toString());
+        if (operator instanceof RoundBracketExpression) {
+            operator.add(op);
         }
 
         for (int i = 0; i < size; i++) {
-            addable.add(expression());
+            operator.add(expression());
         }
-        return addable;
+        return operator;
     }
 
     /**

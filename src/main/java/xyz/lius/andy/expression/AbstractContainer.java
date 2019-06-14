@@ -1,36 +1,58 @@
 package xyz.lius.andy.expression;
 
-public abstract class AbstructAddable implements Addable<Expression> {
+public abstract class AbstractContainer implements Container<Expression> {
     private static final Expression[] EMPTY_ELEMENT_DATA = {};
 
     private static final int DEFAULT_INITIAL_CAPACITY = 8;
 
     //元素总数
-    int count;
+    private int count;
 
     //剩余空间
-    int free;
+    private int free;
 
     private Expression[] elementData;
 
-    public AbstructAddable() {
-        count = 0;
-        free = 0;
+    public AbstractContainer() {
         elementData = EMPTY_ELEMENT_DATA;
     }
 
+    public AbstractContainer(int initialCapacity) {
+        free = initialCapacity;
+        elementData = new Expression[free];
+    }
+
     @Override
-    public Addable add(Expression element) {
+    public void add(Expression element) {
         if (free == 0) {
             Expression[] oldElementData = elementData;
-            int len = count == 0 ? 8 : count * 2;
+            int len = count == 0 ? DEFAULT_INITIAL_CAPACITY : (count << 1);
             elementData = new Expression[len];
             System.arraycopy(oldElementData, 0, elementData, 0, count);
             free = len - count;
         }
         elementData[count] = element;
         count++; free--;
-        return this;
+    }
+
+    @Override
+    public Expression get(int i) {
+        return i < count ? elementData[i] : ExpressionType.NIL;
+    }
+
+    @Override
+    public int count() {
+        return count;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return count == 0;
+    }
+
+    @Override
+    public Expression[] toArray() {
+        return elementData;
     }
 
     @Override
@@ -43,7 +65,4 @@ public abstract class AbstructAddable implements Addable<Expression> {
         return sb.toString();
     }
 
-    public Expression get(int i) {
-        return i < count ? elementData[i] : ExpressionType.NIL;
-    }
 }

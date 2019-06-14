@@ -1,14 +1,12 @@
 package xyz.lius.andy.core;
 
-import xyz.lius.andy.expression.*;
 import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.TokenFlag;
+import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.context.ExpressionContext;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 public final class Definition {
@@ -53,9 +51,9 @@ public final class Definition {
     private static final Map<Character, Token> delimiter = new HashMap<>();
 
     //运算符定义
-    private static Operator operator = OperatorSingleton.getSingleton();
+    private static OperatorDefinition operatorDefinition = OperatorSingleton.getSingleton();
 
-    private static Function<String, Addable<Expression>> operatorSupplier = OperatorSupplier.INSTANCE;
+    private static Function<String, Operator> operatorSupplier = OperatorSupplier.INSTANCE;
 
     private static Context<Name, Expression> CORE_CONTEXT = new ExpressionContext(null);
 
@@ -125,7 +123,7 @@ public final class Definition {
     }
 
     public static final boolean isBinary(String op) {
-        return operator.isBinary(op);
+        return operatorDefinition.isBinary(op);
     }
 
     public static final boolean isBinary(Object op) {
@@ -133,7 +131,7 @@ public final class Definition {
     }
 
     public static final boolean isUnary(String op) {
-        return operator.isUnary(op);
+        return operatorDefinition.isUnary(op);
     }
 
     public static final boolean isUnary(Object op) {
@@ -141,14 +139,14 @@ public final class Definition {
     }
 
     public static final int getOperands(String op) {
-        return operator.getOperands(op);
+        return operatorDefinition.getOperands(op);
     }
 
     public static final int compare(String op1, String op2) {
-        return operator.compare(op1, op2);
+        return operatorDefinition.compare(op1, op2);
     }
 
-    public static final Addable<Expression> getExpression(String op) {
+    public static final Operator getOperator(String op) {
         return operatorSupplier.apply(op);
     }
 

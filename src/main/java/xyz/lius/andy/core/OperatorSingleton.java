@@ -7,7 +7,7 @@ import java.util.Map;
  * 运算符定义接口
  * 单例模式--静态内部类
  */
-public final class OperatorSingleton implements Operator {
+public final class OperatorSingleton implements OperatorDefinition {
     //--------- Unary -----------//
     public static final String NIL = "nil";
     public static final String TRUE = "true";
@@ -44,10 +44,10 @@ public final class OperatorSingleton implements Operator {
 
 
     private static final class SingletonHolder {
-        private static final Operator INSTANCE = new OperatorSingleton();
+        private static final OperatorDefinition INSTANCE = new OperatorSingleton();
     }
 
-    public static final Operator getSingleton() {
+    public static final OperatorDefinition getSingleton() {
         return SingletonHolder.INSTANCE;
     }
 

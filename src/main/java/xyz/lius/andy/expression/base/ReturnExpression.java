@@ -1,17 +1,12 @@
 package xyz.lius.andy.expression.base;
 
-import xyz.lius.andy.expression.AbstructAddable;
-import xyz.lius.andy.expression.Context;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.Name;
-import xyz.lius.andy.expression.ast.BracketExpression;
+import xyz.lius.andy.expression.*;
 
-import java.util.List;
-
-public class ReturnExpression extends AbstructAddable {
+public class ReturnExpression extends AbstractContainer implements Operator {
     private Expression value;
     public ReturnExpression() {}
     public ReturnExpression(Expression value) {
+        super(1);
         this.value = value;
     }
 

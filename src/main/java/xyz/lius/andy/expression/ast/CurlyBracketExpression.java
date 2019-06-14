@@ -22,7 +22,7 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     @Override
-    public CurlyBracketExpression add(Expression expression) {
+    public void add(Expression expression) {
         //record the order of the origin file
         super.add(expression);
 
@@ -34,7 +34,6 @@ public class CurlyBracketExpression extends BracketExpression {
             this.codes.add(expression);
         }
 
-        return this;
     }
 
     @Override
