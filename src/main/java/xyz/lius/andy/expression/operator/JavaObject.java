@@ -5,7 +5,7 @@ import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
 
 /**
- * 对象表达式，代表任一个java对象
+ * Represent a java object
  */
 public class JavaObject implements Expression {
     private Object object;

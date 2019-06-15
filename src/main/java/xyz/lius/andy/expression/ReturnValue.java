@@ -1,5 +1,9 @@
 package xyz.lius.andy.expression;
 
+/**
+ * Represent a return value
+ * engine will return and not eval the rest expressions when encounter a return value
+ */
 public class ReturnValue implements Expression {
     private Expression value;
 
