@@ -60,10 +60,12 @@ public abstract class AbstractContainer implements Container<Expression> {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < count; i++) {
-            sb.append(elementData[i] + " ");
+        if (count() != 0) {
+            for (int i = 0; i < count; i++) {
+                sb.append(elementData[i] + " ");
+            }
+            sb.replace(sb.length()-1, sb.length(), "");
         }
-        sb.replace(sb.length()-1, sb.length(), "");
         return sb.toString();
     }
 

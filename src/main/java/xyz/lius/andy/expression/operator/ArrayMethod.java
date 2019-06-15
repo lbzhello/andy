@@ -5,16 +5,14 @@ import xyz.lius.andy.expression.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * 数组方法调用缓存, 比调用 MethodExpression速度要快一点
+ * 数组方法调用缓存, 比调用 JavaMethod 速度要快一点
  * @see JavaMethod
  */
-public class ArrayMethod extends NativeExpression {
+public class ArrayMethod extends AbstractContainer implements Expression {
     //key: methodName value: methodHandle
     private static Map<String, MethodHandle> cachedMethod = new HashMap<>();
 
@@ -43,25 +41,18 @@ public class ArrayMethod extends NativeExpression {
 
     //当前选中的方法句柄
     private MethodHandle methodHandle;
-    private Expression methodObject;
     public ArrayMethod(Expression methodObject, String methodName) {
         methodHandle = cachedMethod.get(methodName);
-        this.methodObject = methodObject;
-        //先绑定后面调用asSpreader会报错,生成了一个新的对象？
-        methodHandle = methodHandle.bindTo(methodObject);
         if (methodHandle == null) {
             ExpressionFactory.error(methodObject, "No such method:" + methodName);
         }
+        methodHandle = methodHandle.bindTo(methodObject);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         try {
-            List<Expression> parameters = new ArrayList<>(list().size());
-            for (Expression element : list()) {
-                parameters.add(element.eval(context));
-            }
-            return  (Expression)methodHandle.asSpreader(Object[].class, list().size()).invoke(parameters.toArray());
+            return  (Expression)methodHandle.asSpreader(Object[].class, count()).invoke(toArray());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
