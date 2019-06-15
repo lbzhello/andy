@@ -2,7 +2,6 @@ package xyz.lius.andy.expression.operator;
 
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.context.ExpressionContext;
 
 public class IfExpression extends AbstractContainer implements Operator {
     public IfExpression() {
@@ -18,7 +17,8 @@ public class IfExpression extends AbstractContainer implements Operator {
             selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(1) : ExpressionType.NIL;
         }
         if (ExpressionUtils.isCurlyBracket(selectExpression)) {
-            return selectExpression.eval(context).eval(new ExpressionContext());
+            Complex complex = (Complex) selectExpression.eval(context);
+            return new StackFrame(complex).eval(null);
         } else {
             return selectExpression.eval(context);
         }

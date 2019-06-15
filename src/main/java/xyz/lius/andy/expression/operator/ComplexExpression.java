@@ -1,6 +1,5 @@
 package xyz.lius.andy.expression.operator;
 
-import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 
 @CurlyBracketed
@@ -47,19 +46,7 @@ public class ComplexExpression implements Complex {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        context.setParent(this.context);
-        context.add(Definition.SELF, this);
-        Expression rstValue = ExpressionType.NIL;
-        for (Expression expression : this.codes) {
-            rstValue = expression.eval(context);
-            if (ExpressionUtils.isReturn(rstValue)) {
-                return ExpressionUtils.asReturn(rstValue).getValue();
-            }
-            if (ExpressionUtils.hasError(rstValue)) {
-                return rstValue.eval(context);
-            }
-        }
-        return rstValue;
+        return this;
     }
 
 }

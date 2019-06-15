@@ -1,9 +1,8 @@
 package xyz.lius.andy.core;
 
 import xyz.lius.andy.compiler.Compiler;
-import xyz.lius.andy.expression.*;
 import xyz.lius.andy.compiler.parser.Parser;
-import xyz.lius.andy.expression.context.ExpressionContext;
+import xyz.lius.andy.expression.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +41,8 @@ public class ReplEngine {
 
         Expression rst;
         if (ExpressionUtils.isCurlyBracket(expression)) {
-            Expression complex = expression.eval(context); //setParameters and generate a runtime expression
-            rst = complex.eval(new ExpressionContext());
+            Complex complex = (Complex) expression.eval(context); //setParameters and generate a runtime expression
+            rst = new StackFrame(complex).eval(null);
         } else {
             rst = expression.eval(context);
         }
