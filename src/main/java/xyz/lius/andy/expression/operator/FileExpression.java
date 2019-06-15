@@ -1,22 +1,16 @@
 package xyz.lius.andy.expression.operator;
 
-import xyz.lius.andy.expression.Context;
-import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.expression.Name;
+import xyz.lius.andy.expression.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
-public class FileExpression extends NativeExpression {
-    @Override
-    public Expression parameters(List<Expression> list) {
-        this.list(list);
-        return this;
+public class FileExpression extends AbstractContainer implements Operator {
+    public FileExpression() {
+        super(1);
     }
 
     @Override
@@ -35,6 +29,6 @@ public class FileExpression extends NativeExpression {
                 e.printStackTrace();
             }
         }
-        return super.eval(context);
+        return ExpressionFactory.error(this, "File not found!");
     }
 }

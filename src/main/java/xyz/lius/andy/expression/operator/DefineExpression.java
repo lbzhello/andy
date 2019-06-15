@@ -1,15 +1,14 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 
 @CurlyBracketed
 public class DefineExpression extends AbstractContainer implements Operator {
-    public DefineExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+    public DefineExpression() {
         super(2);
-        add(bracket);
-        add(curlyBracket);
     }
 
     /**
@@ -29,6 +28,6 @@ public class DefineExpression extends AbstractContainer implements Operator {
 
     @Override
     public String toString() {
-        return show(ExpressionType.DEFINE.toString(), super.toString());
+        return show(OperatorSingleton.DEFINE, super.toString());
     }
 }

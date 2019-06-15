@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
 
@@ -32,6 +33,6 @@ public class PointExpression extends AbstractContainer implements Operator {
 
     @Override
     public String toString() {
-        return get(0).toString() + "." + get(1).toString();
+        return get(0).toString() + OperatorSingleton.POINT + get(1).toString();
     }
 }

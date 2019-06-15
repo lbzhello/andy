@@ -57,8 +57,14 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         operator.put(OperatorSingleton.MUL, () -> new MultiplyExpression());
         operator.put(OperatorSingleton.DIV, () -> new DivideExpression());
 
-        operator.put(OperatorSingleton.POINT, () -> new PointExpression());
         operator.put(OperatorSingleton.ELSE, () -> new ElseExpression());
+
+        //---------------- other -----------------//
+        operator.put(OperatorSingleton.DEFINE, () -> new DefineExpression());
+        operator.put(OperatorSingleton.COLON, () -> new ColonExpression());
+        operator.put(OperatorSingleton.POINT, () -> new PointExpression());
+        operator.put(OperatorSingleton.PRINT, () -> new PrintExpression());
+        operator.put(OperatorSingleton.FILE, () -> new FileExpression());
     }
 
     @Override

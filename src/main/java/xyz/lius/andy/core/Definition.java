@@ -79,37 +79,6 @@ public final class Definition {
 //        delimiter.put('>', ExpressionFactory.symbol(">"));
     }
 
-    static {
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("="), ExpressionFactory.assign());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("+"), ExpressionFactory.plus());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("-"), ExpressionFactory.minus());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("*"), ExpressionFactory.Multiply());
-        // '/' is delimiter so it will be parse earlier on tokenizer
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("/"), ExpressionFactory.divide());
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("||"), ExpressionFactory.or());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("=="), ExpressionFactory.equal());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("!="), ExpressionFactory.notEqual());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">"), ExpressionFactory.greaterThan());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol(">="), ExpressionFactory.greaterEqual());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<"), ExpressionFactory.lessThan());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("<="), ExpressionFactory.lessEqual());
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("true"), ExpressionType.TRUE);
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("false"), ExpressionType.FALSE);
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("if"), ExpressionFactory.ifExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("for"), ExpressionFactory.forExpression());
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("new"), ExpressionFactory.newExpression());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("import"), ExpressionFactory.importExpression());
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("->"), ExpressionFactory.arrow());
-
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("print"), ExpressionFactory.print());
-        CORE_CONTEXT.bind(ExpressionFactory.symbol("file") , ExpressionFactory.file());
-    }
-
     public static final Context<Name, Expression> getCoreContext() {
         return CORE_CONTEXT;
     }

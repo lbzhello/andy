@@ -39,9 +39,14 @@ public final class OperatorSingleton implements OperatorDefinition {
     public static final String MUL = "*";
     public static final String DIV = "/";
 
-    public static final String POINT = ".";
     public static final String ELSE = "else";
 
+    //--------- Other -----------//
+    public static final String DEFINE = "def";
+    public static final String COLON = ":";
+    public static final String POINT = ".";
+    public static final String PRINT = "print";
+    public static final String FILE = "file";
 
     private static final class SingletonHolder {
         private static final OperatorDefinition INSTANCE = new OperatorSingleton();
@@ -91,7 +96,6 @@ public final class OperatorSingleton implements OperatorDefinition {
         binary.put(MUL, 41);
         binary.put(DIV, 41);
 
-        binary.put(POINT, 1314);
         binary.put(ELSE, 1314);
     }
 

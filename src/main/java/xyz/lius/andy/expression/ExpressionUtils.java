@@ -1,7 +1,9 @@
 package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.operator.*;
+import xyz.lius.andy.expression.operator.CommaExpression;
+import xyz.lius.andy.expression.operator.JavaObject;
+import xyz.lius.andy.expression.operator.LambdaExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
 
@@ -112,14 +114,6 @@ public class ExpressionUtils {
 
     public static NumberExpression asNumber(Expression expression) {
         return (NumberExpression) expression;
-    }
-
-    public static boolean isNative(Expression expression) {
-        return expression instanceof NativeExpression;
-    }
-
-    public static NativeExpression asNative(Expression expression) {
-        return (NativeExpression) expression;
     }
 
     public static boolean isXml(Expression expression) {

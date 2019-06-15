@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.ast;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.operator.ArrayMethod;
 import xyz.lius.andy.expression.operator.JavaMethod;
@@ -40,9 +41,9 @@ public class RoundBracketExpression extends BracketExpression {
     public Expression eval(Context<Name, Expression> context) {
         if (list().size() == 0) return this; //e.g. ()
         Expression first = get(0).eval(context);
-        if (first == ExpressionType.NIL && get(0) == ExpressionType.NIL) return ExpressionType.NIL; //e.g. (nil)
-        if (ExpressionUtils.isNative(first)) {
-            return ExpressionUtils.asNative(first).parameters(this.getParameters()).eval(context);
+        if (first == ExpressionType.NIL) {
+            //查看是否为系统提供的运算符
+            first = Definition.getOperator(get(0).toString());
         }
 
         if (first instanceof Operator) {

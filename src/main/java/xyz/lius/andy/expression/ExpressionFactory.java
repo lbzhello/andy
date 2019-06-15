@@ -84,11 +84,17 @@ public class ExpressionFactory extends NativeFactory {
         if (key.getName() == Name.NIL && key instanceof BracketExpression) { //it's a lambda
             return lambda((BracketExpression) key, value);
         }
-        return new DefineExpression(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
+        DefineExpression def = new DefineExpression();
+        def.add(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key);
+        def.add(value);
+        return def;
     }
 
     public static Operator colon(Expression key, Expression value) {
-        return new ColonExpression(key, value);
+        Operator colon = new ColonExpression();
+        colon.add(key);
+        colon.add(value);
+        return colon;
     }
 
     public static BracketExpression comma(Expression... expressions) {

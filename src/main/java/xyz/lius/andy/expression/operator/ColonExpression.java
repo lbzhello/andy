@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
@@ -12,10 +13,8 @@ import java.util.List;
  */
 public class ColonExpression extends AbstractContainer implements Operator {
 
-    public ColonExpression(Expression key, Expression value) {
+    public ColonExpression() {
         super(2);
-        add(key);
-        add(value);
     }
 
     @Override
@@ -37,6 +36,6 @@ public class ColonExpression extends AbstractContainer implements Operator {
 
     @Override
     public String toString() {
-        return show(ExpressionType.DEFINE.toString(), super.toString());
+        return show(OperatorSingleton.COLON, super.toString());
     }
 }
