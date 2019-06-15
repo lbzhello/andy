@@ -99,19 +99,11 @@ public class ExpressionUtils {
     }
 
     public static boolean isJavaObject(Expression expression) {
-        return expression instanceof JavaObjectExpression;
+        return expression instanceof JavaObject;
     }
 
-    public static JavaObjectExpression asJavaObject(Expression expression) {
-        return (JavaObjectExpression)expression;
-    }
-
-    public static boolean isJavaMethod(Expression expression) {
-        return expression instanceof JavaMethod;
-    }
-
-    public static JavaMethod asJavaMethod(Expression expression) {
-        return (JavaMethod) expression;
+    public static JavaObject asJavaObject(Expression expression) {
+        return (JavaObject)expression;
     }
 
     public static StringExpression asString(Expression expression) {

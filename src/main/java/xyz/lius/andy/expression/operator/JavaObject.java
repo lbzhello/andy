@@ -7,10 +7,10 @@ import xyz.lius.andy.expression.Name;
 /**
  * 对象表达式，代表任一个java对象
  */
-public class JavaObjectExpression implements Expression {
+public class JavaObject implements Expression {
     private Object object;
 
-    public JavaObjectExpression(Object object) {
+    public JavaObject(Object object) {
         this.object = object;
     }
 

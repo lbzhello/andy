@@ -106,8 +106,8 @@ public class ExpressionFactory extends NativeFactory {
         return new ComplexExpression(context);
     }
 
-    public static JavaObjectExpression javaObject(Object o) {
-        return new JavaObjectExpression(o);
+    public static JavaObject javaObject(Object o) {
+        return new JavaObject(o);
     }
 
     public static JavaMethod javaMethod(Object methodObject, String methodName) {

@@ -8,7 +8,8 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
- * use reflect/invoke to invoke a java method
+ * representative a java method
+ * use reflect/invoke to invoke
  * @see ArrayMethod
  */
 public class JavaMethod extends AbstractContainer implements Operator {

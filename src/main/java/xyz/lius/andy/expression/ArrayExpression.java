@@ -3,8 +3,7 @@ package xyz.lius.andy.expression;
 import xyz.lius.andy.expression.operator.ArrayMethod;
 
 /**
- * 表达式数组迭代接口,实现此接口可以通过ArrayMethodInvoker调用
- * e.g. [expr1 expr2 expr3 ...]
+ * 数组方法,实现此接口可以通过ArrayMethod调用
  * @see ArrayMethod
  */
 public interface ArrayExpression extends Expression {
