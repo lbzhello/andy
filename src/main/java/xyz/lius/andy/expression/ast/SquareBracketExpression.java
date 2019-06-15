@@ -33,7 +33,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     public Expression map(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
         StackFrame stackFrame = new StackFrame((Complex) func);
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
             squareBracket.add(stackFrame.eval(null));
         }
@@ -43,7 +43,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     @Override
     public Expression each(Expression func) {
         StackFrame stackFrame = new StackFrame((Complex) func);
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
             stackFrame.eval(null);
         }
@@ -54,7 +54,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     public Expression filter(Expression func) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
         StackFrame stackFrame = new StackFrame((Complex) func);
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
             if (stackFrame.eval(null) == ExpressionType.TRUE) {
                 squareBracket.add(expression);
@@ -67,7 +67,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     public Expression mapValues(Expression func) {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         StackFrame stackFrame = new StackFrame((Complex) func);
-        for (Expression expression : list()) {
+        for (Expression expression : toArray()) {
             ArrayExpression array = ExpressionUtils.asArray(expression);
             stackFrame.add(ExpressionFactory.symbol("$0"), array.other());
             squareBracket.add(ExpressionFactory.squareBracket(array.first(), stackFrame.eval(null)));
@@ -77,11 +77,11 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
 
     @Override
     public Expression reduce(Expression func) {
-        if (list().size() < 2) {
+        if (size() < 2) {
             return ExpressionType.NIL;
         } else {
             StackFrame stackFrame = new StackFrame((Complex) func);
-            Iterator<Expression> iterator = list().iterator();
+            Iterator<Expression> iterator = Arrays.stream(toArray()).iterator();
             Expression acc = iterator.next();
             while (iterator.hasNext()) {
                 stackFrame.add(ExpressionFactory.symbol("$0"), acc);
@@ -115,7 +115,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     public Expression reduceByKey(Expression func) {
         SquareBracketExpression squareBracket = ExpressionUtils.asSquareBracket(groupByKey());
         SquareBracketExpression rst = ExpressionFactory.squareBracket();
-        for (Expression expression : squareBracket.list()) { //e.g. [[...] [...] [...]]
+        for (Expression expression : squareBracket.toArray()) { //e.g. [[...] [...] [...]]
             ArrayExpression array = ExpressionUtils.asArray(expression);
             Expression first = array.first();
             Expression other = array.other();
@@ -132,7 +132,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         Map<Expression, SquareBracketExpression> keyMap = new HashMap<>();
         SquareBracketExpression parrent = ExpressionFactory.squareBracket(); //rst [[...] [...]]
         StackFrame stackFrame = new StackFrame((Complex) func);
-        for (Expression element : list()) {
+        for (Expression element : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), element); //传参
             Expression key = stackFrame.eval(null);
             SquareBracketExpression child = keyMap.get(key);
@@ -151,7 +151,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     public Expression groupByKey() {
         Map<Expression, SquareBracketExpression> keyMap = new HashMap<>();
         SquareBracketExpression parent = ExpressionFactory.squareBracket(); //[[...] [...] [...]]
-        Iterator<Expression> iterator = list().iterator();
+        Iterator<Expression> iterator = Arrays.stream(toArray()).iterator();
         while (iterator.hasNext()) {
             ArrayExpression array = ExpressionUtils.asArray(iterator.next());
             Expression key = array.first();
@@ -176,26 +176,27 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
 
     @Override
     public Expression other() {
-        List<Expression> rst = this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
-        if (rst.size() == 0) { //e.g. []
+        if (size() < 2) {
             return ExpressionType.NIL;
-        } else if (rst.size() == 1) { //e.g. [first second]
-            return rst.get(0);
+        } else if (size() == 2) {
+            return get(1);
+        } else {
+            Expression[] rst = Arrays.copyOfRange(toArray(), 1, size());
+            return ExpressionFactory.squareBracket(rst);
         }
-        return ExpressionFactory.squareBracket().list(rst);
     }
 
     @Override
     public Expression reverse() {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
-        for (int i = list().size() - 1; i >= 0; i--) {
-            squareBracket.add(list().get(i));
+        for (int i = size() - 1; i >= 0; i--) {
+            squareBracket.add(get(i));
         }
         return squareBracket;
     }
 
     @Override
     public Expression count() {
-        return ExpressionFactory.number(list().size());
+        return ExpressionFactory.number(size());
     }
 }

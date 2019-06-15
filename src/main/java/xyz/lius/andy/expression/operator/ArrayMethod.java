@@ -45,14 +45,16 @@ public class ArrayMethod extends AbstractContainer implements Operator {
         methodHandle = cachedMethod.get(methodName);
         if (methodHandle == null) {
             ExpressionFactory.error(methodObject, "No such method:" + methodName);
+            throw  new RuntimeException("No such method:" + methodName);
+        } else {
+            methodHandle = methodHandle.bindTo(methodObject);
         }
-        methodHandle = methodHandle.bindTo(methodObject);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         try {
-            return  (Expression)methodHandle.asSpreader(Object[].class, count()).invoke(toArray());
+            return  (Expression)methodHandle.asSpreader(Object[].class, size()).invoke(toArray());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

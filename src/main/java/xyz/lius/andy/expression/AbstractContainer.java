@@ -3,7 +3,7 @@ package xyz.lius.andy.expression;
 import java.util.Arrays;
 
 public abstract class AbstractContainer implements Container<Expression> {
-    private static final Expression[] EMPTY_ELEMENT_DATA = {};
+    protected static final Expression[] EMPTY_ELEMENT_DATA = {};
 
     private static final int DEFAULT_INITIAL_CAPACITY = 8;
 
@@ -22,6 +22,11 @@ public abstract class AbstractContainer implements Container<Expression> {
     public AbstractContainer(int initialCapacity) {
         free = initialCapacity;
         elementData = new Expression[free];
+    }
+
+    public AbstractContainer(Expression[] elementData) {
+        this.elementData = elementData;
+        count = elementData.length;
     }
 
     @Override
@@ -43,7 +48,7 @@ public abstract class AbstractContainer implements Container<Expression> {
     }
 
     @Override
-    public int count() {
+    public int size() {
         return count;
     }
 
@@ -60,13 +65,25 @@ public abstract class AbstractContainer implements Container<Expression> {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        if (count() != 0) {
+        if (size() != 0) {
             for (int i = 0; i < count; i++) {
                 sb.append(elementData[i] + " ");
             }
             sb.replace(sb.length()-1, sb.length(), "");
         }
         return sb.toString();
+    }
+
+    public void addAll(Expression[] a) {
+        int len = count + a.length;
+        if (a.length > free) {
+            elementData = Arrays.copyOf(elementData, len);
+            System.arraycopy(a, 0, elementData, count, a.length);
+            count = len; free = 0;
+        } else {
+            System.arraycopy(a, 0, elementData, count, a.length);
+            count = len; free -= a.length;
+        }
     }
 
     /**

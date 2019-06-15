@@ -22,8 +22,8 @@ public class ArrowExpression extends AbstractContainer implements Operator {
             left = (BracketExpression)get(0);
         } else if (ExpressionUtils.isRoundBracket(get(0))) {
             BracketExpression roundBracket = (RoundBracketExpression) get(0);
-            if (roundBracket.list().size() == 1) { //e.g. (x) -> right
-                left = ExpressionFactory.squareBracket(roundBracket.list().get(0));
+            if (roundBracket.size() == 1) { //e.g. (x) -> right
+                left = ExpressionFactory.squareBracket(roundBracket.get(0));
             } else { //e.g. (x y z) -> right
                 return ExpressionFactory.error(roundBracket, "Error ArrowExpression!");
             }

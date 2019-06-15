@@ -61,10 +61,10 @@ public class TemplateExpression implements Expression {
     //向左平移offset单位
     private Expression moveLine(Expression expression, int offset) {
         if (expression instanceof LineExpression && offset > 0) {
-            List<Expression> list = ((LineExpression) expression).list();
-            if (list.size() > 0 && ExpressionUtils.isString(list.get(0))) {
-                String str = list.get(0).toString();
-                list.set(0, ExpressionFactory.string(str.substring(offset, str.length())));
+            Expression[] array = ((LineExpression) expression).toArray();
+            if (array.length > 0 && ExpressionUtils.isString(array[0])) {
+                String str = array[0].toString();
+                array[0] = ExpressionFactory.string(str.substring(offset, str.length()));
             }
         }
         return expression;

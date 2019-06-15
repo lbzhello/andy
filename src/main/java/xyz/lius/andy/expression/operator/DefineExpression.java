@@ -21,9 +21,10 @@ public class DefineExpression extends AbstractContainer implements Operator {
         BracketExpression bracket = (BracketExpression) get(0);
         CurlyBracketExpression curlyBracket = (CurlyBracketExpression) get(1);
         //every ComplexExpression has it's own context
-        ComplexExpression complexExpression = curlyBracket.eval(context).setParameters(bracket.getParameters());
-        context.add(bracket.getName(), complexExpression);
-        return complexExpression;
+        Complex complex = curlyBracket.eval(context);
+        complex.setParameters(bracket.getParameters());
+        context.add(bracket.getName(), complex);
+        return complex;
     }
 
     @Override

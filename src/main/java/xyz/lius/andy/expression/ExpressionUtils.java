@@ -76,7 +76,7 @@ public class ExpressionUtils {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         for (Expression expression : expressions) {
             if (isSquareBracket(expression)) {
-                squareBracket.list().addAll(asSquareBracket(expression).list());
+                squareBracket.addAll(asSquareBracket(expression).toArray());
             } else {
                 squareBracket.add(expression);
             }
@@ -138,7 +138,7 @@ public class ExpressionUtils {
         if (!xml.getStartTag().isEmpty()) {
             xmlStr.append(indent + xml.getStartTag() + "\n");
         }
-        for (Expression element : xml.getBody().list()) {
+        for (Expression element : xml.getBody().toArray()) {
             if (ExpressionUtils.isXml(element)) {
                 xmlStr.append(xmlToString(ExpressionUtils.asXml(element), indentInc));
             } else {

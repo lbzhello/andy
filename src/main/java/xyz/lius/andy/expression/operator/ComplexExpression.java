@@ -8,8 +8,8 @@ import java.util.List;
 @CurlyBracketed
 public class ComplexExpression implements Complex {
 
-    private List<Expression> parameters;
-    private List<Expression> codes;
+    private Expression[] parameters;
+    private Expression[] codes;
 
     private Context<Name, Expression> context;
 
@@ -19,17 +19,16 @@ public class ComplexExpression implements Complex {
 
     //形参
     @Override
-    public ComplexExpression setParameters(List<Expression> parameters) {
+    public void setParameters(Expression[] parameters) {
         this.parameters = parameters;
         // param1 -> NameExpression.$0; param2 -> NameExpression.$1; ...
-        for (int i = 0; i < this.parameters.size(); i++) {
-            context.bind(this.parameters.get(i).getName(), ExpressionFactory.symbol("$" + i));
+        for (int i = 0; i < this.parameters.length; i++) {
+            context.bind(this.parameters[i].getName(), ExpressionFactory.symbol("$" + i));
         }
-        return this;
     }
 
     @Override
-    public List<Expression> getParameters() {
+    public Expression[] getParameters() {
         return parameters;
     }
 
@@ -39,13 +38,12 @@ public class ComplexExpression implements Complex {
     }
 
     @Override
-    public ComplexExpression setCodes(List<Expression> codes) {
+    public void setCodes(Expression[] codes) {
         this.codes = codes;
-        return this;
     }
 
     @Override
-    public List<Expression> getCodes() {
+    public Expression[] getCodes() {
         return codes;
     }
 

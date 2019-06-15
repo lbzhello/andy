@@ -25,9 +25,9 @@ public class JavaMethod extends AbstractContainer implements Operator {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        Class<?>[] paramTypes = new Class[count()];
-        Object[] paramValues = new Object[count()];
-        for (int i = 0; i < count(); i++) {
+        Class<?>[] paramTypes = new Class[size()];
+        Object[] paramValues = new Object[size()];
+        for (int i = 0; i < size(); i++) {
             Expression param = get(i);
             if (ExpressionUtils.isString(param)) {
                 paramTypes[i] = String.class;
@@ -48,7 +48,7 @@ public class JavaMethod extends AbstractContainer implements Operator {
 
         try {
             Method method = methodClass.getMethod(methodName, paramTypes);
-            MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, count()).bindTo(methodObject);
+            MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, size()).bindTo(methodObject);
             Object rstObj = methodHandle.invoke(paramValues);
             if (ExpressionUtils.isExpression(rstObj)) {
                 return ExpressionUtils.asExpression(rstObj);

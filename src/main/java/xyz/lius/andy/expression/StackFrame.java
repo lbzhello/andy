@@ -9,20 +9,20 @@ import java.util.List;
  */
 public class StackFrame extends AbstractContext<Name, Expression> implements Expression {
     //方法字节吗
-    private List<Expression> codes;
+    private Expression[] codes;
 
     /**
      * @param complex 相当于类文件
      * @param argsContext 实参上下文
      * @param args 实参
      */
-    public StackFrame(Complex complex, Context<Name, Expression> argsContext, List<Expression> args) {
+    public StackFrame(Complex complex, Context<Name, Expression> argsContext, Expression[] args) {
         //动态链接, 对运行时常量池的引用
         super(complex.getContext());
         this.codes = complex.getCodes();
         //参数放入局部变量表
-        for (int i = 0; i < args.size(); i++) {
-            add(ExpressionFactory.symbol("$" + i), args.get(i).eval(argsContext));
+        for (int i = 0; i < args.length; i++) {
+            add(ExpressionFactory.symbol("$" + i), args[i].eval(argsContext));
         }
     }
 

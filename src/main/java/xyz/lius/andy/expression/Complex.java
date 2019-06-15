@@ -1,17 +1,15 @@
 package xyz.lius.andy.expression;
 
-import java.util.List;
-
 public interface Complex extends Expression {
 
     Context<Name, Expression> getContext();
 
-    List<Expression> getParameters();
+    Expression[] getParameters();
 
-    Complex setParameters(List<Expression> parameters);
+    void setParameters(Expression[] parameters);
 
-    List<Expression> getCodes();
+    Expression[] getCodes();
 
-    Complex setCodes(List<Expression> codes);
+    void setCodes(Expression[] codes);
 
 }

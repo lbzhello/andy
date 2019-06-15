@@ -5,7 +5,7 @@ public interface Container<T> {
 
     T get(int i);
 
-    int count();
+    int size();
 
     boolean isEmpty();
 

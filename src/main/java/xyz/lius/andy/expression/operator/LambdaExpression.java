@@ -21,6 +21,8 @@ public class LambdaExpression extends AbstractContainer implements Operator {
         BracketExpression bracket = (BracketExpression) get(0);
         CurlyBracketExpression curlyBracket = (CurlyBracketExpression) get(1);
         //every ComplexExpression has it's own context
-        return curlyBracket.eval(context).setParameters(bracket.getParameters());
+        Complex complex = curlyBracket.eval(context);
+        complex.setParameters(bracket.getParameters());
+        return complex;
     }
 }

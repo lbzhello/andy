@@ -24,7 +24,7 @@ public class XmlTagExpression extends BracketExpression {
     @Override
     public XmlTagExpression eval(Context<Name, Expression> context) {
         XmlTagExpression xmlTag = ExpressionFactory.xmlTag();
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             xmlTag.add(expression.eval(context));
         }
         return xmlTag;
@@ -33,7 +33,7 @@ public class XmlTagExpression extends BracketExpression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             sb.append(expression);
         }
         return sb.toString();

@@ -16,7 +16,7 @@ public class LinesExpression extends SquareBracketExpression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression line : list()) {
+        for (Expression line : toArray()) {
             sb.append(line);
         }
         return sb.toString();

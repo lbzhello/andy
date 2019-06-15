@@ -17,22 +17,22 @@ public class CommaExpression extends RoundBracketExpression {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         BracketExpression squareBracket = ExpressionFactory.squareBracket();
-        for (Expression expression : list()) {
+        for (Expression expression : toArray()) {
             squareBracket.add(expression.eval(context));
         }
         return squareBracket;
     }
 
     @Override
-    public List<Expression> getParameters() {
-        return list();
+    public Expression[] getParameters() {
+        return toArray();
     }
 
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        if (list() != null && list().size() > 0) {
-            for (Expression expression : list()) {
+        if (!isEmpty()) {
+            for (Expression expression : toArray()) {
                 sb.append(expression + ", ");
             }
             //remove the last space and comma

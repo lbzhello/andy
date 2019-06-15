@@ -16,7 +16,7 @@ public class XmlExpression implements Expression {
     public Expression eval(Context<Name, Expression> context) {
         XmlExpression xml = ExpressionFactory.xml();
         BracketExpression bracket = ExpressionFactory.squareBracket();
-        for (Expression expression : body.list()) {
+        for (Expression expression : body.toArray()) {
             bracket.add(expression.eval(context));
         }
         xml.setStartTag(this.startTag.eval(context));
@@ -52,7 +52,7 @@ public class XmlExpression implements Expression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression expression : body.list()) {
+        for (Expression expression : body.toArray()) {
             sb.append(expression);
         }
         return this.startTag.toString() + sb.toString() + this.closeTag.toString();

@@ -37,12 +37,13 @@ public class CurlyBracketExpression extends BracketExpression {
     }
 
     @Override
-    public ComplexExpression eval(Context<Name, Expression> context) {
+    public Complex eval(Context<Name, Expression> context) {
         Context<Name, Expression> selfContext = new ExpressionContext(context);
         for (Expression expression : this.fields) {
             expression.eval(selfContext);
         }
-        ComplexExpression complex = ExpressionFactory.complex(selfContext).setCodes(this.codes);
+        Complex complex = ExpressionFactory.complex(selfContext);
+        complex.setCodes(this.codes.toArray(new Expression[this.codes.size()]));
         selfContext.add(Definition.SELF, complex);
         return complex;
     }

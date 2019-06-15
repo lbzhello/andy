@@ -2,11 +2,8 @@ package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.operator.ArrayMethod;
-import xyz.lius.andy.expression.operator.JavaMethod;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * (f x y)
@@ -18,13 +15,18 @@ public class RoundBracketExpression extends BracketExpression {
     }
 
     @Override
-    public List<Expression> getParameters() {
-        return this.list().size() >= 2 ? this.list().subList(1, this.list().size()) : Collections.emptyList();
+    public Expression[] getParameters() {
+        Expression[] params = toArray();
+        if (params.length > 1) {
+            return Arrays.copyOfRange(params, 1, params.length);
+        } else {
+            return EMPTY_ELEMENT_DATA;
+        }
     }
 
     @Override
     public Name getName() {
-        return this.get(0).getName();
+        return get(0).getName();
     }
 
     @Override
@@ -39,7 +41,7 @@ public class RoundBracketExpression extends BracketExpression {
      */
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        if (list().size() == 0) return this; //e.g. ()
+        if (size() == 0) return this; //e.g. ()
         Expression first = get(0).eval(context);
         if (first == ExpressionType.NIL) {
             //查看是否为系统提供的运算符
@@ -56,11 +58,11 @@ public class RoundBracketExpression extends BracketExpression {
 
         if (ExpressionUtils.isComplex(first)) { //e.g. name = {...}; (name x y)
             return new StackFrame((Complex) first, context, getParameters()).eval(null);
-        } else if (ExpressionUtils.isSquareBracket(first) && this.list().size() > 1) { //e.g. name = [...]; name(1)
+        } else if (ExpressionUtils.isSquareBracket(first) && size() > 1) { //e.g. name = [...]; name(1)
             Expression index = get(1).eval(context);
             if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
-            return ExpressionUtils.asSquareBracket(first).list().get(ExpressionUtils.asNumber(index).intValue());
-        } else if (this.list().size() == 1) { //e.g. (name)
+            return ExpressionUtils.asSquareBracket(first).get(ExpressionUtils.asNumber(index).intValue());
+        } else if (size() == 1) { //e.g. (name)
             return first;
         } else {
             return ExpressionFactory.error(get(0), "Expression must be ComplexExpression!");

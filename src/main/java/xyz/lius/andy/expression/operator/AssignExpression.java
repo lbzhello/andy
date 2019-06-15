@@ -24,10 +24,15 @@ public class AssignExpression extends AbstractContainer implements Operator {
             if  (get(1) instanceof CurlyBracketExpression) { //define a function. e.g. f(x) = { x }
                 CurlyBracketExpression right = (CurlyBracketExpression) get(1);
                 name = left.getName();
-                value = right.eval(context).setParameters(left.getParameters());
+                Complex complex = right.eval(context);
+                complex.setParameters(left.getParameters());
+                value = complex;
             } else { //e.g. f(x) = x + 1
                 name = left.getName();
-                value = ExpressionFactory.complex(new ExpressionContext(context)).setParameters(left.getParameters()).setCodes(List.of(get(1)));
+                Complex complex = ExpressionFactory.complex(new ExpressionContext(context));
+                complex.setParameters(left.getParameters());
+                complex.setCodes(new Expression[]{get(1)});
+                value = complex;
             }
         } else if (get(0) instanceof PointExpression) { //e.g. (. a b) = ...
             PointExpression left = (PointExpression) get(0);

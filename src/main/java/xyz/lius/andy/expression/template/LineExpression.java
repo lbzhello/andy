@@ -5,7 +5,6 @@ import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * e.g.
@@ -17,18 +16,18 @@ public class LineExpression extends BracketExpression {
     @Override
     public LineExpression eval(Context<Name, Expression> context) {
         LineExpression line = ExpressionFactory.line();
-        this.list().stream().forEach(element -> line.add(element.eval(context)));
+        Arrays.stream(toArray()).forEach(element -> line.add(element.eval(context)));
         return line;
     }
 
     public Expression evalOld(Context<Name, Expression> context) {
         StringBuffer sb = new StringBuffer();
         int charCount = 0, acc = 0;
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             if (ExpressionUtils.isRoundBracket(expression)) { //only eval (...)
                 Expression rst = expression.eval(context);
                 if (ExpressionUtils.isSquareBracket(rst)) { //if it's a setCodes
-                    List<Expression> lines = ExpressionUtils.asSquareBracket(rst).list();
+                    BracketExpression lines = ExpressionUtils.asSquareBracket(rst);
                     if (lines.size() > 1) { //add space to other lines except line 1
                         char[] spaces = new char[charCount];
                         Arrays.fill(spaces, ' ');
@@ -58,7 +57,7 @@ public class LineExpression extends BracketExpression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression expression : this.list()) {
+        for (Expression expression : toArray()) {
             sb.append(expression);
         }
         return sb.toString();
