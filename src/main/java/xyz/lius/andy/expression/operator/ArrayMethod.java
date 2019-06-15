@@ -12,7 +12,7 @@ import java.util.Map;
  * 数组方法调用缓存, 比调用 JavaMethod 速度要快一点
  * @see JavaMethod
  */
-public class ArrayMethod extends AbstractContainer implements Expression {
+public class ArrayMethod extends AbstractContainer implements Operator {
     //key: methodName value: methodHandle
     private static Map<String, MethodHandle> cachedMethod = new HashMap<>();
 

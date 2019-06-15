@@ -45,20 +45,10 @@ public class RoundBracketExpression extends BracketExpression {
             return ExpressionUtils.asNative(first).parameters(this.getParameters()).eval(context);
         }
 
-        if (first instanceof JavaMethod) {
-            JavaMethod method = (JavaMethod) first;
+        if (first instanceof Operator) {
             //传参
             for (Expression param : this.getParameters()) {
-                method.add(param.eval(context));
-            }
-            return first.eval(context);
-        }
-
-        if (first instanceof ArrayMethod) {
-            ArrayMethod method = (ArrayMethod) first;
-            //传参
-            for (Expression param : this.getParameters()) {
-                method.add(param.eval(context));
+                ((Operator) first).add(param.eval(context));
             }
             return first.eval(context);
         }

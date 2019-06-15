@@ -11,7 +11,7 @@ import java.util.Objects;
  * use reflect/invoke to invoke a java method
  * @see ArrayMethod
  */
-public class JavaMethod extends AbstractContainer implements Expression {
+public class JavaMethod extends AbstractContainer implements Operator {
     private String methodName = "";
     private Class<?> methodClass;
     private Object methodObject;

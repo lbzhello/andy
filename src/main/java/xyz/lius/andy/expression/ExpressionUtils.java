@@ -7,11 +7,11 @@ import xyz.lius.andy.expression.template.XmlExpression;
 
 public class ExpressionUtils {
     public static boolean isReturn(Expression expression) {
-        return expression instanceof ReturnExpression;
+        return expression instanceof ReturnValue;
     }
 
-    public static ReturnExpression asReturn(Expression rstValue) {
-        return (ReturnExpression) rstValue;
+    public static ReturnValue asReturn(Expression rstValue) {
+        return (ReturnValue) rstValue;
     }
 
     public static boolean hasError(Expression expression) {
