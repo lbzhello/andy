@@ -1,12 +1,9 @@
 package xyz.lius.andy.expression.ast;
 
-import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import xyz.lius.andy.expression.AbstractContainer;
+import xyz.lius.andy.expression.Context;
+import xyz.lius.andy.expression.Expression;
+import xyz.lius.andy.expression.Name;
 
 public class BracketExpression extends AbstractContainer implements Expression {
     public BracketExpression(Expression... expressions) {

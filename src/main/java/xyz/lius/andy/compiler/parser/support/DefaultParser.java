@@ -8,7 +8,6 @@ import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
-import xyz.lius.andy.expression.ast.RoundBracketExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
@@ -96,7 +95,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combine(Expression left) throws Exception {
         if (tokenizer.current() == TokenFlag.ROUND_BRACKET_LEFT) { //e.g. left(...)...
             BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
-            bracketExpression.addAll(roundBracketExpression().toArray());
+            bracketExpression.addContainer(roundBracketExpression());
             return combine(bracketExpression);
         } else if (tokenizer.current() == TokenFlag.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));

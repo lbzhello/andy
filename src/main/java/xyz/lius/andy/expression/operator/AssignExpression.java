@@ -8,6 +8,9 @@ import xyz.lius.andy.expression.context.ExpressionContext;
 
 import java.util.List;
 
+/**
+ * e.g. left = "hello"
+ */
 public class AssignExpression extends AbstractContainer implements Operator {
 
     public AssignExpression() {

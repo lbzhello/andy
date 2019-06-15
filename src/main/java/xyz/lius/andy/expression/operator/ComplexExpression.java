@@ -3,8 +3,6 @@ package xyz.lius.andy.expression.operator;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 
-import java.util.List;
-
 @CurlyBracketed
 public class ComplexExpression implements Complex {
 

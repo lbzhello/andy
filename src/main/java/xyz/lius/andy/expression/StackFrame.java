@@ -2,8 +2,6 @@ package xyz.lius.andy.expression;
 
 import xyz.lius.andy.expression.context.AbstractContext;
 
-import java.util.List;
-
 /**
  * 栈帧,方法运行时数据结构
  */

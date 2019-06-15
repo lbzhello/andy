@@ -10,4 +10,6 @@ public interface Container<T> {
     boolean isEmpty();
 
     T[] toArray();
+
+    void addContainer(Container<T> container);
 }

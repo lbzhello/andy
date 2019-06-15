@@ -9,6 +9,9 @@ import xyz.lius.andy.expression.ast.RoundBracketExpression;
 
 import java.util.List;
 
+/**
+ * (a, b, c, d) => [a b c d]
+ */
 public class CommaExpression extends RoundBracketExpression {
     public CommaExpression(Expression... expressions) {
         super(expressions);

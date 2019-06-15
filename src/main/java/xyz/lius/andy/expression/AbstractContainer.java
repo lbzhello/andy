@@ -63,6 +63,20 @@ public abstract class AbstractContainer implements Container<Expression> {
     }
 
     @Override
+    public void addContainer(Container<Expression> container) {
+        Expression[] array = container.toArray();
+        int len = count + array.length;
+        if (array.length > free) {
+            elementData = Arrays.copyOf(elementData, len);
+            System.arraycopy(array, 0, elementData, count, array.length);
+            count = len; free = 0;
+        } else {
+            System.arraycopy(array, 0, elementData, count, array.length);
+            count = len; free -= array.length;
+        }
+    }
+
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         if (size() != 0) {
@@ -72,18 +86,6 @@ public abstract class AbstractContainer implements Container<Expression> {
             sb.replace(sb.length()-1, sb.length(), "");
         }
         return sb.toString();
-    }
-
-    public void addAll(Expression[] a) {
-        int len = count + a.length;
-        if (a.length > free) {
-            elementData = Arrays.copyOf(elementData, len);
-            System.arraycopy(a, 0, elementData, count, a.length);
-            count = len; free = 0;
-        } else {
-            System.arraycopy(a, 0, elementData, count, a.length);
-            count = len; free -= a.length;
-        }
     }
 
     /**

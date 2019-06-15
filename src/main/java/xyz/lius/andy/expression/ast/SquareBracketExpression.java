@@ -2,10 +2,13 @@ package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
- * [...]
+ * [a b c d]
  */
 public class SquareBracketExpression extends BracketExpression implements ArrayExpression {
 
@@ -90,25 +93,6 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
             }
             return acc;
         }
-    }
-
-    /**
-     *
-     * @param iterator next expression
-     * @param func  reduce function
-     * @param context avoid create unnecessary contexts
-     * @return
-     */
-    private Expression reduceCircle(Iterator<Expression> iterator, Expression func, Context<Name, Expression> context) {
-        context.add(ExpressionFactory.symbol("$1"), iterator.next()); //绑定第二个参数
-        Expression first = func.eval(context);
-        if (iterator.hasNext()) {
-            context.add(ExpressionFactory.symbol("$0"), first);
-            return reduceCircle(iterator, func, context);
-        } else {
-            return first;
-        }
-
     }
 
     @Override

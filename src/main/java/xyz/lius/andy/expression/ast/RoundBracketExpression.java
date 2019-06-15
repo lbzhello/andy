@@ -16,9 +16,8 @@ public class RoundBracketExpression extends BracketExpression {
 
     @Override
     public Expression[] getParameters() {
-        Expression[] params = toArray();
-        if (params.length > 1) {
-            return Arrays.copyOfRange(params, 1, params.length);
+        if (size() > 1) {
+            return Arrays.copyOfRange(toArray(), 1, size());
         } else {
             return EMPTY_ELEMENT_DATA;
         }
@@ -27,11 +26,6 @@ public class RoundBracketExpression extends BracketExpression {
     @Override
     public Name getName() {
         return get(0).getName();
-    }
-
-    @Override
-    public String toString() {
-        return "(" + super.toString() + ")";
     }
 
     /**
@@ -50,7 +44,7 @@ public class RoundBracketExpression extends BracketExpression {
 
         if (first instanceof Operator) {
             //传参
-            for (Expression param : this.getParameters()) {
+            for (Expression param : getParameters()) {
                 ((Operator) first).add(param.eval(context));
             }
             return first.eval(context);
@@ -67,6 +61,11 @@ public class RoundBracketExpression extends BracketExpression {
         } else {
             return ExpressionFactory.error(get(0), "Expression must be ComplexExpression!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "(" + super.toString() + ")";
     }
 
 }

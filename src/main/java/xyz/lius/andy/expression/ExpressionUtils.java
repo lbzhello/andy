@@ -24,10 +24,6 @@ public class ExpressionUtils {
         return expression instanceof SymbolExpression;
     }
 
-    public static SymbolExpression asSymbol(Expression expression) {
-        return (SymbolExpression) expression;
-    }
-
     public static boolean isNumber(Expression expression) {
         return expression instanceof NumberExpression;
     }
@@ -36,20 +32,8 @@ public class ExpressionUtils {
         return expression instanceof StringExpression;
     }
 
-    public static boolean isValue(Expression expression) {
-        return isNumber(expression) || isString(expression);
-    }
-
     public static boolean isLambda(Expression expression) {
         return expression instanceof LambdaExpression;
-    }
-
-    public static boolean isBracket(Expression expression) {
-        return expression instanceof BracketExpression;
-    }
-
-    public static BracketExpression asBracket(Expression expression) {
-        return (BracketExpression)expression;
     }
 
     public static boolean isRoundBracket(Expression expression) {
@@ -76,7 +60,7 @@ public class ExpressionUtils {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         for (Expression expression : expressions) {
             if (isSquareBracket(expression)) {
-                squareBracket.addAll(asSquareBracket(expression).toArray());
+                squareBracket.addContainer(asSquareBracket(expression));
             } else {
                 squareBracket.add(expression);
             }
