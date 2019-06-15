@@ -2,6 +2,7 @@ package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.operator.ArrayMethod;
+import xyz.lius.andy.expression.operator.JavaMethod;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,11 +45,20 @@ public class RoundBracketExpression extends BracketExpression {
             return ExpressionUtils.asNative(first).parameters(this.getParameters()).eval(context);
         }
 
-        if (first instanceof ArrayMethod) {
-            ArrayMethod arrayMethod = (ArrayMethod) first;
+        if (first instanceof JavaMethod) {
+            JavaMethod method = (JavaMethod) first;
             //传参
             for (Expression param : this.getParameters()) {
-                arrayMethod.add(param.eval(context));
+                method.add(param.eval(context));
+            }
+            return first.eval(context);
+        }
+
+        if (first instanceof ArrayMethod) {
+            ArrayMethod method = (ArrayMethod) first;
+            //传参
+            for (Expression param : this.getParameters()) {
+                method.add(param.eval(context));
             }
             return first.eval(context);
         }

@@ -5,15 +5,13 @@ import xyz.lius.andy.expression.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * use reflect/invoke to invoke a java method
  * @see ArrayMethod
  */
-public class JavaMethod extends NativeExpression {
+public class JavaMethod extends AbstractContainer implements Expression {
     private String methodName = "";
     private Class<?> methodClass;
     private Object methodObject;
@@ -26,31 +24,31 @@ public class JavaMethod extends NativeExpression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        List<Class<?>> paramTypes = new ArrayList<>(this.list().size());
-        List<Object> paramValues = new ArrayList<>(this.list().size());
-        for (Expression expression : list()) {
-            Expression param = expression.eval(context);
+        Class<?>[] paramTypes = new Class[count()];
+        Object[] paramValues = new Object[count()];
+        for (int i = 0; i < count(); i++) {
+            Expression param = get(i);
             if (ExpressionUtils.isString(param)) {
-                paramTypes.add(String.class);
-                paramValues.add(ExpressionUtils.asString(param).getValue());
+                paramTypes[i] = String.class;
+                paramValues[i] = ExpressionUtils.asString(param).getValue();
             } else if (ExpressionUtils.isNumber(param)) {
                 //number as int
-                paramTypes.add(int.class);
-                paramValues.add(ExpressionUtils.asNumber(param).intValue());
+                paramTypes[i] = int.class;
+                paramValues[i] = ExpressionUtils.asNumber(param).intValue();
             } else if (ExpressionUtils.isJavaObject(param)) {
-                paramTypes.add(ExpressionUtils.asJavaObject(param).getObject().getClass());
-                paramValues.add(ExpressionUtils.asJavaObject(param).getObject());
+                paramTypes[i] = ExpressionUtils.asJavaObject(param).getObject().getClass();
+                paramValues[i] = ExpressionUtils.asJavaObject(param).getObject();
             } else {  //type Expression
-//                paramTypes.add(param.getClass());
-                paramTypes.add(Expression.class); //通用类型参数
-                paramValues.add(param);
+//                paramTypes[i] = param.getClass();
+                paramTypes[i] = Expression.class; //通用类型参数
+                paramValues[i] = param;
             }
         }
 
         try {
-            Method method = methodClass.getMethod(methodName, paramTypes.toArray(new Class[paramTypes.size()]));
-            MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, paramValues.size()).bindTo(methodObject);
-            Object rstObj = methodHandle.invoke(paramValues.toArray());
+            Method method = methodClass.getMethod(methodName, paramTypes);
+            MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, count()).bindTo(methodObject);
+            Object rstObj = methodHandle.invoke(paramValues);
             if (ExpressionUtils.isExpression(rstObj)) {
                 return ExpressionUtils.asExpression(rstObj);
             } else {
