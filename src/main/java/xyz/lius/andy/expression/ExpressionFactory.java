@@ -110,12 +110,12 @@ public class ExpressionFactory extends NativeFactory {
         return new JavaObjectExpression(o);
     }
 
-    public static JavaMethodExpression javaMethod(Object methodObject, String methodName) {
-        return new JavaMethodExpression(methodObject, methodName);
+    public static JavaMethod javaMethod(Object methodObject, String methodName) {
+        return new JavaMethod(methodObject, methodName);
     }
 
-    public static ArrayMethodInvoker arrayMethod(Expression methodObject, String methodName) {
-        return new ArrayMethodInvoker(methodObject, methodName);
+    public static ArrayMethod arrayMethod(Expression methodObject, String methodName) {
+        return new ArrayMethod(methodObject, methodName);
     }
 
     public static XmlExpression xml() {

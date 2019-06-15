@@ -11,14 +11,14 @@ import java.util.Objects;
 
 /**
  * use reflect/invoke to invoke a java method
- * @see ArrayMethodInvoker
+ * @see ArrayMethod
  */
-public class JavaMethodExpression extends NativeExpression {
+public class JavaMethod extends NativeExpression {
     private String methodName = "";
     private Class<?> methodClass;
     private Object methodObject;
 
-    public JavaMethodExpression(Object methodObject, String methodName) {
+    public JavaMethod(Object methodObject, String methodName) {
         this.methodName = methodName;
         this.methodObject = methodObject;
         this.methodClass = methodObject.getClass();

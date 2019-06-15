@@ -12,9 +12,9 @@ import java.util.Map;
 
 /**
  * 数组方法调用缓存, 比调用 MethodExpression速度要快一点
- * @see JavaMethodExpression
+ * @see JavaMethod
  */
-public class ArrayMethodInvoker extends NativeExpression {
+public class ArrayMethod extends NativeExpression {
     //key: methodName value: methodHandle
     private static Map<String, MethodHandle> cachedMethod = new HashMap<>();
 
@@ -44,7 +44,7 @@ public class ArrayMethodInvoker extends NativeExpression {
     //当前选中的方法句柄
     private MethodHandle methodHandle;
     private Expression methodObject;
-    public ArrayMethodInvoker(Expression methodObject, String methodName) {
+    public ArrayMethod(Expression methodObject, String methodName) {
         methodHandle = cachedMethod.get(methodName);
         this.methodObject = methodObject;
         //先绑定后面调用asSpreader会报错,生成了一个新的对象？
@@ -69,62 +69,62 @@ public class ArrayMethodInvoker extends NativeExpression {
     }
 
     private static MethodHandle mapMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "map",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "map",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle eachMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "each",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "each",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle filterMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "filter",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "filter",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle mapValuesMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "mapValues",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "mapValues",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle reduceMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "reduce",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "reduce",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle reduceByKeyMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "reduceByKey",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "reduceByKey",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle groupByMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "groupBy",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "groupBy",
                 MethodType.methodType(Expression.class, Expression.class));
     }
 
     private static MethodHandle groupByKeyMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "groupByKey",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "groupByKey",
                 MethodType.methodType(Expression.class));
     }
 
     private static MethodHandle firstMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "first",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "first",
                 MethodType.methodType(Expression.class));
     }
 
     private static MethodHandle otherMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "other",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "other",
                 MethodType.methodType(Expression.class));
     }
 
     private static MethodHandle reverseMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "reverse",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "reverse",
                 MethodType.methodType(Expression.class));
     }
 
     private static MethodHandle countMethod() throws NoSuchMethodException, IllegalAccessException {
-        return MethodHandles.lookup().findVirtual(ArrayMethod.class, "count",
+        return MethodHandles.lookup().findVirtual(ArrayExpression.class, "count",
                 MethodType.methodType(Expression.class));
     }
 }
