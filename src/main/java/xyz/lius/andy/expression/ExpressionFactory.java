@@ -75,11 +75,11 @@ public class ExpressionFactory extends NativeFactory {
         return new DelimiterExpression(value, lineNumber);
     }
 
-    public static BracketExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+    public static Operator lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
         return new LambdaExpression(bracket, curlyBracket);
     }
 
-    public static BracketExpression define(Expression key, CurlyBracketExpression value) {
+    public static Expression define(Expression key, CurlyBracketExpression value) {
         //a{...} => a(){...}
         if (key.getName() == Name.NIL && key instanceof BracketExpression) { //it's a lambda
             return lambda((BracketExpression) key, value);
@@ -87,7 +87,7 @@ public class ExpressionFactory extends NativeFactory {
         return new DefineExpression(key instanceof Name ? ExpressionFactory.roundBracket(key) : (BracketExpression)key, value);
     }
 
-    public static BracketExpression colon(Expression key, Expression value) {
+    public static Operator colon(Expression key, Expression value) {
         return new ColonExpression(key, value);
     }
 

@@ -3,17 +3,13 @@ package xyz.lius.andy.expression.operator;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
-import xyz.lius.andy.expression.ast.RoundBracketExpression;
 
 @CurlyBracketed
-public class DefineExpression extends RoundBracketExpression {
-    private BracketExpression bracket;
-    private CurlyBracketExpression curlyBracket;
-
+public class DefineExpression extends AbstractContainer implements Operator {
     public DefineExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        super(ExpressionType.DEFINE, bracket, curlyBracket);
-        this.bracket = bracket;
-        this.curlyBracket = curlyBracket;
+        super(2);
+        add(bracket);
+        add(curlyBracket);
     }
 
     /**
@@ -23,9 +19,16 @@ public class DefineExpression extends RoundBracketExpression {
      */
     @Override
     public Expression eval(Context<Name, Expression> context) {
+        BracketExpression bracket = (BracketExpression) get(0);
+        CurlyBracketExpression curlyBracket = (CurlyBracketExpression) get(1);
         //every ComplexExpression has it's own context
-        ComplexExpression complexExpression = this.curlyBracket.eval(context).setParameters(bracket.getParameters());
+        ComplexExpression complexExpression = curlyBracket.eval(context).setParameters(bracket.getParameters());
         context.add(bracket.getName(), complexExpression);
         return complexExpression;
+    }
+
+    @Override
+    public String toString() {
+        return show(ExpressionType.DEFINE.toString(), super.toString());
     }
 }

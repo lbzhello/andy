@@ -10,20 +10,18 @@ import java.util.List;
 /**
  * e.g. name: "some name"
  */
-public class ColonExpression extends RoundBracketExpression {
-    //e.g. (f a b) || f
-    private Expression key;
-    //e.g. "some text" || {...} || (...){...}
-    private Expression value;
+public class ColonExpression extends AbstractContainer implements Operator {
 
     public ColonExpression(Expression key, Expression value) {
-        super(ExpressionType.PAIR, key, value);
-        this.key = key;
-        this.value = value;
+        super(2);
+        add(key);
+        add(value);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
+        Expression key = get(0); //e.g. (f a b) || f
+        Expression value = get(1); //e.g. "some text" || {...} || (...){...}
         if (ExpressionUtils.isCurlyBracket(value) || ExpressionUtils.isLambda(value)) {
             List<Expression> parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : Collections.emptyList();
             ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
@@ -35,5 +33,10 @@ public class ColonExpression extends RoundBracketExpression {
             return value;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return show(ExpressionType.DEFINE.toString(), super.toString());
     }
 }

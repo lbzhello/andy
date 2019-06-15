@@ -3,7 +3,9 @@ package xyz.lius.andy.expression.ast;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.context.ExpressionContext;
+import xyz.lius.andy.expression.operator.ColonExpression;
 import xyz.lius.andy.expression.operator.ComplexExpression;
+import xyz.lius.andy.expression.operator.DefineExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,7 @@ public class CurlyBracketExpression extends BracketExpression {
         //record the order of the origin file
         super.add(expression);
 
-        if (expression instanceof RoundBracketExpression && (
-                Objects.equals(((RoundBracketExpression) expression).get(0), Definition.DEFINE) ||
-                Objects.equals(((RoundBracketExpression) expression).get(0), Definition.PAIR))) {
+        if (expression instanceof DefineExpression || expression instanceof ColonExpression) {
             this.fields.add(expression);
         } else {
             this.codes.add(expression);

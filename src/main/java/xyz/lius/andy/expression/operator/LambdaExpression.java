@@ -9,18 +9,18 @@ import xyz.lius.andy.expression.ast.RoundBracketExpression;
  * e.g. (...){...}
  */
 @CurlyBracketed
-public class LambdaExpression extends RoundBracketExpression {
-    private BracketExpression bracket;
-    private CurlyBracketExpression curlyBracket;
-
+public class LambdaExpression extends AbstractContainer implements Operator {
     public LambdaExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        this.bracket = bracket;
-        this.curlyBracket = curlyBracket;
+        super(2);
+        add(bracket);
+        add(curlyBracket);
     }
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
+        BracketExpression bracket = (BracketExpression) get(0);
+        CurlyBracketExpression curlyBracket = (CurlyBracketExpression) get(1);
         //every ComplexExpression has it's own context
-        return this.curlyBracket.eval(context).setParameters(bracket.getParameters());
+        return curlyBracket.eval(context).setParameters(bracket.getParameters());
     }
 }
