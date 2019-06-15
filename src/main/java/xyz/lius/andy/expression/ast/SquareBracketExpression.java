@@ -38,7 +38,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
-            squareBracket.add(stackFrame.eval(null));
+            squareBracket.add(stackFrame.run());
         }
         return squareBracket;
     }
@@ -48,7 +48,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
-            stackFrame.eval(null);
+            stackFrame.run();
         }
         return ExpressionType.NIL;
     }
@@ -59,7 +59,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
-            if (stackFrame.eval(null) == ExpressionType.TRUE) {
+            if (stackFrame.run() == ExpressionType.TRUE) {
                 squareBracket.add(expression);
             }
         }
@@ -73,7 +73,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         for (Expression expression : toArray()) {
             ArrayExpression array = ExpressionUtils.asArray(expression);
             stackFrame.add(ExpressionFactory.symbol("$0"), array.other());
-            squareBracket.add(ExpressionFactory.squareBracket(array.first(), stackFrame.eval(null)));
+            squareBracket.add(ExpressionFactory.squareBracket(array.first(), stackFrame.run()));
         }
         return squareBracket;
     }
@@ -89,7 +89,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
             while (iterator.hasNext()) {
                 stackFrame.add(ExpressionFactory.symbol("$0"), acc);
                 stackFrame.add(ExpressionFactory.symbol("$1"), iterator.next());
-                acc = stackFrame.eval(null);
+                acc = stackFrame.run();
             }
             return acc;
         }
@@ -118,7 +118,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression element : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), element); //传参
-            Expression key = stackFrame.eval(null);
+            Expression key = stackFrame.run();
             SquareBracketExpression child = keyMap.get(key);
             if (child == null) { //new
                 child = ExpressionFactory.squareBracket(key, element);

@@ -5,7 +5,7 @@ import xyz.lius.andy.expression.context.AbstractContext;
 /**
  * 栈帧,方法运行时数据结构
  */
-public class StackFrame extends AbstractContext<Name, Expression> implements Expression {
+public class StackFrame extends AbstractContext<Name, Expression> {
     //方法字节吗
     private Expression[] codes;
 
@@ -33,8 +33,7 @@ public class StackFrame extends AbstractContext<Name, Expression> implements Exp
         this.codes = complex.getCodes();
     }
 
-    @Override
-    public Expression eval(Context<Name, Expression> self) {
+    public Expression run() {
         Expression rstValue = ExpressionType.NIL;
         for (Expression expression : this.codes) {
             rstValue = expression.eval(this);

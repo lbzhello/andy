@@ -42,7 +42,7 @@ public class ReplEngine {
         Expression rst;
         if (ExpressionUtils.isCurlyBracket(expression)) {
             Complex complex = (Complex) expression.eval(context); //setParameters and generate a runtime expression
-            rst = new StackFrame(complex).eval(null);
+            rst = new StackFrame(complex).run();
         } else {
             rst = expression.eval(context);
         }
