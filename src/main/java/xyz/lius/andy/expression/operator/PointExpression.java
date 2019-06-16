@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
@@ -24,8 +25,8 @@ public class PointExpression extends AbstractContainer implements Operator {
             return ExpressionFactory.javaMethod(leftValue, rightValue.getName().toString());
         } else if (leftValue == ExpressionType.ARRAY) { //e.g. Array.fromString()
             return ExpressionFactory.error(leftValue, "Not Realized");
-        } else if (leftValue == ExpressionType.NIL) {
-            return ExpressionType.NIL;
+        } else if (leftValue == Definition.NIL) {
+            return Definition.NIL;
         } else {
             return ExpressionFactory.error(leftValue, "Unsupport operation type!");
         }

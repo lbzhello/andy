@@ -13,22 +13,11 @@ public final class Definition {
     private Definition() {
     }
 
-    public static final Expression NIL = ExpressionType.NIL;
+    public static final Operator NIL = ExpressionType.NIL;
 
-    /**
-     * 系统提供函数，用于定义其他函数/对象
-     */
-    public static Expression DEFINE = ExpressionType.DEFINE;
+    public static final Operator TRUE = ExpressionType.TRUE;
 
-    /**
-     * 系统提供函数，用于定义匿名对象
-     */
-    public static Expression LAMBDA = ExpressionType.LAMBDA;
-
-    /**
-     * 用于定义属性/字段
-     */
-    public static Expression PAIR = ExpressionType.PAIR;
+    public static final Operator FALSE = ExpressionType.FALSE;
 
     //represent expression it self
     public static final Name SELF = ExpressionFactory.symbol("self");

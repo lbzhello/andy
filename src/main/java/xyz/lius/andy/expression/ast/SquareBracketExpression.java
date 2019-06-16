@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.ast;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
             stackFrame.run();
         }
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     @Override
@@ -81,7 +82,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     @Override
     public Expression reduce(Expression func) {
         if (size() < 2) {
-            return ExpressionType.NIL;
+            return Definition.NIL;
         } else {
             StackFrame stackFrame = new StackFrame((Complex) func);
             Iterator<Expression> iterator = Arrays.stream(toArray()).iterator();
@@ -161,7 +162,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
     @Override
     public Expression other() {
         if (size() < 2) {
-            return ExpressionType.NIL;
+            return Definition.NIL;
         } else if (size() == 2) {
             return get(1);
         } else {

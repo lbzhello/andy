@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.context.AbstractContext;
 
 /**
@@ -34,7 +35,7 @@ public class StackFrame extends AbstractContext<Name, Expression> {
     }
 
     public Expression run() {
-        Expression rstValue = ExpressionType.NIL;
+        Expression rstValue = Definition.NIL;
         for (Expression expression : this.codes) {
             rstValue = expression.eval(this);
             if (ExpressionUtils.isReturn(rstValue)) {
@@ -50,7 +51,7 @@ public class StackFrame extends AbstractContext<Name, Expression> {
     @Override
     public Expression lookup(Name key) {
         Expression o = super.lookup(key);
-        return o == null ? ExpressionType.NIL : o;
+        return o == null ? Definition.NIL : o;
     }
 
 }

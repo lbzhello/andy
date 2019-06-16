@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 
@@ -14,7 +15,7 @@ public class IfExpression extends AbstractContainer implements Operator {
         if (get(0).eval(context) == ExpressionType.TRUE) {
             selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(0) : get(1);
         } else {
-            selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(1) : ExpressionType.NIL;
+            selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(1) : Definition.NIL;
         }
         if (ExpressionUtils.isCurlyBracket(selectExpression)) {
             Complex complex = (Complex) selectExpression.eval(context);

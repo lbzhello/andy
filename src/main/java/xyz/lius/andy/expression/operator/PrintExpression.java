@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
@@ -13,7 +14,7 @@ public class PrintExpression extends AbstractContainer implements Operator {
             rst.add(element.eval(context));
         }
         System.out.println(rst);
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     @Override

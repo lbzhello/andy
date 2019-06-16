@@ -1,12 +1,11 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.ast.RoundBracketExpression;
 import xyz.lius.andy.expression.context.ExpressionContext;
-
-import java.util.List;
 
 /**
  * e.g. left = "hello"
@@ -52,7 +51,7 @@ public class AssignExpression extends AbstractContainer implements Operator {
             value = this.get(1).eval(context);
         }
         bindContext.bind(name, value);
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     @Override

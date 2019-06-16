@@ -32,7 +32,7 @@ public class DefaultParser implements Parser<Expression> {
             return expression();
         } catch (Exception e) {
             e.printStackTrace();
-            return ExpressionType.NIL;
+            return Definition.NIL;
         }
     }
 

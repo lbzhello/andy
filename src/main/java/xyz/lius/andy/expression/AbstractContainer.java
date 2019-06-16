@@ -1,5 +1,7 @@
 package xyz.lius.andy.expression;
 
+import xyz.lius.andy.core.Definition;
+
 import java.util.Arrays;
 
 public abstract class AbstractContainer implements Container<Expression> {
@@ -44,7 +46,7 @@ public abstract class AbstractContainer implements Container<Expression> {
 
     @Override
     public Expression get(int i) {
-        return i < count ? elementData[i] : ExpressionType.NIL;
+        return i < count ? elementData[i] : Definition.NIL;
     }
 
     @Override

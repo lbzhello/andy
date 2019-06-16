@@ -43,7 +43,7 @@ public class ImportExpression extends AbstractContainer implements Operator {
             e.printStackTrace();
         }
 
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     @Override

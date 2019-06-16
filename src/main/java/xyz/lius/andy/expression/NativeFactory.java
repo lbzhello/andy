@@ -1,6 +1,6 @@
 package xyz.lius.andy.expression;
 
-import xyz.lius.andy.expression.operator.FileExpression;
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.operator.*;
 
 /**
@@ -64,7 +64,7 @@ public class NativeFactory {
     }
 
     public static Expression nil() {
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     public static ReturnExpression returnExpression() {

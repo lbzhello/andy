@@ -1,10 +1,10 @@
 package xyz.lius.andy.expression.ast;
 
+import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.Name;
-import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 
 public class ErrorExpression implements Expression {
     private String message;
@@ -15,7 +15,7 @@ public class ErrorExpression implements Expression {
     private int lineNumber = -1;
 
     public ErrorExpression(String message) {
-        this.expression = ExpressionType.NIL;
+        this.expression = Definition.NIL;
         this.message = message;
         toSting = "ErrorExpression: " + expression + "\n    " + message;
     }

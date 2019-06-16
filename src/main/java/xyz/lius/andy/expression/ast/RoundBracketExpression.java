@@ -37,7 +37,7 @@ public class RoundBracketExpression extends BracketExpression {
     public Expression eval(Context<Name, Expression> context) {
         if (isEmpty()) return this; //e.g. ()
         Expression first = get(0).eval(context);
-        if (first == ExpressionType.NIL) {
+        if (first == Definition.NIL) {
             //查看是否为系统提供的运算符
             first = Definition.getOperator(get(0));
         }

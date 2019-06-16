@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 
@@ -15,7 +16,7 @@ public class OrExpression extends AbstractContainer implements Operator {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         Expression rst = get(0).eval(context);
-        if (rst == ExpressionType.NIL || rst == ExpressionType.FALSE) {
+        if (rst == Definition.NIL || rst == ExpressionType.FALSE) {
             rst = get(1).eval(context);
         }
         return rst;

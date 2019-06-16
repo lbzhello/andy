@@ -23,7 +23,7 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         defaultSupplier = () -> new DefaultOperator();
 
         //---------------- unary -----------------//
-        operator.put(OperatorSingleton.NIL, () -> ExpressionType.NIL);
+        operator.put(OperatorSingleton.NIL, () -> Definition.NIL);
         operator.put(OperatorSingleton.TRUE, () -> ExpressionType.TRUE);
         operator.put(OperatorSingleton.FALSE, () -> ExpressionType.FALSE);
 
@@ -31,9 +31,9 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         operator.put(OperatorSingleton.NEW, () -> new NewExpression());
         operator.put(OperatorSingleton.IMPORT, () -> new ImportExpression());
 
-        operator.put(OperatorSingleton.AUTO_INC, () -> ExpressionType.NIL);
-        operator.put(OperatorSingleton.AUTO_DEC, () -> ExpressionType.NIL);
-        operator.put(OperatorSingleton.NOT, () -> ExpressionType.NIL);
+        operator.put(OperatorSingleton.AUTO_INC, () -> Definition.NIL);
+        operator.put(OperatorSingleton.AUTO_DEC, () -> Definition.NIL);
+        operator.put(OperatorSingleton.NOT, () -> Definition.NIL);
 
         operator.put(OperatorSingleton.IF, () -> new IfExpression());
         operator.put(OperatorSingleton.FOR, () -> new ForExpression());
@@ -42,7 +42,7 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         operator.put(OperatorSingleton.ARROW, () -> new ArrowExpression());
         operator.put(OperatorSingleton.ASSIGN, () -> new AssignExpression());
         operator.put(OperatorSingleton.OR, () -> new OrExpression());
-        operator.put(OperatorSingleton.AND, () -> ExpressionType.NIL);
+        operator.put(OperatorSingleton.AND, () -> Definition.NIL);
 
         operator.put(OperatorSingleton.EQUAL, () -> new EqualExpression());
         operator.put(OperatorSingleton.NOT_EQUAL, () -> new NotEqualExpression());

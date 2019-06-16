@@ -1,10 +1,9 @@
 package xyz.lius.andy.expression.context;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;
-import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.Name;
-import xyz.lius.andy.expression.context.AbstractContext;
 
 public class ExpressionContext extends AbstractContext<Name, Expression> implements Expression {
     public ExpressionContext() {}
@@ -16,7 +15,7 @@ public class ExpressionContext extends AbstractContext<Name, Expression> impleme
     @Override
     public Expression lookup(Name key) {
         Expression o = super.lookup(key);
-        return o == null ? ExpressionType.NIL : o;
+        return o == null ? Definition.NIL : o;
     }
 
     @Override

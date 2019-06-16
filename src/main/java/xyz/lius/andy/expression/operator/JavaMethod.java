@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 
 import java.lang.invoke.MethodHandle;
@@ -62,7 +63,7 @@ public class JavaMethod extends AbstractContainer implements Operator {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        return ExpressionType.NIL;
+        return Definition.NIL;
     }
 
     @Override
