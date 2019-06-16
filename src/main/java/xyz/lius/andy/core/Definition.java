@@ -48,75 +48,34 @@ public final class Definition {
      */
     public static final Token HOF = TokenFlag.HOF;
 
-    private static final Map<Character, Token> delimiter = new HashMap<>();
-
     //运算符定义
     private static OperatorDefinition operatorDefinition = OperatorSingleton.getSingleton();
 
     private static Function<String, Operator> operatorSupplier = OperatorSupplier.INSTANCE;
 
-    private static Context<Name, Expression> CORE_CONTEXT = new ExpressionContext(null);
-
-    static {
-        delimiter.put(',', TokenFlag.COMMA);
-        delimiter.put(';', TokenFlag.SEMICOLON);
-        delimiter.put('.', TokenFlag.POINT);
-        delimiter.put(':', TokenFlag.COLON);
-        delimiter.put('(', TokenFlag.ROUND_BRACKET_LEFT);
-        delimiter.put(')', TokenFlag.ROUND_BRACKET_RIGHT);
-        delimiter.put('{', TokenFlag.CURLY_BRACKET_LEFT);
-        delimiter.put('}', TokenFlag.CURLY_BRACKET_RIGHT);
-        delimiter.put('[', TokenFlag.SQUARE_BRACKET_LEFT);
-        delimiter.put(']', TokenFlag.SQUARE_BRACKET_RIGHT);
-//        delimiter.put('/', TokenFlag.SLASH_RIGHT);
-        delimiter.put('\\',TokenFlag.SLASH_LEFT);
-        delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
-        delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
-
-//        delimiter.put('!', ExpressionFactory.symbol("!"));
-//        delimiter.put('=', ExpressionFactory.symbol("="));
-//        delimiter.put('<', ExpressionFactory.symbol("<"));
-//        delimiter.put('>', ExpressionFactory.symbol(">"));
+    public static void setOperatorDefinition(OperatorDefinition definition, Function<String, Operator> supplier) {
+        operatorDefinition = definition;
+        operatorSupplier = supplier;
     }
 
-    public static final Context<Name, Expression> getCoreContext() {
-        return CORE_CONTEXT;
+    public static final boolean isBinary(Expression op) {
+        return operatorDefinition.isBinary(String.valueOf(op));
     }
 
-    public static final Token getDelimiter(Character character) {
-        return delimiter.get(character);
+    public static final boolean isUnary(Expression op) {
+        return operatorDefinition.isUnary(String.valueOf(op));
     }
 
-    public static final boolean isDelimiter(Character c) {
-        return delimiter.containsKey(c);
+    public static final int getOperands(Expression op) {
+        return operatorDefinition.getOperands(String.valueOf(op));
     }
 
-    public static final boolean isBinary(String op) {
-        return operatorDefinition.isBinary(op);
+    public static final int compare(Expression op1, Expression op2) {
+        return operatorDefinition.compare(String.valueOf(op1), String.valueOf(op2));
     }
 
-    public static final boolean isBinary(Object op) {
-        return isBinary(String.valueOf(op));
-    }
-
-    public static final boolean isUnary(String op) {
-        return operatorDefinition.isUnary(op);
-    }
-
-    public static final boolean isUnary(Object op) {
-        return isUnary(String.valueOf(op));
-    }
-
-    public static final int getOperands(String op) {
-        return operatorDefinition.getOperands(op);
-    }
-
-    public static final int compare(String op1, String op2) {
-        return operatorDefinition.compare(op1, op2);
-    }
-
-    public static final Operator getOperator(String op) {
-        return operatorSupplier.apply(op);
+    public static final Operator getOperator(Expression op) {
+        return operatorSupplier.apply(String.valueOf(op));
     }
 
 }

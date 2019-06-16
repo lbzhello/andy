@@ -67,11 +67,11 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression operator(Expression left, Expression op) throws Exception {
         tokenizer.next(); //eat op
-        Operator binary = Definition.getOperator(op.toString());
+        Operator binary = Definition.getOperator(op);
         Expression right = combine(combinator());
         if (Definition.isBinary(tokenizer.current())) { //e.g. left op right op2 ...
             Expression op2 = tokenizer.current();
-            if (Definition.compare(op.toString(), op2.toString()) < 0) { //e.g. left op (right op2 ...)
+            if (Definition.compare(op, op2) < 0) { //e.g. left op (right op2 ...)
                 binary.add(left);
                 binary.add(operator(right, op2));
                 return binary;
@@ -323,8 +323,8 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     private Expression unaryExpression(Expression op) throws Exception {
-        int size = Definition.getOperands(op.toString());
-        Operator operator = Definition.getOperator(op.toString());
+        int size = Definition.getOperands(op);
+        Operator operator = Definition.getOperator(op);
 
         for (int i = 0; i < size; i++) {
             operator.add(expression());

@@ -3,6 +3,7 @@ package xyz.lius.andy.core;
 import xyz.lius.andy.compiler.Compiler;
 import xyz.lius.andy.compiler.parser.Parser;
 import xyz.lius.andy.expression.*;
+import xyz.lius.andy.expression.context.ExpressionContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.io.IOException;
  * 表达式求值引擎
  */
 public class ReplEngine {
-    private final Context<Name, Expression> context = Definition.getCoreContext();
+    private final Context<Name, Expression> context = new ExpressionContext();
     private final Parser<Expression> parser = Compiler.parser();
 
     public Expression eval(String expression) {

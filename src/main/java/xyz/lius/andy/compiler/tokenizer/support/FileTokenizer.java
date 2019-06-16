@@ -9,11 +9,38 @@ import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.io.CharIterator;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileTokenizer implements Tokenizer<Token> {
     private CharIterator iterator;
     private int lineNumber;
     private Token currentToken;
+
+    private static final Map<Character, Token> delimiter = new HashMap<>();
+    static {
+        delimiter.put(',', TokenFlag.COMMA);
+        delimiter.put(';', TokenFlag.SEMICOLON);
+        delimiter.put('.', TokenFlag.POINT);
+        delimiter.put(':', TokenFlag.COLON);
+        delimiter.put('(', TokenFlag.ROUND_BRACKET_LEFT);
+        delimiter.put(')', TokenFlag.ROUND_BRACKET_RIGHT);
+        delimiter.put('{', TokenFlag.CURLY_BRACKET_LEFT);
+        delimiter.put('}', TokenFlag.CURLY_BRACKET_RIGHT);
+        delimiter.put('[', TokenFlag.SQUARE_BRACKET_LEFT);
+        delimiter.put(']', TokenFlag.SQUARE_BRACKET_RIGHT);
+        delimiter.put('\\',TokenFlag.SLASH_LEFT);
+        delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
+        delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
+    }
+
+    private static final boolean isDelimiter(Character c) {
+        return delimiter.containsKey(c);
+    }
+
+    private static final Token getDelimiter(Character character) {
+        return delimiter.get(character);
+    }
 
     @Override
     public void setResource(CharIterator iterator) {
@@ -45,8 +72,8 @@ public class FileTokenizer implements Tokenizer<Token> {
                    if(iterator.current() == '"'){ //String
                        currentToken = nextString();
                        return currentToken;
-                   } else if (Definition.isDelimiter(iterator.current())) { //间隔符直接返回
-                       currentToken = Definition.getDelimiter(iterator.current());
+                   } else if (isDelimiter(iterator.current())) { //间隔符直接返回
+                       currentToken = getDelimiter(iterator.current());
                        iterator.next(); //eat
                        return currentToken;
                    } else if (Character.isDigit(iterator.current())) { //number
@@ -128,7 +155,7 @@ public class FileTokenizer implements Tokenizer<Token> {
      */
     private LineNumberToken nextNumber() {
         StringBuffer sb = new StringBuffer();
-        while (iterator.current() == '.' || !Character.isWhitespace(iterator.current()) && !Definition.isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
+        while (iterator.current() == '.' || !Character.isWhitespace(iterator.current()) && !isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
             sb.append(iterator.current());
             iterator.next();
         }
@@ -158,7 +185,7 @@ public class FileTokenizer implements Tokenizer<Token> {
                 }
             }
         } else {
-            while (!Character.isWhitespace(iterator.current()) && !Definition.isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
+            while (!Character.isWhitespace(iterator.current()) && !isDelimiter(iterator.current()) && iterator.current() != '\uFFFF') {
                 sb.append(iterator.current());
                 iterator.next();
             }

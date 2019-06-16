@@ -39,7 +39,7 @@ public class RoundBracketExpression extends BracketExpression {
         Expression first = get(0).eval(context);
         if (first == ExpressionType.NIL) {
             //查看是否为系统提供的运算符
-            first = Definition.getOperator(get(0).toString());
+            first = Definition.getOperator(get(0));
         }
 
         if (first instanceof Operator) {
