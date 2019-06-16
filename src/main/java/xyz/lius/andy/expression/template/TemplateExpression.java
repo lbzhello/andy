@@ -1,6 +1,7 @@
 package xyz.lius.andy.expression.template;
 
 import xyz.lius.andy.expression.*;
+import xyz.lius.andy.util.AbstractContainer;
 
 import java.util.*;
 
@@ -12,18 +13,13 @@ import java.util.*;
  *   ...
  * @see LineExpression
  */
-public class TemplateExpression implements Expression {
-    private List<Expression> lines = new LinkedList<>();
-
-    public void addLine(Expression line) {
-        this.lines.add(line);
-    }
+public class TemplateExpression extends AbstractContainer implements Expression {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
         TemplateExpression template = ExpressionFactory.template();
-        this.lines.stream().forEach(line ->  {
-            template.addLine(line.eval(context));
+        Arrays.stream(toArray()).forEach(line ->  {
+            template.add(line.eval(context));
         });
         return template;
 //        return relative(context);
@@ -37,21 +33,21 @@ public class TemplateExpression implements Expression {
     private Expression relative(Context<Name, Expression> context) {
         LinesExpression linesExpression = new LinesExpression();
 
-        if (this.lines.size() > 1) {
-            String first = this.lines.get(0).eval(context).toString();
-            String second = this.lines.get(1).eval(context).toString(); //record relative
+        if (size() > 1) {
+            String first = get(0).eval(context).toString();
+            String second = get(1).eval(context).toString(); //record relative
             //求出左边得空格数目
             int offset = second.length() + 1 - (second + "!").trim().length();
-            String last = this.lines.get(this.lines.size() - 1).eval(context).toString();
+            String last = get(size() - 1).eval(context).toString();
             if (!first.isBlank()) linesExpression.add(ExpressionFactory.string(first));
             int index = 1;
-            while (index < this.lines.size() - 1) {
-                String lineStr = moveLine(lines.get(index++), offset).eval(context).toString();
+            while (index < size() - 1) {
+                String lineStr = moveLine(get(index++), offset).eval(context).toString();
                 linesExpression.add(ExpressionFactory.string(lineStr));
             }
             if (!last.isBlank()) linesExpression.add(ExpressionFactory.string(last));
-        } else if (this.lines.size() == 1){
-            linesExpression.add(ExpressionFactory.string(this.lines.get(0).eval(context).toString()));
+        } else if (size() == 1){
+            linesExpression.add(ExpressionFactory.string(get(0).eval(context).toString()));
         } else {
             return ExpressionFactory.error(this, "Template should not empty!");
         }
@@ -73,7 +69,7 @@ public class TemplateExpression implements Expression {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Expression expression : lines) {
+        for (Expression expression : toArray()) {
             sb.append(expression);
         }
         return sb.toString();

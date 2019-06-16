@@ -2,10 +2,12 @@ package xyz.lius.andy.compiler.parser.support;
 
 import xyz.lius.andy.compiler.parser.Parser;
 import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
-import xyz.lius.andy.expression.*;
+import xyz.lius.andy.expression.Expression;
+import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.expression.ExpressionUtils;
+import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.template.LineExpression;
@@ -241,7 +243,7 @@ public class DefaultParser implements Parser<Expression> {
                 iterator.next();
                 return template;
             } else {
-                template.addLine(lineExpression());
+                template.add(lineExpression());
             }
         }
 
@@ -272,7 +274,7 @@ public class DefaultParser implements Parser<Expression> {
         return ExpressionFactory.error("Missing closing symbol when parse template");
     }
 
-    //解析模板中得string片段, '|' 为定界符
+    //解析模板中string片段, '|' 为定界符
     private Expression stringExpression() {
         StringBuffer sb = new StringBuffer();
         while (iterator.hasNext()) {
