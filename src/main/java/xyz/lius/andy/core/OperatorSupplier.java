@@ -19,7 +19,7 @@ public enum  OperatorSupplier implements Function<String, Operator> {
 
     OperatorSupplier() {
         operator = new HashMap<>();
-        defaultSupplier = () -> new DefaultOperator();
+        defaultSupplier = () -> Definition.NIL;
 
         //---------------- unary -----------------//
         operator.put(OperatorSingleton.NIL, () -> Definition.NIL);
