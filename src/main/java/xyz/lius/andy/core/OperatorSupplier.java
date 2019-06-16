@@ -24,8 +24,8 @@ public enum  OperatorSupplier implements Function<String, Operator> {
 
         //---------------- unary -----------------//
         operator.put(OperatorSingleton.NIL, () -> Definition.NIL);
-        operator.put(OperatorSingleton.TRUE, () -> ExpressionType.TRUE);
-        operator.put(OperatorSingleton.FALSE, () -> ExpressionType.FALSE);
+        operator.put(OperatorSingleton.TRUE, () -> Definition.TRUE);
+        operator.put(OperatorSingleton.FALSE, () -> Definition.FALSE);
 
         operator.put(OperatorSingleton.RETURN, () -> new ReturnExpression());
         operator.put(OperatorSingleton.NEW, () -> new NewExpression());

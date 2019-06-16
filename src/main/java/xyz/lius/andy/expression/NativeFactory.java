@@ -56,11 +56,11 @@ public class NativeFactory {
     }
 
     public static Expression trueExpression() {
-        return ExpressionType.TRUE;
+        return Definition.TRUE;
     }
 
     public static Expression falseExpression() {
-        return ExpressionType.FALSE;
+        return Definition.FALSE;
     }
 
     public static Expression nil() {

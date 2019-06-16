@@ -12,7 +12,7 @@ public class IfExpression extends AbstractContainer implements Operator {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         Expression selectExpression;
-        if (get(0).eval(context) == ExpressionType.TRUE) {
+        if (get(0).eval(context) == Definition.TRUE) {
             selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(0) : get(1);
         } else {
             selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(1) : Definition.NIL;

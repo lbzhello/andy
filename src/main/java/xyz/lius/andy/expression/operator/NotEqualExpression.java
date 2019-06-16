@@ -1,5 +1,6 @@
 package xyz.lius.andy.expression.operator;
 
+import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 
@@ -12,9 +13,9 @@ public class NotEqualExpression extends AbstractContainer implements Operator {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         if (get(0).eval(context).equals(get(1).eval(context))) {
-            return ExpressionType.FALSE;
+            return Definition.FALSE;
         } else {
-            return ExpressionType.TRUE;
+            return Definition.TRUE;
         }
     }
 

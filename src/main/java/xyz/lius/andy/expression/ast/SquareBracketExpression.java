@@ -60,7 +60,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : toArray()) {
             stackFrame.add(ExpressionFactory.symbol("$0"), expression);
-            if (stackFrame.run() == ExpressionType.TRUE) {
+            if (stackFrame.run() == Definition.TRUE) {
                 squareBracket.add(expression);
             }
         }

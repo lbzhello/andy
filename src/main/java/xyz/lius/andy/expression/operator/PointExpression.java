@@ -23,8 +23,6 @@ public class PointExpression extends AbstractContainer implements Operator {
             return ExpressionFactory.arrayMethod(leftValue, rightValue.getName().toString());
         } else if (ExpressionUtils.isString(leftValue)) {
             return ExpressionFactory.javaMethod(leftValue, rightValue.getName().toString());
-        } else if (leftValue == ExpressionType.ARRAY) { //e.g. Array.fromString()
-            return ExpressionFactory.error(leftValue, "Not Realized");
         } else if (leftValue == Definition.NIL) {
             return Definition.NIL;
         } else {
