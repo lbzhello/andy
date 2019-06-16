@@ -1,6 +1,7 @@
-package xyz.lius.andy.expression;
+package xyz.lius.andy.util;
 
 import xyz.lius.andy.core.Definition;
+import xyz.lius.andy.expression.Expression;
 
 import java.util.Arrays;
 

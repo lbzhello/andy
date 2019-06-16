@@ -2,7 +2,7 @@ package xyz.lius.andy.compiler.tokenizer.support;
 
 import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.TokenFlag;
+import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ExpressionFactory;
@@ -19,19 +19,19 @@ public class FileTokenizer implements Tokenizer<Token> {
 
     private static final Map<Character, Token> delimiter = new HashMap<>();
     static {
-        delimiter.put(',', TokenFlag.COMMA);
-        delimiter.put(';', TokenFlag.SEMICOLON);
-        delimiter.put('.', TokenFlag.POINT);
-        delimiter.put(':', TokenFlag.COLON);
-        delimiter.put('(', TokenFlag.ROUND_BRACKET_LEFT);
-        delimiter.put(')', TokenFlag.ROUND_BRACKET_RIGHT);
-        delimiter.put('{', TokenFlag.CURLY_BRACKET_LEFT);
-        delimiter.put('}', TokenFlag.CURLY_BRACKET_RIGHT);
-        delimiter.put('[', TokenFlag.SQUARE_BRACKET_LEFT);
-        delimiter.put(']', TokenFlag.SQUARE_BRACKET_RIGHT);
-        delimiter.put('\\',TokenFlag.SLASH_LEFT);
-        delimiter.put('"', TokenFlag.QUOTE_MARK_DOUBLE);
-        delimiter.put('\'',TokenFlag.QUOTE_MARK_SINGLE);
+        delimiter.put(',', Token.COMMA);
+        delimiter.put(';', Token.SEMICOLON);
+        delimiter.put('.', Token.POINT);
+        delimiter.put(':', Token.COLON);
+        delimiter.put('(', Token.ROUND_BRACKET_LEFT);
+        delimiter.put(')', Token.ROUND_BRACKET_RIGHT);
+        delimiter.put('{', Token.CURLY_BRACKET_LEFT);
+        delimiter.put('}', Token.CURLY_BRACKET_RIGHT);
+        delimiter.put('[', Token.SQUARE_BRACKET_LEFT);
+        delimiter.put(']', Token.SQUARE_BRACKET_RIGHT);
+        delimiter.put('\\',Token.SLASH_LEFT);
+        delimiter.put('"', Token.QUOTE_MARK_DOUBLE);
+        delimiter.put('\'',Token.QUOTE_MARK_SINGLE);
     }
 
     private static final boolean isDelimiter(Character c) {
@@ -80,8 +80,8 @@ public class FileTokenizer implements Tokenizer<Token> {
                        currentToken = nextNumber();
                        return currentToken;
                    } else if (iterator.current() == '`') { //交给外部解析器解析
-                       if (currentToken != TokenFlag.BACK_QUOTE) { //初次进入
-                           currentToken = TokenFlag.BACK_QUOTE;
+                       if (currentToken != Token.BACK_QUOTE) { //初次进入
+                           currentToken = Token.BACK_QUOTE;
                        } else { // '`'已经被消费
                            iterator.next(); //eat '`'
                            currentToken = Definition.HOF;
@@ -108,15 +108,15 @@ public class FileTokenizer implements Tokenizer<Token> {
                     }
                     if (iterator.current() == '(') {  //e.g. name {...
                         iterator.next();
-                        currentToken = TokenFlag.ROUND_BRACKET_FREE;
+                        currentToken = Token.ROUND_BRACKET_FREE;
                         return currentToken;
                     } else if (iterator.current() == '[') { //e.g. name [...
                         iterator.next();
-                        currentToken = TokenFlag.SQUARE_BRACKET_FREE;
+                        currentToken = Token.SQUARE_BRACKET_FREE;
                         return currentToken;
                     } else if (iterator.current() == '{') { //e.g. name {...
                         iterator.next();
-                        currentToken = TokenFlag.CURLY_BRACKET_FREE;
+                        currentToken = Token.CURLY_BRACKET_FREE;
                         return currentToken;
                     }
                 }
@@ -178,10 +178,10 @@ public class FileTokenizer implements Tokenizer<Token> {
                 return ExpressionFactory.symbol(sb.toString().trim(), getLineNumber());
             } else { //xml 交给外部处理
                 iterator.previous(); //back to '<'
-                if (currentToken != TokenFlag.ANGLE_BRACKET) { //初次进入
-                    return TokenFlag.ANGLE_BRACKET;
+                if (currentToken != Token.ANGLE_BRACKET) { //初次进入
+                    return Token.ANGLE_BRACKET;
                 } else { //已经处理
-                    return TokenFlag.HOF;
+                    return Definition.HOF;
                 }
             }
         } else {

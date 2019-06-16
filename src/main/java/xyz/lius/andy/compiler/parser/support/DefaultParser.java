@@ -2,7 +2,7 @@ package xyz.lius.andy.compiler.parser.support;
 
 import xyz.lius.andy.compiler.parser.Parser;
 import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.TokenFlag;
+import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
@@ -93,15 +93,15 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combine(Expression left) throws Exception {
-        if (tokenizer.current() == TokenFlag.ROUND_BRACKET_LEFT) { //e.g. left(...)...
+        if (tokenizer.current() == Token.ROUND_BRACKET_LEFT) { //e.g. left(...)...
             BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
             bracketExpression.addContainer(roundBracketExpression());
             return combine(bracketExpression);
-        } else if (tokenizer.current() == TokenFlag.CURLY_BRACKET_LEFT) { //e.g. left{...}...
+        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
-        } else if (tokenizer.current() == TokenFlag.POINT) { //e.g. left.right...
+        } else if (tokenizer.current() == Token.POINT) { //e.g. left.right...
             return combine(ExpressionFactory.point(left, combinator()));
-        } else if (tokenizer.current() == TokenFlag.COLON) { //e.g. left: ...
+        } else if (tokenizer.current() == Token.COLON) { //e.g. left: ...
             tokenizer.next();
             return ExpressionFactory.colon(left, expression());
         } else {
@@ -132,18 +132,18 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat
             return expression;
-        } else if (tokenizer.current() == TokenFlag.ROUND_BRACKET_LEFT || tokenizer.current() == TokenFlag.ROUND_BRACKET_FREE) { //e.g. (...)...
+        } else if (tokenizer.current() == Token.ROUND_BRACKET_LEFT || tokenizer.current() == Token.ROUND_BRACKET_FREE) { //e.g. (...)...
             return roundBracketExpression();
-        } else if (tokenizer.current() == TokenFlag.SQUARE_BRACKET_LEFT || tokenizer.current() == TokenFlag.SQUARE_BRACKET_FREE) { //e.g. [...]...
+        } else if (tokenizer.current() == Token.SQUARE_BRACKET_LEFT || tokenizer.current() == Token.SQUARE_BRACKET_FREE) { //e.g. [...]...
             return squareBracketExpression();
-        } else if (tokenizer.current() == TokenFlag.CURLY_BRACKET_LEFT || tokenizer.current() == TokenFlag.CURLY_BRACKET_FREE) { //e.g. {...}...
+        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT || tokenizer.current() == Token.CURLY_BRACKET_FREE) { //e.g. {...}...
             return curlyBracketExpression();
-        } else if (tokenizer.current() == TokenFlag.BACK_QUOTE) { //e.g. ``
+        } else if (tokenizer.current() == Token.BACK_QUOTE) { //e.g. ``
             tokenizer.next(); //eat start '`'
             Expression template = templateExpression();
             tokenizer.next(); //eat end '`'
             return template;
-        } else if (tokenizer.current() == TokenFlag.ANGLE_BRACKET) {
+        } else if (tokenizer.current() == Token.ANGLE_BRACKET) {
             tokenizer.next(); //notice
             Expression xml = xmlExpression();
             tokenizer.next(); //continue
@@ -316,7 +316,7 @@ public class DefaultParser implements Parser<Expression> {
 //        this.currentToken = Definition.HOF;
 //        tokenizer.setResource(iterator);
         tokenizer.reset();
-        while (tokenizer.current() != TokenFlag.ROUND_BRACKET_RIGHT && iterator.hasNext()) {
+        while (tokenizer.current() != Token.ROUND_BRACKET_RIGHT && iterator.hasNext()) {
             roundBracket.add(expression());
         }
         return roundBracket;
@@ -339,7 +339,7 @@ public class DefaultParser implements Parser<Expression> {
     private CurlyBracketExpression curlyBracketExpression() throws Exception {
         tokenizer.next(); //eat '{'
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        while (tokenizer.current() != TokenFlag.CURLY_BRACKET_RIGHT && iterator.hasNext()) {
+        while (tokenizer.current() != Token.CURLY_BRACKET_RIGHT && iterator.hasNext()) {
             curlyBracketExpression.add(expression());
         }
         tokenizer.next(); //eat '}'
@@ -354,7 +354,7 @@ public class DefaultParser implements Parser<Expression> {
     private BracketExpression squareBracketExpression() throws Exception {
         tokenizer.next(); //eat '['
         BracketExpression squareBracketExpression = ExpressionFactory.squareBracket();
-        while (tokenizer.current() != TokenFlag.SQUARE_BRACKET_RIGHT && iterator.hasNext()) {
+        while (tokenizer.current() != Token.SQUARE_BRACKET_RIGHT && iterator.hasNext()) {
             squareBracketExpression.add(expression());
         }
 
@@ -368,13 +368,13 @@ public class DefaultParser implements Parser<Expression> {
      */
     private BracketExpression roundBracketExpression() throws Exception {
         tokenizer.next(); //eat '('
-        if (tokenizer.current() == TokenFlag.ROUND_BRACKET_RIGHT) { //e.g. ()
+        if (tokenizer.current() == Token.ROUND_BRACKET_RIGHT) { //e.g. ()
             tokenizer.next(); //eat ")"
             return ExpressionFactory.roundBracket();
         }
 
         Expression expression = expression();
-        if (tokenizer.current() == TokenFlag.ROUND_BRACKET_RIGHT) { //e.g. (expression)
+        if (tokenizer.current() == Token.ROUND_BRACKET_RIGHT) { //e.g. (expression)
             tokenizer.next(); //eat ")"
             return ExpressionFactory.roundBracket(expression);
         } else {
@@ -389,11 +389,11 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression roundBracket(Expression left) throws Exception {
-        if (tokenizer.current() == TokenFlag.COMMA) { //e.g. left, ...
+        if (tokenizer.current() == Token.COMMA) { //e.g. left, ...
             return roundBracket(commaExpression(ExpressionFactory.comma(left)));
-        } else if (tokenizer.current() == TokenFlag.SEMICOLON) { //e.g. left; ...
+        } else if (tokenizer.current() == Token.SEMICOLON) { //e.g. left; ...
             return roundBracket(semicolonExpression(ExpressionFactory.squareBracket(left)));
-        } else if (tokenizer.current() != TokenFlag.ROUND_BRACKET_RIGHT){ //e.g. left ritht
+        } else if (tokenizer.current() != Token.ROUND_BRACKET_RIGHT){ //e.g. left ritht
             return roundBracket(parseRoundBracket(ExpressionFactory.roundBracket(left)));
         } else {
             tokenizer.next(); //eat ")"
@@ -406,7 +406,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression parseRoundBracket(BracketExpression roundBracket) throws Exception {
-        while (tokenizer.current() != TokenFlag.ROUND_BRACKET_RIGHT && iterator.hasNext()) {
+        while (tokenizer.current() != Token.ROUND_BRACKET_RIGHT && iterator.hasNext()) {
             roundBracket.add(expression());
         }
         return roundBracket;
@@ -417,7 +417,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression commaExpression(BracketExpression squareBracketExpression) throws Exception {
-        while (tokenizer.current() == TokenFlag.COMMA) {
+        while (tokenizer.current() == Token.COMMA) {
             tokenizer.next(); //eat ","
             squareBracketExpression.add(expression());
         }
@@ -431,10 +431,10 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private BracketExpression semicolonExpression(BracketExpression squareBracketExpression) throws Exception {
-        while (tokenizer.current() == TokenFlag.SEMICOLON) {
+        while (tokenizer.current() == Token.SEMICOLON) {
             tokenizer.next(); //eat ";"
             Expression expression = expression();
-            if (tokenizer.current() == TokenFlag.COMMA) { //e.g. (expr1, expr2; expr3, expr4 ...
+            if (tokenizer.current() == Token.COMMA) { //e.g. (expr1, expr2; expr3, expr4 ...
                 expression = commaExpression(ExpressionFactory.squareBracket(expression));
             }
             squareBracketExpression.add(expression);

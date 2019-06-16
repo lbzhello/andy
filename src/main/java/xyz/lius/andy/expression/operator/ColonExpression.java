@@ -3,10 +3,7 @@ package xyz.lius.andy.expression.operator;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
-import xyz.lius.andy.expression.ast.RoundBracketExpression;
-
-import java.util.Collections;
-import java.util.List;
+import xyz.lius.andy.util.AbstractContainer;
 
 /**
  * e.g. name: "some name"

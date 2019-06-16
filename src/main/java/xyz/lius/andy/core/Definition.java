@@ -1,7 +1,6 @@
 package xyz.lius.andy.core;
 
 import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.TokenFlag;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.Name;
@@ -13,11 +12,11 @@ public final class Definition {
     private Definition() {
     }
 
-    public static final Operator NIL = Operator.Constant.NIL;
+    public static final Operator NIL = Operator.NIL;
 
-    public static final Operator TRUE = Operator.Constant.TRUE;
+    public static final Operator TRUE = Operator.TRUE;
 
-    public static final Operator FALSE = Operator.Constant.FALSE;
+    public static final Operator FALSE = Operator.FALSE;
 
     //represent expression it self
     public static final Name SELF = ExpressionFactory.symbol("self");
@@ -30,12 +29,12 @@ public final class Definition {
     /**
      * End of file
      */
-    public static final Token EOF = TokenFlag.EOF;
+    public static final Token EOF = Token.EOF;
 
     /**
      * Head of file
      */
-    public static final Token HOF = TokenFlag.HOF;
+    public static final Token HOF = Token.HOF;
 
     //运算符定义
     private static OperatorDefinition operatorDefinition = OperatorSingleton.getSingleton();

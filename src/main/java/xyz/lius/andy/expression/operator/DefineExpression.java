@@ -4,6 +4,7 @@ import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
+import xyz.lius.andy.util.AbstractContainer;
 
 @CurlyBracketed
 public class DefineExpression extends AbstractContainer implements Operator {

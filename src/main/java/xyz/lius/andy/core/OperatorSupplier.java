@@ -1,6 +1,5 @@
 package xyz.lius.andy.core;
 
-import xyz.lius.andy.expression.ExpressionType;
 import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.operator.*;
 
