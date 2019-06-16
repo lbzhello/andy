@@ -2,7 +2,10 @@ package xyz.lius.andy.core;
 
 import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.TokenFlag;
-import xyz.lius.andy.expression.*;
+import xyz.lius.andy.expression.Expression;
+import xyz.lius.andy.expression.ExpressionFactory;
+import xyz.lius.andy.expression.Name;
+import xyz.lius.andy.expression.Operator;
 
 import java.util.function.Function;
 
@@ -10,11 +13,11 @@ public final class Definition {
     private Definition() {
     }
 
-    public static final Operator NIL = ExpressionType.NIL;
+    public static final Operator NIL = Operator.Constant.NIL;
 
-    public static final Operator TRUE = ExpressionType.TRUE;
+    public static final Operator TRUE = Operator.Constant.TRUE;
 
-    public static final Operator FALSE = ExpressionType.FALSE;
+    public static final Operator FALSE = Operator.Constant.FALSE;
 
     //represent expression it self
     public static final Name SELF = ExpressionFactory.symbol("self");
