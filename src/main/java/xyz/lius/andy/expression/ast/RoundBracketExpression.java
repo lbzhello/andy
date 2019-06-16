@@ -35,7 +35,7 @@ public class RoundBracketExpression extends BracketExpression {
      */
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        if (size() == 0) return this; //e.g. ()
+        if (isEmpty()) return this; //e.g. ()
         Expression first = get(0).eval(context);
         if (first == ExpressionType.NIL) {
             //查看是否为系统提供的运算符

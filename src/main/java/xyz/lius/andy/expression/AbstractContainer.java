@@ -79,7 +79,7 @@ public abstract class AbstractContainer implements Container<Expression> {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        if (size() != 0) {
+        if (!isEmpty()) {
             for (int i = 0; i < count; i++) {
                 sb.append(elementData[i] + " ");
             }
