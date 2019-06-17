@@ -169,7 +169,7 @@ public class FileTokenizer implements Tokenizer<Token> {
      */
     private Token nextSymbol() {
         StringBuffer sb = new StringBuffer();
-        if (iterator.current() == '<') { //judgement if it's template
+        if (iterator.current() == '<') { //judgement if it's xml
             sb.append(iterator.current());
             iterator.next(); //eat '<'
             if (Character.isWhitespace(iterator.current()) || iterator.current() == '=') {
@@ -191,6 +191,62 @@ public class FileTokenizer implements Tokenizer<Token> {
             }
             return ExpressionFactory.symbol(sb.toString(), getLineNumber());
         }
+    }
+
+    private Token nextTmpl() {
+        StringBuilder segment = new StringBuilder();
+        while (iterator.hasNext()) {
+            switch (iterator.current()) {
+                //定界符, '\n' 和 '|' 之间的空格忽略
+                case '\n':
+                    segment.append(iterator.current());
+                    iterator.next(); //eat '\n'
+                    lineNumber++;
+                    int start = segment.length();
+                    while (Character.isWhitespace(iterator.current())) {
+                        segment.append(iterator.current());
+                        iterator.next();
+                    }
+                    if (iterator.current() == '|') {
+                        segment.delete(start, segment.length());
+                        iterator.next(); //eat '|'
+                    }
+                    break;
+                case '(':
+                    return ExpressionFactory.string(segment.toString(), getLineNumber());
+                case '\\':
+                    iterator.next(); //eat
+                    if (Character.isWhitespace(iterator.current())) {
+                        iterator.next(); //skip
+                    } else {
+                        segment.append(iterator.current()); //add to buffer
+                        iterator.next();
+                    }
+                    break;
+                case '`':
+                    return ExpressionFactory.string(segment.toString(), getLineNumber());
+                default:
+                    segment.append(iterator.current());
+            }
+        }
+        throw new RuntimeException("Lack of '`' to end the template!");
+    }
+
+    public Token nextXml() {
+        StringBuilder segment = new StringBuilder();
+        while (iterator.hasNext()) {
+            if (iterator.current() == '(' || iterator.current() == '/'
+                    || iterator.current() == '<' || iterator.current() == '>') {
+                return ExpressionFactory.string(segment.toString(), getLineNumber());
+            } else if (iterator.current() == '\n') {
+                iterator.next();
+                lineNumber++;
+            } else {
+                segment.append(iterator.current());
+            }
+        }
+
+        throw new RuntimeException("Lack of '`' to end the template!");
     }
 
 }
