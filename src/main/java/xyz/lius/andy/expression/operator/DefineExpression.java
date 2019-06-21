@@ -6,7 +6,6 @@ import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.util.AbstractContainer;
 
-@CurlyBracketed
 public class DefineExpression extends AbstractContainer implements Operator {
     public DefineExpression() {
         super(2);

@@ -6,7 +6,7 @@ import xyz.lius.andy.expression.ExpressionFactory;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 
-public class StringExpression extends TokenExpression {
+public class StringExpression extends ConstantExpression {
     public StringExpression(String value){
         super(value);
     }

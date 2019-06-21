@@ -1,8 +1,7 @@
-package xyz.lius.andy.expression.operator;
+package xyz.lius.andy.expression.ast;
 
 import xyz.lius.andy.expression.*;
 
-@CurlyBracketed
 public class ComplexExpression implements Complex {
 
     private Expression[] parameters;

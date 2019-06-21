@@ -5,12 +5,12 @@ import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionUtils;
 import xyz.lius.andy.expression.Name;
 
-public class DelimiterExpression extends TokenExpression{
-    public DelimiterExpression(String value) {
-        super(value);
+public class IdentifierExpression extends ConstantExpression {
+    public IdentifierExpression(String value) {
+        this.value = value;
     }
 
-    public DelimiterExpression(String value, int lineNumber) {
+    public IdentifierExpression(String value, int lineNumber) {
         super(value, lineNumber);
     }
 

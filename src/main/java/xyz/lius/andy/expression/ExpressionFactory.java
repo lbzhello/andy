@@ -10,7 +10,7 @@ import xyz.lius.andy.expression.template.XmlTagExpression;
 /**
  * 用于提供各种表达式语法树
  */
-public class ExpressionFactory extends NativeFactory {
+public class ExpressionFactory {
     public static BracketExpression bracket(Expression... expressions) {
         return new BracketExpression(expressions);
     }
@@ -27,20 +27,12 @@ public class ExpressionFactory extends NativeFactory {
         return new CurlyBracketExpression();
     }
 
-    public static TokenExpression token(Object token) {
-        return new TokenExpression(token);
+    public static IdentifierExpression symbol(String value) {
+        return new IdentifierExpression(value);
     }
 
-    public static TokenExpression token(Object token, int lineNumber) {
-        return new TokenExpression(token, lineNumber);
-    }
-
-    public static SymbolExpression symbol(String value) {
-        return new SymbolExpression(value);
-    }
-
-    public static SymbolExpression symbol(String value, int lineNumber) {
-        return new SymbolExpression(value, lineNumber);
+    public static IdentifierExpression symbol(String value, int lineNumber) {
+        return new IdentifierExpression(value, lineNumber);
     }
 
     public static StringExpression string(String value) {
@@ -65,14 +57,6 @@ public class ExpressionFactory extends NativeFactory {
 
     public static NumberExpression number(double val, int lineNumber) {
         return new NumberExpression(val, lineNumber);
-    }
-
-    public static DelimiterExpression delimiter(String value) {
-        return new DelimiterExpression(value);
-    }
-
-    public static DelimiterExpression delimiter(String value, int lineNumber) {
-        return new DelimiterExpression(value, lineNumber);
     }
 
     public static Operator lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {

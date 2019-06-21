@@ -4,7 +4,6 @@ import xyz.lius.andy.expression.ast.*;
 import xyz.lius.andy.expression.operator.CommaExpression;
 import xyz.lius.andy.expression.operator.JavaObject;
 import xyz.lius.andy.expression.operator.LambdaExpression;
-import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
 
 public class ExpressionUtils {
@@ -21,7 +20,7 @@ public class ExpressionUtils {
     }
 
     public static boolean isSymbol(Expression expression) {
-        return expression instanceof SymbolExpression;
+        return expression instanceof IdentifierExpression;
     }
 
     public static boolean isNumber(Expression expression) {
@@ -60,7 +59,7 @@ public class ExpressionUtils {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         for (Expression expression : expressions) {
             if (isSquareBracket(expression)) {
-                squareBracket.addContainer(asSquareBracket(expression));
+                squareBracket.addAll(asSquareBracket(expression));
             } else {
                 squareBracket.add(expression);
             }
@@ -106,10 +105,6 @@ public class ExpressionUtils {
 
     public static XmlExpression asXml(Expression expression) {
         return (XmlExpression) expression;
-    }
-
-    public static boolean isTemplate(Expression expression) {
-        return expression instanceof TemplateExpression;
     }
 
     public static String formatXml(XmlExpression xmlExpression) {

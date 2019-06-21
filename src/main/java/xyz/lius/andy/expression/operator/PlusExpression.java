@@ -4,7 +4,6 @@ import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.util.AbstractContainer;
 
-@RoundBracketed
 public class PlusExpression extends AbstractContainer implements Operator {
     public PlusExpression() {
         super(2);

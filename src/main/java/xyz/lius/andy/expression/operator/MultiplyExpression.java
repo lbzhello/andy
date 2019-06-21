@@ -7,7 +7,6 @@ import xyz.lius.andy.util.AbstractContainer;
 
 import java.math.BigDecimal;
 
-@RoundBracketed
 public class MultiplyExpression extends AbstractContainer implements Operator {
     public MultiplyExpression() {
         super(2);

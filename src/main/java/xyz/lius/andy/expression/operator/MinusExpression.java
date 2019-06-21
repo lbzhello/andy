@@ -7,7 +7,6 @@ import xyz.lius.andy.util.AbstractContainer;
 
 import java.math.BigDecimal;
 
-@RoundBracketed
 public class MinusExpression extends AbstractContainer implements Operator {
     public MinusExpression() {
         super(2);

@@ -66,7 +66,7 @@ public abstract class AbstractContainer implements Container<Expression> {
     }
 
     @Override
-    public void addContainer(Container<Expression> container) {
+    public void addAll(Container<Expression> container) {
         Expression[] array = container.toArray();
         int len = count + array.length;
         if (array.length > free) {

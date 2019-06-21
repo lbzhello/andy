@@ -7,7 +7,6 @@ import xyz.lius.andy.util.AbstractContainer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@RoundBracketed
 public class DivideExpression extends AbstractContainer implements Operator {
     public DivideExpression() {
         super(2);

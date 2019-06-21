@@ -11,5 +11,5 @@ public interface Container<T> {
 
     T[] toArray();
 
-    void addContainer(Container<T> container);
+    void addAll(Container<T> container);
 }

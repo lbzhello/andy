@@ -3,6 +3,7 @@ package xyz.lius.andy.expression.operator;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.ast.BracketExpression;
+import xyz.lius.andy.expression.ast.ComplexExpression;
 import xyz.lius.andy.util.AbstractContainer;
 
 /**

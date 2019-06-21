@@ -97,7 +97,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combine(Expression left) throws Exception {
         if (tokenizer.current() == Token.ROUND_BRACKET_LEFT) { //e.g. left(...)...
             BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
-            bracketExpression.addContainer(roundBracketExpression());
+            bracketExpression.addAll(roundBracketExpression());
             return combine(bracketExpression);
         } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));

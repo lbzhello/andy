@@ -8,7 +8,6 @@ import xyz.lius.andy.util.AbstractContainer;
 /**
  * e.g. (...){...}
  */
-@CurlyBracketed
 public class LambdaExpression extends AbstractContainer implements Operator {
     public LambdaExpression(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
         super(2);

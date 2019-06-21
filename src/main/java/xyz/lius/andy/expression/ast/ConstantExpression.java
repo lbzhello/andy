@@ -5,17 +5,17 @@ import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.Name;
 import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 
-public class TokenExpression implements LineNumberToken, Expression, Name {
+public class ConstantExpression implements LineNumberToken, Expression, Name {
     protected Object value;
     protected int lineNumber = 0;
 
-    public TokenExpression(){}
+    public ConstantExpression(){}
 
-    public TokenExpression(Object value){
+    public ConstantExpression(Object value){
         this(value, 0);
     }
 
-    public TokenExpression(Object value, int lineNumber) {
+    public ConstantExpression(Object value, int lineNumber) {
         this.value = value;
         this.lineNumber = lineNumber;
     }
@@ -39,7 +39,7 @@ public class TokenExpression implements LineNumberToken, Expression, Name {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
-        TokenExpression that = (TokenExpression) o;
+        ConstantExpression that = (ConstantExpression) o;
         return this.value == null ? that.value == null : this.value.equals(that.value);
     }
 

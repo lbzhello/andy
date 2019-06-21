@@ -4,17 +4,14 @@ import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.*;
 import xyz.lius.andy.expression.context.ExpressionContext;
 import xyz.lius.andy.expression.operator.ColonExpression;
-import xyz.lius.andy.expression.operator.ComplexExpression;
 import xyz.lius.andy.expression.operator.DefineExpression;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * e.g. {...}
  */
-@CurlyBracketed
 public class CurlyBracketExpression extends BracketExpression {
     private List<Expression> fields = new ArrayList<>();
     private List<Expression> codes = new ArrayList<>();
