@@ -59,8 +59,11 @@ public class ExpressionFactory {
         return new NumberExpression(val, lineNumber);
     }
 
-    public static Operator lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
-        return new LambdaExpression(bracket, curlyBracket);
+    public static LambdaExpression lambda(BracketExpression bracket, CurlyBracketExpression curlyBracket) {
+        LambdaExpression lambda = new LambdaExpression();
+        lambda.add(bracket);
+        lambda.add(curlyBracket);
+        return lambda;
     }
 
     public static Expression define(Expression key, CurlyBracketExpression value) {
