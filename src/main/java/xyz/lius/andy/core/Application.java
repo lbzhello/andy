@@ -1,5 +1,7 @@
 package xyz.lius.andy.core;
 
+import xyz.lius.andy.compiler.parser.support.MyParser;
+
 /**
  * 应用程序启动类
  */
@@ -10,7 +12,7 @@ public class Application {
             return;
         }
 
-        ReplEngine replEngine = new ReplEngine();
+        ReplEngine replEngine = new ReplEngine(new MyParser());
         replEngine.evalFile(args[0]);
     }
 }

@@ -13,7 +13,15 @@ import java.io.IOException;
  */
 public class ReplEngine {
     private final Context<Name, Expression> context = new ExpressionContext();
-    private final Parser<Expression> parser = Compiler.parser();
+    private final Parser<Expression> parser;
+
+    public ReplEngine() {
+        this.parser = Compiler.parser();
+    }
+
+    public ReplEngine(Parser<Expression> parser) {
+        this.parser = parser;
+    }
 
     public Expression eval(String expression) {
         return this.eval(parser.parseString(expression));
