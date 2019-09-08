@@ -34,7 +34,7 @@ public class ReplEngine {
             try {
                 //父目录放入上下文，用于脚本文件导入（表示从当前文件夹），详见 ImportExpression
                 File parent = new File(fileName).getCanonicalFile().getParentFile();
-                context.add(Definition.FILE_PARENT, ExpressionFactory.symbol(parent.getCanonicalPath()));
+                context.add(Definition.FILE_DIRECTORY, ExpressionFactory.symbol(parent.getCanonicalPath()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

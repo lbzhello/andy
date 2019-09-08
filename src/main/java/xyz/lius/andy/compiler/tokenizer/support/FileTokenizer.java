@@ -106,19 +106,16 @@ public class FileTokenizer implements Tokenizer<Token> {
                         if (iterator.current() == '\n') lineNumber++;
                         iterator.next(); //eat
                     }
-                    if (iterator.current() == '(') {  //e.g. name {...
-                        iterator.next();
-                        currentToken = Token.ROUND_BRACKET_FREE;
+
+                    // 返回空格
+                    if (iterator.current() == '('
+                            || iterator.current() == '['
+                            || iterator.current() == '{') {
+                        currentToken = Token.SPACE;
                         return currentToken;
-                    } else if (iterator.current() == '[') { //e.g. name [...
-                        iterator.next();
-                        currentToken = Token.SQUARE_BRACKET_FREE;
-                        return currentToken;
-                    } else if (iterator.current() == '{') { //e.g. name {...
-                        iterator.next();
-                        currentToken = Token.CURLY_BRACKET_FREE;
-                        return currentToken;
+
                     }
+
                 }
             }
         } catch (Exception e) {

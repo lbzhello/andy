@@ -8,6 +8,8 @@ public interface Token extends Expression {
     Constant EOF = new Constant();
     Constant HOF = new Constant();
 
+    Constant SPACE = new Constant();
+
     Constant COMMA = new Constant();
     Constant SEMICOLON = new Constant();
     Constant POINT = new Constant();
@@ -15,15 +17,12 @@ public interface Token extends Expression {
 
     Constant ROUND_BRACKET_LEFT = new Constant();
     Constant ROUND_BRACKET_RIGHT = new Constant();
-    Constant ROUND_BRACKET_FREE = new Constant();
 
     Constant CURLY_BRACKET_LEFT = new Constant();
     Constant CURLY_BRACKET_RIGHT = new Constant();
-    Constant CURLY_BRACKET_FREE = new Constant();
 
     Constant SQUARE_BRACKET_LEFT = new Constant();
     Constant SQUARE_BRACKET_RIGHT = new Constant();
-    Constant SQUARE_BRACKET_FREE = new Constant();
 
     Constant ANGLE_BRACKET = new Constant();
     Constant SLASH_LEFT = new Constant();

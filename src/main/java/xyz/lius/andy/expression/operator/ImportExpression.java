@@ -23,8 +23,8 @@ public class ImportExpression extends AbstractContainer implements Operator {
     @Override
     public Expression eval(Context<Name, Expression> context) {
         //默认从父目录里面查找
-        String fileParent = context.lookup(Definition.FILE_PARENT).toString();
-        String fileName = fileParent + "/" + get(0).toString() + ".andy";
+        String fileParent = context.lookup(Definition.FILE_DIRECTORY).toString();
+        String fileName = fileParent + File.separator + get(0).toString() + ".andy";
         try {
             for (File file : new File(fileParent).listFiles()) {
                 if (Objects.equals(fileName, file.getCanonicalPath())) {

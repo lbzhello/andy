@@ -24,7 +24,7 @@ public final class Definition {
     /**
      * 脚本文件所在的目录
      */
-    public static Name FILE_PARENT = ExpressionFactory.symbol("FILE_PARENT");
+    public static Name FILE_DIRECTORY = ExpressionFactory.symbol("FILE_DIRECTORY");
 
     /**
      * End of file
