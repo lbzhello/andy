@@ -13,7 +13,12 @@ public interface Token extends Expression {
     Constant COMMA = new Constant();
     Constant SEMICOLON = new Constant();
     Constant POINT = new Constant();
-    Constant COLON = new Constant();
+    Constant COLON = new Constant() {
+        @Override
+        public String toString() {
+            return ":";
+        }
+    };
 
     Constant ROUND_BRACKET_LEFT = new Constant();
     Constant ROUND_BRACKET_RIGHT = new Constant();

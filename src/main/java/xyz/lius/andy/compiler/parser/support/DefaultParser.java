@@ -9,6 +9,7 @@ import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ExpressionUtils;
 import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.ast.BracketExpression;
+import xyz.lius.andy.expression.ast.ConstantExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
@@ -55,7 +56,7 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     private Expression expression() throws Exception {
-        Expression expression = combine(combinator());
+        Expression expression = combinator();
         if (Definition.isBinary(tokenizer.current())) { //e.g. expression op ...
             expression = operator(expression, tokenizer.current());
         }
@@ -70,7 +71,7 @@ public class DefaultParser implements Parser<Expression> {
     private Expression operator(Expression left, Expression op) throws Exception {
         tokenizer.next(); //eat op
         Operator binary = Definition.getOperator(op);
-        Expression right = combine(combinator());
+        Expression right = combinator();
         if (Definition.isBinary(tokenizer.current())) { //e.g. left op right op2 ...
             Expression op2 = tokenizer.current();
             if (Definition.compare(op, op2) < 0) { //e.g. left op (right op2 ...)
@@ -90,8 +91,17 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * Generate an expression
-     * e.g. combinator() || name(...) || name(...)(...) || name(...){...} || (...){...}(...)(...) || let a ||...
+     * 基本表达式组合子
+     * @return
+     * @throws Exception
+     */
+    private Expression combinator() throws Exception {
+        return combine(combinator0());
+    }
+
+    /**
+     * 生成一个复合表达式组合子
+     * e.g. combinator0() || name(...) || name(...)(...) || name(...){...} || (...){...}(...)(...) || let a ||...
      * @return
      */
     private Expression combine(Expression left) throws Exception {
@@ -102,10 +112,8 @@ public class DefaultParser implements Parser<Expression> {
         } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. left{...}...
             return combine(ExpressionFactory.define(left, curlyBracketExpression()));
         } else if (tokenizer.current() == Token.POINT) { //e.g. left.right...
-            return combine(ExpressionFactory.point(left, combinator()));
-        } else if (tokenizer.current() == Token.COLON) { //e.g. left: ...
             tokenizer.next();
-            return ExpressionFactory.colon(left, expression());
+            return combine(ExpressionFactory.point(left, combinator0()));
         } else {
             return left;
         }
@@ -117,7 +125,7 @@ public class DefaultParser implements Parser<Expression> {
      * e.g. (...) || {...} || [...] || "string" || 123 || symbol
      * @return
      */
-    private Expression combinator() throws Exception {
+    private Expression combinator0() throws Exception {
         if (ExpressionUtils.isSymbol(tokenizer.current())) { //e.g. name...
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat "expression"

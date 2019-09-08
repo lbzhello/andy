@@ -38,6 +38,7 @@ public enum  OperatorSupplier implements Function<String, Operator> {
         operator.put(OperatorSingleton.FOR, () -> new ForExpression());
 
         //---------------- binary -----------------//
+        operator.put(OperatorSingleton.COLON, () -> new ColonExpression());
         operator.put(OperatorSingleton.ARROW, () -> new ArrowExpression());
         operator.put(OperatorSingleton.ASSIGN, () -> new AssignExpression());
         operator.put(OperatorSingleton.OR, () -> new OrExpression());

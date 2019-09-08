@@ -77,6 +77,8 @@ public final class OperatorSingleton implements OperatorDefinition {
         unary.put(FOR, 2);
 
         binary = new HashMap<>();
+        binary.put(COLON, -10);
+
         binary.put(ARROW, -1);
 
         binary.put(ASSIGN, 0);

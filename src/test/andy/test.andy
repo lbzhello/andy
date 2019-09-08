@@ -1,7 +1,15 @@
-max(a, b){
-    a + b
+book{
+    name: "hello"
+    "age": 23
+    f(x){
+        x + 1
+    }
 }
 
-max
+book.name
 
-(2, 3)
+myage = "age"
+
+book.(myage)
+
+book.f(3)

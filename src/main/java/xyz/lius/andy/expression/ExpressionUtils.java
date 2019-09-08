@@ -19,6 +19,10 @@ public class ExpressionUtils {
         return expression instanceof ErrorExpression;
     }
 
+    public static boolean isConstant(Expression expression) {
+        return isSymbol(expression) || isNumber(expression) || isString(expression);
+    }
+
     public static boolean isSymbol(Expression expression) {
         return expression instanceof IdentifierExpression;
     }
