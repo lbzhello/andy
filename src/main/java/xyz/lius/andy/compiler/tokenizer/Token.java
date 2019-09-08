@@ -8,6 +8,9 @@ public interface Token extends Expression {
     Constant EOF = new Constant();
     Constant HOF = new Constant();
 
+    // end-of-line
+    Constant EOL = new Constant();
+
     Constant SPACE = new Constant();
 
     Constant COMMA = new Constant();
@@ -19,6 +22,13 @@ public interface Token extends Expression {
             return ":";
         }
     };
+
+    // FREE 表示括号是独立的表达式
+    // e.g. (...), [1 2 3 4], def max {...}
+    // 区别于 max(a, b), a[1], loop{...}
+    Constant ROUND_BRACKET_LEFT_FREE = new Constant();
+    Constant CURLY_BRACKET_LEFT_FREE = new Constant();
+    Constant SQUARE_BRACKET_LEFT_FREE = new Constant();
 
     Constant ROUND_BRACKET_LEFT = new Constant();
     Constant ROUND_BRACKET_RIGHT = new Constant();

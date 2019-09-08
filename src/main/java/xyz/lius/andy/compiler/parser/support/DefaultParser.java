@@ -9,8 +9,8 @@ import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ExpressionUtils;
 import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.ast.BracketExpression;
-import xyz.lius.andy.expression.ast.ConstantExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
+import xyz.lius.andy.expression.ast.CommandExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
@@ -60,6 +60,10 @@ public class DefaultParser implements Parser<Expression> {
         if (Definition.isBinary(tokenizer.current())) { //e.g. expression op ...
             expression = operator(expression, tokenizer.current());
         }
+
+        while (isSeparator(tokenizer.current())) {
+            tokenizer.next(); // eat
+        }
         return expression;
     }
 
@@ -91,7 +95,7 @@ public class DefaultParser implements Parser<Expression> {
     }
 
     /**
-     * 基本表达式组合子
+     * 表达式组合子
      * @return
      * @throws Exception
      */
@@ -142,11 +146,11 @@ public class DefaultParser implements Parser<Expression> {
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat
             return expression;
-        } else if (tokenizer.current() == Token.ROUND_BRACKET_LEFT) { //e.g. (...)...
+        } else if (tokenizer.current() == Token.ROUND_BRACKET_LEFT || tokenizer.current() == Token.ROUND_BRACKET_LEFT_FREE) { //e.g. (...)...
             return roundBracketExpression();
-        } else if (tokenizer.current() == Token.SQUARE_BRACKET_LEFT) { //e.g. [...]...
+        } else if (tokenizer.current() == Token.SQUARE_BRACKET_LEFT || tokenizer.current() == Token.SQUARE_BRACKET_LEFT_FREE) { //e.g. [...]...
             return squareBracketExpression();
-        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. {...}...
+        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT || tokenizer.current() == Token.CURLY_BRACKET_LEFT_FREE) { //e.g. {...}...
             return curlyBracketExpression();
         } else if (tokenizer.current() == Token.BACK_QUOTE) { //e.g. ``
             tokenizer.next(); //eat start '`'
@@ -165,6 +169,41 @@ public class DefaultParser implements Parser<Expression> {
             return combinator();
         }
 
+    }
+
+    // 是否是间隔符
+    private boolean isSeparator(Expression sep) {
+        return sep == Token.EOL || sep == Token.SEMICOLON;
+    }
+
+    /**
+     * 函数调用如果在同一行，可以省略括号
+     * @return
+     */
+    private Expression commandExpression(Expression head) throws Exception {
+        CommandExpression command = new CommandExpression(head);
+        while (tokenizer.current() != Token.SEMICOLON || tokenizer.current() != Token.EOL) {
+            command.add(commandArg());
+        }
+        // 只有函数名字，返回函数本身，而不是 command
+        // e.g.
+        // def sum(x, y) x + y
+        // sum 2 3 // command
+        // sum     // self
+        if (command.size() == 1) {
+            return head;
+        }
+        return command;
+    }
+
+    //e.g. cmd arg1 arg2 ...
+    private Expression commandArg() throws Exception {
+        Expression expression = combinator();
+        if (Definition.isBinary(tokenizer.current())) { //e.g. expression op ...
+            expression = operator(expression, tokenizer.current());
+        }
+
+        return expression;
     }
 
     /**
@@ -349,7 +388,7 @@ public class DefaultParser implements Parser<Expression> {
     private CurlyBracketExpression curlyBracketExpression() throws Exception {
         tokenizer.next(); //eat '{'
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        while (tokenizer.current() != Token.CURLY_BRACKET_RIGHT && iterator.hasNext()) {
+         while (tokenizer.current() != Token.CURLY_BRACKET_RIGHT && iterator.hasNext()) {
             curlyBracketExpression.add(expression());
         }
         tokenizer.next(); //eat '}'
@@ -386,6 +425,9 @@ public class DefaultParser implements Parser<Expression> {
         Expression expression = expression();
         if (tokenizer.current() == Token.ROUND_BRACKET_RIGHT) { //e.g. (expression)
             tokenizer.next(); //eat ")"
+            if (expression instanceof CommandExpression) {
+                return ExpressionFactory.roundBracket(((CommandExpression) expression).toArray());
+            }
             return ExpressionFactory.roundBracket(expression);
         } else {
             return roundBracket(expression);

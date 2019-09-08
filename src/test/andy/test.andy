@@ -1,15 +1,5 @@
-book{
-    name: "hello"
-    "age": 23
-    f(x){
-        x + 1
-    }
+def max(x) {
+    x * x
 }
 
-book.name
-
-myage = "age"
-
-book.(myage)
-
-book.f(3)
+(5 + 5)

@@ -2,7 +2,6 @@ package xyz.lius.andy.compiler.tokenizer.support;
 
 import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
 import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.Token;
 import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ExpressionFactory;
@@ -103,17 +102,31 @@ public class FileTokenizer implements Tokenizer<Token> {
                    }
                 } else { //空白字符
                     while (Character.isWhitespace(iterator.current())) {
-                        if (iterator.current() == '\n') lineNumber++;
+                        if (iterator.current() == '\n') {
+                            lineNumber++;
+                            iterator.next();
+                            return currentToken = Token.EOL;
+                        }
                         iterator.next(); //eat
                     }
 
-                    // 返回空格
-                    if (iterator.current() == '('
-                            || iterator.current() == '['
-                            || iterator.current() == '{') {
-                        currentToken = Token.SPACE;
-                        return currentToken;
-
+//                    // 返回空格
+//                    if (iterator.current() == '('
+//                            || iterator.current() == '['
+//                            || iterator.current() == '{') {
+//                        currentToken = Token.SPACE;
+//                        return currentToken;
+//
+//                    }
+                    if (iterator.current() == '(') {
+                        iterator.next();
+                        return currentToken = Token.ROUND_BRACKET_LEFT_FREE;
+                    } else if (iterator.current() == '[') {
+                        iterator.next();
+                        return currentToken = Token.SQUARE_BRACKET_LEFT_FREE;
+                    }else if (iterator.current() == '{') {
+                        iterator.next();
+                        return currentToken = Token.CURLY_BRACKET_LEFT_FREE;
                     }
 
                 }
@@ -121,7 +134,7 @@ public class FileTokenizer implements Tokenizer<Token> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Definition.EOF;
+        return currentToken = Definition.EOF;
     }
 
     @Override

@@ -22,6 +22,7 @@ public final class OperatorSingleton implements OperatorDefinition {
     public static final String FOR = "for";
 
     //--------- Binary -----------//
+    public static final String COLON = ":";
     public static final String ARROW = "->";
     public static final String ASSIGN = "=";
     public static final String OR = "||";
@@ -43,7 +44,6 @@ public final class OperatorSingleton implements OperatorDefinition {
 
     //--------- Other -----------//
     public static final String DEFINE = "def";
-    public static final String COLON = ":";
     public static final String POINT = ".";
     public static final String PRINT = "print";
     public static final String FILE = "file";
@@ -73,6 +73,7 @@ public final class OperatorSingleton implements OperatorDefinition {
         unary.put(AUTO_DEC, 1);
         unary.put(NOT, 1);
 
+        unary.put(DEFINE, 2);
         unary.put(IF, 2);
         unary.put(FOR, 2);
 
