@@ -104,8 +104,8 @@ public class FileTokenizer implements Tokenizer<Token> {
                     while (Character.isWhitespace(iterator.current())) {
                         if (iterator.current() == '\n') {
                             lineNumber++;
-                            iterator.next();
-                            return currentToken = Token.EOL;
+//                            iterator.next();
+//                            return currentToken = Token.EOL;
                         }
                         iterator.next(); //eat
                     }

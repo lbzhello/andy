@@ -15,7 +15,7 @@ public class ExpressionFactory {
         return new BracketExpression(expressions);
     }
 
-    public static BracketExpression roundBracket(Expression... expressions) {
+    public static RoundBracketExpression roundBracket(Expression... expressions) {
         return new RoundBracketExpression(expressions);
     }
 

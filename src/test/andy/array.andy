@@ -7,9 +7,10 @@ a.other()
 (print 2)
 a(2) * a(1) + a(0)
 "abc".toArray()
-iter(obj){
+
+def iter(obj) {
  value:nil
- call(f){
+ def call(f) {
     (return f(value))
  }
  value = obj
@@ -18,7 +19,7 @@ iter(obj){
 rst = iter(3)
 (print rst.call(x -> x + 2))
 pair = [1 2]
-pair.reverse()(0)
+pair.reverse()
 arr = [1 2 3]
 (print arr.count())
 arr.reduce((x,y) -> x + y)

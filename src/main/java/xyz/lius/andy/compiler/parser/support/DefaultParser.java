@@ -11,10 +11,16 @@ import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.ast.CommandExpression;
+import xyz.lius.andy.expression.ast.RoundBracketExpression;
+import xyz.lius.andy.expression.operator.LambdaExpression;
+import xyz.lius.andy.expression.operator.PointExpression;
 import xyz.lius.andy.expression.template.LineExpression;
 import xyz.lius.andy.expression.template.TemplateExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
 import xyz.lius.andy.expression.template.XmlTagExpression;
+import xyz.lius.andy.expression.adapter.AddableExpressionAdapter;
+import xyz.lius.andy.expression.adapter.BracketExpressionAdapter;
+import xyz.lius.andy.expression.adapter.LambdaExpressionAdapter;
 import xyz.lius.andy.io.CharIterator;
 import xyz.lius.andy.io.support.FileCharIterator;
 import xyz.lius.andy.io.support.StringCharIterator;
@@ -109,12 +115,10 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combine(Expression left) throws Exception {
-        if (tokenizer.current() == Token.ROUND_BRACKET_LEFT) { //e.g. left(...)...
-            BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
-            bracketExpression.addAll(roundBracketExpression());
-            return combine(bracketExpression);
-        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. left{...}...
-            return combine(ExpressionFactory.define(left, curlyBracketExpression()));
+        if (tokenizer.current() == Token.ROUND_BRACKET_LEFT //e.g. left(...)... 元素作为多个参数
+                || tokenizer.current() == Token.CURLY_BRACKET_LEFT //e.g. left{...}... 元素作为一个参数
+                || tokenizer.current() == Token.SQUARE_BRACKET_LEFT) { //e.g. left[2]... 元素作为一个参数
+            return combine0(left);
         } else if (tokenizer.current() == Token.POINT) { //e.g. left.right...
             tokenizer.next();
             return combine(ExpressionFactory.point(left, combinator0()));
@@ -123,6 +127,45 @@ public class DefaultParser implements Parser<Expression> {
         }
 
     }
+
+    private Expression combine0(Expression left) throws Exception {
+        // 函数调用语法树
+        // e.g.  f(...) || f{..} || f[...] || f(...)[...]{...}
+        if (ExpressionUtils.isConstant(left) || left instanceof PointExpression) { // f(x) || boo.say()
+            return doCombine(new BracketExpressionAdapter(ExpressionFactory.roundBracket(left)));
+        } else {
+            // lambda 语法树
+            // e.g. (...){...} || [...]{...}
+            LambdaExpression lambda = new LambdaExpression();
+            if (ExpressionUtils.isRoundBracket(left)) {
+                lambda.addAll((RoundBracketExpression) left);
+            } else {
+                lambda.add(left);
+            }
+            return doCombine(new LambdaExpressionAdapter(lambda));
+        }
+    }
+
+    private Expression doCombine(AddableExpressionAdapter left) throws Exception {
+        if (tokenizer.current() == Token.ROUND_BRACKET_LEFT) { //e.g. left(...)... 元素作为多个参数
+            left.add(roundBracketExpression().toArray());
+            return doCombine(left);
+        } else if (tokenizer.current() == Token.CURLY_BRACKET_LEFT) { //e.g. left{...}... 元素作为一个参数
+            left.add(curlyBracketExpression());
+            return doCombine(left);
+        } else if (tokenizer.current() == Token.SQUARE_BRACKET_LEFT) { //e.g. left[2]... 元素作为一个参数
+            left.add(squareBracketExpression());
+            return doCombine(left);
+        } else if (tokenizer.current() == Token.POINT) { //e.g. left.right...
+            tokenizer.next();
+            return combine(ExpressionFactory.point(left.getExpression(), combinator0()));
+        } else {
+            return left.getExpression();
+        }
+
+    }
+
+
 
     /**
      * 生成一个表达式组合子
@@ -182,7 +225,7 @@ public class DefaultParser implements Parser<Expression> {
      */
     private Expression commandExpression(Expression head) throws Exception {
         CommandExpression command = new CommandExpression(head);
-        while (tokenizer.current() != Token.SEMICOLON || tokenizer.current() != Token.EOL) {
+        while (tokenizer.current() != Token.SEMICOLON ) {
             command.add(commandArg());
         }
         // 只有函数名字，返回函数本身，而不是 command

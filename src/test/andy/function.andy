@@ -1,7 +1,7 @@
 debug = import debug
 print("Function")
 
-max(a, b) = {
+def max(a, b) {
     return if (a > b) a else b
 }
 
@@ -21,11 +21,11 @@ book = {
     publish: "1997-06-30"
     type: "Novel"
 
-    setName(newName){
+    def setName(newName) {
         name = newName
     }
 
-    getName(){
+    def getName() {
         return self.name
     }
 }

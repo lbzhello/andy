@@ -1,7 +1,7 @@
 //expr: 表达式
 //expect: 期望值
 //output: 表达式实际输出值
-test(expr, expect, output){
+def test(expr, expect, output) {
     if (expect == output) {
         print(expr, true)
     } else {

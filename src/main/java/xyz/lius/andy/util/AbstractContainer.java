@@ -66,8 +66,7 @@ public abstract class AbstractContainer implements Container<Expression> {
     }
 
     @Override
-    public void addAll(Container<Expression> container) {
-        Expression[] array = container.toArray();
+    public void add(Expression[] array) {
         int len = count + array.length;
         if (array.length > free) {
             elementData = Arrays.copyOf(elementData, len);
@@ -77,6 +76,11 @@ public abstract class AbstractContainer implements Container<Expression> {
             System.arraycopy(array, 0, elementData, count, array.length);
             count = len; free -= array.length;
         }
+    }
+
+    @Override
+    public void addAll(Container<Expression> container) {
+        add(container.toArray());
     }
 
     @Override
