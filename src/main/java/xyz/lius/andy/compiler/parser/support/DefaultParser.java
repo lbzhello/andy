@@ -138,7 +138,7 @@ public class DefaultParser implements Parser<Expression> {
             // e.g. (...){...} || [...]{...}
             LambdaExpression lambda = new LambdaExpression();
             if (ExpressionUtils.isRoundBracket(left)) {
-                lambda.addAll((RoundBracketExpression) left);
+                lambda.add(((RoundBracketExpression) left).toArray());
             } else {
                 lambda.add(left);
             }

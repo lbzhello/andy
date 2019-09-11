@@ -79,11 +79,6 @@ public abstract class AbstractContainer implements Container<Expression> {
     }
 
     @Override
-    public void addAll(Container<Expression> container) {
-        add(container.toArray());
-    }
-
-    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         if (!isEmpty()) {

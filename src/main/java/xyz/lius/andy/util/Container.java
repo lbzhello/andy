@@ -12,6 +12,4 @@ public interface Container<T> {
     boolean isEmpty();
 
     T[] toArray();
-
-    void addAll(Container<T> container);
 }

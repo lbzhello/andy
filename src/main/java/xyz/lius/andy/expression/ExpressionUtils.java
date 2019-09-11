@@ -63,7 +63,7 @@ public class ExpressionUtils {
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         for (Expression expression : expressions) {
             if (isSquareBracket(expression)) {
-                squareBracket.addAll(asSquareBracket(expression));
+                squareBracket.add(asSquareBracket(expression).toArray());
             } else {
                 squareBracket.add(expression);
             }

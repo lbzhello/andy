@@ -124,7 +124,7 @@ public class MyParser implements Parser<Expression> {
 
             if (iterator.current() == '(') { //e.g. left(...)...
                 BracketExpression bracketExpression = ExpressionFactory.roundBracket(left);
-                bracketExpression.addAll(roundBracketExpression());
+                bracketExpression.add(roundBracketExpression().toArray());
                 return combine(bracketExpression);
             } else if (iterator.current() == '{') { //e.g. left{...}...
                 return combine(ExpressionFactory.define(left, curlyBracketExpression()));
