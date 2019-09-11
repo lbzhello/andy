@@ -18,8 +18,8 @@ public class BracketExpressionAdapter implements AddableExpressionAdapter {
     }
 
     @Override
-    public void add(Expression[] array) {
-        bracketExpression.add(array);
+    public void add(Expression[] expressions) {
+        bracketExpression.add(expressions);
     }
 
     @Override
