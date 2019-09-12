@@ -68,7 +68,7 @@ Java 11+
     =, ||, &&, >, <, ==, >=, <=, +, -, *, /, .
     
 #### Function
-    f1(x, y){
+    def f1(x, y) {
       x + y
     }
   
@@ -83,6 +83,8 @@ Java 11+
     }
   
     // single line
+    def f4(x, y) x + y
+    
     f4(x, y) = x + y
   
     // ->
@@ -99,7 +101,7 @@ Java 11+
       unit: "$"
       price: 22
       
-      getPrice(){
+      def getPrice() {
         return price + unit
       }
     }
