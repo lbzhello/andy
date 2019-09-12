@@ -12,6 +12,7 @@ public final class OperatorSingleton implements OperatorDefinition {
     public static final String NIL = "nil";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
+    public static final String LET = "let";
     public static final String RETURN = "return";
     public static final String NEW = "new";
     public static final String IMPORT = "import";
@@ -65,6 +66,7 @@ public final class OperatorSingleton implements OperatorDefinition {
         unary.put(TRUE, 0);
         unary.put(FALSE, 0);
 
+        unary.put(LET, 1);
         unary.put(RETURN, 1);
         unary.put(NEW, 1);
         unary.put(IMPORT, 1);

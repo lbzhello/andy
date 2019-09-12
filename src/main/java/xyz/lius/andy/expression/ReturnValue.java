@@ -1,7 +1,7 @@
 package xyz.lius.andy.expression;
 
 /**
- * Represent a return value
+ * 返回值表达式，计算流遇到它会直接返回，不会计算下面的表达式
  * engine will return and not eval the rest expressions when encounter a return value
  */
 public class ReturnValue implements Expression {
