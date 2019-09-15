@@ -77,7 +77,17 @@ public class MyParser implements Parser<Expression> {
         return curlyBracketExpression;
     }
 
-    private Expression expression() {
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public Expression next() {
+        return null;
+    }
+
+    public Expression expression() {
         Expression expression = loader.next();
         if (Definition.isBinary(loader.get())) { //e.g. expression op ...
             return operator(expression, loader.get());

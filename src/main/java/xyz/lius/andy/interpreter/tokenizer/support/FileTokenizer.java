@@ -42,6 +42,17 @@ public class FileTokenizer implements Tokenizer<Token> {
         return delimiter.get(character);
     }
 
+    public FileTokenizer() {
+    }
+
+    public FileTokenizer(CharIterator iterator) {
+        setResource(iterator);
+    }
+
+    /**
+     * 设置数据源，可重用
+     * @param iterator
+     */
     @Override
     public void setResource(CharIterator iterator) {
         this.iterator = iterator;

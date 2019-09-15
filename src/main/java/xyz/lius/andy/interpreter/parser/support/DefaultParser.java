@@ -61,6 +61,22 @@ public class DefaultParser implements Parser<Expression> {
         return curlyBracketExpression;
     }
 
+    @Override
+    public boolean hasNext() {
+        return tokenizer.hasNext();
+    }
+
+    @Override
+    public Expression next() {
+        try {
+            return expression();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Definition.NIL;
+    }
+
     private Expression expression() throws Exception {
         Expression expression = combinator();
         if (Definition.isBinary(tokenizer.current())) { //e.g. expression op ...

@@ -35,6 +35,10 @@ public class FileCharIterator implements CharIterator {
         setFile(new File(fileName));
     }
 
+    public File getFile() {
+        return file;
+    }
+
     @Override
     public void refresh() {
         try {
