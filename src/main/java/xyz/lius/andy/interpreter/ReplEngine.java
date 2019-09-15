@@ -21,7 +21,30 @@ public class ReplEngine {
     }
 
     public Expression evalFile(String fileName) {
-        return this.eval(parser.parseFile(fileName), fileName);
+        ScriptSession session = new FileScriptSession();
+        session.setSource(fileName);
+        session.refresh();
+        Complex complex = null;
+        try {
+            complex = session.parse();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Expression rst = new StackFrame(complex).run();
+
+        System.out.println("RST: ");
+        if (TypeCheck.hasError(rst)) {
+            System.err.println(rst);
+        } else {
+            if (TypeCheck.isXml(rst)) { //format
+                System.out.println(ExpressionUtils.formatXml(TypeCheck.asXml(rst)));
+            } else {
+                System.out.println(rst);
+            }
+        }
+        return rst;
+
     }
 
     public Expression eval(Expression expression) {

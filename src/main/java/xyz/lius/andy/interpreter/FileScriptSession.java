@@ -24,16 +24,22 @@ public class FileScriptSession implements ScriptSession {
     public FileScriptSession() {
         this.iterator = new FileCharIterator();
         this.tokenizer = new FileTokenizer(iterator);
-        this.parser = new DefaultParser(tokenizer);
+        this.parser = new DefaultParser(iterator, tokenizer);
     }
 
-    // 设置文件源
-    public void setFile(String fileName) {
-        iterator.setFile(fileName);
+
+    @Override
+    public void setSource(Object source) {
+        if (source instanceof String) {
+            iterator.setFile((String) source);
+        } else if (source instanceof File) {
+            iterator.setFile((File) source);
+        }
     }
 
-    public void setFile(File file) {
-        iterator.setFile(file);
+    @Override
+    public void refresh() {
+        iterator.refresh();
     }
 
     @Override
@@ -48,7 +54,7 @@ public class FileScriptSession implements ScriptSession {
         }
 
         ExpressionContext context = new ExpressionContext();
-        context.add(Definition.FILE_DIRECTORY, ExpressionFactory.symbol(iterator.getFile().getCanonicalPath()));
+        context.add(Definition.FILE_DIRECTORY, ExpressionFactory.symbol(iterator.getFile().getParentFile().getCanonicalPath()));
         return curlyBracketExpression.eval(context);
     }
 }

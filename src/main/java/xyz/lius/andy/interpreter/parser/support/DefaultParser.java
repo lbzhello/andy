@@ -29,7 +29,8 @@ public class DefaultParser implements Parser<Expression> {
     private CharIterator iterator;
     private Tokenizer<Token> tokenizer;
 
-    public DefaultParser(Tokenizer<Token> tokenizer) {
+    public DefaultParser(CharIterator iterator, Tokenizer<Token> tokenizer) {
+        this.iterator = iterator;
         this.tokenizer = tokenizer;
     }
 
