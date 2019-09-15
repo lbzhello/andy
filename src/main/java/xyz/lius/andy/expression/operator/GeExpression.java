@@ -16,7 +16,7 @@ public class GeExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         Expression left = get(0).eval(context);
         Expression right = get(1).eval(context);
-        if (ExpressionUtils.isNumber(left) && ExpressionUtils.isNumber(right)) {
+        if (TypeCheck.isNumber(left) && TypeCheck.isNumber(right)) {
             if (((NumberExpression) left).doubleValue() >= ((NumberExpression) right).doubleValue()) {
                 return Definition.TRUE;
             } else {

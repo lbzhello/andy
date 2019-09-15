@@ -16,9 +16,9 @@ public class MinusExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         Expression leftExpression = get(0).eval(context);
         Expression rightExpression = get(1).eval(context);
-        if (!(ExpressionUtils.isNumber(leftExpression))) {
+        if (!(TypeCheck.isNumber(leftExpression))) {
             return new ErrorExpression(get(0), "Unsupport Operand Type!");
-        } else if (!(ExpressionUtils.isNumber(rightExpression))) {
+        } else if (!(TypeCheck.isNumber(rightExpression))) {
             return new ErrorExpression(get(1), "Unsupport Operand Type!");
         }
 

@@ -19,7 +19,7 @@ public class ColonExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         Expression key = get(0); //e.g. (f a b) || f
         Expression value = get(1); //e.g. "some text" || {...} || (...){...}
-        if (ExpressionUtils.isCurlyBracket(value) || ExpressionUtils.isLambda(value)) {
+        if (TypeCheck.isCurlyBracket(value) || TypeCheck.isLambda(value)) {
             Expression[] parameters = key instanceof BracketExpression ? ((BracketExpression) key).getParameters() : EMPTY_ELEMENT_DATA;
             ComplexExpression complexExpression = (ComplexExpression) value.eval(context);
             complexExpression.setParameters(parameters);

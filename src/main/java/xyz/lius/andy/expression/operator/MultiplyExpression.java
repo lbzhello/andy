@@ -17,7 +17,7 @@ public class MultiplyExpression extends AbstractContainer implements Operator {
         BigDecimal accu = BigDecimal.ONE;
         for (Expression expression : toArray()) {
             Expression factor = expression.eval(context);
-            if (!(ExpressionUtils.isNumber(factor))) {
+            if (!(TypeCheck.isNumber(factor))) {
                 return new ErrorExpression(expression, "Unsupport Operand Type!");
             }
             accu = accu.multiply(((BigDecimal) factor));

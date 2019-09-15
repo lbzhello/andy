@@ -31,16 +31,16 @@ public class JavaMethod extends AbstractContainer implements Operator {
         Object[] paramValues = new Object[size()];
         for (int i = 0; i < size(); i++) {
             Expression param = get(i);
-            if (ExpressionUtils.isString(param)) {
+            if (TypeCheck.isString(param)) {
                 paramTypes[i] = String.class;
-                paramValues[i] = ExpressionUtils.asString(param).getValue();
-            } else if (ExpressionUtils.isNumber(param)) {
+                paramValues[i] = TypeCheck.asString(param).getValue();
+            } else if (TypeCheck.isNumber(param)) {
                 //number as int
                 paramTypes[i] = int.class;
-                paramValues[i] = ExpressionUtils.asNumber(param).intValue();
-            } else if (ExpressionUtils.isJavaObject(param)) {
-                paramTypes[i] = ExpressionUtils.asJavaObject(param).getObject().getClass();
-                paramValues[i] = ExpressionUtils.asJavaObject(param).getObject();
+                paramValues[i] = TypeCheck.asNumber(param).intValue();
+            } else if (TypeCheck.isJavaObject(param)) {
+                paramTypes[i] = TypeCheck.asJavaObject(param).getObject().getClass();
+                paramValues[i] = TypeCheck.asJavaObject(param).getObject();
             } else {  //type Expression
 //                paramTypes[i] = param.getClass();
                 paramTypes[i] = Expression.class; //通用类型参数
@@ -52,8 +52,8 @@ public class JavaMethod extends AbstractContainer implements Operator {
             Method method = methodClass.getMethod(methodName, paramTypes);
             MethodHandle methodHandle = MethodHandles.lookup().unreflect(method).asSpreader(Object[].class, size()).bindTo(methodObject);
             Object rstObj = methodHandle.invoke(paramValues);
-            if (ExpressionUtils.isExpression(rstObj)) {
-                return ExpressionUtils.asExpression(rstObj);
+            if (TypeCheck.isExpression(rstObj)) {
+                return TypeCheck.asExpression(rstObj);
             } else {
                 return ExpressionFactory.javaObject(rstObj);
             }

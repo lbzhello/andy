@@ -18,7 +18,7 @@ public class IfExpression extends AbstractContainer implements Operator {
         } else {
             selectExpression = get(1) instanceof ElseExpression ? ((ElseExpression) get(1)).get(1) : Definition.NIL;
         }
-        if (ExpressionUtils.isCurlyBracket(selectExpression)) {
+        if (TypeCheck.isCurlyBracket(selectExpression)) {
             Complex complex = (Complex) selectExpression.eval(context);
             return new StackFrame(complex).run();
         } else {

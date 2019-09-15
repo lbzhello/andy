@@ -41,7 +41,7 @@ public class ReplEngine {
         }
 
         Expression rst;
-        if (ExpressionUtils.isCurlyBracket(expression)) {
+        if (TypeCheck.isCurlyBracket(expression)) {
             Complex complex = (Complex) expression.eval(context); //setParameters and generate a runtime expression
             rst = new StackFrame(complex).run();
         } else {
@@ -49,11 +49,11 @@ public class ReplEngine {
         }
 
         System.out.print("RST: ");
-        if (ExpressionUtils.hasError(rst)) {
+        if (TypeCheck.hasError(rst)) {
             System.err.println(rst);
         } else {
-            if (ExpressionUtils.isXml(rst)) { //format
-                System.out.println(ExpressionUtils.formatXml(ExpressionUtils.asXml(rst)));
+            if (TypeCheck.isXml(rst)) { //format
+                System.out.println(ExpressionUtils.formatXml(TypeCheck.asXml(rst)));
             } else {
                 System.out.println(rst);
             }

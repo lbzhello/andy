@@ -72,7 +72,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         SquareBracketExpression squareBracket = ExpressionFactory.squareBracket();
         StackFrame stackFrame = new StackFrame((Complex) func);
         for (Expression expression : toArray()) {
-            ArrayExpression array = ExpressionUtils.asArray(expression);
+            ArrayExpression array = TypeCheck.asArray(expression);
             stackFrame.add(ExpressionFactory.symbol("$0"), array.other());
             squareBracket.add(ExpressionFactory.squareBracket(array.first(), stackFrame.run()));
         }
@@ -98,14 +98,14 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
 
     @Override
     public Expression reduceByKey(Expression func) {
-        SquareBracketExpression squareBracket = ExpressionUtils.asSquareBracket(groupByKey());
+        SquareBracketExpression squareBracket = TypeCheck.asSquareBracket(groupByKey());
         SquareBracketExpression rst = ExpressionFactory.squareBracket();
         for (Expression expression : squareBracket.toArray()) { //e.g. [[...] [...] [...]]
-            ArrayExpression array = ExpressionUtils.asArray(expression);
+            ArrayExpression array = TypeCheck.asArray(expression);
             Expression first = array.first();
             Expression other = array.other();
-            if (ExpressionUtils.isArray(other)) {
-                other = ExpressionUtils.asArray(other).reduce(func);
+            if (TypeCheck.isArray(other)) {
+                other = TypeCheck.asArray(other).reduce(func);
             }
             rst.add(ExpressionFactory.squareBracket(first, other));
         }
@@ -138,7 +138,7 @@ public class SquareBracketExpression extends BracketExpression implements ArrayE
         SquareBracketExpression parent = ExpressionFactory.squareBracket(); //[[...] [...] [...]]
         Iterator<Expression> iterator = Arrays.stream(toArray()).iterator();
         while (iterator.hasNext()) {
-            ArrayExpression array = ExpressionUtils.asArray(iterator.next());
+            ArrayExpression array = TypeCheck.asArray(iterator.next());
             Expression key = array.first();
             Expression value = array.other();
             SquareBracketExpression child = keyMap.get(key); //[...]

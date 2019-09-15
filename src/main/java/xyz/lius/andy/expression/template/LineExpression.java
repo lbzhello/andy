@@ -24,10 +24,10 @@ public class LineExpression extends BracketExpression {
         StringBuffer sb = new StringBuffer();
         int charCount = 0, acc = 0;
         for (Expression expression : toArray()) {
-            if (ExpressionUtils.isRoundBracket(expression)) { //only eval (...)
+            if (TypeCheck.isRoundBracket(expression)) { //only eval (...)
                 Expression rst = expression.eval(context);
-                if (ExpressionUtils.isSquareBracket(rst)) { //if it's a setCodes
-                    BracketExpression lines = ExpressionUtils.asSquareBracket(rst);
+                if (TypeCheck.isSquareBracket(rst)) { //if it's a setCodes
+                    BracketExpression lines = TypeCheck.asSquareBracket(rst);
                     if (lines.size() > 1) { //add space to other lines except line 1
                         char[] spaces = new char[charCount];
                         Arrays.fill(spaces, ' ');

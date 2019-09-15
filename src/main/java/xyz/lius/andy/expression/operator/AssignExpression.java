@@ -1,12 +1,7 @@
 package xyz.lius.andy.expression.operator;
 
-import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.ast.CurlyBracketExpression;
-import xyz.lius.andy.expression.ast.RoundBracketExpression;
-import xyz.lius.andy.expression.context.ExpressionContext;
-import xyz.lius.andy.expression.strategy.LetUtils;
 import xyz.lius.andy.util.AbstractContainer;
 import xyz.lius.andy.util.Pair;
 
@@ -21,7 +16,7 @@ public class AssignExpression extends AbstractContainer implements Operator {
 
     @Override
     public Expression eval(Context<Name, Expression> context) {
-        return LetUtils.eval(context, new Pair<>(get(0), get(1)), false);
+        return ExpressionUtils.evalAssign(context, new Pair<>(get(0), get(1)), false);
     }
 
     @Override

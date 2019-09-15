@@ -6,7 +6,7 @@ import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
-import xyz.lius.andy.expression.ExpressionUtils;
+import xyz.lius.andy.expression.TypeCheck;
 import xyz.lius.andy.expression.Operator;
 import xyz.lius.andy.expression.ast.BracketExpression;
 import xyz.lius.andy.expression.ast.CurlyBracketExpression;
@@ -131,13 +131,13 @@ public class DefaultParser implements Parser<Expression> {
     private Expression combine0(Expression left) throws Exception {
         // 函数调用语法树
         // e.g.  f(...) || f{..} || f[...] || f(...)[...]{...}
-        if (ExpressionUtils.isConstant(left) || left instanceof PointExpression) { // f(x) || boo.say()
+        if (TypeCheck.isConstant(left) || left instanceof PointExpression) { // f(x) || boo.say()
             return doCombine(new BracketExpressionAdapter(ExpressionFactory.roundBracket(left)));
         } else {
             // lambda 语法树
             // e.g. (...){...} || [...]{...}
             LambdaExpression lambda = new LambdaExpression();
-            if (ExpressionUtils.isRoundBracket(left)) {
+            if (TypeCheck.isRoundBracket(left)) {
                 lambda.add(((RoundBracketExpression) left).toArray());
             } else {
                 lambda.add(left);
@@ -173,7 +173,7 @@ public class DefaultParser implements Parser<Expression> {
      * @return
      */
     private Expression combinator0() throws Exception {
-        if (ExpressionUtils.isSymbol(tokenizer.current())) { //e.g. name...
+        if (TypeCheck.isSymbol(tokenizer.current())) { //e.g. name...
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat "expression"
             //if it's unary operator
@@ -181,11 +181,11 @@ public class DefaultParser implements Parser<Expression> {
                 return unaryExpression(expression);
             }
             return expression;
-        } else if (ExpressionUtils.isString(tokenizer.current())) { //e.g. "name"...
+        } else if (TypeCheck.isString(tokenizer.current())) { //e.g. "name"...
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat
             return expression;
-        } else if (ExpressionUtils.isNumber(tokenizer.current())) { //e.g. 123...
+        } else if (TypeCheck.isNumber(tokenizer.current())) { //e.g. 123...
             Expression expression = tokenizer.current();
             tokenizer.next(); //eat
             return expression;

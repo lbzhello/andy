@@ -13,16 +13,16 @@ public class PlusExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         Expression first = get(0).eval(context);
         Expression second = get(1).eval(context);
-        if (ExpressionUtils.isSquareBracket(first) || ExpressionUtils.isSquareBracket(second)) { //e.g. [1 2 3] + 4
-            return ExpressionUtils.pair(first, second);
-        } else if (ExpressionUtils.isString(first) || ExpressionUtils.isString(second)) { //e.g. "abc" + "xyz"
+        if (TypeCheck.isSquareBracket(first) || TypeCheck.isSquareBracket(second)) { //e.g. [1 2 3] + 4
+            return ExpressionUtils.link(first, second);
+        } else if (TypeCheck.isString(first) || TypeCheck.isString(second)) { //e.g. "abc" + "xyz"
             return ExpressionFactory.string(first.toString() + second.toString());
-        } else if (ExpressionUtils.isNumber(first) && ExpressionUtils.isNumber(second)){ //e.g. 3 + 2
-            Double value = ExpressionUtils.asNumber(first).add(ExpressionUtils.asNumber(second)).doubleValue();
+        } else if (TypeCheck.isNumber(first) && TypeCheck.isNumber(second)){ //e.g. 3 + 2
+            Double value = TypeCheck.asNumber(first).add(TypeCheck.asNumber(second)).doubleValue();
             return ExpressionFactory.number(value);
         } else {
             Expression error;
-            if (!ExpressionUtils.isNumber(first)) {
+            if (!TypeCheck.isNumber(first)) {
                 error = get(0);
             } else {
                 error = get(1);

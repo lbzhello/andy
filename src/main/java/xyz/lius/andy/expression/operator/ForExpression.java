@@ -18,7 +18,7 @@ public class ForExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         BracketExpression squareBracketExpression = ExpressionFactory.squareBracket();
         while (get(0).eval(context) == Definition.TRUE) {
-            squareBracketExpression.add(ExpressionUtils.isCurlyBracket(get(1))
+            squareBracketExpression.add(TypeCheck.isCurlyBracket(get(1))
                     ? new StackFrame((Complex) get(1).eval(context)).run()
                     : get(1).eval(context));
         }

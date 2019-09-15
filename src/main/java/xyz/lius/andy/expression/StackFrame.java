@@ -38,10 +38,10 @@ public class StackFrame extends AbstractContext<Name, Expression> {
         Expression rstValue = Definition.NIL;
         for (Expression expression : this.codes) {
             rstValue = expression.eval(this);
-            if (ExpressionUtils.isReturn(rstValue)) {
-                return ExpressionUtils.asReturn(rstValue).getValue();
+            if (TypeCheck.isReturn(rstValue)) {
+                return TypeCheck.asReturn(rstValue).getValue();
             }
-            if (ExpressionUtils.hasError(rstValue)) {
+            if (TypeCheck.hasError(rstValue)) {
                 return rstValue.eval(this);
             }
         }

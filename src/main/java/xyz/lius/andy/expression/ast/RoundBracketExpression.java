@@ -50,12 +50,12 @@ public class RoundBracketExpression extends BracketExpression {
             return first.eval(context);
         }
 
-        if (ExpressionUtils.isComplex(first)) { //e.g. name = {...}; (name x y)
+        if (TypeCheck.isComplex(first)) { //e.g. name = {...}; (name x y)
             return new StackFrame((Complex) first, context, getParameters()).run();
-        } else if (ExpressionUtils.isSquareBracket(first) && size() > 1) { //e.g. name = [...]; name(1)
+        } else if (TypeCheck.isSquareBracket(first) && size() > 1) { //e.g. name = [...]; name(1)
             Expression index = get(1).eval(context);
-            if (!ExpressionUtils.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
-            return ExpressionUtils.asSquareBracket(first).get(ExpressionUtils.asNumber(index).intValue());
+            if (!TypeCheck.isNumber(index)) return ExpressionFactory.error(index, "Array index should be number.");
+            return TypeCheck.asSquareBracket(first).get(TypeCheck.asNumber(index).intValue());
         } else if (size() == 1) { //e.g. (name)
             return first;
         } else {

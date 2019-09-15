@@ -58,7 +58,7 @@ public class TemplateExpression extends AbstractContainer implements Expression 
     private Expression moveLine(Expression expression, int offset) {
         if (expression instanceof LineExpression && offset > 0) {
             Expression[] array = ((LineExpression) expression).toArray();
-            if (array.length > 0 && ExpressionUtils.isString(array[0])) {
+            if (array.length > 0 && TypeCheck.isString(array[0])) {
                 String str = array[0].toString();
                 array[0] = ExpressionFactory.string(str.substring(offset, str.length()));
             }

@@ -19,9 +19,9 @@ public class ArrowExpression extends AbstractContainer implements Operator {
     public Expression eval(Context<Name, Expression> context) {
         BracketExpression left;
         CurlyBracketExpression right;
-        if (ExpressionUtils.isSquareBracket(get(0)) || ExpressionUtils.isComma(get(0))) { //e.g. (x, y, z) -> right
+        if (TypeCheck.isSquareBracket(get(0)) || TypeCheck.isComma(get(0))) { //e.g. (x, y, z) -> right
             left = (BracketExpression)get(0);
-        } else if (ExpressionUtils.isRoundBracket(get(0))) {
+        } else if (TypeCheck.isRoundBracket(get(0))) {
             BracketExpression roundBracket = (RoundBracketExpression) get(0);
             if (roundBracket.size() == 1) { //e.g. (x) -> right
                 left = ExpressionFactory.squareBracket(roundBracket.get(0));
@@ -32,7 +32,7 @@ public class ArrowExpression extends AbstractContainer implements Operator {
             left = ExpressionFactory.squareBracket(get(0));
         }
 
-        if (ExpressionUtils.isCurlyBracket(get(1))) { //e.g. left -> {...}
+        if (TypeCheck.isCurlyBracket(get(1))) { //e.g. left -> {...}
             right = (CurlyBracketExpression) get(1);
         } else { //e.g. left -> x + 1
             right = ExpressionFactory.curlyBracket();
