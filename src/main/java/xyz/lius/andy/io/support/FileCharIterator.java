@@ -10,17 +10,35 @@ import java.util.Arrays;
  * @see StringCharacterIterator
  */
 public class FileCharIterator implements CharIterator {
+    private File file;
     private StringCharacterIterator iterator;
     private BufferedReader reader;
     private char[] buf = new char[1024]; //缓冲
+
+    public FileCharIterator() {
+    }
 
     /**
      * generate iter from reader
      * @param fileName
      */
     public FileCharIterator(String fileName) {
+        setFile(fileName);
+        refresh();
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public void setFile(String fileName) {
+        setFile(new File(fileName));
+    }
+
+    @Override
+    public void refresh() {
         try {
-            this.reader = new BufferedReader(new FileReader(fileName));
+            this.reader = new BufferedReader(new FileReader(file));
             int capacity = this.reader.read(buf);
             this.iterator = new StringCharacterIterator(String.valueOf(Arrays.copyOf(buf, capacity)));
         } catch (FileNotFoundException e) {

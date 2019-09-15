@@ -1,6 +1,6 @@
 package xyz.lius.andy.core;
 
-import xyz.lius.andy.compiler.tokenizer.Token;
+import xyz.lius.andy.interpreter.tokenizer.Token;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.Name;

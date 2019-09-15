@@ -1,5 +1,7 @@
 package xyz.lius.andy.core;
 
+import xyz.lius.andy.interpreter.ReplEngine;
+
 /**
  * 应用程序启动类
  */

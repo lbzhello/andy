@@ -8,6 +8,8 @@ import java.text.CharacterIterator;
 public interface CharIterator {
     char DONE = '\uFFFF';
 
+    void refresh();
+
     boolean hasNext();
 
     char current();

@@ -1,6 +1,6 @@
 package xyz.lius.andy.expression.ast;
 
-import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
+import xyz.lius.andy.interpreter.tokenizer.LineNumberToken;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.Context;
 import xyz.lius.andy.expression.Expression;

@@ -1,20 +1,7 @@
 package xyz.lius.andy;
 
-import xyz.lius.andy.core.ReplEngine;
-import xyz.lius.andy.expression.*;
-import xyz.lius.andy.expression.ast.*;
+import xyz.lius.andy.interpreter.ReplEngine;
 import org.junit.Test;
-
-import java.io.*;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.*;
-import java.util.function.Supplier;
 
 public class MainTest {
     public static void main(String[] args) {

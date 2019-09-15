@@ -1,8 +1,8 @@
-package xyz.lius.andy.compiler.parser.support;
+package xyz.lius.andy.interpreter.parser.support;
 
-import xyz.lius.andy.compiler.parser.Parser;
-import xyz.lius.andy.compiler.tokenizer.LineNumberToken;
-import xyz.lius.andy.compiler.tokenizer.Token;
+import xyz.lius.andy.interpreter.parser.Parser;
+import xyz.lius.andy.interpreter.tokenizer.LineNumberToken;
+import xyz.lius.andy.interpreter.tokenizer.Token;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.Expression;
 import xyz.lius.andy.expression.ExpressionFactory;

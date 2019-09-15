@@ -1,24 +1,25 @@
-package xyz.lius.andy.compiler.tokenizer.support;
+package xyz.lius.andy.interpreter.tokenizer.support;
 
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ExpressionFactory;
 import xyz.lius.andy.expression.ast.StringExpression;
-import xyz.lius.andy.compiler.tokenizer.Token;
-import xyz.lius.andy.compiler.tokenizer.Tokenizer;
 import xyz.lius.andy.io.CharIterator;
+import xyz.lius.andy.interpreter.tokenizer.Token;
+import xyz.lius.andy.interpreter.tokenizer.Tokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class StringTokenizer implements Tokenizer<Token> {
+public class TemplateTokenizer implements Tokenizer<Token> {
     private CharIterator iterator;
     private Token currentToken = Definition.HOF;
 
     private static final Set<Character> delimiter = new HashSet<>();
     static {
-        delimiter.add('"');
+        delimiter.add('`');
         delimiter.add('(');
         delimiter.add(')');
+        delimiter.add('\n');
     }
 
     @Override
@@ -41,7 +42,7 @@ public class StringTokenizer implements Tokenizer<Token> {
         if (this.isDelimiter(iterator.current())) {
             char delimiter = iterator.current();
             iterator.next(); //eat
-            currentToken = ExpressionFactory.symbol(String.valueOf(delimiter), getLineNumber());
+            currentToken = ExpressionFactory.string(String.valueOf(delimiter), getLineNumber());
             return currentToken;
         } else {
             currentToken = nextFragment();

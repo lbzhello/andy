@@ -1,16 +1,12 @@
 package xyz.lius.andy.expression;
 
-import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.expression.ast.*;
-import xyz.lius.andy.expression.context.ExpressionContext;
 import xyz.lius.andy.expression.operator.CommaExpression;
 import xyz.lius.andy.expression.operator.JavaObject;
 import xyz.lius.andy.expression.operator.LambdaExpression;
-import xyz.lius.andy.expression.operator.PointExpression;
 import xyz.lius.andy.expression.template.XmlExpression;
-import xyz.lius.andy.util.Pair;
 
-public class TypeCheck {
+public abstract class TypeCheck {
     public static boolean isReturn(Expression expression) {
         return expression instanceof ReturnValue;
     }
