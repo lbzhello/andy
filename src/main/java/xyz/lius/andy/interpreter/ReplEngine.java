@@ -34,15 +34,7 @@ public class ReplEngine {
         Expression rst = new StackFrame(complex).run();
 
         System.out.println("RST: ");
-        if (TypeCheck.hasError(rst)) {
-            System.err.println(rst);
-        } else {
-            if (TypeCheck.isXml(rst)) { //format
-                System.out.println(ExpressionUtils.formatXml(TypeCheck.asXml(rst)));
-            } else {
-                System.out.println(rst);
-            }
-        }
+        ExpressionUtils.print(rst);
         return rst;
 
     }
@@ -73,15 +65,7 @@ public class ReplEngine {
         }
 
         System.out.print("RST: ");
-        if (TypeCheck.hasError(rst)) {
-            System.err.println(rst);
-        } else {
-            if (TypeCheck.isXml(rst)) { //format
-                System.out.println(ExpressionUtils.formatXml(TypeCheck.asXml(rst)));
-            } else {
-                System.out.println(rst);
-            }
-        }
+        ExpressionUtils.print(rst);
         return rst;
     }
 }

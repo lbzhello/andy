@@ -29,6 +29,22 @@ public class ExpressionUtils {
     }
 
     /**
+     * 打印表达式
+     * @param expression
+     */
+    public static void print(Expression expression) {
+        if (TypeCheck.hasError(expression)) {
+            System.err.println(expression);
+        } else {
+            if (TypeCheck.isXml(expression)) { //format
+                System.out.println(ExpressionUtils.formatXml(TypeCheck.asXml(expression)));
+            } else {
+                System.out.println(expression);
+            }
+        }
+    }
+
+    /**
      * 格式化 xml, 4 空格缩进
      * @param xmlExpression
      * @return
