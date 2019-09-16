@@ -3,12 +3,11 @@ package xyz.lius.andy.expression.operator;
 import xyz.lius.andy.core.Definition;
 import xyz.lius.andy.core.OperatorSingleton;
 import xyz.lius.andy.expression.*;
-import xyz.lius.andy.interpreter.Interpreter;
-import xyz.lius.andy.interpreter.parser.Parser;
+import xyz.lius.andy.interpreter.FileScriptLoader;
+import xyz.lius.andy.interpreter.ScriptLoader;
 import xyz.lius.andy.util.AbstractContainer;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -29,18 +28,17 @@ public class ImportExpression extends AbstractContainer implements Operator {
             for (File file : new File(fileParent).listFiles()) {
                 if (Objects.equals(fileName, file.getCanonicalPath())) {
                     //从当前目录找到文件，导入到命名空间
-                    Parser<Expression> parser = Interpreter.getDefaultParser();
-                    Expression expression = parser.parseFile(file.getCanonicalPath());
                     String importFileName = file.getName();
                     if (file.getName().contains(".")) { //e.g. remove file suffix
                         importFileName = importFileName.split("[.]")[0];
                     }
-                    Expression value = expression.eval(context);
-                    context.add(ExpressionFactory.symbol(importFileName), value);
-                    return value;
+                    ScriptLoader scriptLoader = new FileScriptLoader();
+                    Complex complex = scriptLoader.loadScript(fileName);
+                    context.add(ExpressionFactory.symbol(importFileName), complex);
+                    return complex;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
