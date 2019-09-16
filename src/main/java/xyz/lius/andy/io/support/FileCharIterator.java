@@ -23,16 +23,17 @@ public class FileCharIterator implements CharIterator {
      * @param fileName
      */
     public FileCharIterator(String fileName) {
-        setFile(fileName);
+        setSource(fileName);
         refresh();
+    }
+
+    @Override
+    public void setSource(String path) {
+        setFile(new File(path));
     }
 
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public void setFile(String fileName) {
-        setFile(new File(fileName));
     }
 
     public File getFile() {

@@ -8,7 +8,18 @@ import java.text.CharacterIterator;
 public interface CharIterator {
     char DONE = '\uFFFF';
 
-    void refresh();
+    /**
+     * 设置源文件来源
+     * @param path
+     */
+    default void setSource(String path) {
+
+    }
+
+    // template method
+    default void refresh() {
+
+    }
 
     boolean hasNext();
 

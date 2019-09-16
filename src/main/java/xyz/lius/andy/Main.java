@@ -7,7 +7,7 @@ import xyz.lius.andy.core.Application;
  *
  */
 public class Main {
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws Exception {
         System.out.println("*********************************");
         System.out.println("* *  Application starting...  * *");
         System.out.println("*********************************");

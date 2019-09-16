@@ -15,8 +15,7 @@ public class Interpreter {
     
     public static Parser getDefaultParser(){
         FileCharIterator iterator = new FileCharIterator();
-        Tokenizer<Token> tokenizer = new FileTokenizer();
-        Parser<Expression> parser = new DefaultParser(iterator, tokenizer);
+        Parser<Expression> parser = new DefaultParser(iterator);
         return parser;
     }
 

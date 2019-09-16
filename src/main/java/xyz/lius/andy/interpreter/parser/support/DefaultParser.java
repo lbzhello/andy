@@ -21,6 +21,7 @@ import xyz.lius.andy.expression.template.XmlTagExpression;
 import xyz.lius.andy.interpreter.parser.Parser;
 import xyz.lius.andy.interpreter.tokenizer.Token;
 import xyz.lius.andy.interpreter.tokenizer.Tokenizer;
+import xyz.lius.andy.interpreter.tokenizer.support.FileTokenizer;
 import xyz.lius.andy.io.CharIterator;
 import xyz.lius.andy.io.support.FileCharIterator;
 import xyz.lius.andy.io.support.StringCharIterator;
@@ -29,9 +30,9 @@ public class DefaultParser implements Parser<Expression> {
     private CharIterator iterator;
     private Tokenizer<Token> tokenizer;
 
-    public DefaultParser(CharIterator iterator, Tokenizer<Token> tokenizer) {
+    public DefaultParser(CharIterator iterator) {
         this.iterator = iterator;
-        this.tokenizer = tokenizer;
+        this.tokenizer = new FileTokenizer(iterator);
     }
 
     @Override

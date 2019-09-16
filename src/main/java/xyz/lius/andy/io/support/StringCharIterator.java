@@ -12,11 +12,6 @@ public class StringCharIterator implements CharIterator {
     }
 
     @Override
-    public void refresh() {
-
-    }
-
-    @Override
     public boolean hasNext() {
         return current() == DONE;
     }

@@ -8,42 +8,23 @@ import xyz.lius.andy.expression.ast.CurlyBracketExpression;
 import xyz.lius.andy.expression.context.ExpressionContext;
 import xyz.lius.andy.interpreter.parser.Parser;
 import xyz.lius.andy.interpreter.parser.support.DefaultParser;
-import xyz.lius.andy.interpreter.tokenizer.Token;
-import xyz.lius.andy.interpreter.tokenizer.Tokenizer;
-import xyz.lius.andy.interpreter.tokenizer.support.FileTokenizer;
 import xyz.lius.andy.io.support.FileCharIterator;
 
-import java.io.File;
 import java.io.IOException;
 
-public class FileScriptSession implements ScriptSession {
+public class FileScriptLoader implements ScriptLoader {
     private FileCharIterator iterator;
-    private Tokenizer<Token> tokenizer;
     private Parser<Expression> parser;
 
-    public FileScriptSession() {
+    public FileScriptLoader() {
         this.iterator = new FileCharIterator();
-        this.tokenizer = new FileTokenizer(iterator);
-        this.parser = new DefaultParser(iterator, tokenizer);
-    }
-
-
-    @Override
-    public void setSource(Object source) {
-        if (source instanceof String) {
-            iterator.setFile((String) source);
-        } else if (source instanceof File) {
-            iterator.setFile((File) source);
-        }
+        this.parser = new DefaultParser(iterator);
     }
 
     @Override
-    public void refresh() {
+    public Complex loadScript(String path) throws IOException {
+        iterator.setSource(path);
         iterator.refresh();
-    }
-
-    @Override
-    public Complex parse() throws IOException {
         CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
         try {
             while (parser.hasNext()) {
