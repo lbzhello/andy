@@ -22,11 +22,6 @@ public class StringTokenizer implements Tokenizer<Token> {
     }
 
     @Override
-    public void setResource(CharIterator iterator) {
-        this.iterator = iterator;
-    }
-
-    @Override
     public Token current() {
         return currentToken;
     }

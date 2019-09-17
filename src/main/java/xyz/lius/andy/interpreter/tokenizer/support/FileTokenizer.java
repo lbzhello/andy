@@ -46,15 +46,6 @@ public class FileTokenizer implements Tokenizer<Token> {
     }
 
     public FileTokenizer(CharIterator iterator) {
-        setResource(iterator);
-    }
-
-    /**
-     * 设置数据源，可重用
-     * @param iterator
-     */
-    @Override
-    public void setResource(CharIterator iterator) {
         this.iterator = iterator;
         lineNumber = 1;
         currentToken = Definition.HOF;

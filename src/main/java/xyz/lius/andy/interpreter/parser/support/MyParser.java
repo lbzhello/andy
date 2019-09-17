@@ -48,34 +48,6 @@ public class MyParser implements Parser<Expression> {
         }
     }
 
-    @Override
-    public Expression parseString(String expression) {
-        iterator = new StringCharIterator(expression);
-        try {
-            return expression();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Definition.NIL;
-        }
-    }
-
-    @Override
-    public Expression parseFile(String fileName) {
-        CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        try {
-            iterator = new FileCharIterator(fileName);
-            if (iterator.hasNext()) {
-                loader = new Loader(combine(combinator()));
-                while (loader.hasNext()) {
-                    curlyBracketExpression.add(expression());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return curlyBracketExpression;
-    }
 
     @Override
     public boolean hasNext() {

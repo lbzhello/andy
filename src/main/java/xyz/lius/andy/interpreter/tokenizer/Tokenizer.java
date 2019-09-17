@@ -1,10 +1,6 @@
 package xyz.lius.andy.interpreter.tokenizer;
 
-import xyz.lius.andy.io.CharIterator;
-
 public interface Tokenizer<T> {
-
-    void setResource(CharIterator iterator);
 
     T current();
 

@@ -23,8 +23,6 @@ import xyz.lius.andy.interpreter.tokenizer.Token;
 import xyz.lius.andy.interpreter.tokenizer.Tokenizer;
 import xyz.lius.andy.interpreter.tokenizer.support.FileTokenizer;
 import xyz.lius.andy.io.CharIterator;
-import xyz.lius.andy.io.support.FileCharIterator;
-import xyz.lius.andy.io.support.StringCharIterator;
 
 public class DefaultParser implements Parser<Expression> {
     private CharIterator iterator;
@@ -33,34 +31,6 @@ public class DefaultParser implements Parser<Expression> {
     public DefaultParser(CharIterator iterator) {
         this.iterator = iterator;
         this.tokenizer = new FileTokenizer(iterator);
-    }
-
-    @Override
-    public Expression parseString(String expression) {
-        iterator = new StringCharIterator(expression);
-        tokenizer.setResource(iterator);
-        try {
-            return expression();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Definition.NIL;
-        }
-    }
-
-    @Override
-    public Expression parseFile(String fileName){
-        CurlyBracketExpression curlyBracketExpression = ExpressionFactory.curlyBracket();
-        try {
-            iterator = new FileCharIterator(fileName);
-            tokenizer.setResource(iterator);
-            while (tokenizer.hasNext()) {
-                curlyBracketExpression.add(expression());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return curlyBracketExpression;
     }
 
     @Override
