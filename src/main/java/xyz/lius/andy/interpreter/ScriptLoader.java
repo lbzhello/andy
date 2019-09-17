@@ -3,7 +3,7 @@ package xyz.lius.andy.interpreter;
 import xyz.lius.andy.expression.Complex;
 
 /**
- * 解释器 Session 对象，可重用
+ * 脚本加载器
  */
 public interface ScriptLoader {
 
