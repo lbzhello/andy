@@ -20,23 +20,23 @@ git clone https://github.com/lbzhello/andy.git
 **let** 声明一个变量
 
 ```js
-    // Number
-    let a = 2
-    let b = 3
-    print(a + b) // 5
+// Number
+let a = 2
+let b = 3
+print(a + b) // 5
 
-    // ` 或 " 表示字符串
-    let str1 = "this is a string"
-    let str2 = `this is another string`
+// ` 或 " 表示字符串
+let str1 = "this is a string"
+let str2 = `this is another string`
 
-    // () 可以用于字符串插值
-    let msg = "word"
-    let str3 = `hello (msg)!` // hello world
+// () 可以用于字符串插值
+let msg = "word"
+let str3 = `hello (msg)!` // hello world
 
-    // true 表示肯定， false 表示否定, nil 表示零值
-    let t = true
-    let f = false
-    let n = nil
+// true 表示肯定， false 表示否定, nil 表示零值
+let t = true
+let f = false
+let n = nil
 ```
 
 ### Function
