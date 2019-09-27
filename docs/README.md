@@ -1,388 +1,329 @@
 # [**Andy**](http://lius.xyz/andy)
 
-## Build
+## 运行
 
-#### Environment
- 
-Maven 3.5.3+  
-Java 11+
+1. Git 下载版本库
+```sh
+git clone https://github.com/lbzhello/andy.git
+```
 
-#### Step
+2. Idea 或 Eclipse 导入 Maven 项目（打开 andy/pom.xml 文件）
 
-    //clone from git
-    $ git clone https://github.com/lbzhello/andy.git
-    
-    //cd the root directory
-    $ cd andy
-    
-    //run maven
-    $ mvn assembly:assembly
-    
-    //cd output directory
-    $ cd target
-    
-    //run
-    $ java -jar andy-1.0-SNAPSHOT-jar-with-dependencies.jar ../docs/examples/andy.test
+3. 运行 main 下面的 xyz.lius.andy.Main.java 或者 test 下面的 xyz.lius.andy.MainTest.java 
 
+## 语法
 
-## Delimiter, Number, Symbol, String  
+语法类似于 js, python, lisp
 
-#### Delimiter  
+### Variable
 
-There are only the following symbols can be used as delimiter  
+**let** 声明一个变量
 
-    , ; . : ( ) { } [ ] " '
-  
-#### Number  
- 
-    123, -12, +12, 3.14
+```js
+    // Number
+    let a = 2
+    let b = 3
+    print(a + b) // 5
 
-#### Symbol  
+    // ` 或 " 表示字符串
+    let str1 = "this is a string"
+    let str2 = `this is another string`
 
-All characters except delimiter can be used as symbol  
+    // () 可以用于字符串插值
+    let msg = "word"
+    let str3 = `hello (msg)!` // hello world
 
-    var, num, str+, a-b ...
+    // true 表示肯定， false 表示否定, nil 表示零值
+    let t = true
+    let f = false
+    let n = nil
+```
 
-#### String  
+### Function
 
-Quote by '"' or '`'
+**def** 定义一个函数
 
-    str1 = "this is a string"
-    str2 = `this is another string`
-    
-#### Explanatory
+```js
+// 定义
+def sum(x, y) {
+    // return 可以省略
+    return x + y
+}
 
-Using "//"
+// 单行函数可以省略 {}
+def sum(x, y) x + y
 
-    a = 3  //assign 3 to a
+// 无参函数可以省略 ()
+def foo print("hello world")
 
-## Expression  
+// 函数作为值，调用时需要加括号，如 sum(2, 3)
+let foo = sum
+foo(2, 3) // 5
 
-Everything is an expression and will returns a value  
+// 函数字面量，直接作为函数变量
+let sum = (x, y){
+    x + y
+}
 
-#### Round bracket expression  
+// 参数前置
+let sum(x, y) = {
+    x + y
+}
 
-    (f a b)
-    
-> *f* is name of the expression, other is parameters, like lisp  
+// 同样可以省略括号
+let sum(x, y) = x + y
 
-#### Square bracket expression
+// lambda
+let sum = (x, y) -> x + y
 
-    [1 2 3]
+// 函数调用
+sum(2, 3) // 5
 
-> also called array
+// lisp 风格
+(sum 2 3) // 5
 
-#### Curly bracket expression
+// 函数可以拥有属性和方法（也是函数）
+def foo(x, y) {
+    name: "foo"
+    age: 0
 
-    {expr1 expr2 expr3}
+    age = x + y
 
-> curly bracket expression will return the value of the last expression
-
-
-different of bracket expression  
-
-* round: (expr1 expr2 expr3 ...) => expr1(expr2, expr3 ...)  
-圆括号表达式是一个算子，计算单元，如果用逗号隔开会计算每个表达式的值然后返回一个array，例：  
-(expr1, expr2, expr3, ...) => \[(expr1) (expr2) (expr3)]
-
-* square: \[expr1 expr2 expr3] => \[expr1 expr2 expr3]  
-方括号不会计算表达式的值，直接当作字面量返回  
-
-* curly: {expr1 expr2 expr3} => (expr3)  
-花括号**求值时**会计算每个表达式的值，然后将最后一个表达式的值作为结果返回  
-  
-例如：  
-
-    a = 1 b = 2
-    rst1 = (1, 2, a + b)  //rst1 = [1 2 3]
-    rst2 = [1 2 a + b]    //rst2 = [1 2 a + b]
-    f = {1 2 a + b}       //f = (){1 2 (+ a b)}
-    rst3 = f()  ////rst3 = 3
-
-
-## Operator
-
-operator is a kind of round bracket expression  
-
-#### Binary  
-
-Binary is a kind of round bracket expression that can omit '(' and ')'
-
-*expr1 op expr2* => *(op expr1 expr2)*  
-
-> e.g.  *=  +  -  *  /  >  <  >=  <=  !=  &&  || -> ...*  
-
-belows are equals   
-
-    a = 8 => (= a 8)
-    3 + 2 => (+ 3 2)  
-    3 + 2 * 5  => (+ 3 (* 2 5))  
-    rst = a || "it is nil"  => (= rst (|| a "it is nil"))
-    
-    
-**Attention!**
-
-if operator isn't a delimiter it will be parsed as:
-
-    3 + 2 =>  3 ; + ; 2  //3 expressions
-    3+ 2  =>  3+ ; 2     //2 expressions
-    3 +2  =>  3 ; +2     //2 expressions
-    3+2   =>  3+2        //1 expressions
-    
-else if the operator is a delimiter
-
-    book.name == book .name == book. name == book . name =>  (. book name)
-    name: "xyz" == name:"xyz" == name :"xyz" == name : "xyz" => (: name "xyz")
-    
-#### Unary  
-
-Unary is a kind of round bracket expression that can omit '(' and ')'
-
-*op expr1 expr2 ...* => *(op expr1 expr2 ...)*  
-
-> e.g.  *true  false  nil  if  for  return ...*  
-   
-*if* is unary and accepts 2 args  
-
-    if (3 > 2) "it's true" => (if (> 3 2) "it's true") 
-    
-*else* is binary  
-
-    if 3 > 2 "it's true" else "it's false" => (if (> 3 2) (else "it's true" "it's false")   
-    
-*for* is unary and accepts 2 args, it returns an array
-
-    int i = 0
-    for (i < 5) {i = i + 1 i} => (for (i < t) {(= i (+ i 1) i})  //[1 2 3 4]    
-
-*return* is unary and accepts 1 args   
-
-    return 2 => (return 2)
-    
-*new* create an object from class
-
-    str = new java.lang.StringBuffer
-    str.append("hello")
-    str.append(" ")
-    str.append("world")
-    (print str)  //"hello world"
-    
-*true*, *false*, *nil* are unary and accept 0 args
-
-    true => (true)
-    false =>  (false)
-    nil => (nil)
-  
-if the operator isn't a delimiter, and you write it like  
-
-    a=3  
-
-it will be parsed as a symbol like "a=3", so you should write like  
-
-    a = 3
-
-## Function  
-
-Function is a kind of round bracket expression
-
-#### Define  
-
-    f1(x, y){
-      x + y
+    // 方法
+    def getAge() {
+        return age
     }
-  
-    //lambda
-    f2(x, y) = {
-      x + y
+
+    return `i am (name)`
+}
+
+let rst = foo(2, 3) // rst = i am foo
+print(foo.getAge()) // 5
+
+// 函数的名字可以是字符串, 即 json 格式 
+def book(x, y) {
+    "name": "Understanding Mysql"
+    "price": 99
+    "date": "2019-09-27"
+    "author": {
+        "name": "Bspzvt"
+        "from": "American"
     }
-  
-    //lambda
-    f3 = (x, y){
-      x + y
-    }
-  
-    //single function can simplely write like this
-    f4(x, y) = x + y
-  
-    //arrow function
-    f5 = (x, y) -> x + y
-  
-    //use $n as parameters
-    f6 = {
-      $0 + $1
-    }
-  
-    //function call
-    f1(1, 2)
-    
-**Attention!**
+}
 
-    f(x,y) => (f x y)       //1 expression
-    f (x, y) => f ; (x, y)  //2 expressions
-    f(x, y){c = 1 x + y} =>  f(x, y){c = 1 x + y}          //1 expression
-    f(x, y) {c = 1 x + y} => (f x y) ; {c = 1 x + y}       //2 expression
-    f (x, y){c = 1 x + y} => f ; (x, y){c = 1 x + y}       //2 expression
-    f (x, y) {c = 1 x + y} => f ; (x, y) ; {c = 1 x + y}   //3 expression
+print(book."name") // Understanding Mysql
+```
 
-you can also define a function like:  
+**系统提供了一些常用函数**
 
-    (f x y) = x + y  
+```js
+// print 打印字符
+print("hello world")
 
-in lisp style:  
+// import 导入脚本文件
+// 定义一个脚本文件 foo.andy, 其内容如下
+def bar {
+    print("hello world")
+}
 
-    (= (f x y) (+ x y))  
-  
-#### Function call
+// 在同一个文件夹的另一个文件中
+// 暂不支持 path
+let foo = imoprt foo
+foo.bar()
 
-    f(1, 2)
-    //or in lisp style
-    (f 1 2)
- 
-#### Function with properties
-
-    f(x, y) = {
-      name: "abc"
-      x + y
-    }
-  
-    a = f(1, 2)  //a = 3
-    b = f.name  //b = "abc"
-    f.name = "xyz"
-    b = f.name //b = "xyz"
-
-above will be parsed as  
-
-    (= (f x y) {(: name "abc") (+ x y)})
-
-
-#### Function provide by system
-
-*print(expr)* => *(print expr)*
-
-    greeting = "hello world"
-    print(greeting)  //"hello world" 
-
-#### Compare between operator/function
-
-* they both are round bracket expression
-* operator can omit '(' and ')'  
+// new 创建一个 java 对象
+str = new java.lang.StringBuffer
+str.append("hello")
+str.append(" ")
+str.append("world")
+(print str)  //"hello world"
+```
 
 ## Array  
 
-#### Introduce  
+```js  
+let arr1 = [1 2 3 4 5]
+let arr2 = ["hello" "world" 1 2 3]
+```
 
-    arr1 = [1 2 3 4 5]
-    arr2 = ["hello" "world" 1 2 3]
+#### 数组方法
 
+```js
+let arr = [1 2 3 4 5]  
+```
 
-#### Method on array  
+* first() other() count() reverse()
 
-> arr = [1 2 3 4 5]  
+```js
+arr.first()   //1
+arr.other()   //[2 3 4 5]
+arr.count()   //5
+arr.reverse() //[5 4 3 2 1]
+```
 
-*    first() other() count() reverse()
+* map(expr)  
 
-    arr.first()   //1
-    arr.other()   //[2 3 4 5]
-    arr.count()   //5
-    arr.reverse() //[5 4 3 2 1]
+```js
+arr.map(x -> x + 1)  //[2 3 4 5 6]
+```
+
+* filter(expr)  
+
+```js
+arr.filter(x -> x > 2)  //[3 4 5]
+```
+
+* each(expr)  
+
+```js
+arr.each(print x)  //nil  console: 1 2 3 4 5
+```
+
+* reduce(expr)  
+
+```js
+arr.reduce((x, y) -> x + y)  //15
+```
+
+* mapValues(expr)  
+
+```js
+arr2 = arr.map(x -> (x, 1))  //arr2 = [[1 1] [2 1] [3 1] [4 1] [5 1]]
+arr.mapValues(x -> x + 1)    //arr2 = [[1 2] [2 2] [3 2] [4 2] [5 2]]
+```
+
+* reduceByKey(expr)  
+
+```js
+arr3 = [12 12 14 15 15]
+arr4 = arr3.map(x -> (x, 1)) //arr4 = [[12 1] [12 1] [14 1] [15 1] [15 1]]
+arr5 = arr4.reduceByKey((x, y) -> x + y) //arr5 = [[12 2] [14 1] [15 2]]
+```
+
+* groupBy(expr)
+
+```js
+arr.groupBy(x -> if x > 2 "bigger" else "smaller") //[["smaller" 1 2] ["bigger" 3 4 5]]
+```
+
+* groupByKey()  
+
+```js
+arr4.groupByKey()  //[12 1 1] [14 1] [15 1 1]]
+```
+
+* word count  
+
+```js
+words = ["abc" "rng" "xyz" "ig" "ig" "rng" "ig"]
+words.map(x -> (x, 1)).reduceByKey((x, y) -> x + y).map(x -> x.reverse())
+//[[1 "abc"] [2 "rng"] [1 "xyz"] [3 "ig"]]
+```
+
+### 流程控制
+
+```js
+let a = 5
+
+if a > 0 {
+    print("a > 0")
+} else {
+    print("a <= 0")
+}
+
+// if 作为表达式
+let rst = if (a > 0) {
+    return a
+} else {
+    return 0
+}
+
+// 括号可以省略
+let rst = if a > 0 a else 0
+
+// else if
+if a > 0 {
+    a
+} else if a > 1 {
+    1
+} else {
+    0
+}
+
+// 写在一行, 貌似不那么清晰
+let rst = if a > 0 a else if a > 1 1 else 0
+```
+
+### 循环
+
+for 以后可能改成 while, for 作为 for-in 语句
+
+```js
+let count = 10
+
+for count > 0 {
+    print(count)
+    // 还不支持 count -= 1 或 count--
+    count = count - 1
+}
+
+// for 返回一个数组
+// rst = [9 8 7 6 5 4 3 2 1 0]
+let rst = for count > 0 {
+    count = count - 1
+    return count
+}
+
+```
+
   
-  
-*    map(expr)  
+## Xml  
 
-    arr.map(x -> x + 1)  //[2 3 4 5 6]
+xml 中只有括号表达式会被计算, 其格式为：
 
+<(expr)/(expr)>  
+\<(expr)>(expr)</(expr)>  
+\<(expr) />  
 
-*    filter(expr)  
-  
-    arr.filter(x -> x > 2)  //[3 4 5]
-
-  
-*    each(expr)  
-
-    arr.each(print x)  //nil  console: 1 2 3 4 5
-
-  
-*    reduce(expr)  
-
-    arr.reduce((x, y) -> x + y)  //15
-
-  
-*    mapValues(expr)  
-
-    arr2 = arr.map(x -> (x, 1))  //arr2 = [[1 1] [2 1] [3 1] [4 1] [5 1]]
-    arr.mapValues(x -> x + 1)    //arr2 = [[1 2] [2 2] [3 2] [4 2] [5 2]]
-
-  
-*    reduceByKey(expr)  
-
-    arr3 = [12 12 14 15 15]
-    arr4 = arr3.map(x -> (x, 1)) //arr4 = [[12 1] [12 1] [14 1] [15 1] [15 1]]
-    arr5 = arr4.reduceByKey((x,y) -> x + y) //arr5 = [[12 2] [14 1] [15 2]]
-
-  
-*    groupBy(expr)
-  
-根据expr表达式的值对元素进行分组
-
-    arr.groupBy(x -> if x > 2 "bigger" else "smaller") //[["smaller" 1 2] ["bigger" 3 4 5]]
-
-  
-*    groupByKey()  
-
-    arr4.groupByKey()  //[12 1 1] [14 1] [15 1 1]]
-
-  
-*    word count  
-
-    words = \["abc" "rng" "xyz" "ig" "ig" "rng" "ig"]
-    words.map(x -> (x, 1)).reduceByKey((x, y) -> x + y).map(x -> x.reverse())
-    //[[1 "abc"] [2 "rng"] [1 "xyz"] [3 "ig"]]
-
-  
-## Simple Xml
-
-#### Grammar  
-
-xml中只有括号表达式会被计算
-> <(expr)/(expr)> matching  
-> \<(expr)>(expr)</(expr)>  
-> \<(expr) />
-
-    a = 3 b = 4
-    tag = "name"
-    xml = {
-        <book>
-          <(tag)>inception</(tag)>
-          <prise>(a + b)</prise>
-        </book>
-    }
+```js
+a = 3 b = 4
+tag = "name"
+xml = {
+    <book>
+        <(tag)>inception</(tag)>
+        <prise>(a + b)</prise>
+    </book>
+}
+```
 
 ## Template
 
-#### Grammar
-
-    greeting = "hello world"
-    tmpl = `this is kangkang (greeting)`  //tmpl = "this is kangkang hello world"
+```js
+greeting = "hello world"
+tmpl = `this is kangkang (greeting)`  //"this is kangkang hello world"
+```
 
 #### Using '|' as delimiter
 
-    tmpl = `
-        first line
-        second line
-    `
-    //rst = 
-        first line
-        second line
-        
-     tmpl = `
-         |first line
-         |second line
-         
-     //rst = 
-     first line
-     second line
-     
+```js
+tmpl = `
+    first line
+    second line
+` 
+//    first line
+//    second line
+    
+tmpl = `
+    |first line
+    |second line
+`
+
+//first line
+//second line
+```
+
 #### Using '\\' as escaped char
-     
-     greet = "abc"
-     str = `hello \(greet)`  //str = "hello \(greet)"
+```js
+greet = "abc"
+str = `hello \(greet)`  //str = "hello (greet)"
+```
